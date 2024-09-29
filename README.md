@@ -14,6 +14,7 @@ npm install
 npm run dev
 
 php artisan datatables:make + Tên Bảng (Setup datatable) (Không cần tạo ngay vì sau này chia case thì mới dùng)
+Tên database : graduation_project
 
 Mỗi người khi colone về thì tự tạo nhánh mới của mình trên git. VD: git branch -b duongnvph33352
 Và mỗi người chỉ được quyền đẩy code lên nhánh của mình..
