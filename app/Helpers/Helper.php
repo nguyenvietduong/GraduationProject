@@ -5,17 +5,22 @@ use Illuminate\Support\Facades\Storage;
 // Check if the 'set_active' function does not already exist to avoid redeclaration.
 if (!function_exists('set_active')) {
     /**
-     * Helper function to set an 'active' class on a navigation link based on the current URL path.
+     * Check if the current URL matches a given pattern or route name
      *
-     * @param array $path An array of URL paths or patterns to match against the current request.
-     * @param string $active The CSS class to apply if the current request URL matches any of the paths.
-     * @return string Returns the CSS class if the current request matches one of the paths, otherwise returns an empty string.
+     * @param array|string $patterns Patterns or route names to match against the current request
+     * @return string Returns 'active' if any pattern matches, otherwise returns ''
      */
-    function set_active($path = [], $active = 'active')
+    function set_active($patterns, $activeClass = 'active')
     {
-        // Use 'Request::is' method to check if the current URL matches any of the provided paths.
-        // 'call_user_func_array' allows passing the array of paths as arguments to the 'Request::is' method.
-        return call_user_func_array('Request::is', $path) ? $active : '';
+        $segment = request()->segment(2);
+
+        foreach ((array) $patterns as $pattern) {
+            // Check if the pattern matches the URL
+            if ($segment === $pattern) {
+                return $activeClass;
+            }
+        }
+        return '';
     }
 }
 
