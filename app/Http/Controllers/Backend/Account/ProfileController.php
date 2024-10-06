@@ -61,8 +61,8 @@ class ProfileController extends Controller
 
     public function updateProfile(AccountUpdateRequest $request)
     {
-        $idProfile = $request->id;
-        if ($this->accountService->updateAccount($idProfile, $request)) {
+        $idProfile = Auth::user()->id;
+        if ($this->accountService->updateAccount($idProfile, $request->all())) {
             return redirect()->route('admin.profile')->with('success', 'Record updated successfully');
         }
         return redirect()->route('admin.profile')->with('error', 'Failed to update record. Please try again');

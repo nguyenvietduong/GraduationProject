@@ -42,8 +42,13 @@
             success: function(response) {
                 if (response.success) {
                     // Update the profile image preview with the new image
-                    $('#profileImagePreview').attr('src', response.new_image_url);
-                    alert('Profile image updated successfully.');
+                    // $('#profileImagePreview').attr('src', response.new_image_url);
+                    executeExample('success'); // Call success function
+
+                    setTimeout(function () {
+                            // Trigger the click event on the reload button
+                            location.reload(); 
+                        }, 2500);
                 } else {
                     alert('Failed to update profile image.');
                 }

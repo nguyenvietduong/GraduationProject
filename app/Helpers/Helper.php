@@ -140,9 +140,8 @@ if (!function_exists('checkFile')) {
     function checkFile($path)
     {
         try {
-            $disk = Storage::disk('local'); // Use 'local' disk for checking
             // Ensure the provided path is a valid non-empty string
-            if (is_string($path) && !empty($path) && $disk->exists($path)) {
+            if (is_string($path) && !empty($path) && Storage::exists($path)) {
                 // Return the URL of the image
                 return asset('storage/' . $path);
             }

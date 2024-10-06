@@ -22,7 +22,7 @@
                                     </div>
                                     <div>
                                         <h5 class="fw-semibold fs-22 mb-1">
-                                            {{ Auth::user()->name ?? 'No data available' }}
+                                            {{ Auth::user()->full_name ?? 'No data available' }}
                                         </h5>
                                         <p class="mb-0 text-muted fw-medium">
                                             {{ Auth::user()->email ?? 'No data available' }}
@@ -69,7 +69,7 @@
                         <div id="infoDisplay">
                             <ul class="list-unstyled mb-0">
                                 <li class="mt-2"><i class="las la-briefcase me-2 text-secondary fs-22 align-middle"></i>
-                                    <b> Fullname </b> : {{ Auth::user()->name ?? 'No data available' }}
+                                    <b> Fullname </b> : {{ Auth::user()->full_name ?? 'No data available' }}
                                 </li>
                                 <li class="mt-2"><i class="las la-phone me-2 text-secondary fs-22 align-middle"></i>
                                     <b> Phone </b> : {{ Auth::user()->phone ?? 'No data available' }}
@@ -86,11 +86,10 @@
                         <!-- Edit Form -->
                         <form id="editForm" action="{{ route('profile.update') }}" method="post" style="display: none;">
                             @csrf
-                            <input type="hidden" name="id" value="{{ Auth::user()->id }}">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Fullname</label>
                                 <input type="text" class="form-control" id="name" name="name"
-                                    value="{{ Auth::user()->name }}">
+                                    value="{{ Auth::user()->full_name }}">
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone</label>
@@ -107,7 +106,7 @@
                                 <input type="text" class="form-control" id="address" name="address"
                                     value="{{ Auth::user()->address }}">
                             </div>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" onclick="executeExample('handleDismiss', 'editForm')" class="btn btn-primary">Save Changes</button>
                         </form>
                     </div><!--end card-body-->
                 </div><!--end card-->
