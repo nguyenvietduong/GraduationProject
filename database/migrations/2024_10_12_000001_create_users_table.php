@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('phone')->unique();
             $table->string('email');
+            $table->string('image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('status')->default('normal'); // Trạng thái tài khoản ['normal', 'locked', 'warning']

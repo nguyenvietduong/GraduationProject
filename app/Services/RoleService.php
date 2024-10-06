@@ -18,23 +18,27 @@ class RoleService extends BaseService implements RoleServiceInterface
      * @param RoleRepositoryInterface $roleRepository
      */
     public function __construct(
-        RoleRepositoryInterface  $roleRepository,
+        RoleRepositoryInterface $roleRepository,
     ) {
         $this->roleRepository = $roleRepository;
     }
 
     /**
-     * Get a list of roles with optional parameters.
+     * Get a paginated list of roles with optional filters.
      *
+     * @param array $filters
+     * @param int $perPage
      * @return mixed
+     * @throws Exception
      */
-    public function listRoles()
+    public function getAllRoles(array $filters = [], int $perPage = 5)
     {
         try {
-            return $this->roleRepository->listRoles();
+            // Retrieve roles from the repository using filters and pagination
+            return $this->roleRepository->getAllRoles($filters, $perPage);
         } catch (Exception $e) {
-            // Handle error if necessary
-            throw new Exception('Unable to retrieve roles: ' . $e->getMessage());
+            // Handle any exceptions that occur while retrieving roles
+            throw new Exception('Unable to retrieve role list: ' . $e->getMessage());
         }
     }
 

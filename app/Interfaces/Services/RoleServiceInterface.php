@@ -5,14 +5,17 @@ namespace App\Interfaces\Services;
 interface RoleServiceInterface
 {
     /**
-     * Danh sách các Role với các tham số tùy chọn.
+     * Get a paginated list of Roles with optional filters.
      *
+     * @param array $filters
+     * @param int $perPage
+     * @param string $role
      * @return mixed
      */
-    public function listRoles();
+    public function getAllRoles(array $filters = [], int $perPage = 15);
 
     /**
-     * Lấy chi tiết của Role theo ID.
+     * Get details of a Role by ID.
      *
      * @param int $id
      * @return mixed
@@ -20,7 +23,7 @@ interface RoleServiceInterface
     public function getRoleDetail(int $id);
 
     /**
-     * Tạo mới một Role.
+     * Create a new Role.
      *
      * @param array $data
      * @return mixed
@@ -28,7 +31,7 @@ interface RoleServiceInterface
     public function createRole(array $data);
 
     /**
-     * Cập nhật một Role theo ID.
+     * Update a Role by ID.
      *
      * @param int $id
      * @param array $data
@@ -37,7 +40,7 @@ interface RoleServiceInterface
     public function updateRole(int $id, array $data);
 
     /**
-     * Xóa một Role theo ID.
+     * Delete a Role by ID.
      *
      * @param int $id
      * @return bool

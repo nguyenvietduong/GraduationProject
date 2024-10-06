@@ -1,5 +1,6 @@
 <li class="dropdown topbar-item">
-    <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+    <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button"
+        aria-haspopup="false" aria-expanded="false">
         @if(Auth::check())
         <img src="{{ checkMinioImage(Auth::user()->image) }}" alt class="thumb-lg rounded-circle">
         @else
@@ -16,32 +17,26 @@
                 @endif
             </div>
             <div class="flex-grow-1 ms-2 text-truncate align-self-center">
-                <h6 class="my-0 fw-medium text-dark fs-13">{{ Auth::user()->name ?? 'No data available' }}</h6>
+                <h6 class="my-0 fw-medium text-dark fs-13">{{ Auth::user()->full_name ?? 'No data available' }}</h6>
                 <small class="text-muted mb-0">
                     @if(Auth::check())
-                    @if (Auth::user()->role == 'sysadmin')
-                    Sysadmin
-                    @elseif(Auth::user()->role == 'manager')
-                    Manager
-                    @endif
-                    @else
-                    Admin
+                    {{ Auth::user()->role_id == 1 ? __('messages.role.role.manager') : (Auth::user()->role_id == 2 ? __('messages.role.role.admin') : '') }}
                     @endif
                 </small>
             </div>
             <!--end media-body-->
         </div>
         <div class="dropdown-divider mt-0"></div>
-        <small class="text-muted px-2 pb-1 d-block">Account</small>
+        <small class="text-muted px-2 pb-1 d-block">{{ __('messages.system.account') }}</small>
         <a class="dropdown-item" href=""><i class="las la-user fs-18 me-1 align-text-bottom"></i>
-            Profile</a>
+            {{ __('messages.system.profile') }}</a>
         {{-- <a class="dropdown-item" href="pages-faq.html"><i class="las la-wallet fs-18 me-1 align-text-bottom"></i>
             Earning</a> --}}
-        <small class="text-muted px-2 py-1 d-block">Settings</small>
+        <small class="text-muted px-2 py-1 d-block">{{ __('messages.system.setting') }}</small>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
             @csrf
             <button type="submit" class="dropdown-item text-danger">
-                <i class="las la-power-off fs-18 me-1 align-text-bottom"></i> Logout
+                <i class="las la-power-off fs-18 me-1 align-text-bottom"></i> {{ __('messages.system.logout') }}
             </button>
         </form>
     </div>

@@ -19,12 +19,12 @@ class RoleSeeder extends Seeder
         // Thêm dữ liệu vào bảng roles
         DB::table('roles')->insert([
             [
-                'name' => 'Admin',
+                'name' => 'Manager',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Manager',
+                'name' => 'Admin',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

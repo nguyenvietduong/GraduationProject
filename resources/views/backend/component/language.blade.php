@@ -4,10 +4,10 @@
     </a>
     <div class="dropdown-menu">
         <div class="dropdown-item" data-language="en">
-            <span class="fi fi-us me-2"></span>{{ __('messages.language.english') }}
+            <span class="fi fi-us me-2"></span>{{ __('messages.system.lang.en') }}
         </div>
         <div class="dropdown-item" data-language="vi">
-            <span class="fi fi-vn me-2"></span>{{ __('messages.language.vietnamese') }}
+            <span class="fi fi-vn me-2"></span>{{ __('messages.system.lang.vi') }}
         </div>
     </div>
 </li>

@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 
-// Check if the 'set_active' function does not already exist to avoid redeclaration.
 if (!function_exists('set_active')) {
     /**
      * Check if the current URL matches a given pattern or route name
@@ -16,7 +16,7 @@ if (!function_exists('set_active')) {
 
         foreach ((array) $patterns as $pattern) {
             // Check if the pattern matches the URL
-            if ($segment === $pattern) {
+            if($segment === $pattern){
                 return $activeClass;
             }
         }
@@ -216,5 +216,15 @@ if (!function_exists('getRandomQuote')) {
         ];
 
         return $quotes[array_rand($quotes)];
+    }
+}
+
+if (!function_exists('forgetSessionImageTemp')) {
+    function forgetSessionImageTemp($image_temp)
+    {
+        if (session()->has($image_temp)) {
+            // Xóa session sau khi xử lý thành công
+            session()->forget($image_temp);
+        }
     }
 }

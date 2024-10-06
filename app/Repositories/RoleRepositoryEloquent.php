@@ -28,13 +28,30 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepositoryInt
     }
 
     /**
-     * List Roles with optional keyword search.
+     * Get a paginated list of Roles with optional search functionality.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param array $filters
+     * @param int $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllRoles()
+    public function getAllRoles(array $filters = [], $perPage = 5)
     {
-        return $this->model->get();
+        $query = $this->model->query();
+
+        // Apply search filters
+        if (!empty($filters['start_date'])) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
+
+        if (!empty($filters['end_date'])) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+
+        // Sort by creation date (latest first)
+        $query->orderBy('id', 'desc');
+
+        // Paginate results
+        return $query->paginate($perPage);
     }
 
     /**

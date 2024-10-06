@@ -7,14 +7,16 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface RoleRepositoryInterface extends RepositoryInterface
 {
     /**
-     * Danh sách các Role với các tham số lọc tùy chọn.
+     * Get a paginated list of Roles with optional search functionality.
      *
-     * @return mixed
+     * @param array $filters
+     * @param int $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllRoles();
+    public function getAllRoles(array $filters = [], $perPage = 5);
 
     /**
-     * Lấy chi tiết của Role theo ID.
+     * Get details of a Role by ID.
      *
      * @param int $id
      * @return mixed
@@ -22,7 +24,7 @@ interface RoleRepositoryInterface extends RepositoryInterface
     public function getRoleDetail(int $id);
 
     /**
-     * Cập nhật một Role theo ID với dữ liệu mới.
+     * Update a Role by ID with new data.
      *
      * @param int $id
      * @param array $params
@@ -31,7 +33,7 @@ interface RoleRepositoryInterface extends RepositoryInterface
     public function updateRole(int $id, array $params);
 
     /**
-     * Tạo mới một Role với dữ liệu.
+     * Create a new Role with data.
      *
      * @param array $params
      * @return mixed
@@ -39,7 +41,7 @@ interface RoleRepositoryInterface extends RepositoryInterface
     public function createRole(array $params);
 
     /**
-     * Lấy chi tiết của Role theo ID. (Có thể trùng với phương thức `getRoleDetail`)
+     * Get details of a Role by ID. (Possibly duplicates the `getRoleDetail` method)
      *
      * @param int $id
      * @return mixed
@@ -47,7 +49,7 @@ interface RoleRepositoryInterface extends RepositoryInterface
     public function detailRole(int $id);
 
     /**
-     * Xóa một Role theo ID.
+     * Delete a Role by ID.
      *
      * @param int $id
      * @return bool

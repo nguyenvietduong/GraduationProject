@@ -17,15 +17,15 @@ function executeExample(t, formId) {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: translations.button.confirm.confirmButtonText, // Using Laravel translation
-        cancelButtonText: translations.button.confirm.cancelButtonText.button,
+        cancelButtonText: translations.button.confirm.cancelButtonText,
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
           formElement.submit();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire(
-            translations.button.confirm.cancelButtonText.title,
-            translations.button.confirm.cancelButtonText.text,
+            translations.button.confirm.cancelled.title,
+            translations.button.confirm.cancelled.text,
             'error'
           );
         }

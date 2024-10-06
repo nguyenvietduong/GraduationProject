@@ -12,11 +12,15 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  mixed  ...$roles
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
-        if (Auth::check() && Auth::user()->role == $role) {
+        // Kiểm tra xem user có role_id nào trong danh sách các roles không
+        if (Auth::check() && in_array(Auth::user()->role_id, $roles)) {
             return $next($request);
         }
 

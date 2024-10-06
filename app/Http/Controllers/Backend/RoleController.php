@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\Backend\RoleDataTable;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\RoleServiceInterface;
 use App\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
-use App\DataTables\Backend\RolesDataTable;
 
 // Requests
-use App\Http\Requests\BackEnd\Roles\ListRequest   as RoleListRequest;
+use App\Http\Requests\BackEnd\Roles\ListRequest as RoleListRequest;
+use App\Http\Requests\BackEnd\Roles\StoreRequest as RoleStoreRequest;
 use App\Http\Requests\BackEnd\Roles\UpdateRequest as RoleUpdateRequest;
 
 class RoleController extends Controller
@@ -21,32 +22,82 @@ class RoleController extends Controller
 
     // Base path for views
     const PATH_VIEW = 'backend.role.';
+    const PER_PAGE_DEFAULT = 5;
+    const OBJECT = 'role';
 
     public function __construct(
-        RoleServiceInterface     $roleService,
-        RoleRepositoryInterface  $roleRepository,
+        RoleServiceInterface $roleService,
+        RoleRepositoryInterface $roleRepository,
     ) {
-        $this->roleService       = $roleService;
-        $this->roleRepository    = $roleRepository;
+        $this->roleService = $roleService;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
-     * Display a listing of role, supporting search and pagination.
+     * Display the list of roles.
      *
      * @param RoleListRequest $request
      * @return \Illuminate\View\View
      */
-
-    public function index(RolesDataTable $dataTable)
+    public function index(RoleListRequest $request)
     {
-        return $dataTable->render(self::PATH_VIEW . __FUNCTION__, [
-            'table_name'   => 'role',
-            'totalRecords' => $this->roleRepository->count(),
+        session()->forget('image_temp'); // Clear temporary image value
+        // Validate the request data
+        $request->validated();
+
+        // Extract filters from the request
+        $params = $request->all();
+
+        // Apply filters from the request
+        $filters = [
+            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
+            'start_date' => $params['start_date'] ?? '',
+            'end_date' => $params['end_date'] ?? '',
+        ];
+
+        // Get the per_page value
+        $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
+
+        return view(self::PATH_VIEW . __FUNCTION__, [
+            'object' => self::OBJECT,
+            'roleTotalRecords' => $this->roleRepository->count(), // Total records for display
+            'roleDatas' => $this->roleService->getAllRoles($filters, $perPage, self::OBJECT), // Paginated role list for the view
         ]);
     }
 
     /**
-     * Show the form for editing an role.
+     * Show the form for creating a new role.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view(self::PATH_VIEW . __FUNCTION__, [
+            'object' => 'role',
+        ]);
+    }
+
+    /**
+     * Handle the storage of a new role.
+     *
+     * @param RoleStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(RoleStoreRequest $request)
+    {
+        // Validate the data from the request using RoleStoreRequest
+        $data = $request->validated();
+        try {
+            // Create a new role
+            $this->roleService->createRole($data);
+            return redirect()->back()->with('success', 'Role created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Show the form for editing a role.
      *
      * @param int $id
      * @return \Illuminate\View\View
@@ -57,7 +108,8 @@ class RoleController extends Controller
         $role = $this->roleService->getRoleDetail($id);
         if ($role) {
             return view(self::PATH_VIEW . __FUNCTION__, [
-                'role' => $role,
+                'roleData' => $role,
+                'object' => 'role',
             ]);
         }
 
@@ -65,7 +117,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Handle the update of an role.
+     * Handle the update of a role.
      *
      * @param int $id
      * @param RoleUpdateRequest $request
@@ -79,14 +131,14 @@ class RoleController extends Controller
         try {
             // Update the role
             $this->roleService->updateRole($id, $data);
-            return redirect()->route('admin.role.index')->with('success', 'User updated successfully');
+            return redirect()->route('admin.role.index')->with('success', 'Role updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
     /**
-     * Delete an role.
+     * Delete a role.
      *
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
@@ -96,17 +148,11 @@ class RoleController extends Controller
         try {
             // Delete the role
             $this->roleService->deleteRole($id);
-            // Trả về JSON response nếu thành công
-            return response()->json([
-                'success' => true,
-                'message' => 'User delete successfully!',
-            ]);
+
+            return redirect()->back()->with('success', 'Role deleted successfully');
         } catch (\Exception $e) {
-            // Trả về JSON response nếu có lỗi
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 500);
+            // Return a JSON response if there is an error
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

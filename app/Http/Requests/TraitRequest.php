@@ -19,7 +19,7 @@ trait TraitRequest
      * @param int $perPage Default number of items per page if 'per_page' is not provided (default: 12).
      * @return void
      */
-    public function prepareForPagination($page = 1, $perPage = 12)
+    public function prepareForPagination($page = 1, $perPage = 5)
     {
         // Retrieve input data from the request instance
         $input = $this->all();

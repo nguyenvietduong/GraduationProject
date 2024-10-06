@@ -1,43 +1,29 @@
 @extends('layout.backend')
 @section('adminContent')
 <div class="container-xxl">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        @include('backend.component.title_table', [
-                        'table_name'    => $table_name,
-                        'total_records' => $totalRecords,
-                        ])
-
-                        @include('backend.component.button.button_add', [
-                        'table_name'    => $table_name,
-                        ])
-                    </div>
-                </div>
-            </div>
+            @include('backend.component.card-component', [
+            'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
+            'totalRecords' => $roleTotalRecords,
+            'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
+            ])
 
             <div class="card-body pt-0">
+                @include('backend.component.filter', [
+                    'object' => $object,
+                ])
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
                 <div class="table-responsive">
-                    <div class="container">
-                        <div class="card-body">
-                            {{ $dataTable->table() }}
-                        </div>
-                    </div>
+                    @include('backend.role.component.table.table')
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@push('script')
-{{ $dataTable->scripts() }}
-<script src="/backend/assets/custom/js/ajax/role/role_create.js"></script>
-{{-- <script src="/backend/assets/custom/js/ajax/role/role_delete.js"></script> --}}
-<script type="text/javascript">
-    loadRoleCreate("{{ route('admin.role.store') }}")
-    // loadRoleDelete('.delete-role-form')
-</script>
-@endpush
 @endsection

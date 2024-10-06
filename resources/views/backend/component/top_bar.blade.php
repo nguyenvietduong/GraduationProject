@@ -10,7 +10,7 @@
                 </li>
 
                 <li class="mx-3 welcome-text">
-                    <h3 class="mb-0 fw-bold text-truncate">{{ getGreeting() }}, {{ Auth::check() ? Auth::user()->name : "Null" }} !</h3>
+                    <h3 class="mb-0 fw-bold text-truncate">{{ getGreeting() }}, {{ Auth::check() ? Auth::user()->full_name : "Null" }} !</h3>
                     <marquee>
                         <h6 class="mb-0 fw-normal text-muted text-truncate fs-14">{{ getRandomQuote() }}</h6>
                     </marquee>
@@ -21,13 +21,13 @@
 
                 @include('backend.component.search_all')
 
-                {{-- @include('backend.component.language') --}}
+                @include('backend.component.language')
 
                 @include('backend.component.light_dark_mode')
 
                 <!-- Include your JavaScript files here -->
 
-                {{-- <li class="dropdown topbar-item">
+                <li class="dropdown topbar-item">
                     <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <i class="icofont-bell-alt"></i>
                         <span class="alert-badge"></span>
@@ -283,7 +283,7 @@
                             View All <i class="fi-arrow-right"></i>
                         </a>
                     </div>
-                </li> --}}
+                </li>
 
                 @include('backend.component.auth')
             </ul>

@@ -22,15 +22,13 @@ class User extends Authenticatable
 
     protected $fillable = [
         'id',
-        'name',
-        'email',
-        'password',
-        'image',
         'phone',
-        'address',
-        'role',
-        'created_at',
-        'updated_at',
+        'email',
+        'image',
+        'password',
+        'status',
+        'code_sent',
+        'role_id',
     ];
 
     const TYPE_ADMIN    = "sysadmin";
