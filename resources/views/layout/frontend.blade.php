@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Veganfry - Food & Restaurant Template</title>
+    <title>Hương Việt - Trang chủ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Food & Restaurant Template" name="description">
     <meta content="Shop, Fashion, eCommerce, Cart, Shop Cart, tailwind css, Admin, Landing" name="keywords">
@@ -16,15 +16,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="/frontend/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favicon.ico') }}">
 
     <!-- Css -->
-    <link href="/frontend/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-    <link href="/frontend/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
-    <link href="/frontend/assets/libs/swiper/css/swiper.min.css" rel="stylesheet">
+    <link href="{{ asset('frontend/assets/libs/tiny-slider/tiny-slider.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/assets/libs/tobii/css/tobii.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/assets/libs/swiper/css/swiper.min.css') }}" rel="stylesheet">
     <!-- Main Css -->
-    <link href="/frontend/assets/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-    <link href="/frontend/assets/css/tailwind.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('frontend/assets/libs/%40mdi/font/css/materialdesignicons.min.css') }}" rel="stylesheet"
+        type="text/css">
+    <link href="{{ asset('frontend/assets/css/tailwind.min.css') }}" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -40,15 +41,19 @@
         </div> -->
     <!-- Loader End -->
     <!-- Start Navbar -->
+    {{-- @php
+        $segment = request()->segment(0);
+        dd($segment);
+    @endphp --}}
     <nav id="topnav" class="defaultscroll is-sticky">
         <div class="container relative">
             <!-- Logo container-->
             <a class="logo" href="{{ route('home') }}">
                 <span class="inline-block dark:hidden">
-                    <img src="/frontend/assets/images/logo-dark.png" class="l-dark" alt="">
-                    <img src="/frontend/assets/images/logo-light.png" class="l-light" alt="">
+                    <img src="{{ asset('frontend/assets/images/logo-dark.png') }}" class="l-dark" alt="">
+                    <img src="{{ asset('frontend/assets/images/logo-light.png') }}" class="l-light" alt="">
                 </span>
-                <img src="/frontend/assets/images/logo-light.png" class="hidden dark:inline-block" alt="">
+                <img src="{{ asset('frontend/assets/images/logo-light.png') }}" class="hidden dark:inline-block" alt="">
             </a>
             <!-- End Logo container-->
 
@@ -113,22 +118,9 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu nav-light justify-end">
-                    <li class="has-submenu parent-menu-item">
-                        <a href="javascript:void(0)">Hero</a><span class="menu-arrow"></span>
-                        <ul class="submenu">
-                            <li><a href="index.html" class="sub-menu-item">Restaurant One</a></li>
-                            <li><a href="restaurant-two.html" class="sub-menu-item">Restaurant Two</a></li>
-                            <li><a href="restaurant-three.html" class="sub-menu-item">Restaurant Three</a></li>
-                            <li><a href="food-blog.html" class="sub-menu-item">Food Blogs</a></li>
-                            <li><a href="pizza.html" class="sub-menu-item">Pizza</a></li>
-                            <li><a href="index-dark.html" class="sub-menu-item">Index Dark <span
-                                        class="bg-slate-900 dark:bg-slate-50 inline-block text-white dark:text-slate-900 text-[10px] font-bold px-2.5 py-0.5 rounded h-5 ms-1">Dark</span></a>
-                            </li>
-                            <li><a href="index-rtl.html" class="sub-menu-item">Index RTL <span
-                                        class="bg-red-600 inline-block text-white text-[10px] font-bold px-2.5 py-0.5 rounded h-5 ms-1">RTL</span></a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="has-submenu parent-menu-item {{ set_active(['null', '', 'home'], 'active', '') }}">
+                        <a href="{{ route('home') }}">Trang chủ</a><span class="menu-arrow"></span>
+                    </li>                    
 
                     <li><a href="aboutus.html" class="sub-menu-item">Our Story</a></li>
 
@@ -177,9 +169,12 @@
                     </li>
 
                     <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li>
-                </ul><!--end navigation menu-->
-            </div><!--end navigation-->
-        </div><!--end container-->
+                </ul>
+                <!--end navigation menu-->
+            </div>
+            <!--end navigation-->
+        </div>
+        <!--end container-->
     </nav>
     <!--end header-->
     <!-- End Navbar -->
@@ -211,13 +206,13 @@
                                 <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Address</h5>
                                 <p class="mb-0 text-gray-200/80">C/54 Northwest Freeway, <br> Suite 558, USA 485</p>
                             </div>
-                        </div><!--end grid-->
+                        </div>
+                        <!--end grid-->
 
 
                         <div class="grid grid-cols-1 mt-12">
                             <div class="text-center">
-                                <img src="/frontend/assets/images/white-icon.png" class="block mx-auto"
-                                    alt="">
+                                <img src="/frontend/assets/images/white-icon.png" class="block mx-auto" alt="">
                                 <p class="max-w-xl mx-auto mt-6">Splash your dream color Bring your home to lively
                                     Colors. We make it a priority to offer flexible services to accomodate your needs
                                 </p>
@@ -246,19 +241,22 @@
                                             title="instagram"></i></a></li>
                                 <li class="inline"><a href="https://twitter.com/shreethemes" target="_blank"
                                         class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i
-                                            data-feather="twitter" class="size-4 align-middle"
-                                            title="twitter"></i></a>
+                                            data-feather="twitter" class="size-4 align-middle" title="twitter"></i></a>
                                 </li>
                                 <li class="inline"><a href="mailto:support@shreethemes.in"
                                         class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i
                                             data-feather="mail" class="size-4 align-middle" title="email"></i></a>
                                 </li>
-                            </ul><!--end icon-->
-                        </div><!--end grid-->
+                            </ul>
+                            <!--end icon-->
+                        </div>
+                        <!--end grid-->
                     </div>
                 </div>
-            </div><!--end grid-->
-        </div><!--end container-->
+            </div>
+            <!--end grid-->
+        </div>
+        <!--end container-->
 
         <div class="py-[30px] px-0 border-t border-slate-800">
             <div class="container relative text-center">
@@ -269,10 +267,13 @@
                         </script> Veganfry. Design with <i class="mdi mdi-heart text-red-600"></i> by <a
                             href="https://shreethemes.in/" target="_blank" class="text-reset">Shreethemes</a>.
                     </p>
-                </div><!--end grid-->
-            </div><!--end container-->
+                </div>
+                <!--end grid-->
+            </div>
+            <!--end container-->
         </div>
-    </footer><!--end footer-->
+    </footer>
+    <!--end footer-->
     <!-- Footer End -->
     <!-- Switcher -->
     <div class="fixed top-1/4 -left-2 z-50">
@@ -283,8 +284,7 @@
                 for="chk">
                 <i data-feather="moon" class="w-[18px] h-[18px] text-yellow-500"></i>
                 <i data-feather="sun" class="w-[18px] h-[18px] text-yellow-500"></i>
-                <span
-                    class="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] w-7 h-7"></span>
+                <span class="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] w-7 h-7"></span>
             </label>
         </span>
     </div>
@@ -296,13 +296,13 @@
     <!-- Back to top -->
 
     <!-- JAVASCRIPTS -->
-    <script src="/frontend/assets/libs/shufflejs/shuffle.min.js"></script>
-    <script src="/frontend/assets/libs/tiny-slider/min/tiny-slider.js"></script>
-    <script src="/frontend/assets/libs/tobii/js/tobii.min.js"></script>
-    <script src="/frontend/assets/libs/feather-icons/feather.min.js"></script>
-    <script src="/frontend/assets/libs/swiper/js/swiper.min.js"></script>
-    <script src="/frontend/assets/js/plugins.init.js"></script>
-    <script src="/frontend/assets/js/app.js"></script>
+    <script src="{{ asset('frontend/assets/libs/shufflejs/shuffle.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/libs/tiny-slider/min/tiny-slider.js') }}"></script>
+    <script src="{{ asset('frontend/assets/libs/tobii/js/tobii.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/libs/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/libs/swiper/js/swiper.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins.init.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
     <!-- JAVASCRIPTS -->
 </body>
 

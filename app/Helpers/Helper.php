@@ -5,22 +5,21 @@ use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('set_active')) {
     /**
-     * Check if the current URL matches a given pattern or route name
+     * Check if the current request segment matches the given routes.
      *
-     * @param array|string $patterns Patterns or route names to match against the current request
-     * @return string Returns 'active' if any pattern matches, otherwise returns ''
+     * @param array|string $routes The routes to check against.
+     * @param string $activeClass The class to return if there is a match.
+     * @param string $defaultClass The class to return if there is no match.
+     * @return string
      */
-    function set_active($patterns, $activeClass = 'active')
+    function set_active($routes, $activeClass = 'active', $layout = 'admin')
     {
-        $segment = request()->segment(2);
+        // Determine the segment index based on layout
+        $segmentIndex = ($layout === 'admin') ? 2 : 1;
+        $segment = request()->segment($segmentIndex); // Get the segment based on layout
 
-        foreach ((array) $patterns as $pattern) {
-            // Check if the pattern matches the URL
-            if($segment === $pattern){
-                return $activeClass;
-            }
-        }
-        return '';
+        // Check if the current segment matches any of the routes
+        return in_array($segment, (array)$routes) ? $activeClass : '';
     }
 }
 
