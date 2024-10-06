@@ -3,10 +3,10 @@
         <span class="fi {{ App::getLocale() === 'vi' ? 'fi-vn' : 'fi-us' }}"></span>
     </a>
     <div class="dropdown-menu">
-        <div class="dropdown-item" data-language="en">
+        <div class="dropdown-item set-language" data-language="en">
             <span class="fi fi-us me-2"></span>{{ __('messages.system.lang.en') }}
         </div>
-        <div class="dropdown-item" data-language="vi">
+        <div class="dropdown-item set-language" data-language="vi">
             <span class="fi fi-vn me-2"></span>{{ __('messages.system.lang.vi') }}
         </div>
     </div>
@@ -15,7 +15,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        const dropdownItems = document.querySelectorAll('.set-language');
 
         dropdownItems.forEach(item => {
             item.addEventListener('click', function() {

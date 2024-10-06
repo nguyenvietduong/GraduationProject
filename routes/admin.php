@@ -4,7 +4,6 @@ use App\Http\Controllers\Backend\Account\AdminController;
 use App\Http\Controllers\Backend\Account\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
-use App\Enums\GlobalEnum;
 
 Route::middleware(['auth', 'role:1,2'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -34,6 +33,12 @@ Route::middleware(['auth', 'role:1,2'])->group(function () {
             Route::delete('{id}/destroy', [AdminController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.admin.destroy');
         });
 
+        // Profile Management
+        Route::get('profile', function () {
+            return view('backend.account.profile');
+        })->name('admin.profile');
+
+        // Role Management
         Route::prefix('role')->group(function () {
             Route::get('index', [RoleController::class, 'index'])->name('admin.role.index');
             Route::get('create', [RoleController::class, 'create'])->name('admin.role.create');
@@ -41,6 +46,16 @@ Route::middleware(['auth', 'role:1,2'])->group(function () {
             Route::get('{id}/edit', [RoleController::class, 'edit'])->where('id', '[0-9]+')->name('admin.role.edit');
             Route::put('{id}/update', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('admin.role.update');
             Route::delete('{id}/destroy', [RoleController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.role.destroy');
+        });
+
+        // Category Management
+        Route::prefix('category')->group(function () {
+            Route::get('index', [CategoryController::class, 'index'])->name('admin.category.index');
+            Route::get('create', [CategoryController::class, 'create'])->name('admin.category.create');
+            Route::post('store', [CategoryController::class, 'store'])->name('admin.category.store');
+            Route::get('{id}/edit', [CategoryController::class, 'edit'])->where('id', '[0-9]+')->name('admin.category.edit');
+            Route::post('{id}/update', [CategoryController::class, 'update'])->where('id', '[0-9]+')->name('admin.category.update');
+            Route::delete('{id}/destroy', [CategoryController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.category.destroy');
         });
     });
 });

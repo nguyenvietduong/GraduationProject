@@ -1,6 +1,7 @@
-@extends('layout.admin')
+@extends('layout.backend')
 
 @section('adminContent')
+{{-- @dd(Auth::user()->image) --}}
     <div class="container-xxl">
         <!-- Profile Image and Edit -->
         <div class="row justify-content-center">
@@ -12,7 +13,7 @@
                                 <div class="d-flex align-items-center flex-row flex-wrap">
                                     <div class="position-relative me-3">
                                         <!-- Profile image preview -->
-                                        <img id="profileImagePreview" src="{{ checkMinioImage(Auth::user()->image) ?? '' }}"
+                                        <img id="profileImagePreview" src="{{ checkFile(Auth::user()->image) ?? '' }}"
                                             alt="Profile Image" height="120" width="120" class="rounded-circle">
                                         <a href="javascript:void(0);" id="changeImage"
                                             class="thumb-md d-flex align-items-center justify-content-center bg-primary text-white rounded-circle position-absolute end-0 bottom-0 border border-3 border-card-bg">

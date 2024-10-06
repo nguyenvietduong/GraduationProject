@@ -132,27 +132,26 @@ if (!function_exists('set_class')) {
 
 if (!function_exists('checkFile')) {
     /**
-     * Check the existence of a file on local storage.
+     * Check the existence of an image in local storage.
      *
-     * @param string $path The path of the file in local storage.
-     * @return string|null Returns the URL of the file if it exists, otherwise returns null.
+     * @param string $path The path of the image in local storage.
+     * @return string|null Returns the URL of the image if it exists, otherwise returns null.
      */
     function checkFile($path)
     {
         try {
-            $disk = Storage::disk('local'); // Change 'local' to your desired disk if needed
-
-            // Check if $path is a valid string
+            $disk = Storage::disk('local'); // Use 'local' disk for checking
+            // Ensure the provided path is a valid non-empty string
             if (is_string($path) && !empty($path) && $disk->exists($path)) {
-                // Return the URL of the file
-                return $disk->url($path);
+                // Return the URL of the image
+                return asset('storage/' . $path);
             }
         } catch (Exception $e) {
-            // Log the error for debugging
+            // Log the error for debugging purposes
             \Log::error('Error checking local storage file: ' . $e->getMessage());
         }
 
-        // Return null if no file is found or an error occurs
+        // Return null if the file doesn't exist or an error occurs
         return null;
     }
 }
