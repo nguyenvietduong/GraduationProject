@@ -23,7 +23,7 @@ class AdminController extends Controller
     const PATH_VIEW = 'backend.account.';
     const PER_PAGE_DEFAULt = 5;
     const OBJECT = 'admin';
-    const ROLE = 1;
+    const ROLE = 2;
 
     public function __construct(
         AccountServiceInterface $accountService,

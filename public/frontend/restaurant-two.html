@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" class="light scroll-smooth" dir="ltr">
+    
+<!-- Mirrored from shreethemes.in/veganfry/layouts/restaurant-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Sep 2024 13:56:06 GMT -->
+<head>
+        <meta charset="UTF-8">
+        <title>Veganfry - Food & Restaurant Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="Food & Restaurant Template" name="description">
+        <meta content="Shop, Fashion, eCommerce, Cart, Shop Cart, tailwind css, Admin, Landing" name="keywords">
+        <meta name="author" content="Shreethemes">
+        <meta name="website" content="https://shreethemes.in/">
+        <meta name="email" content="support@shreethemes.in">
+        <meta name="version" content="1.0.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- Css -->
+        <link href="assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
+        <link href="assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
+        <link href="assets/libs/swiper/css/swiper.min.css" rel="stylesheet">
+        <!-- Main Css -->
+        <link href="assets/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/tailwind.min.css" rel="stylesheet" type="text/css">
+
+    </head>
+    
+    <body class="dark:bg-slate-900">
+        <!-- Loader Start -->
+        <!-- <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div> -->
+        <!-- Loader End -->
+        <!-- Start Navbar -->
+        <nav id="topnav" class="defaultscroll is-sticky">
+            <div class="container relative">
+                <!-- Logo container-->
+                <a class="logo" href="index.html">
+                    <span class="inline-block dark:hidden">
+                        <img src="assets/images/logo-dark.png" class="l-dark" alt="">
+                        <img src="assets/images/logo-light.png" class="l-light" alt="">
+                    </span>
+                    <img src="assets/images/logo-light.png" class="hidden dark:inline-block" alt="">
+                </a>
+                <!-- End Logo container-->
+
+                <!-- Start Mobile Toggle -->
+                <div class="menu-extras">
+                    <div class="menu-item">
+                        <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- End Mobile Toggle -->
+
+                <!--Login button Start-->
+                <ul class="buy-button list-none mb-0">
+                    <li class="dropdown inline-block relative pe-1">
+                        <button data-dropdown-toggle="dropdown" class="dropdown-toggle align-middle inline-flex search-dropdown" type="button">
+                            <i data-feather="search" class="size-5 dark-icon"></i>
+                            <i data-feather="search" class="size-5 white-icon text-white"></i>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown-menu absolute overflow-hidden end-0 m-0 mt-5 z-10 md:w-52 w-48 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden" onclick="event.stopPropagation();">
+                            <div class="relative">
+                                <i data-feather="search" class="size-4 absolute top-[9px] end-3"></i>
+                                <input type="text" class="h-9 px-3 pe-10 w-full border-0 focus:ring-0 outline-none bg-white dark:bg-slate-900 shadow dark:shadow-gray-800" name="s" id="searchItem" placeholder="Search...">
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="dropdown inline-block relative ps-0.5">
+                        <button data-dropdown-toggle="dropdown" class="dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-amber-500 border border-amber-500 text-white" type="button">
+                            <i data-feather="shopping-cart" class="h-4 w-4"></i>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-64 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden" onclick="event.stopPropagation();">
+                            <ul class="py-3 text-start" aria-labelledby="dropdownDefault">
+                                <li class="py-1.5 px-4">Empty Cart</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="inline-block ps-0.5">
+                        <a href="javascript:void(0)" class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-amber-500 text-white">
+                            <i data-feather="heart" class="h-4 w-4"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!--Login button End-->
+
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu nav-light justify-end">
+                        <li class="has-submenu parent-menu-item">
+                            <a href="javascript:void(0)">Hero</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="index.html" class="sub-menu-item">Restaurant One</a></li>
+                                <li><a href="restaurant-two.html" class="sub-menu-item">Restaurant Two</a></li>
+                                <li><a href="restaurant-three.html" class="sub-menu-item">Restaurant Three</a></li>
+                                <li><a href="food-blog.html" class="sub-menu-item">Food Blogs</a></li>
+                                <li><a href="pizza.html" class="sub-menu-item">Pizza</a></li>
+                                <li><a href="index-dark.html" class="sub-menu-item">Index Dark <span class="bg-slate-900 dark:bg-slate-50 inline-block text-white dark:text-slate-900 text-[10px] font-bold px-2.5 py-0.5 rounded h-5 ms-1">Dark</span></a></li>
+                                <li><a href="index-rtl.html" class="sub-menu-item">Index RTL <span class="bg-red-600 inline-block text-white text-[10px] font-bold px-2.5 py-0.5 rounded h-5 ms-1">RTL</span></a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="aboutus.html" class="sub-menu-item">Our Story</a></li>
+
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)"> Menus </a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="menu-one.html" class="sub-menu-item">Menu One</a></li>
+                                <li><a href="menu-two.html" class="sub-menu-item">Menu Two</a></li>
+                                <li><a href="menu-three.html" class="sub-menu-item">Menu Three</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)"> Pages </a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="team.html" class="sub-menu-item">Our Chefs</a></li>
+
+                                <li class="has-submenu parent-menu-item">
+                                    <a href="javascript:void(0)"> Blogs </a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="blog-grid.html" class="sub-menu-item">Blog Grids</a></li>
+                                        <li><a href="blog-standard.html" class="sub-menu-item">Blog Starndard</a></li>
+                                        <li><a href="blog-list.html" class="sub-menu-item">Blog List</a></li>
+                                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Detail</a></li>
+                                    </ul>  
+                                </li>
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Auth Pages </a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="login.html" class="sub-menu-item"> Login</a></li>
+                                        <li><a href="signup.html" class="sub-menu-item"> Signup</a></li>
+                                        <li><a href="forgot-password.html" class="sub-menu-item"> Forgot Password</a></li>
+                                        <li><a href="lock-screen.html" class="sub-menu-item"> Lock Screen</a></li>
+                                    </ul> 
+                                </li>
+
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Utility </a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="terms.html" class="sub-menu-item">Terms of Services</a></li>
+                                        <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
+                                    </ul>  
+                                </li>
+
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Special </a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="comingsoon.html" class="sub-menu-item"> Coming Soon</a></li>
+                                        <li><a href="maintenance.html" class="sub-menu-item"> Maintenance</a></li>
+                                        <li><a href="error.html" class="sub-menu-item"> 404!</a></li>
+                                    </ul> 
+                                </li>
+                                <li><a href="contactus.html" class="sub-menu-item">Contact Us</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="reservation.html" class="sub-menu-item">Reservation</a></li>
+                    </ul><!--end navigation menu-->
+                </div><!--end navigation-->
+            </div><!--end container-->
+        </nav><!--end header-->
+        <!-- End Navbar -->
+        
+        <!-- Start Hero -->
+        <section class="swiper-slider-hero relative block h-screen" id="home">
+            <div class="swiper-container absolute end-0 top-0 w-full h-full">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide flex items-center overflow-hidden">
+                        <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;" data-background="assets/images/bg/bg1.jpg">
+                            <div class="absolute inset-0 bg-slate-900/60"></div>
+                            <div class="container relative">
+                                <div class="grid grid-cols-1">
+                                    <h1 class="font-semibold lg:leading-normal leading-normal text-4xl lg:text-6xl text-white mb-5">Taste The <br> Difference</h1>
+                                    <p class="text-white/70 text-lg max-w-xl">My veggie-packed take on a deli-style pasta salad! I swap spiralized summer squash for half the noodles and a creamy tahini dressing.</p>
+                                
+                                    <div class="mt-8">
+                                        <a href="menu-one.html" class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">View Our Menu</a>
+                                    </div>
+                                </div><!--end grid-->
+                            </div><!--end container-->
+                        </div><!-- end slide-inner --> 
+                    </div> <!-- end swiper-slide -->
+
+                    <div class="swiper-slide flex items-center overflow-hidden">
+                        <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;" data-background="assets/images/bg/bg2.jpg">
+                            <div class="absolute inset-0 bg-slate-900/60"></div>
+                            <div class="container relative">
+                                <div class="grid grid-cols-1">
+                                    <h1 class="font-semibold lg:leading-normal leading-normal text-4xl lg:text-6xl text-white mb-5">Taste The <br> Everyone</h1>
+                                    <p class="text-white/70 text-lg max-w-xl">My veggie-packed take on a deli-style pasta salad! I swap spiralized summer squash for half the noodles and a creamy tahini dressing.</p>
+                                
+                                    <div class="mt-8">
+                                        <a href="reservation.html" class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">Book A Table</a>
+                                    </div>
+                                </div><!--end grid-->
+                            </div><!--end container-->
+                        </div><!-- end slide-inner --> 
+                    </div> <!-- end swiper-slide -->
+                </div>
+                <!-- end swiper-wrapper -->
+
+                <!-- swipper controls -->
+                <!-- <div class="swiper-pagination"></div> -->
+                <div class="swiper-button-next bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center"></div>
+                <div class="swiper-button-prev bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center"></div>
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- Hero End -->
+
+        <!-- Start -->
+        <section class="relative md:py-24 py-16">
+            <div class="container relative">
+                <div class="flex justify-center">
+                    <div class="lg:w-1/2 md:w-2/3 w-full">
+                        <div class="text-center">
+                            <h4 class="text-3xl font-semibold">Our Story</h4>
+
+                            <p class="text-slate-400 mt-6">Our buzzy food-hall style concept is inspired by international dining styles, especially in Asia. Explore the following fast-action food stations as busy chefs perform.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-10">
+                    <div class="lg:w-2/3 w-full">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="group relative">
+                                <img src="assets/images/menu/m1.jpg" alt="">
+                                <div class="absolute inset-0 bg-slate-950/50"></div>
+                                <div class="absolute inset-0 m-6 border border-white/30"></div>
+                                <div class="absolute bottom-12 start-0 end-0 text-center">
+                                    <h5 class="text-white/80 group-hover:text-white duration-500 text-xl">Dining Menu</h5>
+                                </div>
+                            </div>
+
+                            <div class="group relative">
+                                <img src="assets/images/menu/m3.jpg" alt="">
+                                <div class="absolute inset-0 bg-slate-950/50"></div>
+                                <div class="absolute inset-0 m-6 border border-white/30"></div>
+                                <div class="absolute bottom-12 start-0 end-0 text-center">
+                                    <h5 class="text-white/80 group-hover:text-white duration-500 text-xl">Dessert Menu</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container relative md:mt-24 mt-16">
+                <div class="grid grid-cols-1 pb-8 text-center">
+                    <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Services</h3>
+
+                    <p class="text-slate-400 max-w-xl mx-auto">Our buzzy food-hall style concept is inspired by international dining styles, especially in Asia.</p>
+                </div><!--end grid-->
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-6 gap-6">
+                    <div class="md:px-6 duration-500 text-center">
+                        <div class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
+                            <i class="mdi mdi-pizza"></i>
+                        </div>
+
+                        <div class="content mt-7">
+                            <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Food Meets Style</a>
+                            <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit</p>
+                            
+                            <div class="mt-5">
+                                <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:px-6 duration-500 text-center">
+                        <div class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
+                            <i class="mdi mdi-silverware"></i>
+                        </div>
+
+                        <div class="content mt-7">
+                            <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Quality Check</a>
+                            <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit</p>
+                            
+                            <div class="mt-5">
+                                <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:px-6 duration-500 text-center">
+                        <div class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
+                            <i class="mdi mdi-moped-outline"></i>
+                        </div>
+
+                        <div class="content mt-7">
+                            <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Home Delivery</a>
+                            <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit</p>
+                            
+                            <div class="mt-5">
+                                <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative pt-24 pb-40 bg-[url('../../assets/images/bg/pages.html')] bg-no-repeat bg-fixed bg-top bg-cover">
+            <div class="absolute inset-0 bg-slate-950/50"></div>
+            <div class="container">
+                <div class="flex justify-center relative mt-20">
+                    <div class="relative lg:w-1/3 md:w-1/2 w-full">
+                        <div class="absolute -top-20 md:-start-24 -start-0">
+                            <i class="mdi mdi-format-quote-open text-9xl text-white opacity-50"></i>
+                        </div>
+
+                        <div class="absolute bottom-28 md:-end-24 -end-0">
+                            <i class="mdi mdi-format-quote-close text-9xl text-white opacity-50"></i>
+                        </div>
+
+                        <div class="tiny-single-item">
+                            <div class="tiny-slide">
+                                <div class="text-center">
+                                    <p class="text-lg text-white/80 italic"> " Veganfry made the processes so easy. Veganfry instantly increased the amount of interest and ultimately saved us over $10,000. " </p>
+
+                                    <div class="text-center mt-5">
+                                        <ul class="text-xl font-medium text-amber-400 list-none mb-2">
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                        </ul>
+
+                                        <img src="assets/images/client/1.jpg" class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
+                                        <h6 class="mt-2 font-medium text-white">Christa Smith</h6>
+                                        <span class="text-white/70 text-sm">Manager</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tiny-slide">
+                                <div class="text-center">
+                                    <p class="text-lg text-white/80 italic"> " I highly recommend Veganfry as the new way to sell your home "by owner". My home sold in 24 hours for the asking price. Best $400 you could spend to sell your home. " </p>
+
+                                    <div class="text-center mt-5">
+                                        <ul class="text-xl font-medium text-amber-400 list-none mb-2">
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                        </ul>
+
+                                        <img src="assets/images/client/2.jpg" class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
+                                        <h6 class="mt-2 font-medium text-white">Christa Smith</h6>
+                                        <span class="text-white/70 text-sm">Manager</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tiny-slide">
+                                <div class="text-center">
+                                    <p class="text-lg text-white/80 italic"> " My favorite part about selling my home myself was that we got to meet and get to know the people personally. This made it so much more enjoyable! " </p>
+
+                                    <div class="text-center mt-5">
+                                        <ul class="text-xl font-medium text-amber-400 list-none mb-2">
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                        </ul>
+
+                                        <img src="assets/images/client/3.jpg" class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
+                                        <h6 class="mt-2 font-medium text-white">Christa Smith</h6>
+                                        <span class="text-white/70 text-sm">Manager</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tiny-slide">
+                                <div class="text-center">
+                                    <p class="text-lg text-white/80 italic"> " Great experience all around! Easy to use and efficient. " </p>
+
+                                    <div class="text-center mt-5">
+                                        <ul class="text-xl font-medium text-amber-400 list-none mb-2">
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                        </ul>
+
+                                        <img src="assets/images/client/4.jpg" class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
+                                        <h6 class="mt-2 font-medium text-white">Christa Smith</h6>
+                                        <span class="text-white/70 text-sm">Manager</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tiny-slide">
+                                <div class="text-center">
+                                    <p class="text-lg text-white/80 italic"> " Veganfry made selling my home easy and stress free. They went above and beyond what is expected. " </p>
+
+                                    <div class="text-center mt-5">
+                                        <ul class="text-xl font-medium text-amber-400 list-none mb-2">
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                        </ul>
+
+                                        <img src="assets/images/client/5.jpg" class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
+                                        <h6 class="mt-2 font-medium text-white">Christa Smith</h6>
+                                        <span class="text-white/70 text-sm">Manager</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tiny-slide">
+                                <div class="text-center">
+                                    <p class="text-lg text-white/80 italic"> " Veganfry is fair priced, quick to respond, and easy to use. I highly recommend their services! " </p>
+
+                                    <div class="text-center mt-5">
+                                        <ul class="text-xl font-medium text-amber-400 list-none mb-2">
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                            <li class="inline"><i class="mdi mdi-star"></i></li>
+                                        </ul>
+
+                                        <img src="assets/images/client/6.jpg" class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-700 mx-auto" alt="">
+                                        <h6 class="mt-2 font-medium text-white">Christa Smith</h6>
+                                        <span class="text-white/70 text-sm">Manager</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end grid-->
+            </div>
+
+            <div class="absolute bottom-0 start-0 end-0 text-center px-3">
+                <h4 class="md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-white mb-6">Choose your mixture & order now!</h4>
+            </div>
+        </section>
+
+        <section class="relative pt-6 md:pb-24 pb-16 bg-gray-50 dark:bg-slate-800">
+            <div class="container relative">
+                <div class="grid md:grid-cols-12">
+                    <div class="lg:col-span-3 md:col-span-3 p-3">
+                        <div class="shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-4 sticky top-20">
+                            <div class="filters-group-wrap text-center">
+                                <div class="filters-group">
+                                    <ul class="mb-0 list-none container-filter-border-bottom filter-options">
+                                        <li class="text-sm uppercase font-medium cursor-pointer relative border-b border-transparent text-slate-400 duration-500 active" data-group="all">All</li>
+                                        <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500" data-group="break">Breakfast</li>
+                                        <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500" data-group="lunch">Lunch</li>
+                                        <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500" data-group="dinner">Dinner</li>
+                                        <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500" data-group="tea">Tea & Coffee</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-9 md:col-span-9">
+                        <div id="grid" class="md:flex">
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/1.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Black bean dip</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/2.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Onion Pizza</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/3.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Chicken Breast</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["dinner"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/4.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Veg Pizza</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/5.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Cordon Bleu</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/6.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Boerewors</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/7.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Tarte Tatin</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/8.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Green Tea</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/9.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Special Coffee</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["dinner"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/10.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Lemon Tea</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/11.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Pancakes</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/12.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">American Item</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/13.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Country side pizza</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["dinner"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/14.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Chilly garlic potato</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/15.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Brownie with vanilla</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
+                                <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                    <img src="assets/images/menu/1.jpg" class="" alt="">
+
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+
+                                    <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                        <a href="#" class="text-lg h5 block text-white hover:text-amber-500 duration-500">Black bean dip</a>
+                                        <h5 class="text-amber-500 font-medium">$25.00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container relative md:mt-24 mt-16">
+                <div class="grid grid-cols-1 pb-8 text-center">
+                    <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Food Blogs</h3>
+
+                    <p class="text-slate-400 max-w-xl mx-auto">Our buzzy food-hall style concept is inspired by international dining styles, especially in Asia.</p>
+                </div><!--end grid-->
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-6 gap-6">
+                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+                        <div class="relative overflow-hidden">
+                            <img src="assets/images/blog/1.jpg" class="group-hover:scale-110 group-hover:rotate-3 duration-500" alt="">
+
+                            <div class="absolute bottom-0 start-0 p-6">
+                                <a href="#" class="bg-amber-500 text-white text-[12px] font-semibold px-2.5 py-0.5">Salad</a>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <a href="blog-detail.html" class="text-lg hover:text-amber-500 h5">Giant Multi-Stuffed Soft Pretzel</a>
+                            <p class="text-slate-400 mt-2">Ut enim ad minim veniamquis nostrud exercitation ullamco</p>
+
+                            <div class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">
+                                <span class="flex items-center">
+                                    <img src="assets/images/client/1.jpg" class="size-7 rounded-full" alt="">
+                                    <a href="#" class="ms-2 text-slate-400 hover:text-amber-500">Calvin Carlo</a>
+                                </span>
+
+                                <span class="flex items-center text-[14px]"><i data-feather="calendar" class="h-4 w-4"></i> <span class="ms-1 text-slate-400">April 10, 2024</span></span>
+                            </div>
+                        </div>
+                    </div><!--end content-->
+
+                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+                        <div class="relative overflow-hidden">
+                            <img src="assets/images/blog/2.jpg" class="group-hover:scale-110 group-hover:rotate-3 duration-500" alt="">
+
+                            <div class="absolute bottom-0 start-0 p-6">
+                                <a href="#" class="bg-amber-500 text-white text-[12px] font-semibold px-2.5 py-0.5">Breakfast</a>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <a href="blog-detail.html" class="text-lg hover:text-amber-500 h5">Romantic Breakfast for Two</a>
+                            <p class="text-slate-400 mt-2">Ut enim ad minim veniamquis nostrud exercitation ullamco</p>
+
+                            <div class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">
+                                <span class="flex items-center">
+                                    <img src="assets/images/client/1.jpg" class="size-7 rounded-full" alt="">
+                                    <a href="#" class="ms-2 text-slate-400 hover:text-amber-500">Calvin Carlo</a>
+                                </span>
+
+                                <span class="flex items-center text-[14px]"><i data-feather="calendar" class="h-4 w-4"></i> <span class="ms-1 text-slate-400">April 10, 2024</span></span>
+                            </div>
+                        </div>
+                    </div><!--end content-->
+
+                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+                        <div class="relative overflow-hidden">
+                            <img src="assets/images/blog/3.jpg" class="group-hover:scale-110 group-hover:rotate-3 duration-500" alt="">
+
+                            <div class="absolute bottom-0 start-0 p-6">
+                                <a href="#" class="bg-amber-500 text-white text-[12px] font-semibold px-2.5 py-0.5">Breads</a>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <a href="blog-detail.html" class="text-lg hover:text-amber-500 h5">Macchiato Pumpkin Soup</a>
+                            <p class="text-slate-400 mt-2">Ut enim ad minim veniamquis nostrud exercitation ullamco</p>
+
+                            <div class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">
+                                <span class="flex items-center">
+                                    <img src="assets/images/client/1.jpg" class="size-7 rounded-full" alt="">
+                                    <a href="#" class="ms-2 text-slate-400 hover:text-amber-500">Calvin Carlo</a>
+                                </span>
+
+                                <span class="flex items-center text-[14px]"><i data-feather="calendar" class="h-4 w-4"></i> <span class="ms-1 text-slate-400">April 10, 2024</span></span>
+                            </div>
+                        </div>
+                    </div><!--end content-->
+                </div>
+            </div>
+        </section>
+        <!-- End -->
+
+        <!-- Insta Post Start -->
+        <div class="container-fluid relative">
+            <div class="grid grid-cols-1 relative">
+                <div class="tiny-twelve-item">
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/1.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/1.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/2.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/2.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/3.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/3.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/4.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/4.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/5.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/5.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/6.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/6.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/7.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/7.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/8.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/8.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/9.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/9.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/10.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/10.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/11.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/11.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/12.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/12.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/13.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/13.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/14.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/14.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tiny-slide">
+                        <div class="card border-0 rounded-0">
+                            <div class="card-body p-0">
+                                <a href="assets/images/menu/15.jpg" class="lightbox d-inline-block" title="">
+                                    <img src="assets/images/menu/15.jpg" class="" alt="Insta Post">
+                                    <div class="overlay bg-dark"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="absolute top-2/4 -translate-y-2/4 start-2/4 ltr:-translate-x-2/4 rtl:translate-x-2/4 text-center">
+                    <a href="https://www.instagram.com/shreethemes/" target="_blank" class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-md bg-amber-500 border border-amber-500 text-white"><i data-feather="instagram" class="size-4"></i></a>
+                </div>
+            </div><!--end grid-->
+        </div><!--end container-->
+        <!-- Insta Post End -->
+
+        <!-- Footer Start -->
+        <footer class="relative bg-slate-950 dark:bg-slate-950/20 text-gray-200">    
+            <div class="container relative">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-12">
+                        <div class="py-[60px] px-0">
+                            <div class="grid lg:grid-cols-3 md:grid-cols-2 justify-center gap-6">
+                                <div class="text-center">
+                                    <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Open Hours</h5>
+                                    <p class="mb-2 text-gray-200/80">Monday - Friday: 10:00AM - 11:00PM</p>
+                                    <p class="mb-0 text-gray-200/80">Saturday - Sunday: 9:00AM - 1:00PM</p>
+                                </div>
+                    
+                                <div class="text-center">
+                                    <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Reservation</h5>
+                                    <p class="mb-2"><a href="tel:+152534-468-854" class="text-gray-200/80">+152 534-468-854</a></p>
+                                    <p class="mb-0"><a href="mailto:contact@example.com" class="text-gray-200/80">contact@example.com</a></p>
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Address</h5>
+                                    <p class="mb-0 text-gray-200/80">C/54 Northwest Freeway, <br> Suite 558, USA 485</p>
+                                </div>
+                            </div><!--end grid-->
+
+                    
+                            <div class="grid grid-cols-1 mt-12">
+                                <div class="text-center">
+                                    <img src="assets/images/white-icon.png" class="block mx-auto" alt="">
+                                    <p class="max-w-xl mx-auto mt-6">Splash your dream color Bring your home to lively Colors. We make it a priority to offer flexible services to accomodate your needs</p>
+                                </div>
+
+                                <ul class="list-none text-center mt-6">
+                                    <li class="inline"><a href="https://1.envato.market/veganfry" target="_blank" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="shopping-cart" class="size-4 align-middle" title="Buy Now"></i></a></li>
+                                    <li class="inline"><a href="https://dribbble.com/shreethemes" target="_blank" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="dribbble" class="size-4 align-middle" title="dribbble"></i></a></li>
+                                    <li class="inline"><a href="http://linkedin.com/company/shreethemes" target="_blank" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="linkedin" class="size-4 align-middle" title="Linkedin"></i></a></li>
+                                    <li class="inline"><a href="https://www.facebook.com/shreethemes" target="_blank" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="facebook" class="size-4 align-middle" title="facebook"></i></a></li>
+                                    <li class="inline"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="instagram" class="size-4 align-middle" title="instagram"></i></a></li>
+                                    <li class="inline"><a href="https://twitter.com/shreethemes" target="_blank" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="twitter" class="size-4 align-middle" title="twitter"></i></a></li>
+                                    <li class="inline"><a href="mailto:support@shreethemes.in" class="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 hover:border-amber-500 rounded-md hover:bg-amber-500"><i data-feather="mail" class="size-4 align-middle" title="email"></i></a></li>
+                                </ul><!--end icon-->
+                            </div><!--end grid-->
+                        </div>
+                    </div>
+                </div><!--end grid-->
+            </div><!--end container-->
+
+            <div class="py-[30px] px-0 border-t border-slate-800">
+                <div class="container relative text-center">
+                    <div class="grid md:grid-cols-1">
+                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> Veganfry. Design with <i class="mdi mdi-heart text-red-600"></i> by <a href="https://shreethemes.in/" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                    </div><!--end grid-->
+                </div><!--end container-->
+            </div>
+        </footer><!--end footer-->
+        <!-- Footer End -->
+        <!-- Switcher -->
+        <div class="fixed top-1/4 -left-2 z-50">
+            <span class="relative inline-block rotate-90">
+                <input type="checkbox" class="checkbox opacity-0 absolute" id="chk">
+                <label class="label bg-slate-900 dark:bg-white shadow dark:shadow-gray-800 cursor-pointer rounded-full flex justify-between items-center p-1 w-14 h-8" for="chk">
+                    <i data-feather="moon" class="w-[18px] h-[18px] text-yellow-500"></i>
+                    <i data-feather="sun" class="w-[18px] h-[18px] text-yellow-500"></i>
+                    <span class="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] w-7 h-7"></span>
+                </label>
+            </span>
+        </div>
+
+        <div class="fixed top-[40%] -left-3 z-50">
+            <a href="#" id="switchRtl">
+                <span class="py-1 px-3 relative inline-block rounded-b-md -rotate-90 bg-white dark:bg-slate-900 shadow-md dark:shadow dark:shadow-gray-800 font-semibold rtl:block ltr:hidden" >LTR</span>
+                <span class="py-1 px-3 relative inline-block rounded-b-md -rotate-90 bg-white dark:bg-slate-900 shadow-md dark:shadow dark:shadow-gray-800 font-semibold ltr:block rtl:hidden">RTL</span>
+            </a>
+        </div>
+        <!-- LTR & RTL Mode Code --> 
+
+        <!-- Back to top -->
+        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 end-5 size-9 text-center bg-amber-500 text-white justify-center items-center"><i class="mdi mdi-arrow-up"></i></a>
+        <!-- Back to top -->
+
+        <!-- JAVASCRIPTS -->
+        <script src="assets/libs/shufflejs/shuffle.min.js"></script>
+        <script src="assets/libs/tiny-slider/min/tiny-slider.js"></script>
+        <script src="assets/libs/tobii/js/tobii.min.js"></script>
+        <script src="assets/libs/feather-icons/feather.min.js"></script>
+        <script src="assets/libs/swiper/js/swiper.min.js"></script>
+        <script src="assets/js/plugins.init.js"></script>
+        <script src="assets/js/app.js"></script>
+        <!-- JAVASCRIPTS -->
+    </body>
+
+<!-- Mirrored from shreethemes.in/veganfry/layouts/restaurant-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Sep 2024 13:56:14 GMT -->
+</html>

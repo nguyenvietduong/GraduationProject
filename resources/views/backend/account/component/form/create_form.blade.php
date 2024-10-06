@@ -75,7 +75,7 @@
             <div class="col-lg-4 col-12 mb-2 mb-lg-1">
                 <label class="form-label mt-2">{{ __('messages.account.fields.role') }}</label>
                 <select class="form-select @error('role') is-invalid @enderror" name="role">
-                    @foreach(__('messages.account.role') as $key => $value)
+                    @foreach(__('messages.role.role') as $key => $value)
                     <option value="{{ $key }}" {{ set_selected('role', $key) }}>{{ $value }}</option>
                     @endforeach
                 </select>
