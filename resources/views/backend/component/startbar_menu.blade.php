@@ -13,7 +13,7 @@ $segment = request()->segment(2);
                 </li>
 
                 <!-- Admin Dashboard -->
-                <li class="nav-item {{ set_active(['dashboard']) }}">
+                <li class="nav-item {{ set_active(['dashboard', 'admin']) }}">
                     <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
                         <i class="fa fa-tachometer menu-icon"></i>
                         <span>Admin Dashboard</span>
@@ -22,7 +22,7 @@ $segment = request()->segment(2);
 
                 <!-- Role -->
                 @if(Auth::check() && Auth::user()->role_id == 1)
-                <li class="nav-item {{ set_active(['role']) }}">
+                <li class="nav-item {{ set_active(['role', 'admin'], 'active', 'admin') }}">
                     <a class="nav-link" href="{{ route('admin.role.index') }}">
                         <i class="fas fa-key menu-icon"></i>
                         <span>Role</span>
@@ -32,22 +32,24 @@ $segment = request()->segment(2);
 
                 <!-- Account Management -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarAccountManagement">
+                    <a class="nav-link {{ set_active(['user', 'admin'], 'active', 'admin') }}"
+                        href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarAccountManagement">
                         <i class="fa fa-users menu-icon"></i>
                         <span>Account</span>
                     </a>
-                    <div class="collapse {{ set_active(['user', 'admin'], 'show') }}" id="sidebarAccountManagement">
+                    <div class="collapse {{ set_active(['user', 'admin'], 'show', 'admin') }}"
+                        id="sidebarAccountManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['user'], 'active') }}"
+                                <a class="nav-link {{ set_active(['user'], 'active', 'admin') }}"
                                     href="{{ route('admin.user.index') }}">
                                     <i class="fa fa-user menu-icon"></i>
                                     <span>Customer</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['admin'], 'active') }}"
+                                <a class="nav-link {{ set_active(['admin'], 'active', 'admin') }}"
                                     href="{{ route('admin.admin.index') }}">
                                     <i class="fa fa-user-tie menu-icon"></i>
                                     <span>Admin</span>
