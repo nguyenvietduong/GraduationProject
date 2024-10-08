@@ -8,7 +8,7 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
 
 
-Route::middleware(['auth', 'role:Admin, Staff'])->group(function () {
+Route::middleware(['auth', 'role:admin, staff'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
         Route::get('/index', function () {
