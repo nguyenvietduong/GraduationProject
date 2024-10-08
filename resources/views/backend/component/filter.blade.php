@@ -21,10 +21,10 @@ $perPageOptions = [5, 10, 15, 20, 50, 100];
                     </select>
                 </div>
 
-                @if($object == 'user' || $object == 'admin')
+                @if(in_array($object, ['user', 'admin', 'staff']))
                 @include('backend.account.component.filter.filter')
                 @else
-                @include('backend.'. $object .'.component.filter.filter')
+                @include('backend.' . $object . '.component.filter.filter')
                 @endif
 
                 <div class="col-12 col-md-auto mb-2">

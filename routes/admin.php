@@ -1,17 +1,19 @@
 <?php
 
 use App\Http\Controllers\Backend\Account\AdminController;
+use App\Http\Controllers\Backend\Account\StaffController;
 use App\Http\Controllers\Backend\Account\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\PermissionController;
 
-Route::middleware(['auth', 'role:1,2'])->group(function () {
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
         Route::get('/index', function () {
             return view('backend.dashboard.index');
         })->name('admin.dashboard.index');
-
 
         // User Management
         Route::prefix('user')->group(function () {
@@ -21,6 +23,15 @@ Route::middleware(['auth', 'role:1,2'])->group(function () {
             Route::get('{id}/edit', [UserController::class, 'edit'])->where('id', '[0-9]+')->name('admin.user.edit');
             Route::put('{id}/update', [UserController::class, 'update'])->where('id', '[0-9]+')->name('admin.user.update');
             Route::delete('{id}/destroy', [UserController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.user.destroy');
+        });
+
+        Route::prefix('staff')->group(function () {
+            Route::get('index', [StaffController::class, 'index'])->name('admin.staff.index');
+            Route::get('create', [StaffController::class, 'create'])->name('admin.staff.create');
+            Route::post('store', [StaffController::class, 'store'])->name('admin.staff.store');
+            Route::get('{id}/edit', [StaffController::class, 'edit'])->where('id', '[0-9]+')->name('admin.staff.edit');
+            Route::put('{id}/update', [StaffController::class, 'update'])->where('id', '[0-9]+')->name('admin.staff.update');
+            Route::delete('{id}/destroy', [StaffController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.staff.destroy');
         });
 
         // Admin Management
@@ -46,6 +57,15 @@ Route::middleware(['auth', 'role:1,2'])->group(function () {
             Route::get('{id}/edit', [RoleController::class, 'edit'])->where('id', '[0-9]+')->name('admin.role.edit');
             Route::put('{id}/update', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('admin.role.update');
             Route::delete('{id}/destroy', [RoleController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.role.destroy');
+        });
+
+        Route::prefix('permissions')->group(function () {
+            Route::get('index', [PermissionController::class, 'index'])->name('admin.permission.index');
+            Route::get('create', [PermissionController::class, 'create'])->name('admin.permission.create');
+            Route::post('store', [PermissionController::class, 'store'])->name('admin.permission.store');
+            Route::get('{permission}/edit', [PermissionController::class, 'edit'])->where('permission', '[0-9]+')->name('admin.permission.edit');
+            Route::put('{permission}/update', [PermissionController::class, 'update'])->where('permission', '[0-9]+')->name('admin.permission.update');
+            Route::delete('{permission}/destroy', [PermissionController::class, 'destroy'])->where('permission', '[0-9]+')->name('admin.permission.destroy');
         });
 
         // Category Management

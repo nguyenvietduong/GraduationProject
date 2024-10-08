@@ -21,5 +21,12 @@
         </div>
     </div>
 </div>
-
+@push('script')
+<script src="{{ asset('backend/assets/custom/js/set-datetime.js') }}"></script>
+<script>
+    var updateStatusUrl = '{{ route("admin.account.updateStatus") }}';
+    var csrfToken = '{{ csrf_token() }}';
+</script>
+<script src="{{ asset('backend/assets/custom/js/ajax/set-status-account.js') }}"></script>
+@endpush
 @endsection

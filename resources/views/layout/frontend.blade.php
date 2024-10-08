@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Hương Việt - Trang chủ</title>
+    <title>Trang chủ - Hương Việt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Food & Restaurant Template" name="description">
     <meta content="Shop, Fashion, eCommerce, Cart, Shop Cart, tailwind css, Admin, Landing" name="keywords">
@@ -26,7 +26,6 @@
     <link href="{{ asset('frontend/assets/libs/%40mdi/font/css/materialdesignicons.min.css') }}" rel="stylesheet"
         type="text/css">
     <link href="{{ asset('frontend/assets/css/tailwind.min.css') }}" rel="stylesheet" type="text/css">
-
 </head>
 
 <body class="dark:bg-slate-900">
@@ -41,10 +40,6 @@
         </div> -->
     <!-- Loader End -->
     <!-- Start Navbar -->
-    {{-- @php
-        $segment = request()->segment(0);
-        dd($segment);
-    @endphp --}}
     <nav id="topnav" class="defaultscroll is-sticky">
         <div class="container relative">
             <!-- Logo container-->
@@ -120,7 +115,7 @@
                 <ul class="navigation-menu nav-light justify-end">
                     <li class="has-submenu parent-menu-item {{ set_active(['null', '', 'home'], 'active', '') }}">
                         <a href="{{ route('home') }}">Trang chủ</a><span class="menu-arrow"></span>
-                    </li>                    
+                    </li>
 
                     <li><a href="aboutus.html" class="sub-menu-item">Our Story</a></li>
 
@@ -168,7 +163,35 @@
                         </ul>
                     </li>
 
-                    <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li>
+                    {{-- <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li> --}}
+
+                    @if (Auth::check())
+                    <li class="has-submenu parent-parent-menu-item active">
+                        <a href="javascript:void(0)">{{ Auth::user()->full_name }}</a><span class="menu-arrow"></span>
+                        <ul class="submenu">
+                            <li><a href="{{ route('team') }}" class="sub-menu-item">{{ __('messages.system.profile')
+                                    }}</a></li>
+                            @if(Auth::user()->roles->contains('name', 'admin'))
+                            <li><a href="{{ route('admin.dashboard.index') }}" class="">{{ __('messages.system.adminPage')
+                                    }}</a></li>
+                            @endif
+                            <li id="custom-logout-front" style="margin-left: 20px">
+                                <!-- Bootstrap 5: ms-4 applies margin-left -->
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="text-danger border-0 bg-transparent mb-1">
+                                        {{ __('messages.system.logout') }}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @else
+                    <li class="has-submenu parent-parent-menu-item active">
+                        <a href="{{ route('login') }}">{{ __('messages.system.login') }}</a>
+                    </li>
+                    @endif
                 </ul>
                 <!--end navigation menu-->
             </div>

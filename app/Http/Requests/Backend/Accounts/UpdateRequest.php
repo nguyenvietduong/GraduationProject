@@ -30,12 +30,15 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:255',
+            'full_name'     => 'required|string|max:255',
             'email'         => 'required|email|max:255|unique:users,email,' . $this->id,
             'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'full'          => 'nullable|string|max:255',
             'phone'         => 'nullable|digits_between:10,11|numeric',
             'address'       => 'nullable|string',
+            'status'        => 'required|string',
+            'roles'         => 'required|array', // Validate roles as an array
+            'roles.*'       => 'exists:roles,id', // Each role ID must exist in the roles table
         ];
     }
 

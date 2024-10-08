@@ -23,7 +23,7 @@
                                         </div>
                                         <div class="col-lg-6 col-6">
                                             <img id="imagePreview"
-                                                src="{{ session('image_temp') ? Storage::url(session('image_temp')) : checkMinioImage($data->image) }}"
+                                                src="{{ session('image_temp') ? checkFile(session('image_temp')) : checkMinioImage($data->image) }}"
                                                 alt="Image Preview"
                                                 style="display: {{ session('image_temp') || checkMinioImage($data->image) ? 'block' : 'none' }}; max-width: 100px; margin-left: 10px;">
                                         </div>
@@ -35,11 +35,11 @@
                 </div>
             </div>
             <div class="col-lg-8 col-12 mb-2 mb-lg-1">
-                <label for="username" class="form-label">{{ __('messages.account.fields.name') }}</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="username" name="name"
-                    value="{{ old('name', $data->name) }}"
+                <label for="full_name" class="form-label">{{ __('messages.account.fields.full_name') }}</label>
+                <input type="text" class="form-control @error('full_name') is-invalid @enderror" id="full_name"
+                    name="full_name" value="{{ old('full_name', $data->full_name) }}"
                     placeholder="{{ __('messages.account.fields.name_placeholder') }}">
-                @error('name')
+                @error('full_name')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -47,6 +47,7 @@
     </div>
     <div class="form-group">
         <div class="row">
+
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
                 <label class="form-label mt-2" for="email">{{ __('messages.account.fields.email') }}</label>
                 <input type="text" class="form-control @error('email') is-invalid @enderror" name="email"
@@ -56,6 +57,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
                 <label class="form-label mt-2" for="phone">{{ __('messages.account.fields.phone') }}</label>
                 <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
@@ -65,7 +67,39 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
+                <label class="form-label mt-2">{{ __('messages.system.status') }}</label>
+                <select class="form-select @error('status') is-invalid @enderror" name="status">
+                    @foreach(__('messages.account.status') as $key => $value)
+                    <option value="{{ $key }}" @selected($key==old('status')) @selected($key==$data->status)>{{ $value
+                        }}</option>
+                    @endforeach
+                </select>
+                @error('status')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="col-lg-3 col-12 mb-2 mb-lg-1">
+                <label class="form-label mt-2">{{ __('messages.account.fields.role') }}</label>
+                <select class="form-select form-select-lm @error('roles') is-invalid @enderror" name="roles[]"
+                    id="roles" multiple="multiple">
+                    @foreach($dataRole as $key => $value)
+                    <option value="{{ $key }}" @if(in_array($key, old('roles', $data->roles->pluck('id')->toArray() ??
+                        [])))
+                        selected
+                        @endif>
+                        {{ $value }}
+                    </option>
+                    @endforeach
+                </select>
+                @error('role')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="col-lg-12 col-12 mb-2 mb-lg-1">
                 <label class="form-label mt-2" for="address">{{ __('messages.account.fields.address') }}</label>
                 <input type="text" class="form-control @error('address') is-invalid @enderror" name="address"
                     value="{{ old('address', $data->address) }}" id="address"
@@ -74,17 +108,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-lg-3 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2">{{ __('messages.account.fields.role') }}</label>
-                <select class="form-select @error('role') is-invalid @enderror" name="role">
-                    @foreach(__('messages.role.role') as $key => $value)
-                    <option value="{{ $key }}" {{ set_selected('role', $key, $data->role) }}>{{ $value }}</option>
-                    @endforeach
-                </select>
-                @error('role')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+
         </div>
     </div>
     <div class="d-flex justify-content-end mt-3">

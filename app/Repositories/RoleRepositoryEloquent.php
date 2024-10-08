@@ -39,6 +39,12 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepositoryInt
         $query = $this->model->query();
 
         // Apply search filters
+        if (!empty($filters['search'])) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['search'] . '%');
+            });
+        }
+
         if (!empty($filters['start_date'])) {
             $query->whereDate('created_at', '>=', $filters['start_date']);
         }
