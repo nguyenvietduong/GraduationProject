@@ -23,9 +23,9 @@
                                         </div>
                                         <div class="col-lg-6 col-6">
                                             <img id="imagePreview"
-                                                src="{{ session('image_temp') ? checkFile(session('image_temp')) : checkMinioImage($data->image) }}"
+                                                src="{{ session('image_temp') ? checkFile(session('image_temp')) : checkFile($data->image) }}"
                                                 alt="Image Preview"
-                                                style="display: {{ session('image_temp') || checkMinioImage($data->image) ? 'block' : 'none' }}; max-width: 100px; margin-left: 10px;">
+                                                style="display: {{ session('image_temp') || checkFile($data->image) ? 'block' : 'none' }}; max-width: 100px; margin-left: 10px;">
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
 
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
                 <label class="form-label mt-2">{{ __('messages.system.status') }}</label>
-                <select class="form-select @error('status') is-invalid @enderror" name="status">
+                <select class="form-select form-select-lm @error('status') is-invalid @enderror" name="status" id="status">
                     @foreach(__('messages.account.status') as $key => $value)
                     <option value="{{ $key }}" @selected($key==old('status')) @selected($key==$data->status)>{{ $value
                         }}</option>
@@ -83,18 +83,15 @@
 
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
                 <label class="form-label mt-2">{{ __('messages.account.fields.role') }}</label>
-                <select class="form-select form-select-lm @error('roles') is-invalid @enderror" name="roles[]"
-                    id="roles" multiple="multiple">
+                <select class="form-select form-select-lm @error('role_id') is-invalid @enderror" name="role_id"
+                    id="role_id">
                     @foreach($dataRole as $key => $value)
-                    <option value="{{ $key }}" @if(in_array($key, old('roles', $data->roles->pluck('id')->toArray() ??
-                        [])))
-                        selected
-                        @endif>
+                    <option value="{{ $key }}" @selected($key==old('role_id')) @selected($key==$data->role_id)>
                         {{ $value }}
                     </option>
                     @endforeach
                 </select>
-                @error('role')
+                @error('role_id')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

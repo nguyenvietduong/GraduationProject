@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function create()
     {
-
+        
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'dataRole' => $this->roleRepository->pluck('name', 'id'),

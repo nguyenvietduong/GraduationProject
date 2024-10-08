@@ -14,7 +14,7 @@ class Role extends Model
 
     protected $fillable = [
         'name',
-        'guard_name',
+        'authorities',
     ];
 
     // Quan hệ với User
