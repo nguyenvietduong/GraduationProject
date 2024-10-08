@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\AccountServiceInterface' => 'App\Services\AccountService',
             'App\Interfaces\Services\RoleServiceInterface' => 'App\Services\RoleService',
             'App\Interfaces\Services\PermissionServiceInterface' => 'App\Services\PermissionService',
+            'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',
         ];
 
         foreach ($services as $interface => $implementation) {

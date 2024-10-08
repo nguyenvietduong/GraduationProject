@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Models\Category;
+use App\Models\Menu;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Interfaces\Repositories\MenuRepositoryInterface;
 
-class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepositoryInterface
+class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInterface
 {
     /**
      * Specify the model class name.
@@ -16,7 +16,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      */
     public function model()
     {
-        return Category::class;
+        return Menu::class;
     }
 
     /**
@@ -28,13 +28,13 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
     
     /**
-     * Get a paginated list of Categorys with optional search functionality.
+     * Get a paginated list of Menus with optional search functionality.
      *
      * @param array $filters
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllCategory(array $filters = [], $perPage = 5)
+    public function getAllMenus(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
 
@@ -53,58 +53,58 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Get category details by ID.
+     * Get menu details by ID.
      *
      * @param int $id
-     * @return \App\Models\Category
+     * @return \App\Models\Menu
      */
-    public function getCategoryDetail($id)
+    public function getMenuDetail($id)
     {
         return $this->find($id);
     }
 
     /**
-     * Update an category by ID.
+     * Update an menu by ID.
      *
      * @param int $id
      * @param array $params
      * @return bool
      */
-    public function updateCategory($id, $params)
+    public function updateMenu($id, $params)
     {
         return $this->update($params, $id);
     }
 
     /**
-     * Create a new category.
+     * Create a new menu.
      *
      * @param array $params
-     * @return \App\Models\Category
+     * @return \App\Models\Menu
      */
-    public function createCategory($params)
+    public function createMenu($params)
     {
         return $this->create($params);
     }
 
     /**
-     * Get category details by ID (same as getCategoryDetail).
+     * Get menu details by ID (same as getMenuDetail).
      *
      * @param int $id
-     * @return \App\Models\Category
+     * @return \App\Models\Menu
      */
-    public function detailCategory($id)
+    public function detailMenu($id)
     {
         return $this->find($id);
     }
 
     /**
-     * Delete an category by ID.
+     * Delete an menu by ID.
      *
      * @param int $id
      * @return bool|null
      * @throws \Exception
      */
-    public function deleteCategory($id)
+    public function deleteMenu($id)
     {
         return $this->delete($id);
     }
