@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Models\Permission;
 
 class Role extends Model
@@ -16,11 +17,10 @@ class Role extends Model
         'guard_name',
     ];
 
-    // Quan hệ với User thông qua bảng trung gian model_has_roles
-    public function users(): BelongsToMany
+    // Quan hệ với User
+    public function users(): HasMany
     {
-        return $this->belongsToMany(User::class, 'model_has_roles', 'role_id', 'model_id')
-            ->where('model_type', User::class);
+        return $this->hasMany(User::class, 'role_id', 'id'); // Mỗi vai trò có nhiều người dùng
     }
 
     public function permissions()

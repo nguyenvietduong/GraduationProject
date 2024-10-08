@@ -27,6 +27,7 @@ class UserController extends Controller
     const PATH_VIEW = 'backend.account.';
     const PER_PAGE_DEFAULT = 5;
     const OBJECT = 'user';
+    const ROLE = 3;
 
     public function __construct(
         AccountServiceInterface $accountService,
@@ -68,8 +69,8 @@ class UserController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->accountRepository->countAccountsByRole(self::OBJECT), // Tổng số bản ghi để hiển thị
-            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::OBJECT), // Truyền danh sách người dùng đã phân trang đến view
+            'totalRecords' => $this->accountRepository->countAccountsByRole(self::ROLE), // Tổng số bản ghi để hiển thị
+            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::ROLE), // Truyền danh sách người dùng đã phân trang đến view
         ]);
     }
 

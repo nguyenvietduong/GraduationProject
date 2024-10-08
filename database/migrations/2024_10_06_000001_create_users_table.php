@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('status')->default('normal'); // Trạng thái tài khoản ['normal', 'locked', 'warning']
             $table->integer('code_sent')->nullable();
 
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

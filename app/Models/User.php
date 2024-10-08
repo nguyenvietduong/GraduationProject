@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -25,6 +24,7 @@ class User extends Authenticatable
         'password',
         'status',
         'code_sent',
+        'role_id',
     ];
 
     protected $hidden = [
@@ -37,15 +37,8 @@ class User extends Authenticatable
     ];
 
     // Custom roles relationship
-    public function roles(): BelongsToMany
+    public function role(): BelongsTo
     {
-        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id')
-            ->where('model_type', User::class); // model_type should refer to User::class
-    }
-
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id')
-            ->where('model_type', User::class); // model_type should refer to User::class
+        return $this->belongsTo(Role::class); // Mỗi người dùng chỉ có một vai trò
     }
 }
