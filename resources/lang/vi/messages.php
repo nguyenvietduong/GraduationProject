@@ -150,7 +150,6 @@ return [
     // Fields for Account
     'account' => [
         'status' => [
-            '' => '-Trạng thái-',
             'normal' => 'Bình thường',
             'locked' => 'Đã khóa',
             'warning' => 'Cảnh báo',

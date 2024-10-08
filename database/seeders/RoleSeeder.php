@@ -14,7 +14,6 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Permission::delete();
         // Thêm dữ liệu vào bảng roles
         DB::table('roles')->insert([
             [

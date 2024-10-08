@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
 
-
-Route::middleware(['auth', 'role:Admin, Staff'])->group(function () {
+Route::middleware(['auth', 'role:1, 2'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
         Route::get('/index', function () {
@@ -17,7 +16,7 @@ Route::middleware(['auth', 'role:Admin, Staff'])->group(function () {
 
         // User Management
         Route::prefix('user')->group(function () {
-            Route::get('index', [UserController::class, 'index'])->middleware('permission:manage-accounts')->name('admin.user.index');
+            Route::get('index', [UserController::class, 'index'])->name('admin.user.index');
             Route::get('create', [UserController::class, 'create'])->name('admin.user.create');
             Route::post('store', [UserController::class, 'store'])->name('admin.user.store');
             Route::get('{id}/edit', [UserController::class, 'edit'])->where('id', '[0-9]+')->name('admin.user.edit');

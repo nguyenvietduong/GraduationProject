@@ -27,6 +27,7 @@ class AdminController extends Controller
     const PATH_VIEW = 'backend.account.';
     const PER_PAGE_DEFAULt = 5;
     const OBJECT = 'admin';
+    const ROLE = 1;
 
     public function __construct(
         AccountServiceInterface $accountService,
@@ -68,8 +69,8 @@ class AdminController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->accountRepository->countAccountsByRole(self::OBJECT), // Total records for display
-            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::OBJECT), // Pass the paginated users to the view
+            'totalRecords' => $this->accountRepository->countAccountsByRole(self::ROLE), // Total records for display
+            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::ROLE), // Pass the paginated users to the view
         ]);
     }
 

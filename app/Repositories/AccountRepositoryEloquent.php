@@ -36,7 +36,9 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
      */
     public function getAllAccount(array $filters = [], $perPage = 5, $role = 'user')
     {
-        $query = $this->model->role($role); // Spatie's role scope for filtering by role
+        $query = $this->model->query();
+
+        $query->where('role_id', $role);
     
         // Apply search filters
         if (!empty($filters['search'])) {
@@ -75,7 +77,7 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
      */
     public function countAccountsByRole(string $role)
     {
-        $query = $this->model->role($role); // Spatie's role scope for filtering by role
+        $query = $this->model->where('role_id', $role); // Spatie's role scope for filtering by role
 
         return $query->count();
     }

@@ -111,49 +111,12 @@ class AccountService extends BaseService implements AccountServiceInterface
                 }
             }
 
-            $roles = $data['roles'] ?? [];
-
-            // Xóa trường 'roles' khỏi dữ liệu để tạo tài khoản
-            unset($data['roles']);
-
             // Tạo một tài khoản mới bằng cách sử dụng repository
-            $account = $this->accountRepository->createAccount($data);
-
-            // Kiểm tra xem tài khoản có được tạo thành công không
-            if ($account) {
-                // Nếu có vai trò, liên kết vai trò với tài khoản
-                if (!empty($roles)) {
-                    foreach ($roles as $role) {
-                        // Lưu thông tin cần thiết để thêm vào bảng trung gian
-                        $account->roles()->attach($role, [
-                            'model_type' => get_class($account), // Đảm bảo kiểu model đúng
-                            'model_id' => $account->id,   // ID của tài khoản vừa tạo
-                        ]);
-
-                        $account->roles()->permissions($role, [
-                            'model_type' => get_class($account), // Đảm bảo kiểu model đúng
-                            'model_id' => $account->id,   // ID của tài khoản vừa tạo
-                        ]);
-                    }
-                }
-            }
+            $this->accountRepository->createAccount($data);
         } catch (Exception $e) {
             // Xóa tài khoản vừa tạo nếu có lỗi
             if (isset($account) && $account) {
                 $account->delete(); // Xóa tài khoản
-            }
-
-            // Xóa thông tin liên kết vai trò nếu có
-            if (isset($roles) && !empty($roles)) {
-                foreach ($roles as $role) {
-                    $account->roles()->detach($role); // Xóa liên kết vai trò
-                }
-            }
-
-            if (isset($roles) && !empty($roles)) {
-                foreach ($roles as $role) {
-                    $account->permissions()->detach($role); // Xóa liên kết vai trò
-                }
             }
 
             // Handle image storage exceptions
@@ -206,21 +169,8 @@ class AccountService extends BaseService implements AccountServiceInterface
                 }
             }
 
-            $roles = $data['roles'] ?? [];
-            // Xóa trường 'roles' khỏi dữ liệu trước khi cập nhật tài khoản
-            unset($data['roles']);
-
             // Cập nhật tài khoản với dữ liệu mới
-            $updatedAccount = $this->accountRepository->updateAccount($id, $data);
-
-            // Kiểm tra xem tài khoản có được cập nhật thành công không
-            if ($updatedAccount) {
-                // Nếu có vai trò, đồng bộ vai trò với tài khoản
-                if (!empty($roles)) {
-                    $updatedAccount->roles()->sync($roles);
-                    $updatedAccount->permissions()->sync($roles);
-                }
-            }
+            $this->accountRepository->updateAccount($id, $data);
         } catch (Exception $e) {
             // Khôi phục dữ liệu cũ nếu có lỗi xảy ra
             $this->accountRepository->updateAccount($id, $oldAccount->toArray());

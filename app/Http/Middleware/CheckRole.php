@@ -19,12 +19,11 @@ class CheckRole
      */
     public function handle($request, Closure $next, ...$roles)
     {
-        // Check if the user is authenticated and has any of the provided roles
-        if (Auth::check() && Auth::user()->roles->pluck('name')->intersect($roles)->isNotEmpty()) {
+        // Kiểm tra xem user có role_id nào trong danh sách các roles không
+        if (Auth::check() && in_array(Auth::user()->role_id, $roles)) {
             return $next($request);
         }
 
-        // Redirect to home if the user doesn't have the required role
         return redirect('/');
     }
 }

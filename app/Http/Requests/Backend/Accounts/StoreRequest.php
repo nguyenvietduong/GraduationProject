@@ -29,16 +29,15 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name'     => 'required|string|max:255',
-            'email'         => 'required|email|max:255|unique:users,email',
-            'password'      => 'required|string|min:6',
-            're_password'   => 'required|string|min:6|same:password',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone'         => 'nullable|digits_between:10,11|numeric|unique:users,phone',
-            'address'       => 'nullable|string',
-            'status'        => 'required|string',
-            'roles'         => 'required|array', // Validate roles as an array
-            'roles.*'       => 'exists:roles,id', // Each role ID must exist in the roles table
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6',
+            're_password' => 'required|string|min:6|same:password',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone' => 'nullable|digits_between:10,11|numeric|unique:users,phone',
+            'address' => 'nullable|string',
+            'status' => 'required|string',
+            'role_id' => 'required|integer|exists:roles,id', // Kiểm tra role_id có tồn tại trong bảng roles
         ];
     }
 
@@ -53,11 +52,11 @@ class StoreRequest extends FormRequest
                 $adminId = Auth::user()->id; // Get the authenticated admin ID
 
                 // Generate a unique file name
-                $fileName  = $this->generateUniqueFileName($image);
+                $fileName = $this->generateUniqueFileName($image);
 
                 // Define the directory path
                 $directory = "temp_images/{$adminId}";
-                $filePath  = "{$directory}/{$fileName}";
+                $filePath = "{$directory}/{$fileName}";
 
                 // Store the file in the temp_images folder
                 Storage::put($filePath, file_get_contents($image->getRealPath()));

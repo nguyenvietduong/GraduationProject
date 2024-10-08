@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('seats');  // Số ghế
             $table->enum('status', ['available', 'reserved', 'occupied'])->default('available');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

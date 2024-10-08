@@ -69,9 +69,9 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     public function createPermission(array $data)
     {
         try {
-            // $data['guard_name'] = 'web';
-            // echo 1; die;
-            // dd($data);
+
+            $data['guard_name'] = 'web';
+
             // Create the permission
             return $this->permissionRepository->createPermission($data);
         } catch (Exception $e) {
@@ -93,7 +93,6 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     public function updatePermission(int $id, array $data)
     {
         try {
-            $data['guard_name'] = 'web';
 
             return $this->permissionRepository->updatePermission($id, $data);
         } catch (ModelNotFoundException $e) {

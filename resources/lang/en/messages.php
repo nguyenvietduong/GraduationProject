@@ -175,7 +175,6 @@ return [
     // Fields for Account
     'account' => [
         'status' => [
-            '' => '-Status-',
             'normal' => 'Normal',
             'locked' => 'Locked',
             'warning' => 'Warning',
