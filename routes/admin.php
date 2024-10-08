@@ -8,7 +8,7 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:Admin, Staff'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
         Route::get('/index', function () {
@@ -17,7 +17,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
         // User Management
         Route::prefix('user')->group(function () {
-            Route::get('index', [UserController::class, 'index'])->name('admin.user.index');
+            Route::get('index', [UserController::class, 'index'])->middleware('permission:manage-accounts')->name('admin.user.index');
             Route::get('create', [UserController::class, 'create'])->name('admin.user.create');
             Route::post('store', [UserController::class, 'store'])->name('admin.user.store');
             Route::get('{id}/edit', [UserController::class, 'edit'])->where('id', '[0-9]+')->name('admin.user.edit');
@@ -59,7 +59,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::delete('{id}/destroy', [RoleController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.role.destroy');
         });
 
-        Route::prefix('permissions')->group(function () {
+        Route::prefix('permission')->group(function () {
             Route::get('index', [PermissionController::class, 'index'])->name('admin.permission.index');
             Route::get('create', [PermissionController::class, 'create'])->name('admin.permission.create');
             Route::post('store', [PermissionController::class, 'store'])->name('admin.permission.store');

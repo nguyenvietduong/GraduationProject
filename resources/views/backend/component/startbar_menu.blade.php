@@ -21,13 +21,13 @@ $segment = request()->segment(2);
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['user', 'admin', 'role', 'permission'], 'active', 'admin') }}"
+                    <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
                         href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarAccountManagement">
                         <i class="fa fa-users menu-icon"></i>
                         <span>Account Management</span>
                     </a>
-                    <div class="collapse {{ set_active(['user', 'admin', 'role', 'permission'], 'show', 'admin') }}"
+                    <div class="collapse {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'show', 'admin') }}"
                         id="sidebarAccountManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
