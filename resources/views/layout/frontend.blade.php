@@ -7,7 +7,10 @@
     @include('frontend.component.meta')
 
     @include('frontend.component.css')
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 </head>
 
 <body class="dark:bg-slate-900">
@@ -15,10 +18,13 @@
     @include('frontend.component.loader')
     <!-- Loader End -->
     <!-- Start Navbar -->
+<<<<<<< Updated upstream
     {{-- @php
         $segment = request()->segment(0);
         dd($segment);
     @endphp --}}
+=======
+>>>>>>> Stashed changes
     @include('frontend.component.navbar')
     <!--end header-->
     <!-- End Navbar -->
@@ -30,10 +36,17 @@
     <!--end footer-->
     <!-- Footer End -->
     <!-- Switcher -->
+<<<<<<< Updated upstream
     @include('frontend.component.light-dark')
 
     <!-- Back to top -->
     @include('frontend.component.back-to-top')
+=======
+    @include('frontend.component.lightdark')
+
+    <!-- Back to top -->
+    @include('frontend.component.backtotop')
+>>>>>>> Stashed changes
     <!-- Back to top -->
 
     <!-- JAVASCRIPTS -->

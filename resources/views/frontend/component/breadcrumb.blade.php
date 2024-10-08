@@ -1,10 +1,24 @@
+<<<<<<< Updated upstream
 <section class="relative md:py-44 py-32 bg-[url('../../assets/images/bg/pages.html')] bg-no-repeat bg-bottom bg-cover">
+=======
+@php
+    $titleHeader = $titleHeader ?? '';
+    $title = $title ?? '';
+@endphp
+<section
+    class="relative md:py-44 py-32 bg-[url('../..//frontend/assets/images/bg/pages.html')] bg-no-repeat bg-bottom bg-cover">
+>>>>>>> Stashed changes
     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-slate-900/70"></div>
     <div class="container relative">
         <div class="grid grid-cols-1 text-center mt-6">
             <div>
                 <h5 class="md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white mb-0">
+<<<<<<< Updated upstream
                     {{ $title }}</h5>
+=======
+                    {{ $titleHeader }}
+                </h5>
+>>>>>>> Stashed changes
             </div>
 
             <ul class="tracking-[0.5px] mb-0 inline-block mt-5">

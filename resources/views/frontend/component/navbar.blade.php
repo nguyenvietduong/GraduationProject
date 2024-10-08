@@ -26,7 +26,11 @@
         <!-- End Mobile Toggle -->
 
         <!--Login button Start-->
+<<<<<<< Updated upstream
         @include('frontend.component.nav-button')
+=======
+        @include('frontend.component.button-nav')
+>>>>>>> Stashed changes
         <!--Login button End-->
 
         @include('frontend.component.navigation')

@@ -46,6 +46,7 @@
         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)"> About Us </a><span
                 class="menu-arrow"></span>
             <ul class="submenu">
+<<<<<<< Updated upstream
                 <li><a href="{{ route('team') }}" class="sub-menu-item">Teams</a></li>
                 <li><a href="{{ route('contact') }}" class="sub-menu-item">Contact Us</a></li>
             </ul>
@@ -55,3 +56,42 @@
     </ul>
     <!--end navigation menu-->
 </div>
+=======
+                <li><a href="{{route('team')}}" class="sub-menu-item">Teams</a></li>
+                <li><a href="{{route('contact')}}" class="sub-menu-item">Contact Us</a></li>
+            </ul>
+        </li>
+
+        {{-- <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li> --}}
+
+        @if (Auth::check())
+        <li class="has-submenu parent-parent-menu-item active">
+            <a href="javascript:void(0)">{{ Auth::user()->full_name }}</a><span class="menu-arrow"></span>
+            <ul class="submenu">
+                <li><a href="{{ route('team') }}" class="sub-menu-item">{{ __('messages.system.profile')
+                        }}</a></li>
+                @if(Auth::user()->roles->contains('name', 'admin'))
+                <li><a href="{{ route('admin.dashboard.index') }}" class="">{{ __('messages.system.adminPage')
+                        }}</a></li>
+                @endif
+                <li id="custom-logout-front" style="margin-left: 20px">
+                    <!-- Bootstrap 5: ms-4 applies margin-left -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        style="display: inline;">
+                        @csrf
+                        <button type="submit" class="text-danger border-0 bg-transparent mb-1">
+                            {{ __('messages.system.logout') }}
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+        @else
+        <li class="has-submenu parent-parent-menu-item active">
+            <a href="{{ route('login') }}">{{ __('messages.system.login') }}</a>
+        </li>
+        @endif
+    </ul>
+    <!--end navigation menu-->
+</div>
+>>>>>>> Stashed changes

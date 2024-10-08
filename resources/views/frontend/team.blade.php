@@ -1,7 +1,14 @@
 @extends('layout.frontend')
 @section('contentUser')
     <!-- Start Hero -->
+<<<<<<< Updated upstream
     @include('frontend.component.breadcrumb', [$title = 'Teams'])
+=======
+    @include('frontend.component.breadcrumb', [
+        $titleHeader = 'Out Developer', 
+        $title = 'Team'
+    ])
+>>>>>>> Stashed changes
     <!-- End Hero -->
 
     <!-- Start -->
