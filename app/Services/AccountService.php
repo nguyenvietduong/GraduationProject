@@ -86,7 +86,7 @@ class AccountService extends BaseService implements AccountServiceInterface
 
             // Handle image upload from the request if present
             if (isset($data['image'])) {
-                $data['image'] = $this->imageService->storeImageS3('account_files', $data['image']);
+                $data['image'] = $this->imageService->storeImage('account_files', $data['image']);
             } elseif (session('image_temp')) {
                 // Handle temporary image if session data exists
                 $tempImageName = session('image_temp');
@@ -104,7 +104,7 @@ class AccountService extends BaseService implements AccountServiceInterface
                     );
 
                     // Store the image in S3 and delete the temporary image
-                    $data['image'] = $this->imageService->storeImageS3('account_files', $image);
+                    $data['image'] = $this->imageService->storeImage('account_files', $image);
                     $this->imageService->deleteImage($tempImagePath);
                 } else {
                     dd('Temp file does not exist in local storage.'); // Debugging statement for missing temp file
@@ -129,6 +129,11 @@ class AccountService extends BaseService implements AccountServiceInterface
                             'model_type' => get_class($account), // Đảm bảo kiểu model đúng
                             'model_id' => $account->id,   // ID của tài khoản vừa tạo
                         ]);
+
+                        $account->roles()->permissions($role, [
+                            'model_type' => get_class($account), // Đảm bảo kiểu model đúng
+                            'model_id' => $account->id,   // ID của tài khoản vừa tạo
+                        ]);
                     }
                 }
             }
@@ -145,8 +150,14 @@ class AccountService extends BaseService implements AccountServiceInterface
                 }
             }
 
+            if (isset($roles) && !empty($roles)) {
+                foreach ($roles as $role) {
+                    $account->permissions()->detach($role); // Xóa liên kết vai trò
+                }
+            }
+
             // Handle image storage exceptions
-            $this->imageService->handleImageS3Exception($e, $data);
+            $this->imageService->handleImageException($e, $data);
             throw new Exception('Unable to create account: ' . $e->getMessage());
         }
     }
@@ -207,6 +218,7 @@ class AccountService extends BaseService implements AccountServiceInterface
                 // Nếu có vai trò, đồng bộ vai trò với tài khoản
                 if (!empty($roles)) {
                     $updatedAccount->roles()->sync($roles);
+                    $updatedAccount->permissions()->sync($roles);
                 }
             }
         } catch (Exception $e) {
@@ -214,7 +226,7 @@ class AccountService extends BaseService implements AccountServiceInterface
             $this->accountRepository->updateAccount($id, $oldAccount->toArray());
 
             // Xử lý ngoại lệ khi có lỗi xảy ra
-            $this->imageService->handleImageS3Exception($e, $data);
+            $this->imageService->handleImageException($e, $data);
             throw new Exception('Unable to update account: ' . $e->getMessage());
         }
     }
