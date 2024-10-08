@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\Backend\RoleDataTable;
 use App\Http\Controllers\Controller;
+use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
 use App\Interfaces\Services\RoleServiceInterface;
 use App\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
@@ -12,6 +13,7 @@ use App\Traits\HandleExceptionTrait;
 use App\Http\Requests\BackEnd\Roles\ListRequest as RoleListRequest;
 use App\Http\Requests\BackEnd\Roles\StoreRequest as RoleStoreRequest;
 use App\Http\Requests\BackEnd\Roles\UpdateRequest as RoleUpdateRequest;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -19,6 +21,8 @@ class RoleController extends Controller
 
     protected $roleService;
     protected $roleRepository;
+
+    protected $permissionRepository;
 
     // Base path for views
     const PATH_VIEW = 'backend.role.';
@@ -28,9 +32,11 @@ class RoleController extends Controller
     public function __construct(
         RoleServiceInterface $roleService,
         RoleRepositoryInterface $roleRepository,
+        PermissionRepository $permissionRepository,
     ) {
         $this->roleService = $roleService;
         $this->roleRepository = $roleRepository;
+        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -72,6 +78,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', 'edit accounts');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'role',
         ]);
@@ -150,6 +157,33 @@ class RoleController extends Controller
             $this->roleService->deleteRole($id);
 
             return redirect()->back()->with('success', 'Role deleted successfully');
+        } catch (\Exception $e) {
+            // Return a JSON response if there is an error
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function permission()
+    {
+        $roles = $this->roleRepository->all();
+        $permissions = $this->permissionRepository->all();
+        // dd($permissions);
+        return view('backend.role.permission', [
+            'object' => 'role',
+            'roles' => $roles,
+            'permissions' => $permissions
+        ]);
+    }
+
+
+    public function updatePermission(Request $request)
+    {
+        try {
+            // Delete the role
+            // echo 1; die;
+            $this->roleService->updatePermission($request);
+
+            return redirect()->back()->with('success', 'Role Permission update successfully');
         } catch (\Exception $e) {
             // Return a JSON response if there is an error
             return redirect()->back()->with('error', $e->getMessage());

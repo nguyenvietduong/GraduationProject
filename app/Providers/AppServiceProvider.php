@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
 use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Html\Builder;
 use Illuminate\Support\Facades\URL;
@@ -15,12 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $services = [
-            'App\Interfaces\Services\ImageServiceInterface'     => 'App\Services\ImageService',
-            'App\Interfaces\Services\TempImageServiceInterface'     => 'App\Services\TempImageService',
+            'App\Interfaces\Services\ImageServiceInterface' => 'App\Services\ImageService',
+            'App\Interfaces\Services\TempImageServiceInterface' => 'App\Services\TempImageService',
             'App\Services\BaseService',
-            'App\Interfaces\Services\AccountServiceInterface'   => 'App\Services\AccountService',
-            'App\Interfaces\Services\RoleServiceInterface'      => 'App\Services\RoleService',
-            'App\Interfaces\Services\PermissionServiceInterface'      => 'App\Services\PermissionService',
+            'App\Interfaces\Services\AccountServiceInterface' => 'App\Services\AccountService',
+            'App\Interfaces\Services\RoleServiceInterface' => 'App\Services\RoleService',
+            'App\Interfaces\Services\PermissionServiceInterface' => 'App\Services\PermissionService',
         ];
 
         foreach ($services as $interface => $implementation) {
@@ -40,5 +41,18 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFive();
         Builder::useVite();
+
+        // $idRoleAdmin = Role::where('id', 1)
+        //     ->orWhere('id', 2)
+        //     ->orWhere('name', 'admin')
+        //     ->orWhere('name', 'Admin')
+        //     ->orWhere('name', 'staff')
+        //     ->orWhere('name', 'Staff')
+        //     ->pluck('id')
+        //     ->first(); // Lấy ID đầu tiên
+
+        // view()->share([
+        //     'idRoleAdmin' => $idRoleAdmin,
+        // ]);
     }
 }
