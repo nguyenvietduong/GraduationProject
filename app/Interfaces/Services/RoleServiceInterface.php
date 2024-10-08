@@ -46,4 +46,6 @@ interface RoleServiceInterface
      * @return bool
      */
     public function deleteRole(int $id);
+    public function updatePermission($request);
+
 }

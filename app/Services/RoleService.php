@@ -120,4 +120,28 @@ class RoleService extends BaseService implements RoleServiceInterface
             throw new Exception('Không thể xóa role: ' . $e->getMessage());
         }
     }
+
+
+
+    public function updatePermission($request)
+    {
+        try {
+            $permissions = $request->input('permission');
+            // dd($permissions);
+            if (count($permissions)) {
+                foreach ($permissions as $key => $val) {
+                    $role = $this->roleRepository->getRoleDetail($key);
+                    $role->permissions()->detach();
+                    $role->permissions()->sync($val);
+                }
+            }
+            // return $this->roleRepository->updateRole($id, $data);
+        } catch (ModelNotFoundException $e) {
+            throw new ModelNotFoundException('');
+        } catch (Exception $e) {
+            // Xử lý lỗi khác nếu cần thiết
+            throw new Exception('Không thể cập nhật phân quyền: ' . $e->getMessage());
+        }
+    }
+
 }
