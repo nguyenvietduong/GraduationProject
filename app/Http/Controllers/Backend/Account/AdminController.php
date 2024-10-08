@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend\Account;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\AccountServiceInterface;
+use App\Interfaces\Services\TempImageServiceInterface;
 use App\Interfaces\Repositories\AccountRepositoryInterface;
+use App\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
 
 // Requests
@@ -17,22 +19,26 @@ class AdminController extends Controller
     use HandleExceptionTrait;
 
     protected $accountService;
+    protected $tempImageService;
     protected $accountRepository;
+    protected $roleRepository;
 
     // Base path for views
     const PATH_VIEW = 'backend.account.';
     const PER_PAGE_DEFAULt = 5;
     const OBJECT = 'admin';
-    const ROLE = 2;
 
     public function __construct(
         AccountServiceInterface $accountService,
+        TempImageServiceInterface $tempImageService,
         AccountRepositoryInterface $accountRepository,
+        RoleRepositoryInterface $roleRepository,
     ) {
         $this->accountService = $accountService;
+        $this->tempImageService = $tempImageService;
         $this->accountRepository = $accountRepository;
+        $this->roleRepository = $roleRepository;
     }
-
     /**
      * Display a listing of users.
      *
@@ -41,7 +47,7 @@ class AdminController extends Controller
      */
     public function index(AccountListRequest $request)
     {
-        session()->forget('image_temp');
+        $this->tempImageService->deleteTempImagesForUser();
         // Validate the request data
         $request->validated();
 
@@ -50,7 +56,10 @@ class AdminController extends Controller
 
         // Populate filters from the request
         $filters = [
-            'search' => $params['keyword'] ?? '', // Make sure this matches the search input name
+            'search' => $params['keyword'] ?? '', // Đảm bảo tên này khớp với tên input tìm kiếm
+            'start_date' => $params['start_date'] ?? '',
+            'end_date' => $params['end_date'] ?? '',
+            'status' => $params['status'] ?? '',
         ];
 
         // Get per_page value
@@ -58,8 +67,8 @@ class AdminController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->accountRepository->countAccountsByRole(self::ROLE), // Total records for display
-            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::ROLE), // Pass the paginated users to the view
+            'totalRecords' => $this->accountRepository->countAccountsByRole(self::OBJECT), // Total records for display
+            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::OBJECT), // Pass the paginated users to the view
         ]);
     }
 
@@ -73,6 +82,7 @@ class AdminController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
+            'dataRole' => $this->roleRepository->pluck('name', 'id'),
         ]);
     }
 
@@ -85,7 +95,7 @@ class AdminController extends Controller
     public function store(AccountStoreRequest $request)
     {
         // Validate the data from the request using AccountStoreRequest
-        $data = $request->validated();
+        $data = $request->all();
         try {
             // Create a new admin
             $this->accountService->createAccount($data);
@@ -113,6 +123,7 @@ class AdminController extends Controller
             return view(self::PATH_VIEW . __FUNCTION__, [
                 'data' => $data,
                 'object' => self::OBJECT,
+                'dataRole' => $this->roleRepository->pluck('name', 'id'),
             ]);
         }
 
@@ -129,7 +140,7 @@ class AdminController extends Controller
     public function update($id, AccountUpdateRequest $request)
     {
         // Validate the data from the request using AccountUpdateRequest
-        $data = $request->validated();
+        $data = $request->all();
 
         try {
             // Update the admin

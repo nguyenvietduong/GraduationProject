@@ -55,10 +55,13 @@ return [
         'no_data_available' => 'No data available',
         'start' => 'Start',
         'end' => 'End',
+        'status' => 'Status',
         'account' => 'Account',
         'profile' => 'Profile',
         'setting' => 'Settings',
-        'logout' => 'Logout'
+        'login' => 'Login',
+        'logout' => 'Logout',
+        'adminPage' => 'Admin Page'
     ],
 
     'welcome' => 'Welcome to our application!',
@@ -113,6 +116,32 @@ return [
         ],
     ],
     // Fields for Role
+    'permission' => [
+        'title' => 'Permission',
+        'fields' => [
+            'name' => 'Permission',
+            'accountsCount' => 'Permissions Count',
+        ],
+        'index' => [
+            'route' => 'admin.permission.index',
+        ],
+        'create' => [
+            'route' => 'admin.permission.create',
+        ],
+        'store' => [
+            'route' => 'admin.permission.store',
+        ],
+        'edit' => [
+            'route' => 'admin.permission.edit',
+        ],
+        'update' => [
+            'route' => 'admin.permission.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.permission.destroy',
+        ],
+    ],
+    // Fields for Role
     'role' => [
         'title' => 'Role',
         'fields' => [
@@ -145,9 +174,15 @@ return [
     ],
     // Fields for Account
     'account' => [
+        'status' => [
+            '' => '-Status-',
+            'normal' => 'Normal',
+            'locked' => 'Locked',
+            'warning' => 'Warning',
+        ],
         'fields' => [
-            'name' => 'Name',
-            'name_placeholder' => 'Enter username',
+            'full_name' => 'Full Name',
+            'name_placeholder' => 'Enter fullname',
             'email' => 'Email',
             'email_placeholder' => 'Enter email',
             'phone' => 'Phone',
@@ -181,6 +216,27 @@ return [
             ],
             'destroy' => [
                 'route' => 'admin.user.destroy',
+            ],
+        ],
+        'staff' => [
+            'title' => 'Account Staff',
+            'index' => [
+                'route' => 'admin.staff.index',
+            ],
+            'create' => [
+                'route' => 'admin.staff.create',
+            ],
+            'store' => [
+                'route' => 'admin.staff.store',
+            ],
+            'edit' => [
+                'route' => 'admin.staff.edit',
+            ],
+            'update' => [
+                'route' => 'admin.staff.update',
+            ],
+            'destroy' => [
+                'route' => 'admin.staff.destroy',
             ],
         ],
         'admin' => [

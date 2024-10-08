@@ -22,40 +22,22 @@
     </div>
 </div>
 
+<div class="col-12 col-md-auto mb-2">
+    <!-- Keep this column for status dropdown -->
+    @php
+    $status = request('status') ?: old('status');
+    $statuses = __('messages.account.status');
+    @endphp
+    <select name="status" class="form-select status filter">
+        @foreach ($statuses as $key => $option)
+        <option value="{{ $key }}" {{ $status==$key ? 'selected' : '' }}>
+            {{ $option }}
+        </option>
+        @endforeach
+    </select>
+</div>
+
 <div class="col-12 col-md mb-2">
     <input type="text" class="form-control" id="search" placeholder="Search..." name="keyword"
         value="{{ request('keyword') ?: old('keyword') }}">
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Lấy ngày hiện tại
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
-        const yyyy = today.getFullYear();
-        
-        // Tạo chuỗi định dạng YYYY-MM-DDTHH:MM
-        const maxDateTime = `${yyyy}-${mm}-${dd}T${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}`;
-
-        // Thiết lập giá trị max cho input datetime-local
-        document.getElementById('start_date').setAttribute('max', maxDateTime);
-        document.getElementById('end_date').setAttribute('max', maxDateTime);
-        
-        // Kiểm tra ngày bắt đầu và ngày kết thúc
-        const startDateInput = document.getElementById('start_date');
-        const endDateInput = document.getElementById('end_date');
-
-        startDateInput.addEventListener('change', function() {
-            if (endDateInput.value && new Date(startDateInput.value) > new Date(endDateInput.value)) {
-                endDateInput.value = ''; // Reset end date if start date is after it
-            }
-        });
-
-        endDateInput.addEventListener('change', function() {
-            if (startDateInput.value && new Date(startDateInput.value) > new Date(endDateInput.value)) {
-                startDateInput.value = ''; // Reset start date if end date is before it
-            }
-        });
-    });
-</script>

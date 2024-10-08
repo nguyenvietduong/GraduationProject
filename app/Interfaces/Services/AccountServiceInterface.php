@@ -45,20 +45,4 @@ interface AccountServiceInterface
      * @return bool
      */
     public function deleteAccount(int $id);
-
-    /**
-     * Count the number of accounts with a specific role.
-     *
-     * @param string $role
-     * @return int
-     */
-    public function countAccountsByRole(string $role);
-
-    /**
-     * Get a list of friends for a specific user by user ID.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function getFriendsByUserId(int $id);
 }

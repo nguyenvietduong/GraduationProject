@@ -20,39 +20,49 @@ $segment = request()->segment(2);
                     </a>
                 </li>
 
-                <!-- Role -->
-                @if(Auth::check() && Auth::user()->role_id == 1)
-                <li class="nav-item {{ set_active(['role', 'admin'], 'active', 'admin') }}">
-                    <a class="nav-link" href="{{ route('admin.role.index') }}">
-                        <i class="fas fa-key menu-icon"></i>
-                        <span>Role</span>
-                    </a>
-                </li>
-                @endif
-
-                <!-- Account Management -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['user', 'admin'], 'active', 'admin') }}"
+                    <a class="nav-link {{ set_active(['user', 'admin', 'role', 'permission'], 'active', 'admin') }}"
                         href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarAccountManagement">
                         <i class="fa fa-users menu-icon"></i>
-                        <span>Account</span>
+                        <span>Account Management</span>
                     </a>
-                    <div class="collapse {{ set_active(['user', 'admin'], 'show', 'admin') }}"
+                    <div class="collapse {{ set_active(['user', 'admin', 'role', 'permission'], 'show', 'admin') }}"
                         id="sidebarAccountManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['user'], 'active', 'admin') }}"
                                     href="{{ route('admin.user.index') }}">
                                     <i class="fa fa-user menu-icon"></i>
-                                    <span>Customer</span>
+                                    <span>Customers</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['staff'], 'active', 'admin') }}"
+                                    href="{{ route('admin.staff.index') }}">
+                                    <i class="fas fa-user-friends menu-icon"></i> <!-- Thay đổi icon ở đây -->
+                                    <span>Staffs</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['admin'], 'active', 'admin') }}"
                                     href="{{ route('admin.admin.index') }}">
                                     <i class="fa fa-user-tie menu-icon"></i>
-                                    <span>Admin</span>
+                                    <span>Admins</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['role'], 'active', 'admin') }}"
+                                    href="{{ route('admin.role.index') }}">
+                                    <i class="fas fa-key menu-icon"></i>
+                                    <span>Roles</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['permission'], 'active', 'admin') }}"
+                                    href="{{ route('admin.permission.index') }}">
+                                    <i class="fas fa-lock menu-icon"></i>
+                                    <span>Permissions</span>
                                 </a>
                             </li>
                         </ul>
@@ -60,8 +70,8 @@ $segment = request()->segment(2);
                 </li>
 
                 <!-- Category Management -->
-                {{-- <li class="nav-item {{ set_active(['category']) }}">
-                    <a class="nav-link {{ set_active(['category'], 'active') }}"
+                <li class="nav-item {{ set_active(['category'], 'active', 'admin') }}">
+                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
                         href="{{ route('admin.category.index') }}">
                         <i class="fa fa-tags menu-icon"></i>
                         <span>Category</span>
@@ -69,7 +79,7 @@ $segment = request()->segment(2);
                 </li>
 
                 <!-- Tag Management -->
-                <li class="nav-item {{ set_active(['tag']) }}">
+                {{-- <li class="nav-item {{ set_active(['tag']) }}">
                     <a class="nav-link {{ set_active(['tag'], 'active') }}" href="{{ route('admin.tag.index') }}">
                         <i class="fa fa-tag menu-icon"></i>
                         <span>Tag</span>

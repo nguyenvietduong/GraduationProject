@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend\Account;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\AccountServiceInterface;
+use App\Interfaces\Services\TempImageServiceInterface;
 use App\Interfaces\Repositories\AccountRepositoryInterface;
+use App\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
 
 // Requests
@@ -17,20 +19,25 @@ class UserController extends Controller
     use HandleExceptionTrait;
 
     protected $accountService;
+    protected $tempImageService;
     protected $accountRepository;
+    protected $roleRepository;
 
     // Base path for views
     const PATH_VIEW = 'backend.account.';
     const PER_PAGE_DEFAULT = 5;
     const OBJECT = 'user';
-    const ROLE = 3;
 
     public function __construct(
         AccountServiceInterface $accountService,
+        TempImageServiceInterface $tempImageService,
         AccountRepositoryInterface $accountRepository,
+        RoleRepositoryInterface $roleRepository,
     ) {
         $this->accountService = $accountService;
+        $this->tempImageService = $tempImageService;
         $this->accountRepository = $accountRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -41,7 +48,7 @@ class UserController extends Controller
      */
     public function index(AccountListRequest $request)
     {
-        session()->forget('image_temp'); // Xóa giá trị tạm thời của hình ảnh
+        $this->tempImageService->deleteTempImagesForUser();
         // Xác thực dữ liệu từ request
         $request->validated();
 
@@ -51,6 +58,9 @@ class UserController extends Controller
         // Điền bộ lọc từ request
         $filters = [
             'search' => $params['keyword'] ?? '', // Đảm bảo tên này khớp với tên input tìm kiếm
+            'start_date' => $params['start_date'] ?? '',
+            'end_date' => $params['end_date'] ?? '',
+            'status' => $params['status'] ?? '',
         ];
 
         // Lấy giá trị per_page
@@ -58,8 +68,8 @@ class UserController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->accountRepository->countAccountsByRole(self::ROLE), // Tổng số bản ghi để hiển thị
-            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::ROLE), // Truyền danh sách người dùng đã phân trang đến view
+            'totalRecords' => $this->accountRepository->countAccountsByRole(self::OBJECT), // Tổng số bản ghi để hiển thị
+            'datas' => $this->accountService->getAllAccount($filters, $perPage, self::OBJECT), // Truyền danh sách người dùng đã phân trang đến view
         ]);
     }
 
@@ -73,6 +83,7 @@ class UserController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
+            'dataRole' => $this->roleRepository->pluck('name', 'id'),
         ]);
     }
 
@@ -113,6 +124,7 @@ class UserController extends Controller
             return view(self::PATH_VIEW . __FUNCTION__, [
                 'data' => $data,
                 'object' => self::OBJECT,
+                'dataRole' => $this->roleRepository->pluck('name', 'id'),
             ]);
         }
 
@@ -129,7 +141,7 @@ class UserController extends Controller
     public function update($id, AccountUpdateRequest $request)
     {
         // Xác thực dữ liệu từ request bằng AccountUpdateRequest
-        $data = $request->validated();
+        $data = $request->all();
 
         try {
             // Cập nhật người dùng
@@ -154,10 +166,10 @@ class UserController extends Controller
             // Xóa người dùng
             $this->accountService->deleteAccount($id);
 
-            return redirect()->back()->with('success', 'Người dùng đã được xóa thành công!');
+            return redirect()->back()->with('success', 'User delete successfully!');
         } catch (\Exception $e) {
             // Trả về phản hồi JSON nếu có lỗi
-            
+
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

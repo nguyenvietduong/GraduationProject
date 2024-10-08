@@ -29,13 +29,16 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
+            'full_name'     => 'required|string|max:255',
             'email'         => 'required|email|max:255|unique:users,email',
             'password'      => 'required|string|min:6',
             're_password'   => 'required|string|min:6|same:password',
             'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'phone'         => 'nullable|digits_between:10,11|numeric|unique:users,phone',
             'address'       => 'nullable|string',
+            'status'        => 'required|string',
+            'roles'         => 'required|array', // Validate roles as an array
+            'roles.*'       => 'exists:roles,id', // Each role ID must exist in the roles table
         ];
     }
 

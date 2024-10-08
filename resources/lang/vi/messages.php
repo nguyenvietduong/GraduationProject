@@ -55,10 +55,13 @@ return [
         'no_data_available' => 'Không có dữ liệu',
         'start' => 'Bắt đầu',
         'end' => 'Kết thúc',
+        'status' => 'Trạng thái',
         'account' => 'Tài khoản',
         'profile' => 'Thông tin',
         'setting' => 'Cài đặt',
-        'logout' => 'Đăng xuất'
+        'login' => 'Đăng nhập',
+        'logout' => 'Đăng xuất',
+        'adminPage' => 'Trang quản trị'
     ],
 
     'welcome' => 'Chào mừng bạn đến với ứng dụng của chúng tôi!',
@@ -145,9 +148,15 @@ return [
     ],
     // Fields for Account
     'account' => [
+        'status' => [
+            '' => '-Trạng thái-',
+            'normal' => 'Bình thường',
+            'locked' => 'Đã khóa',
+            'warning' => 'Cảnh báo',
+        ],
         'fields' => [
-            'name' => 'Tên',
-            'name_placeholder' => 'Nhập tên người dùng',
+            'full_name' => 'Họ Tên',
+            'name_placeholder' => 'Nhập họ tên người dùng',
             'email' => 'Email',
             'email_placeholder' => 'Nhập email',
             'phone' => 'Điện thoại',
@@ -181,6 +190,27 @@ return [
             ],
             'destroy' => [
                 'route' => 'admin.user.destroy',
+            ],
+        ],
+        'staff' => [
+            'title' => 'Tài khoản nhân viên',
+            'index' => [
+                'route' => 'admin.staff.index',
+            ],
+            'create' => [
+                'route' => 'admin.staff.create',
+            ],
+            'store' => [
+                'route' => 'admin.staff.store',
+            ],
+            'edit' => [
+                'route' => 'admin.staff.edit',
+            ],
+            'update' => [
+                'route' => 'admin.staff.update',
+            ],
+            'destroy' => [
+                'route' => 'admin.staff.destroy',
             ],
         ],
         'admin' => [

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('email');
             $table->string('image')->nullable();
+            $table->string('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('status')->default('normal'); // Trạng thái tài khoản ['normal', 'locked', 'warning']
@@ -26,13 +27,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-
-            // Tạo cột ngoại khóa mà không tự động đánh index
-            $table->unsignedBigInteger('role_id');
-
-            // Khai báo khóa ngoại và đánh index
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->index('role_id'); // Đánh index cho role_id
         });
     }
 

@@ -36,10 +36,8 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
      */
     public function getAllAccount(array $filters = [], $perPage = 5, $role = 'user')
     {
-        $query = $this->model->query();
-
-        $query->where('role_id', $role);
-
+        $query = $this->model->role($role); // Spatie's role scope for filtering by role
+    
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
@@ -49,13 +47,25 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
                     ->orWhere('address', 'like', '%' . $filters['search'] . '%');
             });
         }
-
-        // Sort by creation date (latest first)
-        $query->orderBy('created_at', 'desc');
-
+    
+        if (!empty($filters['start_date'])) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
+    
+        if (!empty($filters['end_date'])) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+    
+        if (!empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+    
+        // Order by created date (newest first)
+        $query->orderBy('id', 'desc');
+    
         // Paginate results
         return $query->paginate($perPage);
-    }
+    }    
 
     /**
      * Count users with a specific role.
@@ -65,7 +75,9 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
      */
     public function countAccountsByRole(string $role)
     {
-        return $this->model->where('role_id', $role)->count();
+        $query = $this->model->role($role); // Spatie's role scope for filtering by role
+
+        return $query->count();
     }
 
     /**

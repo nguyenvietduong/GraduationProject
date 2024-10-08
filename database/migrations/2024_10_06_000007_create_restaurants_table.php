@@ -15,11 +15,12 @@ return new class extends Migration {
             $table->string('name'); // Tên nhà hàng
             $table->string('slug')->unique(); // Slug tạo URL thân thiện
             $table->string('address'); // Địa chỉ nhà hàng
-            $table->string('phone_number'); // Số điện thoại nhà hàng
+            $table->string('phone'); // Số điện thoại nhà hàng
+            $table->string('opening_hours', 50)->nullable();
+            $table->decimal('rating', 2, 1)->default(0.0);  // Đánh giá trung bình
             $table->text('description')->nullable(); // Mô tả nhà hàng
             $table->string('image')->nullable(); // Hình ảnh đại diện
             $table->timestamps();
-            $table->softDeletes(); // Xóa mềm để có thể khôi phục
         });
     }
 
