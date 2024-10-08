@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\Backend\PermissionDataTable;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\PermissionServiceInterface;
 use App\Interfaces\Repositories\PermissionRepositoryInterface;
@@ -58,6 +57,7 @@ class PermissionController extends Controller
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
 
+        // dd($this->permissionService->getAllPermissions($filters, $perPage, self::OBJECT));
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'permissionTotalRecords' => $this->permissionRepository->count(), // Total records for display
@@ -87,6 +87,7 @@ class PermissionController extends Controller
     {
         // Validate the data from the request using PermissionStoreRequest
         $data = $request->validated();
+        // dd($data);
         try {
             // Create a new permission
             $this->permissionService->createPermission($data);
@@ -123,14 +124,14 @@ class PermissionController extends Controller
      * @param PermissionUpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id, PermissionUpdateRequest $request)
+    public function update($permission, PermissionUpdateRequest $request)
     {
         // Validate the data from the request using PermissionUpdateRequest
         $data = $request->validated();
 
         try {
             // Update the permission
-            $this->permissionService->updatePermission($id, $data);
+            $this->permissionService->updatePermission($permission, $data);
             return redirect()->route('admin.permission.index')->with('success', 'Permission updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -140,14 +141,14 @@ class PermissionController extends Controller
     /**
      * Delete a permission.
      *
-     * @param int $id
+     * @param int $permission
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($permission)
     {
         try {
             // Delete the permission
-            $this->permissionService->deletePermission($id);
+            $this->permissionService->deletePermission($permission);
 
             return redirect()->back()->with('success', 'Permission deleted successfully');
         } catch (\Exception $e) {

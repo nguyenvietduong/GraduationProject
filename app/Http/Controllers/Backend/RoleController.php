@@ -47,6 +47,7 @@ class RoleController extends Controller
      */
     public function index(RoleListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
@@ -78,6 +79,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         $this->authorize('modules', 'edit accounts');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'role',
@@ -111,6 +113,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         // Retrieve the details of the role
         $role = $this->roleService->getRoleDetail($id);
         if ($role) {
@@ -165,6 +168,8 @@ class RoleController extends Controller
 
     public function permission()
     {
+        
+        $this->authorize('modules', '' . self::OBJECT . '.permission');
         $roles = $this->roleRepository->all();
         $permissions = $this->permissionRepository->all();
         // dd($permissions);

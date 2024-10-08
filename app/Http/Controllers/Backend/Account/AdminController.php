@@ -47,6 +47,7 @@ class AdminController extends Controller
      */
     public function index(AccountListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         // Validate the request data
         $request->validated();
@@ -167,7 +168,7 @@ class AdminController extends Controller
 
             return redirect()->back()->with('success', 'Admin delete successfully!');
         } catch (\Exception $e) {
-            
+
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

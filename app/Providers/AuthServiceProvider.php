@@ -24,12 +24,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('modules', function ($user, $permisionName) {
-            // dd($account->role);
-            if ($user->status !== 'normal')
-                return false;
-            $role = $user->roles;
-            $permission = $role->permissions;
-            if ($permission->contains('name', $permisionName)) {
+            // if ($user->publish == 0)
+            //     return false;
+            $permission = $user->role->permissions;
+            if ($permission->contains('slug', $permisionName)) {
                 return true;
             }
             return false;
