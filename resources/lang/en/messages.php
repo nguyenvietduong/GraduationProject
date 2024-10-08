@@ -97,8 +97,25 @@ return [
     'menu' => [
         'title' => 'Menu',
         'fields' => [
-            'name' => 'Menu Name',
+            'name' => 'Menu Item Name',
+            'slug' => 'Slug',
+            'description' => 'Description',
+            'price' => 'Price',
+            'category' => 'Category',
+            'meal_time' => 'Meal Time',
+            'image_url' => 'Image URL',
             'parent_id' => 'Parent Menu',
+        ],
+        'categories' => [ // Add list of food categories
+            'starter' => 'Appetizer',
+            'main_course' => 'Main Course',
+            'dessert' => 'Dessert',
+        ],
+        'meal_times' => [
+            'breakfast' => 'Breakfast',
+            'lunch' => 'Lunch',
+            'dinner' => 'Dinner',
+            'all_day' => 'All Day',
         ],
         'index' => [
             'route' => 'admin.menu.index',

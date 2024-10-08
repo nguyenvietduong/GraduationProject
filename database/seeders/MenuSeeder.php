@@ -1,0 +1,198 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use DB;
+
+class MenuSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('menus')->insert([
+            // Breakfast
+            [
+                'name' => 'Phở bò',
+                'slug' => 'pho-bo',
+                'description' => 'Traditional Vietnamese beef noodle soup.',
+                'price' => 2.50,
+                'category' => 'main_course',
+                'meal_time' => 'breakfast',
+                'image_url' => 'images/pho-bo.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Bánh mì trứng',
+                'slug' => 'banh-mi-trung',
+                'description' => 'Vietnamese sandwich with egg.',
+                'price' => 1.50,
+                'category' => 'starter',
+                'meal_time' => 'breakfast',
+                'image_url' => 'images/banh-mi-trung.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Xôi xéo',
+                'slug' => 'xoi-xeo',
+                'description' => 'Sticky rice with mung beans and fried shallots.',
+                'price' => 1.20,
+                'category' => 'main_course',
+                'meal_time' => 'breakfast',
+                'image_url' => 'images/xoi-xeo.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Cháo lòng',
+                'slug' => 'chao-long',
+                'description' => 'Rice porridge with pork offal.',
+                'price' => 2.00,
+                'category' => 'main_course',
+                'meal_time' => 'breakfast',
+                'image_url' => 'images/chao-long.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // Lunch
+            [
+                'name' => 'Cơm tấm sườn',
+                'slug' => 'com-tam-suon',
+                'description' => 'Vietnamese broken rice with grilled pork.',
+                'price' => 3.00,
+                'category' => 'main_course',
+                'meal_time' => 'lunch',
+                'image_url' => 'images/com-tam-suon.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Bún chả',
+                'slug' => 'bun-cha',
+                'description' => 'Grilled pork with vermicelli noodles and herbs.',
+                'price' => 2.80,
+                'category' => 'main_course',
+                'meal_time' => 'lunch',
+                'image_url' => 'images/bun-cha.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Chả giò',
+                'slug' => 'cha-gio',
+                'description' => 'Fried Vietnamese spring rolls with pork and vegetables.',
+                'price' => 1.50,
+                'category' => 'starter',
+                'meal_time' => 'lunch',
+                'image_url' => 'images/cha-gio.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Canh chua cá lóc',
+                'slug' => 'canh-chua-ca-loc',
+                'description' => 'Sour soup with snakehead fish and vegetables.',
+                'price' => 3.20,
+                'category' => 'main_course',
+                'meal_time' => 'lunch',
+                'image_url' => 'images/canh-chua-ca-loc.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // Dinner
+            [
+                'name' => 'Lẩu thái hải sản',
+                'slug' => 'lau-thai-hai-san',
+                'description' => 'Spicy seafood hotpot with Thai flavors.',
+                'price' => 5.50,
+                'category' => 'main_course',
+                'meal_time' => 'dinner',
+                'image_url' => 'images/lau-thai-hai-san.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Bò kho',
+                'slug' => 'bo-kho',
+                'description' => 'Vietnamese beef stew with carrots and herbs.',
+                'price' => 4.00,
+                'category' => 'main_course',
+                'meal_time' => 'dinner',
+                'image_url' => 'images/bo-kho.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Bánh xèo',
+                'slug' => 'banh-xeo',
+                'description' => 'Crispy Vietnamese pancake with shrimp and pork.',
+                'price' => 2.80,
+                'category' => 'starter',
+                'meal_time' => 'dinner',
+                'image_url' => 'images/banh-xeo.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Chè chuối',
+                'slug' => 'che-chuoi',
+                'description' => 'Banana and tapioca pearls cooked in coconut milk.',
+                'price' => 1.50,
+                'category' => 'dessert',
+                'meal_time' => 'dinner',
+                'image_url' => 'images/che-chuoi.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // All-day
+            [
+                'name' => 'Bánh cuốn',
+                'slug' => 'banh-cuon',
+                'description' => 'Steamed rice rolls with pork and mushrooms.',
+                'price' => 2.20,
+                'category' => 'main_course',
+                'meal_time' => 'all_day',
+                'image_url' => 'images/banh-cuon.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Trà sữa',
+                'slug' => 'tra-sua',
+                'description' => 'Vietnamese bubble tea.',
+                'price' => 1.50,
+                'category' => 'dessert',
+                'meal_time' => 'all_day',
+                'image_url' => 'images/tra-sua.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Bánh bèo',
+                'slug' => 'banh-beo',
+                'description' => 'Steamed rice cakes topped with shrimp and scallions.',
+                'price' => 2.00,
+                'category' => 'starter',
+                'meal_time' => 'all_day',
+                'image_url' => 'images/banh-beo.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Nem nướng',
+                'slug' => 'nem-nuong',
+                'description' => 'Grilled pork skewers served with fresh vegetables and dipping sauce.',
+                'price' => 3.00,
+                'category' => 'main_course',
+                'meal_time' => 'all_day',
+                'image_url' => 'images/nem-nuong.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}

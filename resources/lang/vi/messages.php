@@ -95,30 +95,47 @@ return [
         '4' => '“Những điều tốt đẹp đến với những ai biết chờ đợi, nhưng chỉ có những điều còn lại của những người chịu khó.” - Abraham Lincoln',
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
-    // Fields for Category
-    'category' => [
-        'title' => 'Danh Mục',
+    // Fields for menu
+    'menu' => [
+        'title' => 'Thực đơn',
         'fields' => [
-            'name' => 'Tên',
-            'parent_id' => 'Danh Mục Cha',
+            'name' => 'Tên món ăn',
+            'slug' => 'Đường dẫn',
+            'description' => 'Mô tả',
+            'price' => 'Giá',
+            'category' => 'Loại',
+            'meal_time' => 'Bữa ăn',
+            'image_url' => 'URL hình ảnh',
+            'parent_id' => 'Thực đơn cha',
+        ],
+        'categories' => [ // Thêm danh sách các loại món ăn
+            'starter' => 'Món khai vị',
+            'main_course' => 'Món chính',
+            'dessert' => 'Món tráng miệng',
+        ],
+        'meal_times' => [ // Thêm danh sách các bữa ăn
+            'breakfast' => 'Bữa sáng',
+            'lunch' => 'Bữa trưa',
+            'dinner' => 'Bữa tối',
+            'all_day' => 'Cả ngày',
         ],
         'index' => [
-            'route' => 'admin.category.index',
+            'route' => 'admin.menu.index',
         ],
         'create' => [
-            'route' => 'admin.category.create',
+            'route' => 'admin.menu.create',
         ],
         'store' => [
-            'route' => 'admin.category.store',
+            'route' => 'admin.menu.store',
         ],
         'edit' => [
-            'route' => 'admin.category.edit',
+            'route' => 'admin.menu.edit',
         ],
         'update' => [
-            'route' => 'admin.category.update',
+            'route' => 'admin.menu.update',
         ],
         'destroy' => [
-            'route' => 'admin.category.destroy',
+            'route' => 'admin.menu.destroy',
         ],
     ],
     // Fields for Role

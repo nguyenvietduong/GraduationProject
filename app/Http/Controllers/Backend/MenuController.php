@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\Backend\MenuDataTable;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
 use App\Interfaces\Services\MenuServiceInterface;
@@ -22,8 +21,6 @@ class MenuController extends Controller
     protected $menuService;
     protected $menuRepository;
 
-    protected $permissionRepository;
-
     // Base path for views
     const PATH_VIEW = 'backend.menu.';
     const PER_PAGE_DEFAULT = 5;
@@ -32,11 +29,9 @@ class MenuController extends Controller
     public function __construct(
         MenuServiceInterface $menuService,
         MenuRepositoryInterface $menuRepository,
-        PermissionRepository $permissionRepository,
     ) {
         $this->menuService = $menuService;
         $this->menuRepository = $menuRepository;
-        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -67,7 +62,7 @@ class MenuController extends Controller
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'menuTotalRecords' => $this->menuRepository->count(), // Total records for display
-            'menuDatas' => $this->menuService->getAllMenus($filters, $perPage, self::OBJECT), // Paginated menu list for the view
+            'menuDatas' => $this->menuService->getAllMenus($filters, $perPage), // Paginated menu list for the view
         ]);
     }
 
@@ -157,33 +152,6 @@ class MenuController extends Controller
             $this->menuService->deleteMenu($id);
 
             return redirect()->back()->with('success', 'Menu deleted successfully');
-        } catch (\Exception $e) {
-            // Return a JSON response if there is an error
-            return redirect()->back()->with('error', $e->getMessage());
-        }
-    }
-
-    public function permission()
-    {
-        $menus = $this->menuRepository->all();
-        $permissions = $this->permissionRepository->all();
-        // dd($permissions);
-        return view('backend.menu.permission', [
-            'object' => 'menu',
-            'menus' => $menus,
-            'permissions' => $permissions
-        ]);
-    }
-
-
-    public function updatePermission(Request $request)
-    {
-        try {
-            // Delete the menu
-            // echo 1; die;
-            $this->menuService->updatePermission($request);
-
-            return redirect()->back()->with('success', 'Menu Permission update successfully');
         } catch (\Exception $e) {
             // Return a JSON response if there is an error
             return redirect()->back()->with('error', $e->getMessage());
