@@ -70,9 +70,13 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     {
         try {
 
+            $data['guard_name'] = 'web';
+
             // Create the permission
             return $this->permissionRepository->createPermission($data);
         } catch (Exception $e) {
+            echo $e->getMessage();
+            die();
             // Handle any errors that occur during permission creation
             throw new Exception('Unable to create permission: ' . $e->getMessage());
         }
@@ -114,6 +118,8 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
             throw new ModelNotFoundException('Permission không tồn tại với ID: ' . $id);
         } catch (Exception $e) {
             // Xử lý lỗi khác nếu cần thiết
+            echo $e->getMessage();
+            die();
             throw new Exception('Không thể xóa permission: ' . $e->getMessage());
         }
     }

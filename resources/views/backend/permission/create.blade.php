@@ -18,7 +18,8 @@
                     <div class="card-body p-0">
                         <div class="row g-0 h-100">
                             <div class="col-lg-12 border-end">
-                                @include('backend.role.component.form.create_form')
+
+                                @include('backend.permission.component.form.create_form')
                             </div>
                         </div>
                     </div>

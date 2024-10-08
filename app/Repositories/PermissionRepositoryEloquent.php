@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\Repositories\PermissionRepositoryInterface;
@@ -64,7 +64,7 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
      * Get Permission detail by ID.
      *
      * @param int $id
-     * @return \Spatie\Permission\Models\Permission
+     * @return App\Models\Permission
      */
     public function getPermissionDetail($id)
     {
@@ -87,10 +87,11 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
      * Create a new Permission.
      *
      * @param array $params
-     * @return \Spatie\Permission\Models\Permission
+     * @return App\Models\Permission
      */
     public function createPermission($params)
     {
+        // dd($params); die;
         return $this->create($params);
     }
 
@@ -98,7 +99,7 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
      * Get Permission detail by ID (same as getPermissionDetail).
      *
      * @param int $id
-     * @return \Spatie\Permission\Models\Permission
+     * @return App\Models\Permission
      */
     public function detailPermission($id)
     {
