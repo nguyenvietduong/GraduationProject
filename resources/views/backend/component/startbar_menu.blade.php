@@ -70,11 +70,13 @@ $segment = request()->segment(2);
                 </li>
 
                 <!-- Menu Management -->
-                <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                    href="{{ route('admin.menu.index') }}">
-                    <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
-                    <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
-                </a>
+                <li class="nav-item {{ set_active(['menu']) }}">
+                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
+                        href="{{ route('admin.menu.index') }}">
+                        <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
+                        <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
+                    </a>
+                </li>
 
                 <!-- Tag Management -->
                 {{-- <li class="nav-item {{ set_active(['tag']) }}">
