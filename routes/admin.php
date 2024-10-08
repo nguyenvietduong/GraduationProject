@@ -57,6 +57,8 @@ Route::middleware(['auth', 'role:admin, staff'])->group(function () {
             Route::get('{id}/edit', [RoleController::class, 'edit'])->where('id', '[0-9]+')->name('admin.role.edit');
             Route::put('{id}/update', [RoleController::class, 'update'])->where('id', '[0-9]+')->name('admin.role.update');
             Route::delete('{id}/destroy', [RoleController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.role.destroy');
+            Route::get('permission', [RoleController::class, 'permission'])->name('admin.role.permission');
+            Route::post('updatePermission', [RoleController::class, 'updatePermission'])->name('admin.role.updatePermission');
         });
 
         Route::prefix('permission')->group(function () {

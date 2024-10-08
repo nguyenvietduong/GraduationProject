@@ -61,7 +61,8 @@ return [
         'setting' => 'Cài đặt',
         'login' => 'Đăng nhập',
         'logout' => 'Đăng xuất',
-        'adminPage' => 'Trang quản trị'
+        'adminPage' => 'Trang quản trị',
+        'buttonPermission' => 'Phân quyền chức năng'
     ],
 
     'welcome' => 'Chào mừng bạn đến với ứng dụng của chúng tôi!',
