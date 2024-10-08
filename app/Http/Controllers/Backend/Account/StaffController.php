@@ -49,6 +49,7 @@ class StaffController extends Controller
      */
     public function index(AccountListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         // Validate the request data
         $request->validated();

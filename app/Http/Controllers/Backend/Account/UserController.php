@@ -49,6 +49,7 @@ class UserController extends Controller
      */
     public function index(AccountListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         // Xác thực dữ liệu từ request
         $request->validated();
