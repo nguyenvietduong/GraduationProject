@@ -71,6 +71,8 @@ class RoleService extends BaseService implements RoleServiceInterface
     {
         try {
             // Create the role
+            $data['guard_name'] = 'web';
+
             return $this->roleRepository->createRole($data);
         } catch (Exception $e) {
             // Handle any errors that occur during role creation
@@ -89,6 +91,8 @@ class RoleService extends BaseService implements RoleServiceInterface
     public function updateRole(int $id, array $data)
     {
         try {
+            $data['guard_name'] = 'web';
+
             return $this->roleRepository->updateRole($id, $data);
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Role không tồn tại với ID: ' . $id);

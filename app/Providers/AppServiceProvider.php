@@ -42,17 +42,17 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         Builder::useVite();
 
-        // $idRoleAdmin = Role::where('id', 1)
-        //     ->orWhere('id', 2)
-        //     ->orWhere('name', 'admin')
-        //     ->orWhere('name', 'Admin')
-        //     ->orWhere('name', 'staff')
-        //     ->orWhere('name', 'Staff')
-        //     ->pluck('id')
-        //     ->first(); // Lấy ID đầu tiên
+        $idRoleAdmin = Role::where('id', 1)
+            ->orWhere('id', 2)
+            ->orWhere('name', 'admin')
+            ->orWhere('name', 'Admin')
+            ->orWhere('name', 'staff')
+            ->orWhere('name', 'Staff')
+            ->pluck('id')
+            ->first(); // Lấy ID đầu tiên
 
-        // view()->share([
-        //     'idRoleAdmin' => $idRoleAdmin,
-        // ]);
+        view()->share([
+            'idRoleAdmin' => $idRoleAdmin,
+        ]);
     }
 }

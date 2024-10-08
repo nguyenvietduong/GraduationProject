@@ -59,9 +59,9 @@
             <ul class="submenu">
                 <li><a href="{{ route('team') }}" class="sub-menu-item">{{ __('messages.system.profile')
                         }}</a></li>
-                @if(Auth::user()->roles->contains('name', 'admin'))
-                <li><a href="{{ route('admin.dashboard.index') }}" class="">{{ __('messages.system.adminPage')
-                        }}</a></li>
+                @if($idRoleAdmin && Auth::user()->roles->contains('id', $idRoleAdmin))
+                <li><a href="{{ route('admin.dashboard.index') }}" class="">{{
+                        __('messages.system.adminPage') }}</a></li>
                 @endif
                 <li id="custom-logout-front" style="margin-left: 20px">
                     <!-- Bootstrap 5: ms-4 applies margin-left -->

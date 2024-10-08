@@ -15,8 +15,6 @@
     <!-- Loader End -->
     <!-- Start Navbar -->
     @include('frontend.component.navbar')
-    <!--end header-->
-    <!-- End Navbar -->
 
     @yield('contentUser')
 
@@ -35,7 +33,4 @@
     @include('frontend.component.js')
     <!-- JAVASCRIPTS -->
 </body>
-
-<!-- Mirrored from shreethemes.in/veganfry/layouts/restaurant-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Sep 2024 13:56:14 GMT -->
-
 </html>

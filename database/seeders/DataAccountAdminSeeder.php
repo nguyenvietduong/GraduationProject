@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class DataAccountAdminSeeder extends Seeder
 {
@@ -74,6 +74,18 @@ class DataAccountAdminSeeder extends Seeder
                 'model_type' => 'App\Models\User',
                 'model_id' => $userId,
             ]);
+
+            // Lấy tất cả quyền có sẵn
+            $permissions = DB::table('permissions')->pluck('id');
+
+            // Gán tất cả quyền cho người dùng admin
+            foreach ($permissions as $permissionId) {
+                DB::table('model_has_permissions')->insert([
+                    'permission_id' => $permissionId,
+                    'model_type' => 'App\Models\User',
+                    'model_id' => $userId,
+                ]);
+            }
         }
     }
 }
