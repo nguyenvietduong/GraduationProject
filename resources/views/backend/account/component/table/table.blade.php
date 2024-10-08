@@ -26,7 +26,7 @@
                 </div>
             </td>
             <td class="ps-0">
-                <img src="{{ checkMinioImage($data->image) }}" alt height="40">
+                <img src="{{ checkFile($data->image) }}" alt height="40">
                 <p class="d-inline-block align-middle mb-0">
                     {{ $data->full_name ?? __('messages.system.no_data_available') }}
                 </p>

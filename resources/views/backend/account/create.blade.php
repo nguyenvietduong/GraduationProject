@@ -36,7 +36,7 @@
     <script defer>
         $(document).ready(function() {
             // Initialize Select2 with responsive width
-            $('#roles').select2({
+            $('#role_id, #status').select2({
                 width: '100%' // Ensure Select2 occupies full width
             });
         });
