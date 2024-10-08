@@ -52,6 +52,11 @@ return [
                 'action' => 'Hành Động',
             ],
         ],
+        'menu' => [
+            'adminDashboard' => 'Quản trị',
+            'menu' => 'Thực đơn'
+
+        ],
         'no_data_available' => 'Không có dữ liệu',
         'start' => 'Bắt đầu',
         'end' => 'Kết thúc',

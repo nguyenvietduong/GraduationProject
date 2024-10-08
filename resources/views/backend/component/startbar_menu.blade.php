@@ -16,7 +16,7 @@ $segment = request()->segment(2);
                 <li class="nav-item {{ set_active(['dashboard', 'admin']) }}">
                     <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
                         <i class="fa fa-tachometer menu-icon"></i>
-                        <span>Admin Dashboard</span>
+                        <span>{{ __('messages.system.menu.adminDashboard') }}</span>
                     </a>
                 </li>
 
@@ -69,14 +69,12 @@ $segment = request()->segment(2);
                     </div>
                 </li>
 
-                <!-- Category Management -->
-                <li class="nav-item {{ set_active(['category'], 'active', 'admin') }}">
-                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
-                        href="{{ route('admin.category.index') }}">
-                        <i class="fa fa-tags menu-icon"></i>
-                        <span>Category</span>
-                    </a>
-                </li>
+                <!-- Menu Management -->
+                <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
+                    href="{{ route('admin.menu.index') }}">
+                    <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
+                    <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
+                </a>
 
                 <!-- Tag Management -->
                 {{-- <li class="nav-item {{ set_active(['tag']) }}">

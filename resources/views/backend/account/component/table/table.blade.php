@@ -57,10 +57,10 @@
                         <i class="fas fa-edit btn btn-primary btn-sm"></i>
                     </a>
                     <form action="{{ route(__('messages.account.' . $object . '.destroy.route'), $data->id) }}"
-                        method="post" class="d-inline-block" id="myForm">
+                        method="post" class="d-inline-block" id="myForm_{{ $data->id }}">
                         @csrf
                         @method('DELETE')
-                        <button onclick="executeExample('handleDismiss', 'myForm')" type="button"
+                        <button onclick="executeExample('handleDismiss', 'myForm_{{ $data->id }}')" type="button"
                             class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i>
                         </button>

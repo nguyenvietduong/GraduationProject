@@ -52,6 +52,10 @@ return [
                 'action' => 'Action',
             ],
         ],
+        'menu' => [
+            'adminDashboard' => 'Admin Dashboard',
+            'menu' => 'Menu'
+        ],
         'no_data_available' => 'No data available',
         'start' => 'Start',
         'end' => 'End',
@@ -89,30 +93,30 @@ return [
         '4' => '“Good things come to those who wait, but only the things left by those who hustle.” - Abraham Lincoln',
         '5' => '“The only thing standing between you and your dream is the willingness to work for it.” - Joel Brown',
     ],
-    // Fields for Category
-    'category' => [
-        'title' => 'Category',
+    // Fields for menu
+    'menu' => [
+        'title' => 'Menu',
         'fields' => [
-            'name' => 'Name',
-            'parent_id' => 'Parent Category',
+            'name' => 'Menu Name',
+            'parent_id' => 'Parent Menu',
         ],
         'index' => [
-            'route' => 'admin.category.index',
+            'route' => 'admin.menu.index',
         ],
         'create' => [
-            'route' => 'admin.category.create',
+            'route' => 'admin.menu.create',
         ],
         'store' => [
-            'route' => 'admin.category.store',
+            'route' => 'admin.menu.store',
         ],
         'edit' => [
-            'route' => 'admin.category.edit',
+            'route' => 'admin.menu.edit',
         ],
         'update' => [
-            'route' => 'admin.category.update',
+            'route' => 'admin.menu.update',
         ],
         'destroy' => [
-            'route' => 'admin.category.destroy',
+            'route' => 'admin.menu.destroy',
         ],
     ],
     // Fields for Role
