@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->integer('total')->default(0);
             $table->decimal('discount', 5, 2);  // Giảm giá theo %
             $table->dateTime('start_date');
             $table->dateTime('end_date');

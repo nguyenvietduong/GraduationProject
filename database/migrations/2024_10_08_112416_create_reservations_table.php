@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('table_id')->nullable()->constrained('tables')->onDelete('cascade');
-            $table->dateTime('reservation_time');
+            $table->dateTime('reservation_time'); // thời gian đặt chỗ
             $table->integer('guests');  // Số khách
             $table->text('special_request')->nullable();  // Yêu cầu đặc biệt
             $table->enum('status', ['pending', 'confirmed', 'canceled', 'completed'])->default('pending');
