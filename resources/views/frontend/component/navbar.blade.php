@@ -27,8 +27,8 @@
         <!--Login button Start-->
         <ul class="buy-button list-none mb-0">
             <li class="dropdown inline-block relative pe-1">
-                <button data-dropdown-toggle="dropdown"
-                    class="dropdown-toggle align-middle inline-flex search-dropdown" type="button">
+                <button data-dropdown-toggle="dropdown" class="dropdown-toggle align-middle inline-flex search-dropdown"
+                    type="button">
                     <i data-feather="search" class="size-5 dark-icon"></i>
                     <i data-feather="search" class="size-5 white-icon text-white"></i>
                 </button>

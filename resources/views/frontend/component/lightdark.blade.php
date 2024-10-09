@@ -1,6 +1,7 @@
 <div class="fixed top-1/4 -left-2 z-50">
     <span class="relative inline-block rotate-90">
-        <input type="checkbox" class="checkbox opacity-0 absolute" id="chk">
+        <input type="checkbox" class="checkbox opacity-0 absolute" id="chk" {{ session('theme')==='dark' ? 'checked'
+            : '' }}>
         <label
             class="label bg-slate-900 dark:bg-white shadow dark:shadow-gray-800 cursor-pointer rounded-full flex justify-between items-center p-1 w-14 h-8"
             for="chk">
@@ -10,3 +11,8 @@
         </label>
     </span>
 </div>
+
+<script src="{{ asset('frontend/assets/custom/js/set-theme.js') }}"></script>
+<script type="text/javascript">
+    setTheme('{{ route('set.theme') }}')
+</script>

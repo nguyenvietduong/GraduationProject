@@ -8,3 +8,4 @@
 <meta name="email" content="support@shreethemes.in">
 <meta name="version" content="1.0.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="csrf-token" content="{{ csrf_token() }}">
