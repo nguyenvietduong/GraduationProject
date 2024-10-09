@@ -119,6 +119,32 @@ return [
             'route' => 'admin.menu.destroy',
         ],
     ],
+    // Fields for Category
+    'category' => [
+        'title' => 'Category',
+        'fields' => [
+            'name' => 'Category Name',
+            'slug' => 'Slug',
+        ],
+        'index' => [
+            'route' => 'admin.category.index',
+        ],
+        'create' => [
+            'route' => 'admin.category.create',
+        ],
+        'store' => [
+            'route' => 'admin.category.store',
+        ],
+        'edit' => [
+            'route' => 'admin.category.edit',
+        ],
+        'update' => [
+            'route' => 'admin.category.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.category.destroy',
+        ],
+    ],
     // Fields for Role
     'permission' => [
         'title' => 'Permission',
