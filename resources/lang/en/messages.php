@@ -65,7 +65,8 @@ return [
         'setting' => 'Settings',
         'login' => 'Login',
         'logout' => 'Logout',
-        'adminPage' => 'Admin Page'
+        'adminPage' => 'Admin Page',
+        'buttonPermission' => 'Authorize'
     ],
 
     'welcome' => 'Welcome to our application!',
