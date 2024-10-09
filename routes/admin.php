@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Account\AdminController;
 use App\Http\Controllers\Backend\Account\StaffController;
 use App\Http\Controllers\Backend\Account\UserController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
@@ -79,6 +80,15 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('{id}/edit', [MenuController::class, 'edit'])->where('id', '[0-9]+')->name('admin.menu.edit');
             Route::post('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update');
             Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
+        });
+        // Category Management
+        Route::prefix('category')->group(function () {
+            Route::get('index', [CategoryController::class, 'index'])->name('admin.category.index');
+            Route::get('create', [CategoryController::class, 'create'])->name('admin.category.create');
+            Route::post('store', [CategoryController::class, 'store'])->name('admin.category.store');
+            Route::get('{id}/edit', [CategoryController::class, 'edit'])->where('id', '[0-9]+')->name('admin.category.edit');
+            Route::put('{id}/update', [CategoryController::class, 'update'])->where('id', '[0-9]+')->name('admin.category.update');
+            Route::delete('{id}/destroy', [CategoryController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.category.destroy');
         });
     });
 });

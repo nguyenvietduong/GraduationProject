@@ -100,7 +100,7 @@ return [
         'title' => 'Danh Mục',
         'fields' => [
             'name' => 'Tên',
-            'parent_id' => 'Danh Mục Cha',
+            'slug' => 'Đường dẫn',
         ],
         'index' => [
             'route' => 'admin.category.index',
