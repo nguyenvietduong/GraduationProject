@@ -9,40 +9,6 @@
 
         <li><a href="{{ route('menu') }}" class="sub-menu-item">Menus</a></li>
 
-        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)"> Pages </a><span
-                class="menu-arrow"></span>
-            <ul class="submenu">
-                <li><a href="team.html" class="sub-menu-item">Our Chefs</a></li>
-
-                <li class="has-submenu parent-menu-item">
-                    <a href="javascript:void(0)"> Blogs </a><span class="submenu-arrow"></span>
-                    <ul class="submenu">
-                        <li><a href="blog-grid.html" class="sub-menu-item">Blog Grids</a></li>
-                        <li><a href="blog-standard.html" class="sub-menu-item">Blog Starndard</a></li>
-                        <li><a href="blog-list.html" class="sub-menu-item">Blog List</a></li>
-                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Detail</a></li>
-                    </ul>
-                </li>
-                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Auth Pages
-                    </a><span class="submenu-arrow"></span>
-                    <ul class="submenu">
-                        <li><a href="login.html" class="sub-menu-item"> Login</a></li>
-                        <li><a href="signup.html" class="sub-menu-item"> Signup</a></li>
-                        <li><a href="forgot-password.html" class="sub-menu-item"> Forgot Password</a></li>
-                        <li><a href="lock-screen.html" class="sub-menu-item"> Lock Screen</a></li>
-                    </ul>
-                </li>
-
-                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Utility </a><span
-                        class="submenu-arrow"></span>
-                    <ul class="submenu">
-                        <li><a href="terms.html" class="sub-menu-item">Terms of Services</a></li>
-                        <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)"> About Us </a><span
                 class="menu-arrow"></span>
             <ul class="submenu">
@@ -52,6 +18,15 @@
         </li>
 
         {{-- <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li> --}}
+
+        <li class="has-submenu parent-parent-menu-item">
+            <a href="javascript:void(0)"> {{ App::getLocale() === 'vi' ? __('messages.system.lang.vi') : __('messages.system.lang.en') }} </a>
+            <span class="menu-arrow"></span>
+            <ul class="submenu">
+                <li><a href="#" class="sub-menu-item dropdown-item" data-language="en">{{ __('messages.system.lang.en') }}</a></li>
+                <li><a href="#" class="sub-menu-item dropdown-item" data-language="vi">{{ __('messages.system.lang.vi') }}</a></li>
+            </ul>
+        </li>
 
         @if (Auth::check())
         <li class="has-submenu parent-parent-menu-item active">
@@ -82,3 +57,5 @@
     </ul>
     <!--end navigation menu-->
 </div>
+
+<script src="{{ asset('frontend/assets/custom/js/set-language.js') }}"></script>
