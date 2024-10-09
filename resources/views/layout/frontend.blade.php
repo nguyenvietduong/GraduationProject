@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light scroll-smooth" dir="ltr">
+<html lang="en" class="{{ session('theme', 'light') }} scroll-smooth" dir="ltr">
 
 <!-- Mirrored from shreethemes.in/veganfry/layouts/restaurant-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Sep 2024 13:56:06 GMT -->
 
