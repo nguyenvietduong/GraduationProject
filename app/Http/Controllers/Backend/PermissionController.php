@@ -40,7 +40,6 @@ class PermissionController extends Controller
      */
     public function index(PermissionListRequest $request)
     {
-        $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
