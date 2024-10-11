@@ -19,7 +19,7 @@ $segment = request()->segment(2);
                         <span>{{ __('messages.system.menu.adminDashboard') }}</span>
                     </a>
                 </li>
-
+                {{-- Account Management --}}
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
                         href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
@@ -68,15 +68,41 @@ $segment = request()->segment(2);
                         </ul>
                     </div>
                 </li>
-
                 <!-- Menu Management -->
-                <li class="nav-item {{ set_active(['menu']) }}">
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'menu') }}"
+                        href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarAccountManagement">
+                        <i class="fa fa-bars menu-icon"></i>
+                        <span>Menu Management</span>
+                    </a>
+                    <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
+                        id="sidebarAccountManagement">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['category'], 'active', 'menu') }}"
+                                    href="{{ route('admin.category.index') }}">
+                                    <i class="fas fa-list-ul"></i>
+                                    <span>Categories</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['menu'], 'active', 'menu') }}"
+                                    href="{{ route('admin.menu.index') }}">
+                                    <i class="fas fa-clipboard-list"></i> <!-- Thay đổi icon ở đây -->
+                                    <span>Menus</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {{-- <li class="nav-item {{ set_active(['menu']) }}">
                     <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
                         href="{{ route('admin.menu.index') }}">
                         <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
                         <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
                     </a>
-                </li>
+                </li> --}}
 
 
                 <li class="nav-item">

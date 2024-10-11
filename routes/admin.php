@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Account\AdminController;
 use App\Http\Controllers\Backend\Account\StaffController;
 use App\Http\Controllers\Backend\Account\UserController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
@@ -81,6 +82,7 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::post('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update');
             Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
         });
+
 
         Route::prefix('notification')->group(function () {
             Route::get('index', [NotificationController::class, 'index'])->name('admin.notification.index');
