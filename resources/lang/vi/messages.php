@@ -34,6 +34,7 @@ return [
             ],
         ],
         'alert' => [
+            'titleSuccess' => 'Thành công!',
             'success' => 'Thành công! Nhiệm vụ đã được hoàn thành.',
             'error' => [
                 'title' => 'Ôi...',
@@ -57,6 +58,36 @@ return [
             'menu' => 'Thực đơn'
 
         ],
+        'front_end' => [
+            'navbar' => [
+                'home' => 'Trang Chủ',
+                'reservation' => 'Đặt Chỗ',
+                'menu' => 'Thực Đơn',
+                'about_us' => [
+                    'title' => 'Về Chúng Tôi',
+                    'team' => 'Đội Ngũ',
+                    'contact_us' => 'Đánh giá',
+                ],
+            ],
+
+            'page' => [
+                'about_us' => [
+                    'contact_us' => [
+                        'titleHeader' => 'Đánh Giá',
+                        'title' => 'Đánh Giá',
+                        'phone' => 'Số Điện Thoại',
+                        'email' => 'Email',
+                        'location' => 'Địa Điểm',
+                        'form' => [
+                            'title' => 'Đánh Giá',
+                            'point' => 'Điểm Đánh Giá Của Bạn',
+                            'comment' => 'Nhận Xét Của Bạn',
+                            'sendMessage' => 'Gửi tin nhắn',
+                        ]
+                    ]
+                ]
+            ],
+        ],
         'no_data_available' => 'Không có dữ liệu',
         'start' => 'Bắt đầu',
         'end' => 'Kết thúc',
@@ -66,6 +97,16 @@ return [
         'setting' => 'Cài đặt',
         'login' => 'Đăng nhập',
         'logout' => 'Đăng xuất',
+        'notification' => [
+            'login' => [
+                'success' => 'Chào mừng trở lại',
+                'error' => 'Vui lòng đăng nhập',
+            ],
+            'logout' => [
+                'success' => 'Bạn đã đăng xuất.',
+                'error' => 'Bạn cần đăng nhập để truy cập trang này.',
+            ]
+        ],
         'adminPage' => 'Trang quản trị',
         'buttonPermission' => 'Phân quyền chức năng'
     ],

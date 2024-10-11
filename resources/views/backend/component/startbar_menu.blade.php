@@ -78,47 +78,34 @@ $segment = request()->segment(2);
                     </a>
                 </li>
 
-                <!-- Tag Management -->
-                {{-- <li class="nav-item {{ set_active(['tag']) }}">
-                    <a class="nav-link {{ set_active(['tag'], 'active') }}" href="{{ route('admin.tag.index') }}">
-                        <i class="fa fa-tag menu-icon"></i>
-                        <span>Tag</span>
-                    </a>
-                </li>
 
-                <!-- Post Management -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#sidebarPostManagement" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarPostManagement">
-                        <i class="fa fa-edit menu-icon"></i>
-                        <span>Post</span>
+                    <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
+                        href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarAccountManagement">
+                        <i class="fa fa-users menu-icon"></i>
+                        <span>System</span>
                     </a>
-                    <div class="collapse {{ set_active(['post', 'word'], 'show') }}" id="sidebarPostManagement">
+                    <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
+                        id="sidebarAccountManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['post'], 'active') }}"
-                                    href="{{ route('admin.post.index') }}">
-                                    <i class="fa fa-list menu-icon"></i>
-                                    <span>Post List</span>
+                                <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
+                                    href="{{ route('admin.notification.index') }}">
+                                    <i class="fa fa-bell menu-icon"></i>
+                                    <span>Notification</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['admin.word.index']) }}"
-                                    href="{{ route('admin.word.index') }}">
-                                    <i class="fa fa-exclamation-triangle menu-icon"></i>
-                                    <span>Words Are Banned</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ set_active(['admin.comment.index']) }}"
-                                    href="{{ route('admin.comment.index') }}">
-                                    <i class="fa fa-comments menu-icon"></i>
-                                    <span>Comment</span>
+                                <a class="nav-link "
+                                    href="">
+                                    <i class="fas fa-user-friends menu-icon"></i> <!-- Thay đổi icon ở đây -->
+                                    <span>Staffs</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                </li> --}}
+                </li>
             </ul>
             <!--end navbar-nav-->
         </div>

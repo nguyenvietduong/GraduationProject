@@ -28,7 +28,7 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepositoryInt
     }
 
     /**
-     * Get a paginated list of Roles with optional search functionality.
+     * Get a paginated list of Reviews with optional search functionality.
      *
      * @param array $filters
      * @param int $perPage

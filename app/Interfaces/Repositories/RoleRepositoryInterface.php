@@ -7,7 +7,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface RoleRepositoryInterface extends RepositoryInterface
 {
     /**
-     * Get a paginated list of Roles with optional search functionality.
+     * Get a paginated list of Reviews with optional search functionality.
      *
      * @param array $filters
      * @param int $perPage

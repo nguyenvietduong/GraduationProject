@@ -34,6 +34,7 @@ return [
             ],
         ],
         'alert' => [
+            'titleSuccess' => 'Success!',
             'success' => 'Success! The task has been completed.',
             'error' => [
                 'title' => 'Oops...',
@@ -56,6 +57,36 @@ return [
             'adminDashboard' => 'Admin Dashboard',
             'menu' => 'Menu'
         ],
+        'front_end' => [
+            'navbar' => [
+                'home' => 'Home',
+                'reservation' => 'Reservation',
+                'menu' => 'Menu',
+                'about_us' => [
+                    'title' => 'About Us',
+                    'team' => 'Team',
+                    'contact_us' => 'Reviews',
+                ],
+            ],
+
+            'page' => [
+                'about_us' => [
+                    'contact_us' => [
+                        'titleHeader' => 'Reviews',
+                        'title' => 'Reviews',
+                        'phone' => 'Phone',
+                        'email' => 'Email',
+                        'location' => 'Location',
+                        'form' => [
+                            'title' => 'Reviews',
+                            'point' => 'Your Point',
+                            'comment' => 'Your Comment',
+                            'sendMessage' => 'Send Message',
+                        ]
+                    ]
+                ]
+            ],
+        ],
         'no_data_available' => 'No data available',
         'start' => 'Start',
         'end' => 'End',
@@ -65,6 +96,16 @@ return [
         'setting' => 'Settings',
         'login' => 'Login',
         'logout' => 'Logout',
+        'notification' => [
+            'login' => [
+                'success' => 'Welcome back',
+                'error' => 'Please login',
+                'errorNotLogin' => 'You need to log in to access this page.',
+            ],
+            'logout' => [
+                'success' => 'You have been logged out.',
+            ]
+        ],
         'adminPage' => 'Admin Page'
     ],
 
@@ -93,30 +134,31 @@ return [
         '4' => '“Good things come to those who wait, but only the things left by those who hustle.” - Abraham Lincoln',
         '5' => '“The only thing standing between you and your dream is the willingness to work for it.” - Joel Brown',
     ],
-    // Fields for menu
-    'menu' => [
-        'title' => 'Menu',
+    // Fields for notification
+    'notification' => [
+        'title' => 'Notification',
         'fields' => [
-            'name' => 'Menu Name',
-            'parent_id' => 'Parent Menu',
+            'user_id' => 'Notifier',
+            'title' => 'Title',
+            'message' => 'Message',
         ],
         'index' => [
-            'route' => 'admin.menu.index',
+            'route' => 'admin.notification.index',
         ],
         'create' => [
-            'route' => 'admin.menu.create',
+            'route' => 'admin.notification.create',
         ],
         'store' => [
-            'route' => 'admin.menu.store',
+            'route' => 'admin.notification.store',
         ],
         'edit' => [
-            'route' => 'admin.menu.edit',
+            'route' => 'admin.notification.edit',
         ],
         'update' => [
-            'route' => 'admin.menu.update',
+            'route' => 'admin.notification.update',
         ],
         'destroy' => [
-            'route' => 'admin.menu.destroy',
+            'route' => 'admin.notification.destroy',
         ],
     ],
     // Fields for Role

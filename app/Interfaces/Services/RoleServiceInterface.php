@@ -5,7 +5,7 @@ namespace App\Interfaces\Services;
 interface RoleServiceInterface
 {
     /**
-     * Get a paginated list of Roles with optional filters.
+     * Get a paginated list of Reviews with optional filters.
      *
      * @param array $filters
      * @param int $perPage

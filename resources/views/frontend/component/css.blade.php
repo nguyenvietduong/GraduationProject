@@ -1,6 +1,6 @@
 <!-- favicon -->
 <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favicon.ico') }}">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Css -->
 <link href="{{ asset('frontend/assets/libs/tiny-slider/tiny-slider.css') }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/libs/tobii/css/tobii.min.css') }}" rel="stylesheet">
@@ -14,3 +14,15 @@
 
 <!-- Include jQuery (if not already included) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- resources/views/layouts/app.blade.php -->
+<meta name="user-id" content="{{ Auth::id() }}">
+
+@vite('resources/js/checkUserSession.js')
+
