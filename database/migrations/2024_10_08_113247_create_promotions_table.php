@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('code')->nullable();
             $table->enum('type',  ['percentage', 'fixed']);
-            $table->integer('total')->default(0); // Số lần được dùng 
+            $table->integer('total')->default(1); // Số lần được dùng
             $table->decimal('min_order_value', 5, 2)->default(0);
             $table->decimal('max_discount', 5, 2)->nullable();
             $table->decimal('discount', 5, 2);
