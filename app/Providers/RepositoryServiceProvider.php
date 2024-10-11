@@ -18,7 +18,8 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Interfaces\Repositories\RoleRepositoryInterface::class => \App\Repositories\RoleRepositoryEloquent::class,
             \App\Interfaces\Repositories\CategoryRepositoryInterface::class => \App\Repositories\CategoryRepositoryEloquent::class,
             \App\Interfaces\Repositories\PermissionRepositoryInterface::class => \App\Repositories\PermissionRepositoryEloquent::class,
-            \App\Interfaces\Repositories\MenuRepositoryInterface::class => \App\Repositories\MenuRepositoryEloquent::class,
+            \App\Interfaces\Repositories\NotificationRepositoryInterface::class => \App\Repositories\NotificationRepositoryEloquent::class,
+            \App\Interfaces\Repositories\ReviewRepositoryInterface::class => \App\Repositories\ReviewRepositoryEloquent::class,
         ];
 
         foreach ($repositories as $interface => $implementation) {
