@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\TempImageServiceInterface' => 'App\Services\TempImageService',
             'App\Services\BaseService',
             'App\Interfaces\Services\AccountServiceInterface' => 'App\Services\AccountService',
+            'App\Interfaces\Services\CategoryServiceInterface' => 'App\Services\CategoryService',
             'App\Interfaces\Services\RoleServiceInterface' => 'App\Services\RoleService',
             'App\Interfaces\Services\PermissionServiceInterface' => 'App\Services\PermissionService',
             'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',

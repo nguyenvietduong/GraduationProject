@@ -1,29 +1,29 @@
-@extends('layout.admin')
+@extends('layout.backend')
 @section('adminContent')
     <div class="container-xxl">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-12">
+                @include('backend.component.card-component', [
+                    'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
+                    'totalRecords' => $categoryTotalRecords,
+                    'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
+                    'permission' => TRUE,
+                ])
+
+                <div class="card-body pt-0">
+                    @include('backend.component.filter', [
+                        'object' => $object,
+                    ])
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h4 class="card-title">{{ $config['seo']['index']['table'] }} ({{ $categories_back->count() }})</h4>
-                            </div><!--end col-->
-
-                            <div class="col-auto">
-                                {{-- Filter --}}
-                                @include('backend.category.component.filter')
-                            </div><!--end col-->
-                        </div><!--end row-->
-                    </div><!--end card-header-->
-
-                    <div class="card-body pt-0">
-                        <div class="table-responsive">
-                            @include('backend.category.component.table')
-                        </div>
+                    <div class="table-responsive">
+                        @include('backend.category.component.table.table')
                     </div>
                 </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
-    </div><!-- container -->
+            </div>
+        </div>
+    </div>
 @endsection

@@ -65,7 +65,8 @@ return [
         'setting' => 'Settings',
         'login' => 'Login',
         'logout' => 'Logout',
-        'adminPage' => 'Admin Page'
+        'adminPage' => 'Admin Page',
+        'buttonPermission' => 'Authorize'
     ],
 
     'welcome' => 'Welcome to our application!',
@@ -117,6 +118,32 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.menu.destroy',
+        ],
+    ],
+    // Fields for Category
+    'category' => [
+        'title' => 'Category',
+        'fields' => [
+            'name' => 'Category Name',
+            'slug' => 'Slug',
+        ],
+        'index' => [
+            'route' => 'admin.category.index',
+        ],
+        'create' => [
+            'route' => 'admin.category.create',
+        ],
+        'store' => [
+            'route' => 'admin.category.store',
+        ],
+        'edit' => [
+            'route' => 'admin.category.edit',
+        ],
+        'update' => [
+            'route' => 'admin.category.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.category.destroy',
         ],
     ],
     // Fields for Role
