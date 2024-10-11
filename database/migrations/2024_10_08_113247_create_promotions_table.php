@@ -15,10 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('total')->default(0);
-            $table->decimal('discount', 5, 2);  // Giảm giá theo %
+            $table->string('code')->nullable();
+            $table->enum('type',  ['percentage', 'fixed']);
+            $table->integer('total')->default(0); // Số lần được dùng 
+            $table->decimal('min_order_value', 5, 2)->default(0);
+            $table->decimal('max_discount', 5, 2)->nullable();
+            $table->decimal('discount', 5, 2);
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

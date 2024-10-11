@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\SetTheme::class,
+            \App\Http\Middleware\CheckUserSession::class,
         ],
 
         'api' => [
@@ -73,5 +74,5 @@ class Kernel extends HttpKernel
         // Các middleware khác...
         'permission' => \App\Http\Middleware\CheckPermission::class,
     ];
-    
+
 }

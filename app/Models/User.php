@@ -25,6 +25,9 @@ class User extends Authenticatable
         'status',
         'code_sent',
         'role_id',
+        'session_id',
+        'provider',
+        'provider_id',
     ];
 
     protected $hidden = [

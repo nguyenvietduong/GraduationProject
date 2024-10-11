@@ -99,7 +99,7 @@ class RoleSeeder extends Seeder
             [
                 'full_name' => 'Người dùng',
                 'phone' => '012345678',
-                'email' => 'nguyenthihuong.qc2004@gmail.com',
+                'email' => 'user0@example.com',
                 'password' => Hash::make('012345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
                 'role_id' => 3, // Giả định rằng bạn đã có một role với ID = 2
