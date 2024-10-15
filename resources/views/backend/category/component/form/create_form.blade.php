@@ -1,3 +1,4 @@
+
 <form id="myForm" class="p-4 pt-3" action="{{ route(__('messages.' . $object . '.store.route')) }}" method="post">
     @csrf
 

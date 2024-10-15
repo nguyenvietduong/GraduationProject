@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Account\AdminController;
 use App\Http\Controllers\Backend\Account\StaffController;
 use App\Http\Controllers\Backend\Account\UserController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
@@ -73,14 +74,15 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{permission}/destroy', [PermissionController::class, 'destroy'])->where('permission', '[0-9]+')->name('admin.permission.destroy');
         });
 
-        // Menu Management
-        Route::prefix('menu')->group(function () {
-            Route::get('index', [MenuController::class, 'index'])->name('admin.menu.index');
-            Route::get('create', [MenuController::class, 'create'])->name('admin.menu.create');
-            Route::post('store', [MenuController::class, 'store'])->name('admin.menu.store');
-            Route::get('{id}/edit', [MenuController::class, 'edit'])->where('id', '[0-9]+')->name('admin.menu.edit');
-            Route::post('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update');
-            Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
+        Route::prefix('blog')->group(function () {
+            Route::get('index', [BlogController::class, 'index'])->name('admin.blog.index');
+            Route::get('create', [BlogController::class, 'create'])->name('admin.blog.create');
+            Route::post('store', [BlogController::class, 'store'])->name('admin.blog.store');
+            Route::get('{id}/edit', [BlogController::class, 'edit'])->where('id', '[0-9]+')->name('admin.blog.edit');
+            Route::put('{id}/update', [BlogController::class, 'update'])->where('id', '[0-9]+')->name('admin.blog.update');
+            Route::delete('{id}/destroy', [BlogController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.blog.destroy');
+            Route::get('permission', [BlogController::class, 'permission'])->name('admin.blog.permission');
+            Route::post('updatePermission', [BlogController::class, 'updatePermission'])->name('admin.blog.updatePermission');
         });
         // Category Management
         Route::prefix('category')->group(function () {
@@ -91,7 +93,6 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::post('{id}/update', [CategoryController::class, 'update'])->where('id', '[0-9]+')->name('admin.category.update');
             Route::delete('{id}/destroy', [CategoryController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.category.destroy');
         });
-
 
         Route::prefix('notification')->group(function () {
             Route::get('index', [NotificationController::class, 'index'])->name('admin.notification.index');

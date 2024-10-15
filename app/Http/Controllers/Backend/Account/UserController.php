@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Backend\Account;
 
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\AccountServiceInterface;
 use App\Interfaces\Services\TempImageServiceInterface;
+use App\Interfaces\Services\NotificationServiceInterface;
 use App\Interfaces\Repositories\AccountRepositoryInterface;
 use App\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 // Requests
 use App\Http\Requests\BackEnd\Accounts\ListRequest as AccountListRequest;
@@ -20,6 +24,7 @@ class UserController extends Controller
 
     protected $accountService;
     protected $tempImageService;
+    private $notificationService;
     protected $accountRepository;
     protected $roleRepository;
 
@@ -32,11 +37,13 @@ class UserController extends Controller
     public function __construct(
         AccountServiceInterface $accountService,
         TempImageServiceInterface $tempImageService,
+        NotificationServiceInterface $notificationService,
         AccountRepositoryInterface $accountRepository,
         RoleRepositoryInterface $roleRepository,
     ) {
         $this->accountService = $accountService;
         $this->tempImageService = $tempImageService;
+        $this->notificationService = $notificationService;
         $this->accountRepository = $accountRepository;
         $this->roleRepository = $roleRepository;
     }
@@ -81,7 +88,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'dataRole' => $this->roleRepository->pluck('name', 'id'),
@@ -145,11 +152,36 @@ class UserController extends Controller
         $data = $request->all();
 
         try {
+            // Gửi thông báo chung
+            $title = 'Account';
+            $message = 'edited account!';
+
+            Log::info('Starting update process for account ID: ' . $id); // Log thông tin
+
+            event(new NotificationEvent($title, $message, 'info', Auth::user()->full_name));
+            // dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Thay thế 'info' và $review nếu cần
+
+            $dataNotification = [
+                'user_id' => Auth::user()->id,  // ID của người gửi thông báo
+                'title' => $title,
+                'message' => $message,
+            ];
+
+            Log::info('Preparing notification data: ', $dataNotification); // Log thông tin
+
+            $this->notificationService->createNotification($dataNotification);
+
             // Cập nhật người dùng
+            Log::info('Updating account with data: ', $data); // Log thông tin
+
             $this->accountService->updateAccount($id, $data);
+
+            Log::info('Account updated successfully for user ID: ' . $id); // Log khi thành công
 
             return redirect()->back()->with('success', 'Người dùng đã được cập nhật thành công');
         } catch (\Exception $e) {
+            Log::error('Error updating account: ' . $e->getMessage()); // Ghi log chi tiết lỗi
+            Log::error('Exception trace: ', ['trace' => $e->getTraceAsString()]); // Log thêm trace để chi tiết hơn về lỗi
 
             return redirect()->back()->with('error', $e->getMessage());
         }

@@ -2,11 +2,9 @@
     <thead class="table-light">
         <tr>
             <th style="width: 16px;">
-                <div class="form-check mb-0 ms-n1">
-                    <input type="checkbox" class="form-check-input" name="select-all" id="select-all">
-                </div>
+                <div class="form-check mb-0 ms-n1"></div>
             </th>
-            <th class="ps-0">#</th>
+            <th class="ps-0" style="width: 16px;">#</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.user_id') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.title') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.message') }}</th>
@@ -19,10 +17,7 @@
         @foreach ($notificationDatas as $item)
         <tr>
             <td style="width: 16px;">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" value="{{ $item->id }}" name="check"
-                        id="customCheck{{ $item->id }}">
-                </div>
+                <div class="form-check"></div>
             </td>
             <td class="ps-0">
                 {{ $item->id ?? __('messages.system.no_data_available') }}
