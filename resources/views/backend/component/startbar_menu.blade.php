@@ -82,14 +82,14 @@ $segment = request()->segment(2);
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['category'], 'active', 'menu') }}"
                                     href="{{ route('admin.category.index') }}">
-                                    <i class="fas fa-list-ul"></i>
+                                    <i class="fa fa-list menu-icon"></i>
                                     <span>Categories</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['menu'], 'active', 'menu') }}"
                                     href="{{ route('admin.menu.index') }}">
-                                    <i class="fas fa-clipboard-list"></i> <!-- Thay đổi icon ở đây -->
+                                    <i class="fa fa-utensils menu-icon"></i> <!-- Thay đổi icon ở đây -->
                                     <span>Menus</span>
                                 </a>
                             </li>
