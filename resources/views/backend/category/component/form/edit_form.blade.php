@@ -1,4 +1,3 @@
-
 <form id="myForm" class="p-4 pt-3" action="{{ route('admin.' . $object . '.update', $categoryData->id) }}"
     method="post">
     @csrf
