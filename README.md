@@ -4,7 +4,6 @@ Nếu Ai dùng Docker thì hãng dùng 2 dòng dưới này nha
 docker-compose up -d
 docker-compose exec php bash (Nếu lỗi ở windows có thể phải thêm winpty vào đầu)
 
-
 cp .env.example .env
 composer install
 php artisan key:generate

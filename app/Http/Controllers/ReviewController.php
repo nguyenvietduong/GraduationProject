@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Interfaces\Services\NotificationServiceInterface;
 use App\Interfaces\Services\ReviewServiceInterface;
 use App\Interfaces\Repositories\ReviewRepositoryInterface;
@@ -69,7 +70,8 @@ class ReviewController extends Controller
             $title = 'Review';
             $message = 'A new review has been added!';
 
-            dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Thay thế 'info' và $review nếu cần
+            event(new NotificationEvent($title, $message, 'info', Auth::user()->full_name));
+            // dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Thay thế 'info' và $review nếu cần
 
             $data = [
                 'user_id'   => $data['user_id'],  // ID của người gui thông báo

@@ -43,7 +43,7 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%')
+                $q->where('full_name', 'like', '%' . $filters['search'] . '%')
                     ->orWhere('email', 'like', '%' . $filters['search'] . '%')
                     ->orWhere('phone', 'like', '%' . $filters['search'] . '%')
                     ->orWhere('address', 'like', '%' . $filters['search'] . '%');
