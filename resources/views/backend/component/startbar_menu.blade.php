@@ -1,6 +1,6 @@
 @php
-$segment = request()->segment(2);
-// dd($segment)
+    $segment = request()->segment(2);
+    // dd($segment)
 @endphp
 <!--start startbar-menu-->
 <div class="startbar-menu">
@@ -70,17 +70,15 @@ $segment = request()->segment(2);
                     </div>
                 </li>
 
-
                 <!-- System -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                        href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}" href="#sidebarSystemManagement"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarSystemManagement">
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
                         <span>Menu</span>
                     </a>
-                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}"
-                        id="sidebarSystemManagement">
+                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarSystemManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
@@ -106,15 +104,6 @@ $segment = request()->segment(2);
                         </ul>
                     </div>
                 </li>
-<<<<<<< HEAD
-                {{-- <li class="nav-item {{ set_active(['menu']) }}">
-                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                        href="{{ route('admin.menu.index') }}">
-                        <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
-                        <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
-                    </a>
-                </li> --}}
-
 
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
@@ -125,9 +114,7 @@ $segment = request()->segment(2);
                     </a>
                     <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
                         id="sidebarAccountManagement">
-=======
-
-                <!-- Blog -->
+                        <!-- Blog -->
                 <li class="nav-item {{ set_active(['blog']) }}">
                     <a class="nav-link" href="{{ route('admin.blog.index') }}">
                         <i class="fa fa-newspaper menu-icon"></i>
@@ -145,20 +132,12 @@ $segment = request()->segment(2);
                     </a>
                     <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
                         id="sidebarSystemManagement">
->>>>>>> dee511a4a8dd018461376b7d9fbc04cddd81bb08
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
                                     href="{{ route('admin.notification.index') }}">
                                     <i class="fa fa-bell menu-icon"></i>
                                     <span>Notification</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link "
-                                    href="">
-                                    <i class="fas fa-user-friends menu-icon"></i> <!-- Thay đổi icon ở đây -->
-                                    <span>Staffs</span>
                                 </a>
                             </li>
                         </ul>
