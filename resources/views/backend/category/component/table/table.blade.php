@@ -1,4 +1,3 @@
-
 <table border="1" class="table mb-0 checkbox-all table-centered table-hover">
     <thead class="table-light">
         <tr>
