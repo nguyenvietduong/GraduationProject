@@ -19,6 +19,7 @@ $segment = request()->segment(2);
                         <span>{{ __('messages.system.menu.adminDashboard') }}</span>
                     </a>
                 </li>
+
                 {{-- Account Management --}}
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
@@ -40,7 +41,7 @@ $segment = request()->segment(2);
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['staff'], 'active', 'admin') }}"
                                     href="{{ route('admin.staff.index') }}">
-                                    <i class="fas fa-user-friends menu-icon"></i> <!-- Thay đổi icon ở đây -->
+                                    <i class="fas fa-user-friends menu-icon"></i>
                                     <span>Staffs</span>
                                 </a>
                             </li>
@@ -68,22 +69,31 @@ $segment = request()->segment(2);
                         </ul>
                     </div>
                 </li>
-                <!-- Menu Management -->
+
+
+                <!-- System -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'menu') }}"
-                        href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                        aria-controls="sidebarAccountManagement">
-                        <i class="fa fa-bars menu-icon"></i>
-                        <span>Menu Management</span>
+                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
+                        href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarSystemManagement">
+                        <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
+                        <span>Menu</span>
                     </a>
-                    <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
-                        id="sidebarAccountManagement">
+                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}"
+                        id="sidebarSystemManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['category'], 'active', 'menu') }}"
+                                <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
                                     href="{{ route('admin.category.index') }}">
                                     <i class="fa fa-list menu-icon"></i>
-                                    <span>Categories</span>
+                                    <span>Category</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['Menu'], 'active', 'admin') }}"
+                                    href="{{ route('admin.menu.index') }}">
+                                    <i class="fa fa-utensils menu-icon"></i>
+                                    <span>Menu</span>
                                 </a>
                             </li>
                             {{-- <li class="nav-item">
@@ -96,6 +106,7 @@ $segment = request()->segment(2);
                         </ul>
                     </div>
                 </li>
+<<<<<<< HEAD
                 {{-- <li class="nav-item {{ set_active(['menu']) }}">
                     <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
                         href="{{ route('admin.menu.index') }}">
@@ -114,6 +125,27 @@ $segment = request()->segment(2);
                     </a>
                     <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
                         id="sidebarAccountManagement">
+=======
+
+                <!-- Blog -->
+                <li class="nav-item {{ set_active(['blog']) }}">
+                    <a class="nav-link" href="{{ route('admin.blog.index') }}">
+                        <i class="fa fa-newspaper menu-icon"></i>
+                        <span>Blog</span>
+                    </a>
+                </li>
+
+                <!-- System -->
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
+                        href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarSystemManagement">
+                        <i class="fa fa-cogs menu-icon"></i>
+                        <span>System</span>
+                    </a>
+                    <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
+                        id="sidebarSystemManagement">
+>>>>>>> dee511a4a8dd018461376b7d9fbc04cddd81bb08
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
