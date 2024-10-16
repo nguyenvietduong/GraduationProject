@@ -57,8 +57,8 @@ return [
             'menu' => 'Menu'
         ],
         'no_data_available' => 'No data available',
-        'start' => 'Start',
-        'end' => 'End',
+        'start' => 'Start to',
+        'end' => 'End from',
         'status' => 'Status',
         'account' => 'Account',
         'profile' => 'Profile',
@@ -97,9 +97,17 @@ return [
     // Fields for menu
     'menu' => [
         'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Price to",
+            "end_price" => "Price from"
+        ],
         'fields' => [
             'name' => 'Menu Name',
-            'parent_id' => 'Parent Menu',
+            'slug' => 'Menu Slug',
+            'description' => 'Menu Description',
+            'price' => 'Menu Price ( USD )',
+            'category_id' => 'Category ID',
+            'image_url' => 'Menu Image',
         ],
         'index' => [
             'route' => 'admin.menu.index',

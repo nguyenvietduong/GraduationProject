@@ -3,6 +3,11 @@
 namespace App\Http\Requests\Backend\Menus;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class StoreRequest extends FormRequest
 {
@@ -24,7 +29,12 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:roles',
+            'name' => 'required|string',
+            'slug' => 'required|string|unique:menus',
+            'price' => 'required|numeric|between:0,99999999.99',
+            'description' => 'nullable',
+            'category_id' => 'required|integer|exists:categories,id',
+            'image_url' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
     }
 
@@ -35,8 +45,54 @@ class StoreRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return [
-            'name' => 'role name', // This will replace 'name' in error messages
-        ];
+        if(app()->getLocale() !== "en"){
+            return [
+                'name' => 'tên món ăn',
+                "slug" => "dường dẫn",
+                'price' => 'giá',
+                'description' => 'mô tả',
+                'category_id' => 'danh mục',
+                'image_url' => 'ảnh',
+            ];
+        }
+        return [];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        // Check if an image was uploaded
+        if ($this->hasFile('image')) {
+            $image = $this->file('image');
+
+            // Ensure the admin is authenticated
+            if (Auth::check()) {
+                $adminId = Auth::user()->id; // Get the authenticated admin ID
+
+                // Generate a unique file name
+                $fileName = $this->generateUniqueFileName($image);
+
+                // Define the directory path
+                $directory = "temp_images/{$adminId}";
+                $filePath = "{$directory}/{$fileName}";
+
+                // Store the file in the temp_images folder
+                Storage::put($filePath, file_get_contents($image->getRealPath()));
+
+                // Save the file path in session
+                session(['image_temp' => $filePath]);
+            }
+        }
+
+        // Redirect back with validation errors and input
+        throw new HttpResponseException(
+            redirect()->back()->withErrors($validator)->withInput()
+        );
+    }
+
+    private function generateUniqueFileName(UploadedFile $file): string
+    {
+        $timestamp = time();
+        $extension = $file->getClientOriginalExtension();
+        $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        return "{$fileName}_{$timestamp}.{$extension}";
     }
 }

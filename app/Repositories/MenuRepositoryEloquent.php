@@ -37,17 +37,34 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
     public function getAllMenus(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
-
+        // dd($filters['priceFilter']);
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
                 $q->where('name', 'like', '%' . $filters['search'] . '%');
             });
         }
+        if (!empty($filters['start_date'])) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
 
-        // Sort by creation date (latest first)
-        $query->orderBy('created_at', 'desc');
+        if (!empty($filters['end_date'])) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
 
+        if(app()->getLocale() !== 'en'){
+            $filters['start_price'] =  $filters['start_price']/24000;
+            $filters['end_price'] =  $filters['end_price']/24000;
+        }
+
+        if ($filters['start_price'] && !$filters['end_price']) {
+            $query->where("price", ">=", $filters['start_price']);
+        } elseif (!$filters['start_price'] && $filters['end_price']) {
+            $query->where("price", "<=", $filters['end_price']);
+        } elseif ($filters['start_price'] && $filters['end_price']) {
+            $query->whereBetween("price", [$filters['start_price'], $filters['end_price']]);
+        }
+        $query->orderBy('id', 'desc');
         // Paginate results
         return $query->paginate($perPage);
     }

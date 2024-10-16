@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function index(CategoryListRequest $request)
     {
-        $this->authorize('modules', '' . self::OBJECT . '.index');
+        // $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();

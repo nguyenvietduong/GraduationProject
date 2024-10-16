@@ -4,13 +4,16 @@ namespace App\Services;
 
 use App\Interfaces\Repositories\MenuRepositoryInterface;
 use App\Interfaces\Services\MenuServiceInterface;
+use App\Interfaces\Services\ImageServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 
 class MenuService extends BaseService implements MenuServiceInterface
 {
     protected $menuRepository;
-
+    protected $imageService;
     /**
      * Create a new instance of MenuService.
      *
@@ -18,8 +21,10 @@ class MenuService extends BaseService implements MenuServiceInterface
      */
     public function __construct(
         MenuRepositoryInterface $menuRepository,
+        ImageServiceInterface $imageService
     ) {
         $this->menuRepository = $menuRepository;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -70,9 +75,48 @@ class MenuService extends BaseService implements MenuServiceInterface
     public function createMenu(array $data)
     {
         try {
-            return $this->menuRepository->createMenu($data);
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to create menu: ' . $e->getMessage());
+            // Hash the password before storing it
+            $image = null;
+            if($data["currency"] == "VND") {
+                $data["price"] = $data["price"]/24000;
+            }
+            // Handle image upload from the request if present
+            if (isset($data['image_url'])) {
+                $data['image_url'] = $this->imageService->storeImage('menu_files', $data['image_url']);
+            } elseif (session('image_temp')) {
+                // Handle temporary image if session data exists
+                $tempImageName = session('image_temp');
+                $tempImagePath = $tempImageName;
+
+                // Check if the temporary image exists in storage
+                if (Storage::exists($tempImagePath)) {
+                    $fullTempImagePath = Storage::path($tempImagePath);
+                    $image = new UploadedFile(
+                        $fullTempImagePath,
+                        $tempImageName,
+                        null,
+                        null,
+                        true
+                    );
+
+                    // Store the image in S3 and delete the temporary image
+                    $data['image_url'] = $this->imageService->storeImage('account_files', $image);
+                    $this->imageService->deleteImage($tempImagePath);
+                } else {
+                    dd('Temp file does not exist in local storage.'); // Debugging statement for missing temp file
+                }
+            }
+            // Tạo một tài khoản mới bằng cách sử dụng repository
+            $this->menuRepository->createMenu($data);
+        } catch (Exception $e) {
+            // Xóa tài khoản vừa tạo nếu có lỗi
+            if (isset($menu) && $menu) {
+                $menu->delete(); // Xóa tài khoản
+            }
+
+            // Handle image storage exceptions
+            $this->imageService->handleImageException($e, $data);
+            throw new Exception('Unable to create account: ' . $e->getMessage());
         }
     }
 
@@ -87,6 +131,14 @@ class MenuService extends BaseService implements MenuServiceInterface
     public function updateMenu(int $id, array $data)
     {
         try {
+            if($data["currency"] == "VND") {
+                $data["price"] = $data["price"]/24000;
+            }
+            if(isset($data['image_url'])) {
+                $data['image_url'] = $this->imageService->storeImage('menu_files', $data['image_url']);
+            }else{
+                $data['image_url'] = $data["image_old"];
+            }
             return $this->menuRepository->updateMenu($id, $data);
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Menu not found with ID: ' . $id);

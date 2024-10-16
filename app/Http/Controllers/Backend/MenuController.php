@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\Backend\MenuDataTable;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
 use App\Interfaces\Services\MenuServiceInterface;
 use App\Interfaces\Repositories\MenuRepositoryInterface;
+use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
+use Illuminate\Support\Str;
 
 // Requests
 use App\Http\Requests\BackEnd\Menus\ListRequest as MenuListRequest;
@@ -21,6 +22,7 @@ class MenuController extends Controller
 
     protected $menuService;
     protected $menuRepository;
+    protected $categoryRepository;
 
     protected $permissionRepository;
 
@@ -32,10 +34,13 @@ class MenuController extends Controller
     public function __construct(
         MenuServiceInterface $menuService,
         MenuRepositoryInterface $menuRepository,
+        CategoryRepositoryInterface $categoryRepository,
         PermissionRepository $permissionRepository,
+
     ) {
         $this->menuService = $menuService;
         $this->menuRepository = $menuRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->permissionRepository = $permissionRepository;
     }
 
@@ -59,11 +64,12 @@ class MenuController extends Controller
             'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
             'start_date' => $params['start_date'] ?? '',
             'end_date' => $params['end_date'] ?? '',
+            'start_price' => $params['start_price'] ?? 0,
+            'end_price' => $params['end_price'] ?? 0,
         ];
 
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
-
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'menuTotalRecords' => $this->menuRepository->count(), // Total records for display
@@ -78,9 +84,10 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $this->authorize('modules', 'edit accounts');
+        // $this->authorize('modules', 'edit accounts');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'menu',
+            "categories" => $this->categoryRepository->getAllCategories()
         ]);
     }
 
@@ -94,6 +101,7 @@ class MenuController extends Controller
     {
         // Validate the data from the request using MenuStoreRequest
         $data = $request->validated();
+        $data["currency"] = $request->currency;
         try {
             // Create a new menu
             $this->menuService->createMenu($data);
@@ -117,6 +125,7 @@ class MenuController extends Controller
             return view(self::PATH_VIEW . __FUNCTION__, [
                 'menuData' => $menu,
                 'object' => 'menu',
+                "categories" => $this->categoryRepository->getAllCategories()
             ]);
         }
 
@@ -134,7 +143,8 @@ class MenuController extends Controller
     {
         // Validate the data from the request using MenuUpdateRequest
         $data = $request->validated();
-
+        $data["currency"] = $request->currency;
+        $data["image_old"] = $request->get("image_old");
         try {
             // Update the menu
             $this->menuService->updateMenu($id, $data);

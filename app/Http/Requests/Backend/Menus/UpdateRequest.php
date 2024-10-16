@@ -25,7 +25,12 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:255|unique:roles,name,' . $this->id,
+            'name' => 'required|string',
+            'slug' => 'required|string|unique:menus,slug,'.$this->id,
+            'price' => 'required|numeric|between:0,99999999.99',
+            'description' => 'nullable',
+            'category_id' => 'required|integer|exists:categories,id',
+            'image_url' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
     }
 
@@ -36,8 +41,15 @@ class UpdateRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return [
-            'name' => 'role name', // This will replace 'name' in error messages
-        ];
+        if(app()->getLocale() !== "en"){
+            return [
+                'name' => 'tên món ăn',
+                'price' => 'giá',
+                'description' => 'mô tả',
+                'category_id' => 'danh mục',
+                'image_url' => 'ảnh',
+            ];
+        }
+        return [];
     }
 }

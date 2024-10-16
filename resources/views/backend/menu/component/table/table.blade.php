@@ -8,8 +8,11 @@
             </th>
             <th class="ps-0">#</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.name') }}</th>
+            <th class="ps-0" width="20%">{{ __('messages.'. $object .'.fields.description') }}</th>
+            <th class="ps-0">{{ __('messages.'. $object .'.fields.price') }}</th>
+            <th class="ps-0">{{ __('messages.'. $object .'.fields.category_id') }}</th>
+            <th class="ps-0">{{ __('messages.'. $object .'.fields.image_url') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
-            <th>{{ __('messages.system.table.fields.updated_at') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
         </tr>
     </thead>
@@ -31,12 +34,29 @@
                     {{ $item->name ?? __('messages.system.no_data_available') }}
                 </p>
             </td>
-            <td>
-                <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available')
-                    }}</span>
+           
+            <td class="ps-0">
+                <p class="d-inline-block align-middle mb-0">
+                    {{ $item->description ?? __('messages.system.no_data_available') }}
+                </p>
+            </td>
+            <td class="ps-0">
+                <p class="d-inline-block align-middle mb-0">
+                    {{ (app()->getLocale() == 'en'?$item->price." $" : ($item->price*24000)." VND")?? __('messages.system.no_data_available') }}
+                </p>
+            </td>
+            <td class="ps-0">
+                <p class="d-inline-block align-middle mb-0">
+                    
+                    {{ $item->category->name ?? __('messages.system.no_data_available') }}
+                </p>
+            </td>
+            <td class="ps-0">
+               <img src="{{checkFile($item->image_url) }}" alt="Image" style="width:60px">
+
             </td>
             <td>
-                <span>{{ date('d/m/Y H:i:s', strtotime($item->updated_at)) ?? __('messages.system.no_data_available')
+                <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available')
                     }}</span>
             </td>
             <td>
@@ -45,10 +65,10 @@
                         <i class="fas fa-edit btn btn-primary btn-sm"></i>
                     </a>
                     <form action="{{ route(__('messages.' . $object . '.destroy.route'), $item->id) }}" method="post"
-                        class="d-inline-block" id="myForm">
+                        class="d-inline-block" id="myForm_{{$item->id}}">
                         @csrf
                         @method('DELETE')
-                        <button onclick="executeExample('handleDismiss', 'myForm')" type="button"
+                        <button onclick="executeExample('handleDismiss', 'myForm_{{$item->id}}')" type="button"
                             class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i>
                         </button>

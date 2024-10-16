@@ -240,6 +240,39 @@ return [
             ],
         ],
     ],
+    'menu' => [
+        'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Giá từ",
+            "end_price" => "Giá đến"
+        ],
+        'fields' => [
+            'name' => 'Tên món ăn',
+            'slug' => 'Đường dẫn',
+            'description' => 'Mô tả món ăn',
+            'price' => 'Giá món ăn ( VND )',
+            'category_id' => 'Danh mục',
+            'image_url' => 'Hình ảnh ',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
+    ],
 
     'version' => '<b>Phiên bản</b> :version',
     'copyright' => '<strong>Bản quyền © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> Tất cả các quyền được bảo lưu.',

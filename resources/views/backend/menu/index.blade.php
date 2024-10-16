@@ -7,7 +7,6 @@
                     'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
                     'totalRecords' => $menuTotalRecords,
                     'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
-                    'permission' => TRUE,
                 ])
 
                 <div class="card-body pt-0">
