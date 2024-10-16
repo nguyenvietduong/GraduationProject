@@ -27,12 +27,11 @@
 <link href="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('backend/assets/libs/animate.css/animate.min.css') }}" rel="stylesheet" type="text/css">
 
-{{-- <script>
-    window.editorConfig = {
-        uploadUrl: "{{ route('admin.upload') }}"
-        , csrfToken: "{{ csrf_token() }}"
-    };
+@if(Auth::check())
+    <script>
+        var userId = {{ auth()->id() }};
+    </script>
+@endif
 
-</script> --}}
-
+@vite('resources/js/sendNotificationJob.js')
 @stack('css')

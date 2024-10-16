@@ -4,7 +4,7 @@
     @method('PUT')
     <div class="form-group">
         <div class="row">
-            <div class="col-lg-6 col-6 mb-2 mb-lg-1">
+            <div class="col-lg-6 col-12 mb-2 mb-lg-1">
                 <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.name') }}</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                     name="name" value="{{ old('name', $categoryData->name ?? '') }}"
@@ -13,7 +13,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-lg-6 col-6 mb-2 mb-lg-1">
+            <div class="col-lg-6 col-12 mb-2 mb-lg-1">
                 <label for="slug" class="form-label">{{ __('messages.' . $object . '.fields.slug') }}</label>
                 <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
                     name="slug" value="{{ old('slug', $categoryData->slug ?? '') }}"

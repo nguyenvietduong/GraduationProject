@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function index(CategoryListRequest $request)
     {
-        $this->authorize('modules', '' . self::OBJECT . '.index');
+        // $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
@@ -58,7 +58,6 @@ class CategoryController extends Controller
             'start_date' => $params['start_date'] ?? '',
             'end_date' => $params['end_date'] ?? '',
         ];
-
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
 
@@ -153,7 +152,6 @@ class CategoryController extends Controller
         try {
             // Delete the Category
             $this->categoryService->deleteCategory($id);
-
             return redirect()->back()->with('success', 'Category deleted successfully');
         } catch (\Exception $e) {
             // Return a JSON response if there is an error
