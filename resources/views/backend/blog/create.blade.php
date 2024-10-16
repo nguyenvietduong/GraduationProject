@@ -61,6 +61,7 @@
         </div>
     </div>
     @push('script')
+        <script src="/backend/assets/custom/js/show_image.js"></script>
         <script>
             $(document).ready(function () {
                 $('#summernote').summernote({

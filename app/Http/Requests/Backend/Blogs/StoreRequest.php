@@ -31,18 +31,42 @@ class StoreRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get the custom attribute names for the validation errors.
-     *
-     * @return array<string, string>
-     */
-    public function attributes(): array
+    protected function failedValidation(Validator $validator)
     {
-        return [
-            'title'     => 'tiêu đề bài viết', // Thay thế 'title' trong thông báo lỗi
-            'content'   => 'nội dung bài viết', // Thay thế 'content' trong thông báo lỗi
-            'slug'      => 'đường dẫn thân thiện', // Thay thế 'slug' trong thông báo lỗi
-            'image'     => 'hình ảnh bài viết', // Thay thế 'image' trong thông báo lỗi
-        ];
+        // Check if an image was uploaded
+        if ($this->hasFile('image')) {
+            $image = $this->file('image');
+
+            // Ensure the admin is authenticated
+            if (Auth::check()) {
+                $adminId = Auth::user()->id; // Get the authenticated admin ID
+
+                // Generate a unique file name
+                $fileName = $this->generateUniqueFileName($image);
+
+                // Define the directory path
+                $directory = "temp_images/{$adminId}";
+                $filePath = "{$directory}/{$fileName}";
+
+                // Store the file in the temp_images folder
+                Storage::put($filePath, file_get_contents($image->getRealPath()));
+
+                // Save the file path in session
+                session(['image_temp' => $filePath]);
+            }
+        }
+
+        // Redirect back with validation errors and input
+        throw new HttpResponseException(
+            redirect()->back()->withErrors($validator)->withInput()
+        );
+    }
+
+    private function generateUniqueFileName(UploadedFile $file): string
+    {
+        $timestamp = time();
+        $extension = $file->getClientOriginalExtension();
+        $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        return "{$fileName}_{$timestamp}.{$extension}";
     }
 }

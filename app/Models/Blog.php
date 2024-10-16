@@ -24,9 +24,16 @@ class Blog extends Model
         return $this->belongsTo(User::class); // Giả sử bạn có model User
     }
 
+    // Tự động tạo slug khi gán giá trị cho 'title'
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug(Str::ascii($value)); // Tạo slug từ title
+    }
+
     // Phương thức để tạo slug từ tiêu đề
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = \Str::slug($value); // Tạo slug từ tiêu đề
+        $this->attributes['slug'] = \Str::slug(\Str::ascii($value)); // Chuyển đổi về dạng không dấu và tạo slug
     }
 }

@@ -105,16 +105,6 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
-                        href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                        aria-controls="sidebarAccountManagement">
-                        <i class="fa fa-users menu-icon"></i>
-                        <span>System</span>
-                    </a>
-                    <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
-                        id="sidebarAccountManagement">
-                        <!-- Blog -->
                 <li class="nav-item {{ set_active(['blog']) }}">
                     <a class="nav-link" href="{{ route('admin.blog.index') }}">
                         <i class="fa fa-newspaper menu-icon"></i>
