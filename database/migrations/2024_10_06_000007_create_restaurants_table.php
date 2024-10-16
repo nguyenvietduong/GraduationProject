@@ -17,8 +17,10 @@ return new class extends Migration {
             $table->string('address'); // Địa chỉ nhà hàng
             $table->string('phone'); // Số điện thoại nhà hàng
             $table->string('opening_hours', 50)->nullable();
+            $table->string('closing_time', 50)->nullable();
             $table->decimal('rating', 2, 1)->default(0.0);  // Đánh giá trung bình
             $table->text('description')->nullable(); // Mô tả nhà hàng
+            $table->text('google_map_link')->nullable(); // Mô tả nhà hàng
             $table->string('image')->nullable(); // Hình ảnh đại diện
             $table->timestamps();
         });

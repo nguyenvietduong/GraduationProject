@@ -72,13 +72,13 @@
 
                 <!-- System -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}" href="#sidebarSystemManagement"
+                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}" href="#sidebarFoodManagement"
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
-                        aria-controls="sidebarSystemManagement">
+                        aria-controls="sidebarFoodManagement">
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
-                        <span>Menu</span>
+                        <span>Food</span>
                     </a>
-                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarSystemManagement">
+                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarFoodManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
