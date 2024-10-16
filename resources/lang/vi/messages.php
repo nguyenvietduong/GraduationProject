@@ -136,6 +136,39 @@ return [
         '4' => '“Những điều tốt đẹp đến với những ai biết chờ đợi, nhưng chỉ có những điều còn lại của những người chịu khó.” - Abraham Lincoln',
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
+    'menu' => [
+        'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Giá từ",
+            "end_price" => "Giá đến"
+        ],
+        'fields' => [
+            'name' => 'Tên món ăn',
+            'slug' => 'Đường dẫn',
+            'description' => 'Mô tả món ăn',
+            'price' => 'Giá món ăn ( VND )',
+            'category_id' => 'Danh mục',
+            'image_url' => 'Hình ảnh ',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
+    ],
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
