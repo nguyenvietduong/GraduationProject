@@ -3,6 +3,15 @@
     document.getElementById('editButton').addEventListener('click', function() {
         document.getElementById('infoDisplay').style.display = 'none';
         document.getElementById('editForm').style.display = 'block';
+        document.getElementById('div-edit').style.display = 'none';
+        document.getElementById('div-cancel').style.display = 'block';
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        document.getElementById('infoDisplay').style.display = 'block';
+        document.getElementById('editForm').style.display = 'none';
+        document.getElementById('div-edit').style.display = 'block';
+        document.getElementById('div-cancel').style.display = 'none';
     });
 
     // Trigger File Input Click When Change Image Icon Is Clicked

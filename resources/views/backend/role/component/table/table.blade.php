@@ -3,7 +3,6 @@
         <tr>
             <th style="width: 16px;">
                 <div class="form-check mb-0 ms-n1">
-                    <input type="checkbox" class="form-check-input" name="select-all" id="select-all">
                 </div>
             </th>
             <th class="ps-0">#</th>
@@ -20,8 +19,6 @@
         <tr>
             <td style="width: 16px;">
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" value="{{ $item->id }}" name="check"
-                        id="customCheck{{ $item->id }}">
                 </div>
             </td>
             <td class="ps-0">

@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\Backend\BlogDataTable;
 use App\Http\Controllers\Controller;
+use App\Interfaces\Services\TempImageServiceInterface;
 use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
 use App\Interfaces\Services\BlogServiceInterface;
+use App\Interfaces\Services\NotificationServiceInterface;
+use App\Events\NotificationEvent;
 use App\Interfaces\Repositories\BlogRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
+use Illuminate\Support\Facades\Log;
 
 // Requests
 use App\Http\Requests\BackEnd\Blogs\ListRequest as BlogListRequest;
 use App\Http\Requests\BackEnd\Blogs\StoreRequest as BlogStoreRequest;
 use App\Http\Requests\BackEnd\Blogs\UpdateRequest as BlogUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -20,8 +24,9 @@ class BlogController extends Controller
 
     protected $blogService;
     protected $blogRepository;
-
+    protected $tempImageService;
     protected $permissionRepository;
+    private $notificationService;
 
     // Base path for views
     const PATH_VIEW = 'backend.blog.';
@@ -29,13 +34,17 @@ class BlogController extends Controller
     const OBJECT = 'blog';
 
     public function __construct(
+        TempImageServiceInterface $tempImageService,
         BlogServiceInterface $blogService,
         BlogRepositoryInterface $blogRepository,
         PermissionRepository $permissionRepository,
+        NotificationServiceInterface $notificationService,
     ) {
+        $this->tempImageService = $tempImageService;
         $this->blogService = $blogService;
         $this->blogRepository = $blogRepository;
         $this->permissionRepository = $permissionRepository;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -46,7 +55,8 @@ class BlogController extends Controller
      */
     public function index(BlogListRequest $request)
     {
-        session()->forget('image_temp'); // Clear temporary image value
+        $this->tempImageService->deleteTempImagesForUser();
+        session()->forget('image_blog_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
 
@@ -77,6 +87,7 @@ class BlogController extends Controller
      */
     public function create()
     {
+
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'blog',
         ]);
@@ -95,8 +106,10 @@ class BlogController extends Controller
         try {
             // Create a new blog
             $this->blogService->createBlog($data);
+
             return redirect()->back()->with('success', 'Blog created successfully');
         } catch (\Exception $e) {
+
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -112,8 +125,9 @@ class BlogController extends Controller
         // Retrieve the details of the blog
         $blog = $this->blogService->getBlogDetail($id);
         if ($blog) {
+
             return view(self::PATH_VIEW . __FUNCTION__, [
-                'blogData' => $blog,
+                'data' => $blog,
                 'object' => 'blog',
             ]);
         }
@@ -134,10 +148,31 @@ class BlogController extends Controller
         $data = $request->validated();
 
         try {
+            // Gửi thông báo chung
+            $title = 'Blog';
+            $message = 'edited blog!';
+
+            Log::info('Starting update process for blog ID: ' . $id); // Log thông tin
+
+            event(new NotificationEvent($title, $message, 'info', Auth::user()->full_name));
+            // dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Thay thế 'info' và $review nếu cần
+
+            $dataNotification = [
+                'user_id' => Auth::user()->id,  // ID của người gửi thông báo
+                'title' => $title,
+                'message' => $message,
+            ];
+
+            Log::info('Preparing notification data: ', $dataNotification); // Log thông tin
+
+            $this->notificationService->createNotification($dataNotification);
+
             // Update the blog
             $this->blogService->updateBlog($id, $data);
+
             return redirect()->route('admin.blog.index')->with('success', 'Blog updated successfully');
         } catch (\Exception $e) {
+
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -157,6 +192,7 @@ class BlogController extends Controller
             return redirect()->back()->with('success', 'Blog deleted successfully');
         } catch (\Exception $e) {
             // Return a JSON response if there is an error
+
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

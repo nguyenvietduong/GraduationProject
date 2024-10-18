@@ -72,7 +72,7 @@
 
                 <!-- System -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}" href="#sidebarFoodManagement"
+                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}" href="#sidebarFoodManagement"
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarFoodManagement">
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
@@ -88,25 +88,18 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['Menu'], 'active', 'admin') }}"
+                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
                                     href="{{ route('admin.menu.index') }}">
                                     <i class="fa fa-utensils menu-icon"></i>
                                     <span>Menu</span>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a class="nav-link {{ set_active(['menu'], 'active', 'menu') }}"
-                                    href="{{ route('admin.menu.index') }}">
-                                    <i class="fa fa-utensils menu-icon"></i> <!-- Thay đổi icon ở đây -->
-                                    <span>Menus</span>
-                                </a>
-                            </li> --}}
                         </ul>
                     </div>
                 </li>
 
-                <li class="nav-item {{ set_active(['blog']) }}">
-                    <a class="nav-link" href="{{ route('admin.blog.index') }}">
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}" href="{{ route('admin.blog.index') }}">
                         <i class="fa fa-newspaper menu-icon"></i>
                         <span>Blog</span>
                     </a>
@@ -128,6 +121,13 @@
                                     href="{{ route('admin.notification.index') }}">
                                     <i class="fa fa-bell menu-icon"></i>
                                     <span>Notification</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{{ route('home') }}">
+                                    <i class="fa fa-arrow-left menu-icon"></i>
+                                    <span>Back to HuongViet</span>
                                 </a>
                             </li>
                         </ul>

@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Interfaces\Services\CategoryServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class CategoryService extends BaseService implements CategoryServiceInterface
@@ -13,7 +12,7 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     protected $categoryRepository;
 
     /**
-     * Tạo mới instance của CategoryService.
+     * Create a new instance of CategoryService.
      *
      * @param CategoryRepositoryInterface $categoryRepository
      */
@@ -24,7 +23,7 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     }
 
     /**
-     * Get a paginated list of Categorys with optional filters.
+     * Get a paginated list of categories with optional filters.
      *
      * @param array $filters
      * @param int $perPage
@@ -34,16 +33,16 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     public function getAllCategories(array $filters = [], int $perPage = 5)
     {
         try {
-            // Retrieve Categorys from the repository using filters and pagination
+            // Retrieve categories from the repository using filters and pagination
             return $this->categoryRepository->getAllCategories($filters, $perPage);
         } catch (Exception $e) {
-            // Handle any exceptions that occur while retrieving Categorys
+            // Handle any exceptions that occur while retrieving categories
             throw new Exception('Unable to retrieve category list: ' . $e->getMessage());
         }
     }
 
     /**
-     * Lấy chi tiết của Category theo ID.
+     * Get the details of a category by ID.
      *
      * @param int $id
      * @return mixed
@@ -54,15 +53,15 @@ class CategoryService extends BaseService implements CategoryServiceInterface
         try {
             return $this->categoryRepository->getCategoryDetail($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Category không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể lấy chi tiết Category: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to retrieve category details: ' . $e->getMessage());
         }
     }
 
     /**
-     * Tạo mới một Category.
+     * Create a new category.
      *
      * @param array $data
      * @return mixed
@@ -70,18 +69,18 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     public function createCategory(array $data)
     {
         try {
-            // Create the Category
+            // Create the category
             $data['guard_name'] = 'web';
 
             return $this->categoryRepository->createCategory($data);
         } catch (Exception $e) {
-            // Handle any errors that occur during Category creation
-            throw new Exception('Unable to create Category: ' . $e->getMessage());
+            // Handle any errors that occur during category creation
+            throw new Exception('Unable to create category: ' . $e->getMessage());
         }
     }
 
     /**
-     * Cập nhật một Category theo ID.
+     * Update a category by ID.
      *
      * @param int $id
      * @param array $data
@@ -95,15 +94,15 @@ class CategoryService extends BaseService implements CategoryServiceInterface
 
             return $this->categoryRepository->updateCategory($id, $data);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Category không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể cập nhật Category: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to update category: ' . $e->getMessage());
         }
     }
 
     /**
-     * Xóa một Category theo ID.
+     * Delete a category by ID.
      *
      * @param int $id
      * @return bool
@@ -114,11 +113,10 @@ class CategoryService extends BaseService implements CategoryServiceInterface
         try {
             return $this->categoryRepository->deleteCategory($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Category không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể xóa Category: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to delete category: ' . $e->getMessage());
         }
     }
-
 }

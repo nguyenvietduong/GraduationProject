@@ -24,5 +24,10 @@
 <!-- resources/views/layouts/app.blade.php -->
 <meta name="user-id" content="{{ Auth::id() }}">
 
-@vite('resources/js/checkUserSession.js')
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+@vite('resources/js/checkUserSession.js')

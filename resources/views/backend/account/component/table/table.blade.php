@@ -1,9 +1,8 @@
-<table class="table mb-0 checkbox-all" id="datatable_1">
+<table border="1" class="table mb-0 checkbox-all" id="datatable_1">
     <thead class="table-light">
         <tr>
             <th style="width: 16px;">
                 <div class="form-check mb-0 ms-n1">
-                    <input type="checkbox" class="form-check-input" id="select-all">
                 </div>
             </th>
             <th class="ps-0">{{ __('messages.account.fields.full_name') }}</th>
@@ -21,8 +20,6 @@
                 <tr>
                     <td style="width: 16px;">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" value="{{ $data->id }}" name="check"
-                                id="customCheck{{ $data->id }}">
                         </div>
                     </td>
                     <td class="ps-0">

@@ -12,7 +12,7 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     protected $permissionRepository;
 
     /**
-     * Tạo mới instance của PermissionService.
+     * Create a new instance of PermissionService.
      *
      * @param PermissionRepositoryInterface $permissionRepository
      */
@@ -37,12 +37,12 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
             return $this->permissionRepository->getAllPermissions($filters, $perPage);
         } catch (Exception $e) {
             // Handle any exceptions that occur while retrieving permissions
-            throw new Exception('Unable to retrieve Permission list: ' . $e->getMessage());
+            throw new Exception('Unable to retrieve permission list: ' . $e->getMessage());
         }
     }
 
     /**
-     * Lấy chi tiết của permission theo ID.
+     * Get the details of a permission by ID.
      *
      * @param int $id
      * @return mixed
@@ -53,15 +53,15 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
         try {
             return $this->permissionRepository->getPermissionDetail($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Permission không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Permission does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể lấy chi tiết permission: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to retrieve permission details: ' . $e->getMessage());
         }
     }
 
     /**
-     * Tạo mới một permission.
+     * Create a new permission.
      *
      * @param array $data
      * @return mixed
@@ -69,7 +69,6 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     public function createPermission(array $data)
     {
         try {
-
             // Create the permission
             return $this->permissionRepository->createPermission($data);
         } catch (Exception $e) {
@@ -79,7 +78,7 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     }
 
     /**
-     * Cập nhật một permission theo ID.
+     * Update a permission by ID.
      *
      * @param int $id
      * @param array $data
@@ -89,18 +88,17 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     public function updatePermission(int $id, array $data)
     {
         try {
-
             return $this->permissionRepository->updatePermission($id, $data);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Permission không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Permission does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể cập nhật permission: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to update permission: ' . $e->getMessage());
         }
     }
 
     /**
-     * Xóa một permission theo ID.
+     * Delete a permission by ID.
      *
      * @param int $id
      * @return bool
@@ -111,10 +109,10 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
         try {
             return $this->permissionRepository->deletePermission($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Permission không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Permission does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể xóa permission: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to delete permission: ' . $e->getMessage());
         }
     }
 }

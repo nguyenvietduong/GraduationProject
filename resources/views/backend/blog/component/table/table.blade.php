@@ -1,4 +1,4 @@
-<table class="table mb-0 checkbox-all" id="datatable_1">
+<table border="1" class="table mb-0 checkbox-all" id="datatable_1">
     <thead class="table-light">
         <tr>
             <th style="width: 16px;">
@@ -22,21 +22,21 @@
                     </td>
                     <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
                     <td class="ps-0">
-                        <img src="{{ checkFile($data->image) }}" alt height="40">
+                        <img src="{{ checkFile($data->image) }}" alt width="50">
                         <p class="d-inline-block align-middle mb-0">
                             {{ $data->title ?? __('messages.system.no_data_available') }}
                         </p>
                     </td>
-                    <td>{{ $data->user()->full_name ?? __('messages.system.no_data_available') }}</td>
+                    <td>{{ $data->user->full_name ?? __('messages.system.no_data_available') }}</td>
                     <td>
                         <span>{{ date('d/m/Y H:i:s', strtotime($data->created_at)) }}</span>
                     </td>
                     <td class="text-end">
                         <div class="d-flex align-items-center">
-                            <a href="{{ route(__('messages.account.' . $object . '.edit.route'), $data->id) }}" class="me-2">
+                            <a href="{{ route(__('messages.' . $object . '.edit.route'), $data->id) }}" class="me-2">
                                 <i class="fas fa-edit btn btn-primary btn-sm"></i>
                             </a>
-                            <form action="{{ route(__('messages.account.' . $object . '.destroy.route'), $data->id) }}"
+                            <form action="{{ route(__('messages.' . $object . '.destroy.route'), $data->id) }}"
                                 method="post" class="d-inline-block" id="myForm_{{ $data->id }}">
                                 @csrf
                                 @method('DELETE')

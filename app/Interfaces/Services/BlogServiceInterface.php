@@ -46,6 +46,4 @@ interface BlogServiceInterface
      * @return bool
      */
     public function deleteBlog(int $id);
-    public function updatePermission($request);
-
 }

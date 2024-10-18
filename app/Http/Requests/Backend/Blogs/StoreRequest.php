@@ -3,6 +3,11 @@
 namespace App\Http\Requests\Backend\Blogs;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage; // Thêm dòng này ở đầu file nếu chưa có
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreRequest extends FormRequest
 {
@@ -45,14 +50,14 @@ class StoreRequest extends FormRequest
                 $fileName = $this->generateUniqueFileName($image);
 
                 // Define the directory path
-                $directory = "temp_images/{$adminId}";
+                $directory = "temp_blog_images/{$adminId}";
                 $filePath = "{$directory}/{$fileName}";
 
                 // Store the file in the temp_images folder
                 Storage::put($filePath, file_get_contents($image->getRealPath()));
 
                 // Save the file path in session
-                session(['image_temp' => $filePath]);
+                session(['image_blog_temp' => $filePath]);
             }
         }
 

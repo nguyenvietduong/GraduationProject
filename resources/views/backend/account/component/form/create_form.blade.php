@@ -23,7 +23,6 @@
                                         <div class="col-lg-6 col-6">
                                             <img id="imagePreview"
                                                 src="{{ session('image_temp') ? checkFile(session('image_temp')) : '' }}"
-                                                alt="Image Preview"
                                                 style="display: {{ session('image_temp') ? 'block' : 'none' }}; max-width: 100px; margin-left: 10px;">
                                         </div>
                                     </div>

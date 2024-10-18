@@ -10,25 +10,25 @@ class TempImageService implements TempImageServiceInterface
 {
     public function deleteTempImagesForUser()
     {
-        // Xác định đường dẫn thư mục tạm của người dùng
-        $tempImagePath = "temp_images/" . auth()->id() . "/"; // Đường dẫn tạm cho người dùng hiện tại
+        // Determine the temporary directory path for the user
+        $tempImagePath = "temp_images/" . auth()->id() . "/"; // Temporary path for the current user
 
-        // Kiểm tra nếu thư mục tồn tại
+        // Check if the directory exists
         if (Storage::exists($tempImagePath)) {
-            // Lấy danh sách tất cả các tệp trong thư mục
+            // Retrieve the list of all files in the directory
             $files = Storage::files($tempImagePath);
             
-            // Xóa tất cả các tệp trong thư mục
+            // Delete all files in the directory
             foreach ($files as $file) {
-                Storage::delete($file); // Xóa từng tệp
+                Storage::delete($file); // Delete each file
             }
 
-            // Xóa giá trị tạm trong session
+            // Remove temporary value in the session
             Session::forget('image_temp');
 
-            return ['message' => 'Đã xóa tất cả tệp tạm thời trong thư mục cho người dùng.'];
+            return ['message' => 'All temporary files in the directory have been deleted for the user.'];
         }
 
-        return ['message' => 'Thư mục tạm thời không tồn tại.'];
+        return ['message' => 'Temporary directory does not exist.'];
     }
 }

@@ -41,7 +41,7 @@ class BlogRepositoryEloquent extends BaseRepository implements BlogRepositoryInt
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+                $q->where('title', 'like', '%' . $filters['search'] . '%');
             });
         }
 

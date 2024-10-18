@@ -3,6 +3,11 @@
 namespace App\Http\Requests\Backend\Blogs;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage; // Thêm dòng này ở đầu file nếu chưa có
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateRequest extends FormRequest
 {
@@ -24,9 +29,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:blogs,title,' . $this->blog->id, // Tiêu đề bài viết
+            'title' => 'required|string|max:255|unique:blogs,title,' . $this->id, // Tiêu đề bài viết
             'content' => 'required|string', // Nội dung bài viết
-            'slug' => 'nullable|string|max:255|unique:blogs,slug,' . $this->blog->id, // Đường dẫn thân thiện, có thể null
+            'slug' => 'nullable|string|max:255|unique:blogs,slug,' . $this->id, // Đường dẫn thân thiện, có thể null
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Hình ảnh bài viết
         ];
     }
@@ -45,14 +50,14 @@ class UpdateRequest extends FormRequest
                 $fileName = $this->generateUniqueFileName($image);
 
                 // Define the directory path
-                $directory = "temp_images/{$adminId}";
+                $directory = "temp_blog_images/{$adminId}";
                 $filePath = "{$directory}/{$fileName}";
 
                 // Store the file in the temp_images folder
                 Storage::put($filePath, file_get_contents($image->getRealPath()));
 
                 // Save the file path in session
-                session(['image_temp' => $filePath]);
+                session(['image_blog_temp' => $filePath]);
             }
         }
 

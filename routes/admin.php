@@ -81,8 +81,6 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('{id}/edit', [BlogController::class, 'edit'])->where('id', '[0-9]+')->name('admin.blog.edit');
             Route::put('{id}/update', [BlogController::class, 'update'])->where('id', '[0-9]+')->name('admin.blog.update');
             Route::delete('{id}/destroy', [BlogController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.blog.destroy');
-            Route::get('permission', [BlogController::class, 'permission'])->name('admin.blog.permission');
-            Route::post('updatePermission', [BlogController::class, 'updatePermission'])->name('admin.blog.updatePermission');
         });
         // Category Management
         Route::prefix('category')->group(function () {
