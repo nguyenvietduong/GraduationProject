@@ -8,6 +8,7 @@
             <th class="ps-0">{{ __('messages.account.fields.full_name') }}</th>
             <th>{{ __('messages.account.fields.email') }}</th>
             <th>{{ __('messages.account.fields.phone') }}</th>
+            <th>{{ __('messages.account.fields.date') }}</th>
             <th>{{ __('messages.account.fields.address') }}</th>
             <th>{{ __('messages.system.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
@@ -30,6 +31,7 @@
                     </td>
                     <td>{{ $data->email ?? __('messages.system.no_data_available') }}</td>
                     <td>{{ $data->phone ?? __('messages.system.no_data_available') }}</td>
+                    <td>{{ $data->birthday  ?? __('messages.system.no_data_available') }}</td>
                     <td>{{ $data->address ?? __('messages.system.no_data_available') }}</td>
                     <td>
                         @php

@@ -12,14 +12,13 @@ return new class extends Migration {
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->decimal('price', 10, 2);
-
-            $table->foreignId(column: 'category_id')->constrained('categories')->onDelete('cascade');
-
+            $table->json('name'); // Lưu tên sản phẩm theo ngôn ngữ
+            $table->json('slug'); // Lưu tên sản phẩm theo ngôn ngữ
+            $table->json('description')->nullable(); // Lưu mô tả sản phẩm theo ngôn ngữ
+            $table->json('price'); // Lưu giá theo nhiều ngôn ngữ hoặc đơn vị tiền tệ
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->string('image_url')->nullable();
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
             $table->softDeletes();
         });
