@@ -6,12 +6,12 @@
 
 <!-- Check session flash messages -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Check for session flash messages
         @if(session('success'))
-        executeExample('success');
+            executeExample('success');
         @elseif(session('error'))
-        executeExample('error');
+            executeExample('error');
         @endif
     });
 
@@ -32,7 +32,11 @@
             });
         }
     }
+</script>
 
+<!-- Truyền biến session cho JS -->
+<script>
+    window.hasImageTemp = @json(session()->has('image_temp'));
 </script>
 
 <!-- Bootstrap v5 JS (after jQuery) -->

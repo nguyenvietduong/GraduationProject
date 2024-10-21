@@ -90,30 +90,32 @@
                     </div>
 
                     <!-- Edit Form -->
-                    <form id="editForm" action="{{ route('profile.update') }}" method="post" style="display: none;">
+                    <form id="editForm" method="post" style="display: none;">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Fullname</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                value="{{ Auth::user()->full_name }}">
+                            <label for="full_name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name"
+                                value="{{ Auth::user()->full_name }}" required>
+                            <div id="full_name_error" class="error-message text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="phone" name="phone"
-                                value="{{ Auth::user()->phone }}">
+                            <input type="number" class="form-control" id="phone" name="phone"
+                                value="{{ Auth::user()->phone }}" required>
+                            <div id="phone_error" class="error-message text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                value="{{ Auth::user()->email }}">
+                                value="{{ Auth::user()->email }}" required>
+                            <div id="email_error" class="error-message text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                value="{{ Auth::user()->address }}">
+                            <input type="text" class="form-control" id="address" value="{{ Auth::user()->address }}"
+                                name="address">
                         </div>
-                        <button type="submit" onclick="executeExample('handleDismiss', 'editForm')"
-                            class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
                     </form>
                 </div><!--end card-body-->
             </div><!--end card-->
@@ -121,4 +123,36 @@
     </div><!--end row-->
 </div><!-- container -->
 @include('backend.ajax.updates_the_profile_image')
+<script>
+    $(document).ready(function () {
+        // Xử lý cập nhật thông tin người dùng
+        $('#editForm').on('submit', function (event) {
+            event.preventDefault(); // Ngăn chặn form mặc định
+
+            $.ajax({
+                url: '{{ route("profile.update") }}', // Đường dẫn đến route
+                method: 'POST',
+                data: $(this).serialize(), // Lấy dữ liệu từ form
+                success: function (response) {
+                    executeExample('success'); // Call success function
+                    $('.error-message').text(''); // Xóa các thông báo lỗi trước đó
+
+                    setTimeout(function () {
+                        // Trigger the click event on the reload button
+                        location.reload();
+                    }, 2500);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        // Xử lý lỗi xác thực
+                        const errors = xhr.responseJSON.error;
+                        for (const key in errors) {
+                            $('#' + key + '_error').html(errors[key]);
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

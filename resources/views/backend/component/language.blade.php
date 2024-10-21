@@ -1,5 +1,6 @@
 <li class="dropdown">
-    <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+    <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button"
+        aria-haspopup="false" aria-expanded="false">
         <span class="fi {{ App::getLocale() === 'vi' ? 'fi-vn' : 'fi-us' }}"></span>
     </a>
     <div class="dropdown-menu">
@@ -18,30 +19,39 @@
         const dropdownItems = document.querySelectorAll('.set-language');
 
         dropdownItems.forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function () {
                 const language = this.getAttribute('data-language');
 
-                // Send a request to change the language
+                // Gửi yêu cầu AJAX để thay đổi ngôn ngữ
                 changeLanguage(language);
             });
         });
     });
 
     function changeLanguage(language) {
-        // Use AJAX or a simple form submission to change the language
-        // Here is a simple form submission example:
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/change-language'; // Set the correct route
-
-        const languageInput = document.createElement('input');
-        languageInput.type = 'hidden';
-        languageInput.name = 'language';
-        languageInput.value = language;
-
-        form.appendChild(languageInput);
-        document.body.appendChild(form);
-        form.submit();
+        // Sử dụng fetch API để gửi yêu cầu AJAX
+        fetch('/change-language', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Đảm bảo bạn đã có CSRF token
+            },
+            body: JSON.stringify({
+                language: language
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Thành công, reload lại trang
+                    window.location.reload();
+                } else {
+                    // Xử lý lỗi nếu có
+                    console.error('Error changing language:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
-
 </script>

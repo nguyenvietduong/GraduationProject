@@ -239,6 +239,7 @@ return [
             'email' => 'Email',
             'email_placeholder' => 'Nhập email',
             'phone' => 'Điện thoại',
+            'date' => 'Ngày sinh',
             'phone_placeholder' => 'Nhập số điện thoại',
             'total_friends' => 'Tổng số bạn bè',
             'address' => 'Địa chỉ',

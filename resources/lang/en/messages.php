@@ -248,32 +248,32 @@ return [
             'route' => 'admin.permission.destroy',
         ],
     ],
-        // Fields for Blog
-        'blog' => [
-            'title' => 'Blog',
-            'fields' => [
-                'name' => 'Blog Name',
-                'accountsCount' => 'Blogs Count',
-            ],
-            'index' => [
-                'route' => 'admin.blog.index',
-            ],
-            'create' => [
-                'route' => 'admin.blog.create',
-            ],
-            'store' => [
-                'route' => 'admin.blog.store',
-            ],
-            'edit' => [
-                'route' => 'admin.blog.edit',
-            ],
-            'update' => [
-                'route' => 'admin.blog.update',
-            ],
-            'destroy' => [
-                'route' => 'admin.blog.destroy',
-            ],
+    // Fields for Blog
+    'blog' => [
+        'title' => 'Blog',
+        'fields' => [
+            'name' => 'Blog Name',
+            'accountsCount' => 'Blogs Count',
         ],
+        'index' => [
+            'route' => 'admin.blog.index',
+        ],
+        'create' => [
+            'route' => 'admin.blog.create',
+        ],
+        'store' => [
+            'route' => 'admin.blog.store',
+        ],
+        'edit' => [
+            'route' => 'admin.blog.edit',
+        ],
+        'update' => [
+            'route' => 'admin.blog.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.blog.destroy',
+        ],
+    ],
     // Fields for Role
     'role' => [
         'title' => 'Role',
@@ -318,6 +318,7 @@ return [
             'email' => 'Email',
             'email_placeholder' => 'Enter email',
             'phone' => 'Phone',
+            'date' => 'Birthday',
             'phone_placeholder' => 'Enter phone',
             'total_friends' => 'Total Friends',
             'address' => 'Address',

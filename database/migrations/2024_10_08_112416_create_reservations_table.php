@@ -20,6 +20,12 @@ return new class extends Migration {
             $table->enum('status', ['pending', 'confirmed', 'canceled', 'completed'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
+
+            // Thêm chỉ mục vào các trường cần thiết
+            $table->unique(['user_id', 'table_id', 'reservation_time'], 'unique_user_table_reservation');
+            $table->index(['user_id', 'table_id']); // Chỉ mục cho user_id và table_id
+            $table->index('reservation_time'); // Chỉ mục cho thời gian đặt chỗ
+            $table->index('status'); // Chỉ mục cho trạng thái
         });
     }
 
