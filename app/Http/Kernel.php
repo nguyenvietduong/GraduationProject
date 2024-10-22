@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\SetTheme::class,
+            \App\Http\Middleware\CheckUserSession::class,
         ],
 
         'api' => [
@@ -67,11 +68,12 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\CheckRole::class,
+        'currency' => \App\Http\Middleware\CurrencyMiddleware::class
     ];
 
     protected $routeMiddleware = [
         // Các middleware khác...
         'permission' => \App\Http\Middleware\CheckPermission::class,
     ];
-    
+
 }

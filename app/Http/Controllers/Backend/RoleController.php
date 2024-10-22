@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\Backend\RoleDataTable;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
 use App\Interfaces\Services\RoleServiceInterface;
@@ -79,6 +78,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         $this->authorize('modules', 'edit accounts');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'role',
@@ -112,6 +112,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         // Retrieve the details of the role
         $role = $this->roleService->getRoleDetail($id);
         if ($role) {

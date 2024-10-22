@@ -39,35 +39,41 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
         $query = $this->model->query();
 
         $query->where('role_id', $role);
-    
+
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%')
+                $q->where('full_name', 'like', '%' . $filters['search'] . '%')
                     ->orWhere('email', 'like', '%' . $filters['search'] . '%')
                     ->orWhere('phone', 'like', '%' . $filters['search'] . '%')
                     ->orWhere('address', 'like', '%' . $filters['search'] . '%');
             });
         }
-    
+
         if (!empty($filters['start_date'])) {
-            $query->whereDate('created_at', '>=', $filters['start_date']);
+            $query->where(function ($query) use ($filters) {
+                $query->whereDate('created_at', '>=', $filters['start_date'])
+                    ->orWhereDate('birthday', '>=', $filters['start_date']);
+            });
         }
-    
+
         if (!empty($filters['end_date'])) {
-            $query->whereDate('created_at', '<=', $filters['end_date']);
+            $query->where(function ($query) use ($filters) {
+                $query->whereDate('created_at', '<=', $filters['end_date'])
+                    ->orWhereDate('birthday', '<=', $filters['end_date']);
+            });
         }
-    
+
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);
         }
-    
+
         // Order by created date (newest first)
         $query->orderBy('id', 'desc');
-    
+
         // Paginate results
         return $query->paginate($perPage);
-    }    
+    }
 
     /**
      * Count users with a specific role.

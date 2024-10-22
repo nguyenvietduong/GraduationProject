@@ -36,7 +36,7 @@
         <small class="text-muted px-2 py-1 d-block ml-5">{{ __('messages.system.setting') }}</small>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
             @csrf
-            <button type="submit" onclick="executeExample('handleDismiss', 'logout-form')" class="text-danger border-0 bg-transparent ps-3 mb-1">
+            <button type="button" onclick="executeExample('handleDismiss', 'logout-form')" class="text-danger border-0 bg-transparent ps-3 mb-1">
                 <i class="las la-power-off fs-18 me-1 align-text-bottom"></i> {{ __('messages.system.logout') }}
             </button>
         </form>

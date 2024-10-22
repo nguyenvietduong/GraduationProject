@@ -20,8 +20,13 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\TempImageServiceInterface' => 'App\Services\TempImageService',
             'App\Services\BaseService',
             'App\Interfaces\Services\AccountServiceInterface' => 'App\Services\AccountService',
+            'App\Interfaces\Services\CategoryServiceInterface' => 'App\Services\CategoryService',
             'App\Interfaces\Services\RoleServiceInterface' => 'App\Services\RoleService',
+            'App\Interfaces\Services\BlogServiceInterface' => 'App\Services\BlogService',
             'App\Interfaces\Services\PermissionServiceInterface' => 'App\Services\PermissionService',
+            'App\Interfaces\Services\NotificationServiceInterface' => 'App\Services\NotificationService',
+            'App\Interfaces\Services\ReviewServiceInterface' => 'App\Services\ReviewService',
+            'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',
         ];
 
         foreach ($services as $interface => $implementation) {

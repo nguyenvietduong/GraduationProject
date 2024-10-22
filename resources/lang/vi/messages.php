@@ -34,6 +34,7 @@ return [
             ],
         ],
         'alert' => [
+            'titleSuccess' => 'Thành công!',
             'success' => 'Thành công! Nhiệm vụ đã được hoàn thành.',
             'error' => [
                 'title' => 'Ôi...',
@@ -52,6 +53,41 @@ return [
                 'action' => 'Hành Động',
             ],
         ],
+        'menu' => [
+            'adminDashboard' => 'Quản trị',
+            'menu' => 'Thực đơn'
+
+        ],
+        'front_end' => [
+            'navbar' => [
+                'home' => 'Trang Chủ',
+                'reservation' => 'Đặt Chỗ',
+                'menu' => 'Thực Đơn',
+                'about_us' => [
+                    'title' => 'Về Chúng Tôi',
+                    'team' => 'Đội Ngũ',
+                    'contact_us' => 'Đánh giá',
+                ],
+            ],
+
+            'page' => [
+                'about_us' => [
+                    'contact_us' => [
+                        'titleHeader' => 'Đánh Giá',
+                        'title' => 'Đánh Giá',
+                        'phone' => 'Số Điện Thoại',
+                        'email' => 'Email',
+                        'location' => 'Địa Điểm',
+                        'form' => [
+                            'title' => 'Đánh Giá',
+                            'point' => 'Điểm Đánh Giá Của Bạn',
+                            'comment' => 'Nhận Xét Của Bạn',
+                            'sendMessage' => 'Gửi tin nhắn',
+                        ]
+                    ]
+                ]
+            ],
+        ],
         'no_data_available' => 'Không có dữ liệu',
         'start' => 'Bắt đầu',
         'end' => 'Kết thúc',
@@ -61,6 +97,16 @@ return [
         'setting' => 'Cài đặt',
         'login' => 'Đăng nhập',
         'logout' => 'Đăng xuất',
+        'notification' => [
+            'login' => [
+                'success' => 'Chào mừng trở lại',
+                'error' => 'Vui lòng đăng nhập',
+            ],
+            'logout' => [
+                'success' => 'Bạn đã đăng xuất.',
+                'error' => 'Bạn cần đăng nhập để truy cập trang này.',
+            ]
+        ],
         'adminPage' => 'Trang quản trị',
         'buttonPermission' => 'Phân quyền chức năng'
     ],
@@ -90,12 +136,45 @@ return [
         '4' => '“Những điều tốt đẹp đến với những ai biết chờ đợi, nhưng chỉ có những điều còn lại của những người chịu khó.” - Abraham Lincoln',
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
+    'menu' => [
+        'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Giá từ",
+            "end_price" => "Giá đến"
+        ],
+        'fields' => [
+            'name' => 'Tên món ăn',
+            'slug' => 'Đường dẫn',
+            'description' => 'Mô tả món ăn',
+            'price' => 'Giá món ăn ( VND )',
+            'category_id' => 'Danh mục',
+            'image_url' => 'Hình ảnh ',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
+    ],
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
         'fields' => [
             'name' => 'Tên',
-            'parent_id' => 'Danh Mục Cha',
+            'slug' => 'Đường dẫn',
         ],
         'index' => [
             'route' => 'admin.category.index',
@@ -160,6 +239,7 @@ return [
             'email' => 'Email',
             'email_placeholder' => 'Nhập email',
             'phone' => 'Điện thoại',
+            'date' => 'Ngày sinh',
             'phone_placeholder' => 'Nhập số điện thoại',
             'total_friends' => 'Tổng số bạn bè',
             'address' => 'Địa chỉ',

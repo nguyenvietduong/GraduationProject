@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tables', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
-            $table->string('table_number');  // Số bàn
-            $table->integer('seats');  // Số ghế
-            $table->enum('status', ['available', 'reserved', 'occupied'])->default('available');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+            $table->id(); // ID của bàn
+            $table->json('name'); // Tên bàn hỗ trợ đa ngôn ngữ
+            $table->integer('capacity'); // Số người tối đa có thể ngồi
+            $table->enum('status', ['available', 'occupied', 'reserved', 'out_of_service'])->default('available'); // Trạng thái bàn
+            $table->text('description')->nullable(); // Mô tả bàn hỗ trợ đa ngôn ngữ
+            $table->string('position'); // Vị trí bàn (ví dụ: A1, B3, C2... tương tự như bàn cờ vua)
+            $table->timestamps(); // Thời gian tạo và cập nhật
+        });        
     }
 
     /**

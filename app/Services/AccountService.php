@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Exception;
 
 class AccountService extends BaseService implements AccountServiceInterface
@@ -111,12 +112,13 @@ class AccountService extends BaseService implements AccountServiceInterface
                 }
             }
 
-            // Tạo một tài khoản mới bằng cách sử dụng repository
-            $this->accountRepository->createAccount($data);
+            // Create a new account using the repository
+            $account = $this->accountRepository->createAccount($data); // Store the created account in $account
+
         } catch (Exception $e) {
-            // Xóa tài khoản vừa tạo nếu có lỗi
-            if (isset($account) && $account) {
-                $account->delete(); // Xóa tài khoản
+            // If an error occurs, delete the newly created account if it exists
+            if (isset($account)) {
+                $account->delete(); // Delete the account
             }
 
             // Handle image storage exceptions
@@ -135,22 +137,25 @@ class AccountService extends BaseService implements AccountServiceInterface
      */
     public function updateAccount(int $id, array $data)
     {
-        // Lưu trữ dữ liệu cũ để khôi phục nếu có lỗi
+        // Store old data to restore in case of an error
         $oldAccount = $this->accountRepository->getAccountDetail($id);
-        $oldImagePath = $oldAccount->image; // Lưu đường dẫn ảnh cũ
+        $oldImagePath = $oldAccount->image; // Store the old image path
         $image = null;
 
+        // Start transaction to ensure all changes are atomic
+        DB::beginTransaction();
+
         try {
-            // Xử lý ảnh upload nếu có
+            // Handle image upload if present
             if (isset($data['image'])) {
-                // Cập nhật ảnh trong S3
-                $data['image'] = $this->imageService->updateImageS3('account_files', $data['image'], $oldImagePath);
+                // Update image in S3
+                $data['image'] = $this->imageService->updateImage('account_files', $data['image'], $oldImagePath);
             } elseif (session('image_temp')) {
-                // Xử lý ảnh tạm thời nếu có trong session
+                // Handle temporary image if present in session
                 $tempImageName = session('image_temp');
                 $tempImagePath = $tempImageName;
 
-                // Kiểm tra xem ảnh tạm có tồn tại trong storage không
+                // Check if the temporary image exists in storage
                 if (Storage::exists($tempImagePath)) {
                     $fullTempImagePath = Storage::path($tempImagePath);
                     $image = new UploadedFile(
@@ -161,21 +166,33 @@ class AccountService extends BaseService implements AccountServiceInterface
                         true
                     );
 
-                    // Cập nhật ảnh trong S3 và xóa ảnh tạm
-                    $data['image'] = $this->imageService->updateImageS3('account_files', $image, $oldImagePath);
-                    $this->imageService->deleteImage($tempImagePath); // Xóa ảnh tạm
+                    // Update image in S3 and delete temporary image
+                    $data['image'] = $this->imageService->updateImage('account_files', $image, $oldImagePath);
+                    $this->imageService->deleteImage($tempImagePath); // Delete temporary image
                 } else {
-                    dd('Temp file does not exist in local storage.'); // Thông báo lỗi nếu ảnh tạm không tồn tại
+                    dd('Temp file does not exist in local storage.'); // Error message if temporary image does not exist
                 }
             }
 
-            // Cập nhật tài khoản với dữ liệu mới
+            // Update account with new data
             $this->accountRepository->updateAccount($id, $data);
+
+            // Commit transaction after successful update
+            DB::commit();
+
         } catch (Exception $e) {
-            // Khôi phục dữ liệu cũ nếu có lỗi xảy ra
+            // Rollback transaction in case of failure
+            DB::rollBack();
+
+            // Restore old data in case of an error
             $this->accountRepository->updateAccount($id, $oldAccount->toArray());
 
-            // Xử lý ngoại lệ khi có lỗi xảy ra
+            // Handle image restoration if it was changed
+            if (isset($data['image']) && $data['image'] !== $oldImagePath) {
+                $this->imageService->updateImageS3('account_files', $oldImagePath, $data['image']);
+            }
+
+            // Handle exceptions when an error occurs
             $this->imageService->handleImageException($e, $data);
             throw new Exception('Unable to update account: ' . $e->getMessage());
         }

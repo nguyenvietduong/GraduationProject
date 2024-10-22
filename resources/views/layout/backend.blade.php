@@ -10,7 +10,16 @@
     <div class="spinner">
         <div></div>
     </div>
-    
+
+    <div class="card-body pt-0">
+        <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts"
+            style="">
+            <div class="toast-container position-absolute p-3" id="toastPlacement" style="top: 0; right: 0;">
+                <!-- Toasts sẽ được thêm tự động ở đây -->
+            </div>
+        </div>
+    </div>
+
     <!-- Top Bar Start -->
     @include('backend.component.top_bar')
     <!-- Top Bar End -->
@@ -19,7 +28,7 @@
     <div class="startbar d-print-none">
         <!--start brand-->
         <div class="brand">
-            <a href="index.html" class="logo">
+            <a href="{{ route('home') }}" class="logo">
                 @include('backend.component.logo')
             </a>
         </div>

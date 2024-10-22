@@ -7,16 +7,16 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface CategoryRepositoryInterface extends RepositoryInterface
 {
     /**
-     * Get a paginated list of Categorys with optional search functionality.
+     * Get a paginated list of Categories with optional search functionality.
      *
      * @param array $filters
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllCategory(array $filters = [], $perPage = 5);
+    public function getAllCategories(array $filters = [], $perPage = 5);
 
     /**
-     * Get category details by ID.
+     * Get details of a Category by ID.
      *
      * @param int $id
      * @return mixed
@@ -24,7 +24,7 @@ interface CategoryRepositoryInterface extends RepositoryInterface
     public function getCategoryDetail(int $id);
 
     /**
-     * Update an category by ID with new data.
+     * Update a Category by ID with new data.
      *
      * @param int $id
      * @param array $params
@@ -33,7 +33,7 @@ interface CategoryRepositoryInterface extends RepositoryInterface
     public function updateCategory(int $id, array $params);
 
     /**
-     * Create a new category with the provided data.
+     * Create a new Category with data.
      *
      * @param array $params
      * @return mixed
@@ -41,7 +41,7 @@ interface CategoryRepositoryInterface extends RepositoryInterface
     public function createCategory(array $params);
 
     /**
-     * Get category details by ID. (May duplicate `getCategoryDetail` method)
+     * Get details of a Category by ID. (Possibly duplicates the `getCategoryDetail` method)
      *
      * @param int $id
      * @return mixed
@@ -49,7 +49,7 @@ interface CategoryRepositoryInterface extends RepositoryInterface
     public function detailCategory(int $id);
 
     /**
-     * Delete an category by ID.
+     * Delete a Category by ID.
      *
      * @param int $id
      * @return bool

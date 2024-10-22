@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');  // Hóa đơn liên quan
             $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');  // Món ăn trong hóa đơn
             $table->integer('quantity');  // Số lượng món ăn
-            $table->decimal('price', 10, 2);  // Giá món ăn
-            $table->decimal('total', 10, 2);  // Tổng tiền cho món (số lượng * giá)
+            $table->json('price');  // Giá món ăn hỗ trợ đa loại tiền tệ
+            $table->json('total');  // Tổng tiền cho món (số lượng * giá) hỗ trợ đa loại tiền tệ
             $table->timestamps();
         });
     }

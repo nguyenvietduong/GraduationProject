@@ -10,7 +10,7 @@ use App\Interfaces\Repositories\CategoryRepositoryInterface;
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepositoryInterface
 {
     /**
-     * Specify the model class name.
+     * Specify Model class name.
      *
      * @return string
      */
@@ -20,13 +20,13 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Apply criteria in the current Query Repository.
+     * Apply criteria in current Query Repository.
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
     /**
      * Get a paginated list of Categorys with optional search functionality.
      *
@@ -34,7 +34,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllCategory(array $filters = [], $perPage = 5)
+    public function getAllCategories(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
 
@@ -45,15 +45,23 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
             });
         }
 
+        if (!empty($filters['start_date'])) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
+
+        if (!empty($filters['end_date'])) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+
         // Sort by creation date (latest first)
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('id', 'desc');
 
         // Paginate results
         return $query->paginate($perPage);
     }
 
     /**
-     * Get category details by ID.
+     * Get Category detail by ID.
      *
      * @param int $id
      * @return \App\Models\Category
@@ -64,7 +72,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Update an category by ID.
+     * Update an Category by ID.
      *
      * @param int $id
      * @param array $params
@@ -76,7 +84,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Create a new category.
+     * Create a new Category.
      *
      * @param array $params
      * @return \App\Models\Category
@@ -87,7 +95,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Get category details by ID (same as getCategoryDetail).
+     * Get Category detail by ID (same as getCategoryDetail).
      *
      * @param int $id
      * @return \App\Models\Category
@@ -98,7 +106,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Delete an category by ID.
+     * Delete an Category by ID.
      *
      * @param int $id
      * @return bool|null

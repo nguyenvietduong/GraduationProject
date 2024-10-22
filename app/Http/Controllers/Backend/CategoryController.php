@@ -2,99 +2,162 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\Backend\CategoryDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\Category\StoreCategoryRequest;
-use App\Http\Requests\Backend\Category\UpdateCategoryRequest;
-use App\Models\Category;
-use App\Repositories\Interfaces\CategoryRepositoryInterface as CategoryRepository;
-use App\Services\Interfaces\CategoryServiceInterface as CategoryService;
+use App\Interfaces\Services\CategoryServiceInterface;
+use App\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Traits\HandleExceptionTrait;
+
+// Requests
+use App\Http\Requests\BackEnd\Categories\ListRequest as CategoryListRequest;
+use App\Http\Requests\BackEnd\Categories\StoreRequest as CategoryStoreRequest;
+use App\Http\Requests\BackEnd\Categories\UpdateRequest as CategoryUpdateRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    // Declare service and repository properties to handle the Category logic.
+    use HandleExceptionTrait;
+
     protected $categoryService;
     protected $categoryRepository;
 
-    // Constructor to initialize the CategoryService and CategoryRepository when CategoryController is called.
+    protected $permissionRepository;
+
+    // Base path for views
+    const PATH_VIEW = 'backend.category.';
+    const PER_PAGE_DEFAULT = 5;
+    const OBJECT = 'category';
+
     public function __construct(
-        CategoryService     $categoryService,
-        CategoryRepository  $categoryRepository
+        CategoryServiceInterface $categoryService,
+        CategoryRepositoryInterface $categoryRepository,
     ) {
-        $this->categoryService      = $categoryService;    // Service to handle business logic related to categories.
-        $this->categoryRepository   = $categoryRepository; // Repository to manage data-related tasks for categories.
+        $this->categoryService = $categoryService;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    // Method to display the list of categories.
-    public function index(Request $request)
+    /**
+     * Display the list of Categorys.
+     *
+     * @param CategoryListRequest $request
+     * @return \Illuminate\View\View
+     */
+    public function index(CategoryListRequest $request)
     {
-        // Set up some configuration data.
-        $config['model']    = 'Category';  // Define the model being handled.
-        $config['seo']      = config('apps.messages.category');  // Load SEO-related configuration for categories.
+        // $this->authorize('modules', '' . self::OBJECT . '.index');
+        session()->forget('image_temp'); // Clear temporary image value
+        // Validate the request data
+        $request->validated();
 
-        // Fetch paginated list of categories using the service layer.
-        $categories_back    = $this->categoryService->paginate($request);
+        // Extract filters from the request
+        $params = $request->all();
 
-        // Return the view for displaying categories along with the config and data.
-        return view('backend.category.index', compact('config', 'categories_back'));
+        // Apply filters from the request
+        $filters = [
+            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
+            'start_date' => $params['start_date'] ?? '',
+            'end_date' => $params['end_date'] ?? '',
+        ];
+        // Get the per_page value
+        $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
+
+        return view(self::PATH_VIEW . __FUNCTION__, [
+            'object' => self::OBJECT,
+            'categoryTotalRecords' => $this->categoryRepository->count(), // Total records for display
+            'categoryDatas' => $this->categoryService->getAllCategories($filters, $perPage, self::OBJECT), // Paginated Category list for the view
+        ]);
     }
 
-    // Method to show the form for creating a new category.
+    /**
+     * Show the form for creating a new Category.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
-        $config['model']    = 'Category';  // Define the model being handled.
-        $config['seo']      = config('apps.messages.category');  // Load SEO-related configuration for categories.
-
-        // Fetch the categories without a parent (top-level categories) and their children for hierarchical display.
-        $categories         = Category::whereNull('parent_id')->with('children')->get();
-
-        // Return the view for creating a new category along with config and category data.
-        return view('backend.category.create', compact('config', 'categories'));
+        // $this->authorize('modules', 'edit accounts');
+        return view(self::PATH_VIEW . __FUNCTION__, [
+            'object' => 'category',
+        ]);
     }
 
-    // Method to store the newly created category in the database.
-    public function store(StoreCategoryRequest $request)
+    /**
+     * Handle the storage of a new Category.
+     *
+     * @param CategoryStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CategoryStoreRequest $request)
     {
-        // Use the service layer to handle category creation and return success or error messages.
-        if ($this->categoryService->create($request)) {
-            return redirect()->route('admin.category.index')->with('success', 'Record added successfully');
+        // Validate the data from the request using CategoryStoreRequest
+        $data = $request->validated();
+        try {
+            // Create a new Category
+            $this->categoryService->createCategory($data);
+            return redirect()->back()->with('success', 'Category created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('admin.category.index')->with('error', 'Failed to add record. Please try again');
     }
 
-    // Method to show the form for editing an existing category.
+    /**
+     * Show the form for editing a Category.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
-        $config['model']    = 'Category';  // Define the model being handled.
-        $config['seo']      = config('apps.messages.category');  // Load SEO-related configuration for categories.
-
-        // Find the category to be edited by its ID using the repository.
-        $cate               = $this->categoryRepository->findById($id);
-
-        // Fetch top-level categories and their children for hierarchical selection during edit.
-        $categories         = Category::whereNull('parent_id')->with('children')->get();
-
-        // Return the view for editing the category along with the category and config data.
-        return view('backend.category.edit', compact('cate', 'config', 'categories'));
-    }
-
-    // Method to update an existing category in the database.
-    public function update(UpdateCategoryRequest $request, $id)
-    {
-        // Use the service layer to handle category update and return success or error messages.
-        if ($this->categoryService->update($id, $request)) {
-            return redirect()->route('admin.category.index')->with('success', 'Record updated successfully');
+        // Retrieve the details of the Category
+        $category = $this->categoryService->getCategoryDetail($id);
+        if ($category) {
+            return view(self::PATH_VIEW . __FUNCTION__, [
+                'categoryData' => $category,
+                'object' => 'category',
+            ]);
         }
-        return redirect()->route('admin.category.index')->with('error', 'Failed to update record. Please try again');
+
+        abort(404);
     }
 
-    // Method to delete an existing category from the database.
+    /**
+     * Handle the update of a Category.
+     *
+     * @param int $id
+     * @param CategoryUpdateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update($id, CategoryUpdateRequest $request)
+    {
+        // Validate the data from the request using CategoryUpdateRequest
+        $data = $request->validated();
+        // dd($data,$id);
+        try {
+            // Update the Category
+            $this->categoryService->updateCategory($id, $data);
+            return redirect()->route('admin.category.index')->with('success', 'Category updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete a Category.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
-        // Use the service layer to handle category deletion and return success or error messages.
-        if ($this->categoryService->destroy($id)) {
-            return redirect()->route('admin.category.index')->with('success', 'Record deleted successfully');
+        try {
+            // Delete the Category
+            $this->categoryService->deleteCategory($id);
+            return redirect()->back()->with('success', 'Category deleted successfully');
+        } catch (\Exception $e) {
+            // Return a JSON response if there is an error
+            return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('admin.category.index')->with('error', 'Failed to delete record. Please try again');
     }
+
+    
 }

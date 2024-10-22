@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\App;
 
 if (!function_exists('set_active')) {
     /**
@@ -223,5 +223,48 @@ if (!function_exists('forgetSessionImageTemp')) {
             // Xóa session sau khi xử lý thành công
             session()->forget($image_temp);
         }
+    }
+}
+
+if (!function_exists('convertCurrency')) {
+    /**
+     * Convert an amount from VND to USD based on the app's locale.
+     *
+     * @param float $amount The amount in VND to convert.
+     * @return float The converted amount in either VND or USD based on locale.
+     * @throws Exception If the currency conversion is unsupported.
+     */
+    function convertCurrency($amount) {
+        // Define the exchange rates
+        $exchangeRate = [
+            'USD' => 24845, // 1 USD = 24.845 VND
+            'VND' => 1 // 1 VND = 1 VND
+        ];
+
+        // Determine the current locale
+        $locale = App::getLocale();
+
+        // Adjust the conversion based on the locale
+        if ($locale === 'vi') { // Nếu ngôn ngữ là tiếng Việt
+            formatCurrency($amount); // Trả về số tiền VND đã convert
+        } elseif ($locale === 'en') { // Nếu ngôn ngữ là tiếng Anh
+            return $amount / $exchangeRate['USD']; // Chuyển từ VND sang USD
+        }
+
+        // Nếu unsupported currency, throw an error
+        throw new Exception('Unsupported currency conversion');
+    }
+}
+
+if (!function_exists('formatCurrency')) {
+    /**
+     * Format an amount in VND to a string with commas and currency symbol.
+     *
+     * @param float $amount The amount in VND.
+     * @return string The formatted amount as a string.
+     */
+    function formatCurrency($amount) {
+        // Định dạng số với dấu phẩy và thêm ký hiệu "đ"
+        return number_format($amount, 0, ',', '.') . ' đ';
     }
 }

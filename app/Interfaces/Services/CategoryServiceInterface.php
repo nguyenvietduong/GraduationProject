@@ -9,12 +9,13 @@ interface CategoryServiceInterface
      *
      * @param array $filters
      * @param int $perPage
+     * @param string $Category
      * @return mixed
      */
-    public function getAllCategory(array $filters = [], int $perPage = 15);
+    public function getAllCategories(array $filters = [], int $perPage = 15);
 
     /**
-     * Get the details of a Category by ID.
+     * Get details of a Category by ID.
      *
      * @param int $id
      * @return mixed
@@ -45,4 +46,5 @@ interface CategoryServiceInterface
      * @return bool
      */
     public function deleteCategory(int $id);
+
 }

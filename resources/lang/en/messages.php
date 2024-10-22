@@ -34,6 +34,7 @@ return [
             ],
         ],
         'alert' => [
+            'titleSuccess' => 'Success!',
             'success' => 'Success! The task has been completed.',
             'error' => [
                 'title' => 'Oops...',
@@ -52,15 +53,59 @@ return [
                 'action' => 'Action',
             ],
         ],
+        'menu' => [
+            'adminDashboard' => 'Admin Dashboard',
+            'menu' => 'Menu'
+        ],
+        'front_end' => [
+            'navbar' => [
+                'home' => 'Home',
+                'reservation' => 'Reservation',
+                'menu' => 'Menu',
+                'about_us' => [
+                    'title' => 'About Us',
+                    'team' => 'Team',
+                    'contact_us' => 'Reviews',
+                ],
+            ],
+
+            'page' => [
+                'about_us' => [
+                    'contact_us' => [
+                        'titleHeader' => 'Reviews',
+                        'title' => 'Reviews',
+                        'phone' => 'Phone',
+                        'email' => 'Email',
+                        'location' => 'Location',
+                        'form' => [
+                            'title' => 'Reviews',
+                            'point' => 'Your Point',
+                            'comment' => 'Your Comment',
+                            'sendMessage' => 'Send Message',
+                        ]
+                    ]
+                ]
+            ],
+        ],
         'no_data_available' => 'No data available',
-        'start' => 'Start',
-        'end' => 'End',
+        'start' => 'Start to',
+        'end' => 'End from',
         'status' => 'Status',
         'account' => 'Account',
         'profile' => 'Profile',
         'setting' => 'Settings',
         'login' => 'Login',
         'logout' => 'Logout',
+        'notification' => [
+            'login' => [
+                'success' => 'Welcome back',
+                'error' => 'Please login',
+                'errorNotLogin' => 'You need to log in to access this page.',
+            ],
+            'logout' => [
+                'success' => 'You have been logged out.',
+            ]
+        ],
         'adminPage' => 'Admin Page',
         'buttonPermission' => 'Authorize'
     ],
@@ -90,12 +135,39 @@ return [
         '4' => '“Good things come to those who wait, but only the things left by those who hustle.” - Abraham Lincoln',
         '5' => '“The only thing standing between you and your dream is the willingness to work for it.” - Joel Brown',
     ],
+    // Fields for notification
+    'notification' => [
+        'title' => 'Notification',
+        'fields' => [
+            'user_id' => 'Notifier',
+            'title' => 'Title',
+            'message' => 'Message',
+        ],
+        'index' => [
+            'route' => 'admin.notification.index',
+        ],
+        'create' => [
+            'route' => 'admin.notification.create',
+        ],
+        'store' => [
+            'route' => 'admin.notification.store',
+        ],
+        'edit' => [
+            'route' => 'admin.notification.edit',
+        ],
+        'update' => [
+            'route' => 'admin.notification.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.notification.destroy',
+        ],
+    ],
     // Fields for Category
     'category' => [
         'title' => 'Category',
         'fields' => [
-            'name' => 'Name',
-            'parent_id' => 'Parent Category',
+            'name' => 'Category Name',
+            'slug' => 'Slug',
         ],
         'index' => [
             'route' => 'admin.category.index',
@@ -116,6 +188,40 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
+    'menu' => [
+        'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Price to",
+            "end_price" => "Price from"
+        ],
+        'fields' => [
+            'name' => 'Menu Name',
+            'slug' => 'Menu Slug',
+            'description' => 'Menu Description',
+            'price' => 'Menu Price ( USD )',
+            'category_id' => 'Category ID',
+            'image_url' => 'Menu Image',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
+    ],
+
     // Fields for Role
     'permission' => [
         'title' => 'Permission',
@@ -140,6 +246,32 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.permission.destroy',
+        ],
+    ],
+    // Fields for Blog
+    'blog' => [
+        'title' => 'Blog',
+        'fields' => [
+            'name' => 'Blog Name',
+            'accountsCount' => 'Blogs Count',
+        ],
+        'index' => [
+            'route' => 'admin.blog.index',
+        ],
+        'create' => [
+            'route' => 'admin.blog.create',
+        ],
+        'store' => [
+            'route' => 'admin.blog.store',
+        ],
+        'edit' => [
+            'route' => 'admin.blog.edit',
+        ],
+        'update' => [
+            'route' => 'admin.blog.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.blog.destroy',
         ],
     ],
     // Fields for Role
@@ -186,6 +318,7 @@ return [
             'email' => 'Email',
             'email_placeholder' => 'Enter email',
             'phone' => 'Phone',
+            'date' => 'Birthday',
             'phone_placeholder' => 'Enter phone',
             'total_friends' => 'Total Friends',
             'address' => 'Address',

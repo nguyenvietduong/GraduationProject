@@ -23,21 +23,21 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     }
 
     /**
-     * Get a paginated list of Categories with optional filters.
+     * Get a paginated list of categories with optional filters.
      *
      * @param array $filters
      * @param int $perPage
      * @return mixed
      * @throws Exception
      */
-    public function getAllCategory(array $filters = [], int $perPage = 5)
+    public function getAllCategories(array $filters = [], int $perPage = 5)
     {
         try {
-            // Retrieve Categories from the repository using filters and pagination
-            return $this->categoryRepository->getAllCategory($filters, $perPage);
+            // Retrieve categories from the repository using filters and pagination
+            return $this->categoryRepository->getAllCategories($filters, $perPage);
         } catch (Exception $e) {
-            // Handle any exceptions that occur while retrieving Categories
-            throw new Exception('Unable to retrieve Category list: ' . $e->getMessage());
+            // Handle any exceptions that occur while retrieving categories
+            throw new Exception('Unable to retrieve category list: ' . $e->getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ class CategoryService extends BaseService implements CategoryServiceInterface
         try {
             return $this->categoryRepository->getCategoryDetail($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Category not found with ID: ' . $id);
+            throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
         } catch (Exception $e) {
             // Handle other errors if necessary
             throw new Exception('Unable to retrieve category details: ' . $e->getMessage());
@@ -66,13 +66,16 @@ class CategoryService extends BaseService implements CategoryServiceInterface
      * @param array $data
      * @return mixed
      */
-
     public function createCategory(array $data)
     {
         try {
+            // Create the category
+            $data['guard_name'] = 'web';
+
             return $this->categoryRepository->createCategory($data);
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to create category: ' . $e->getMessage());
+        } catch (Exception $e) {
+            // Handle any errors that occur during category creation
+            throw new Exception('Unable to create category: ' . $e->getMessage());
         }
     }
 
@@ -87,11 +90,14 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     public function updateCategory(int $id, array $data)
     {
         try {
+            $data['guard_name'] = 'web';
+
             return $this->categoryRepository->updateCategory($id, $data);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Category not found with ID: ' . $id);
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to update category: ' . $e->getMessage());
+            throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
+        } catch (Exception $e) {
+            // Handle other errors if necessary
+            throw new Exception('Unable to update category: ' . $e->getMessage());
         }
     }
 
@@ -107,7 +113,7 @@ class CategoryService extends BaseService implements CategoryServiceInterface
         try {
             return $this->categoryRepository->deleteCategory($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Category not found with ID: ' . $id);
+            throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
         } catch (Exception $e) {
             // Handle other errors if necessary
             throw new Exception('Unable to delete category: ' . $e->getMessage());

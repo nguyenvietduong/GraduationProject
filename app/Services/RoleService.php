@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Interfaces\Services\RoleServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class RoleService extends BaseService implements RoleServiceInterface
@@ -13,7 +12,7 @@ class RoleService extends BaseService implements RoleServiceInterface
     protected $roleRepository;
 
     /**
-     * Tạo mới instance của RoleService.
+     * Create a new instance of RoleService.
      *
      * @param RoleRepositoryInterface $roleRepository
      */
@@ -43,7 +42,7 @@ class RoleService extends BaseService implements RoleServiceInterface
     }
 
     /**
-     * Lấy chi tiết của role theo ID.
+     * Get the details of a role by its ID.
      *
      * @param int $id
      * @return mixed
@@ -54,15 +53,15 @@ class RoleService extends BaseService implements RoleServiceInterface
         try {
             return $this->roleRepository->getRoleDetail($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Role không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Role does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể lấy chi tiết role: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to retrieve role details: ' . $e->getMessage());
         }
     }
 
     /**
-     * Tạo mới một role.
+     * Create a new role.
      *
      * @param array $data
      * @return mixed
@@ -71,8 +70,6 @@ class RoleService extends BaseService implements RoleServiceInterface
     {
         try {
             // Create the role
-            $data['guard_name'] = 'web';
-
             return $this->roleRepository->createRole($data);
         } catch (Exception $e) {
             // Handle any errors that occur during role creation
@@ -81,7 +78,7 @@ class RoleService extends BaseService implements RoleServiceInterface
     }
 
     /**
-     * Cập nhật một role theo ID.
+     * Update a role by its ID.
      *
      * @param int $id
      * @param array $data
@@ -91,19 +88,17 @@ class RoleService extends BaseService implements RoleServiceInterface
     public function updateRole(int $id, array $data)
     {
         try {
-            $data['guard_name'] = 'web';
-
             return $this->roleRepository->updateRole($id, $data);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Role không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Role does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể cập nhật role: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to update role: ' . $e->getMessage());
         }
     }
 
     /**
-     * Xóa một role theo ID.
+     * Delete a role by its ID.
      *
      * @param int $id
      * @return bool
@@ -114,34 +109,37 @@ class RoleService extends BaseService implements RoleServiceInterface
         try {
             return $this->roleRepository->deleteRole($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Role không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Role does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể xóa role: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to delete role: ' . $e->getMessage());
         }
     }
 
-
-
+    /**
+     * Update permissions for roles based on the request input.
+     *
+     * @param $request
+     * @throws ModelNotFoundException
+     * @throws Exception
+     */
     public function updatePermission($request)
     {
         try {
             $permissions = $request->input('permission');
-            // dd($permissions);
+
             if (count($permissions)) {
                 foreach ($permissions as $key => $val) {
                     $role = $this->roleRepository->getRoleDetail($key);
-                    $role->permissions()->detach();
-                    $role->permissions()->sync($val);
+                    $role->permissions()->detach(); // Detach existing permissions
+                    $role->permissions()->sync($val); // Sync new permissions
                 }
             }
-            // return $this->roleRepository->updateRole($id, $data);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('');
+            throw new ModelNotFoundException('Role does not exist.');
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể cập nhật phân quyền: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to update permissions: ' . $e->getMessage());
         }
     }
-
 }
