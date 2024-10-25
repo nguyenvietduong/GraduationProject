@@ -38,7 +38,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/Helper.php"
+            "app/Helpers/Helper.php" ,
+            "app/Enums/VarGlobal.php"
         ]
     },
     "autoload-dev": {

@@ -37,11 +37,11 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
     public function getAllMenus(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
-        // dd($filters['priceFilter']);
-        // Apply search filters
+        app()->getLocale() == "en" ? $language = "en" : $language = "vi";
         if (!empty($filters['search'])) {
-            $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+            
+            $query->where(function ($q) use ($filters ,$language) {
+                $q->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"$language\"')) LIKE ?", ['%' . $filters['search'] . '%']);
             });
         }
         if (!empty($filters['start_date'])) {
@@ -58,13 +58,13 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
         }
 
         if ($filters['start_price'] && !$filters['end_price']) {
-            $query->where("price", ">=", $filters['start_price']);
+            $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(price , "$.'.$language.'")) >= ? ' , $filters['start_price']);
         } elseif (!$filters['start_price'] && $filters['end_price']) {
-            $query->where("price", "<=", $filters['end_price']);
+            $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(price , "$.'.$language.'")) <= ? ' , $filters['end_price']);
         } elseif ($filters['start_price'] && $filters['end_price']) {
-            $query->whereBetween("price", [$filters['start_price'], $filters['end_price']]);
+            $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(price, "$.'.$language.'")) BETWEEN ? AND ?', [$filters['start_price'], $filters['end_price']]);
         }
-        $query->orderBy('id', 'desc');
+        $query->orderBy('status', 'asc');
         // Paginate results
         return $query->paginate($perPage);
     }

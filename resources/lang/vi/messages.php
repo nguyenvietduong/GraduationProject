@@ -137,16 +137,28 @@ return [
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
     'menu' => [
-        'title' => 'Menu',
+        'title' => 'Món ăn',
         "filters" => [
             "start_price" => "Giá từ",
             "end_price" => "Giá đến"
         ],
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Tạm dừng',
+        ],
         'fields' => [
-            'name' => 'Tên món ăn',
+            'name_vi' => 'Tên món ăn (Tiếng việt)',
+            'name_en' => 'Tên món ăn (Tiếng anh)',
             'slug' => 'Đường dẫn',
-            'description' => 'Mô tả món ăn',
-            'price' => 'Giá món ăn ( VND )',
+            'name' => "Tên món ăn" ,
+            'description_vi' => 'Mô tả món ăn (Tiếng việt)',
+            'description_en' => 'Mô tả món ăn (Tiếng anh)',
+            'price_vi' => 'Giá món ăn (Tiếng việt)',
+            'price_en' => 'Giá món ăn (tiếng anh)',
+            "price" =>  "Giá",
+            'status' => 'Trạng thái',
+            'status_active' => 'Hoạt động',
+            'status_inactive' => 'Không hoạt động',
             'category_id' => 'Danh mục',
             'image_url' => 'Hình ảnh ',
         ],

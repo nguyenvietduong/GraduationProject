@@ -58,7 +58,6 @@ class MenuController extends Controller
 
         // Extract filters from the request
         $params = $request->all();
-
         // Apply filters from the request
         $filters = [
             'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
@@ -67,9 +66,9 @@ class MenuController extends Controller
             'start_price' => $params['start_price'] ?? 0,
             'end_price' => $params['end_price'] ?? 0,
         ];
-
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
+
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'menuTotalRecords' => $this->menuRepository->count(), // Total records for display
@@ -101,7 +100,6 @@ class MenuController extends Controller
     {
         // Validate the data from the request using MenuStoreRequest
         $data = $request->validated();
-        $data["currency"] = $request->currency;
         try {
             // Create a new menu
             $this->menuService->createMenu($data);
@@ -121,6 +119,7 @@ class MenuController extends Controller
     {
         // Retrieve the details of the menu
         $menu = $this->menuService->getMenuDetail($id);
+        // dd($menu);
         if ($menu) {
             return view(self::PATH_VIEW . __FUNCTION__, [
                 'menuData' => $menu,

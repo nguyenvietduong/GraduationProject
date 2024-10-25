@@ -15,7 +15,9 @@ class Category extends Model
         'name',
         'slug',
     ];
-
+    protected $casts = [
+        'name' => 'array', 
+    ];
     // Quan hệ với menus
 
     public function menus(): HasMany
