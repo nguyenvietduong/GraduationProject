@@ -52,11 +52,6 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
             $query->whereDate('created_at', '<=', $filters['end_date']);
         }
 
-        if(app()->getLocale() !== 'en'){
-            $filters['start_price'] =  $filters['start_price']/24000;
-            $filters['end_price'] =  $filters['end_price']/24000;
-        }
-
         if ($filters['start_price'] && !$filters['end_price']) {
             $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(price , "$.'.$language.'")) >= ? ' , $filters['start_price']);
         } elseif (!$filters['start_price'] && $filters['end_price']) {

@@ -51,25 +51,23 @@ class MenuController extends Controller
      * @return \Illuminate\View\View
      */
     public function index(MenuListRequest $request)
-    {
+    {   
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
-
         // Extract filters from the request
         $params = $request->all();
         // Apply filters from the request
         $filters = [
-            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
-            'start_date' => $params['start_date'] ?? '',
-            'end_date' => $params['end_date'] ?? '',
-            'start_price' => $params['start_price'] ?? 0,
-            'end_price' => $params['end_price'] ?? 0,
-            'status' => $params['status'] ?? '',
+            'search'        =>    $params['keyword'] ?? '', // Ensure this matches the search input name
+            'start_date'    =>    $params['start_date'] ?? '',
+            'end_date'      =>    $params['end_date'] ?? '',
+            'start_price'   =>    $params['start_price'] ?? 0,
+            'end_price'     =>    $params['end_price'] ?? 0,
+            'status'        =>    $params['status'] ?? '',
         ];
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
-
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'menuTotalRecords' => $this->menuRepository->count(), // Total records for display

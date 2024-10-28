@@ -52,12 +52,14 @@
 </form>
 <script>
     const formFilter = document.getElementById('form_filter');
+    const fieldStatus = document.querySelector('[name="status"]');
     btnReset = document.getElementById('form_filter_reset-btn');
     btnReset.addEventListener('click', function(e) {
         e.preventDefault();
         const inputs = formFilter.querySelectorAll('input');
         inputs.forEach(input => {
             input.value = "";
+            fieldStatus.value = "";
         });
         formFilter.submit();
     });
