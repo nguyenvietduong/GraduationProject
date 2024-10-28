@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/checkUserSession.js',
                 'resources/js/sendNotificationJob.js',
+                'resources/js/reviewEvent.js',
             ],
             refresh: true,
         }),

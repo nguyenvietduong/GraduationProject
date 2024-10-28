@@ -55,4 +55,6 @@ interface ReviewRepositoryInterface extends RepositoryInterface
      * @return bool
      */
     public function deleteReview(int $id);
+
+    public function countNewReviews();
 }

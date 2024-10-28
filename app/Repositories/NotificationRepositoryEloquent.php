@@ -6,6 +6,8 @@ use App\Models\Notification;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\Repositories\NotificationRepositoryInterface;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class NotificationRepositoryEloquent extends BaseRepository implements NotificationRepositoryInterface
 {
@@ -34,35 +36,39 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllNotifications(array $filters = [], $perPage = 5)
+    public function getAllNotifications(array $filters = [])
     {
-        $query = $this->model->query();
+        $query = $this->model->newQuery()
+            ->leftJoin('notification_user', function ($join) {
+                $join->on('notifications.id', '=', 'notification_user.notification_id')
+                    ->where('notification_user.user_id', '=', auth()->id());
+            })
+            ->select('notifications.*', 'notification_user.user_id as user_id')
+            ->orderByRaw('CASE WHEN notification_user.user_id IS NULL THEN 0 ELSE 1 END ASC') // Unread first
+            ->orderBy('notifications.created_at', 'desc'); // Then by date created
 
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
                 $q->where('title', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('message', 'like', '%' . $filters['search' . '%']);
+                    ->orWhere('message', 'like', '%' . $filters['search'] . '%');
             });
         }
 
         if (!empty($filters['start_date'])) {
-            $query->whereDate('created_at', '>=', $filters['start_date']);
+            $query->whereDate('notifications.created_at', '>=', $filters['start_date']);
         }
 
         if (!empty($filters['end_date'])) {
-            $query->whereDate('created_at', '<=', $filters['end_date']);
+            $query->whereDate('notifications.created_at', '<=', $filters['end_date']);
         }
 
         if (!empty($filters['title'])) {
             $query->where('title', $filters['title']);
         }
 
-        // Sort by creation date (latest first)
-        $query->orderBy('created_at', 'desc');
-
         // Paginate results
-        return $query->paginate($perPage);
+        return $query->get();
     }
 
     /**
@@ -121,4 +127,19 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
     {
         return $this->delete($id);
     }
+
+ /**
+     * Count the number of unread notifications for a specific user.
+     *
+     * @return int
+     */
+    public function countUnreadNotifications(int $userId): int
+    {
+        return Notification::whereNotExists(function ($query) use ($userId) {
+            $query->select(DB::raw(1))
+                  ->from('notification_user')
+                  ->whereRaw('notification_user.notification_id = notifications.id')
+                  ->where('notification_user.user_id', $userId);
+        })->count();
+    }     
 }

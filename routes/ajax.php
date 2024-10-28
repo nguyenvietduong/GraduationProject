@@ -8,6 +8,11 @@ use App\Http\Controllers\Ajax\ThemeController;
 use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Account\ProfileController;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
+use App\Http\Controllers\Backend\ChatController;
+use App\Http\Controllers\Backend\NotificationController;
 
 // Set System Ajax
 Route::post('set-language', [LanguageController::class, 'setLanguage']);
@@ -16,7 +21,18 @@ Route::post('profile/update/image', [ProfileController::class, 'updateProfileIma
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
 Route::post('admin/account/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
+Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
+Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+Route::get('/count-new-reviews-endpoint', [UpdateStatusReview::class, 'getNewReviewCount']);
+
+Route::get('/messages/users', [ChatController::class, 'getUsersWithMessages']);
+Route::post('/messages/send', [ChatController::class, 'sendMessage']);
+Route::get('/messages/{userId}', [ChatController::class, 'getMessages']);
+
+Route::get('/notifications/index', [NotificationController::class, 'index'])->name('notification.index');
+Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {
