@@ -64,6 +64,9 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
         } elseif ($filters['start_price'] && $filters['end_price']) {
             $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(price, "$.'.$language.'")) BETWEEN ? AND ?', [$filters['start_price'], $filters['end_price']]);
         }
+        if(!empty($filters['status'])){
+            $query->where('status', $filters['status']);
+        }
         $query->orderBy('status', 'asc');
         // Paginate results
         return $query->paginate($perPage);
