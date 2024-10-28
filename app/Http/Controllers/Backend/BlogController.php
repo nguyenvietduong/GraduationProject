@@ -68,6 +68,7 @@ class BlogController extends Controller
             'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
             'start_date' => $params['start_date'] ?? '',
             'end_date' => $params['end_date'] ?? '',
+            'status' => $params['status'] ?? '',
         ];
 
         // Get the per_page value
@@ -144,11 +145,9 @@ class BlogController extends Controller
      */
     public function update($id, BlogUpdateRequest $request)
     {
-        // Validate the data from the request using BlogUpdateRequest
         $data = $request->validated();
 
         try {
-            // Gửi thông báo chung
             $title = 'Blog';
             $message = 'edited blog!';
 

@@ -11,7 +11,7 @@
 
                 <li class="mx-3 welcome-text">
                     <h3 class="mb-0 fw-bold text-truncate">{{ getGreeting() }}, {{ Auth::check() ?
-                        Auth::user()->full_name : "Null" }} !</h3>
+                    Auth::user()->full_name : "Null" }} !</h3>
                     <marquee>
                         <h6 class="mb-0 fw-normal text-muted text-truncate fs-14">{{ getRandomQuote() }}</h6>
                     </marquee>
@@ -25,6 +25,8 @@
                 @include('backend.component.language')
 
                 @include('backend.component.light_dark_mode')
+
+                @include('backend.component.notification')
 
                 @include('backend.component.auth')
             </ul>
