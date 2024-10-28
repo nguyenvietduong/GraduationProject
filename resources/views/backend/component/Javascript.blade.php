@@ -53,6 +53,17 @@
 <script src="{{ asset('backend/assets/custom/js/set-language.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/set-theme.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/set-slug.js') }}"></script>
-<script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script>
+<!-- <script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script> -->
+
+<script>
+    var csrfToken = '{{ csrf_token() }}';
+</script>
+
+<script>
+    var updateStatusUrl = '{{ route("admin.review.updateStatus") }}';
+</script>
+<script src="{{ asset('backend/assets/custom/js/ajax/set-status-review.js') }}"></script>
+
+<script src="{{ asset('backend/assets/custom/js/ajax/set-notification.js') }}"></script>
 
 @stack('script')

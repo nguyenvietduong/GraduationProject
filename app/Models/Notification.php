@@ -9,11 +9,16 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'title', 'message', 'read'];
+    protected $fillable = ['title', 'message', 'idUser'];
 
-    // Nếu cần liên kết với người dùng
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'idUser'); // Change to belongsTo
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'notification_user')
+                    ->withTimestamps();
+    }      
 }

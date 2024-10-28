@@ -6,6 +6,7 @@ use App\Interfaces\Repositories\NotificationRepositoryInterface;
 use App\Interfaces\Services\NotificationServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationService extends BaseService implements NotificationServiceInterface
 {
@@ -30,11 +31,11 @@ class NotificationService extends BaseService implements NotificationServiceInte
      * @return mixed
      * @throws Exception
      */
-    public function getAllNotifications(array $filters = [], int $perPage = 5)
+    public function getAllNotifications(array $filters = [])
     {
         try {
             // Retrieve Categories from the repository using filters and pagination
-            return $this->notificationRepository->getAllNotifications($filters, $perPage);
+            return $this->notificationRepository->getAllNotifications($filters);
         } catch (Exception $e) {
             // Handle any exceptions that occur while retrieving Categories
             throw new Exception('Unable to retrieve Notification list: ' . $e->getMessage());
@@ -113,4 +114,14 @@ class NotificationService extends BaseService implements NotificationServiceInte
             throw new Exception('Unable to delete notification: ' . $e->getMessage());
         }
     }
+
+    public function countUnreadNotifications(): int
+    {
+        if (Auth::check()) {
+            $userId = Auth::user()->id; 
+            return $this->notificationRepository->countUnreadNotifications($userId);
+        }
+    
+        return 0;
+    }    
 }

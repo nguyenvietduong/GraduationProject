@@ -138,7 +138,6 @@ class BlogService extends BaseService implements BlogServiceInterface
         // Store old data for recovery in case of an error
         $oldBlog = $this->blogRepository->getBlogDetail($id);
         $oldImagePath = $oldBlog->image; // Store the old image path
-    
         // Start transaction to ensure all changes are atomic
         DB::beginTransaction();
     

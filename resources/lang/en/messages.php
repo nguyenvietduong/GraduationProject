@@ -33,6 +33,7 @@ return [
                 ],
             ],
         ],
+        'invoice_error' => 'The invoice code does not belong to your account.',
         'alert' => [
             'titleSuccess' => 'Success!',
             'success' => 'Success! The task has been completed.',
@@ -253,12 +254,48 @@ return [
             'route' => 'admin.permission.destroy',
         ],
     ],
+    // Fields for Review
+    'review' => [
+        'title' => 'Review',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+            'pending' => 'Pending',
+        ],
+        'fields' => [
+            'name' => 'Review Name',
+            'reviewsCount' => 'Reviews Count',
+            'rating' => 'Rating',
+            'review_creator' => 'Review Creator',
+            'comment' => 'Comment',
+        ],
+        'index' => [
+            'route' => 'admin.review.index',
+        ],
+        'edit' => [
+            'route' => 'admin.review.edit',
+        ],
+        'update' => [
+            'route' => 'admin.review.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.review.destroy',
+        ],
+    ],
     // Fields for Blog
     'blog' => [
         'title' => 'Blog',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
         'fields' => [
             'name' => 'Blog Name',
-            'accountsCount' => 'Blogs Count',
+            'blogsCount' => 'Blogs Count',
+            'title' => 'Title',
+            'blog_creator' => 'Blog Creator',
+            'slug' => 'Blog Slug',
+            'content' => 'Content',
         ],
         'index' => [
             'route' => 'admin.blog.index',

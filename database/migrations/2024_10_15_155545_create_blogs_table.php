@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('slug')->unique(); // Đường dẫn thân thiện (slug) hỗ trợ đa ngôn ngữ
             $table->string('image')->nullable(); // Đường dẫn hình ảnh (nếu có)
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ID của người dùng đăng bài
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps(); // Thời gian tạo và cập nhật
             $table->softDeletes(); // Xóa mềm (nếu cần)
         });
