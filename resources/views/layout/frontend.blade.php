@@ -20,8 +20,12 @@
 
     <!-- Footer Start -->
     @include('frontend.component.footer')
-    <!--end footer-->
     <!-- Footer End -->
+
+    <!-- Chat Popup -->
+    @include('frontend.component.message')
+    <!-- Chat Popup End -->
+
     <!-- Switcher -->
     @include('frontend.component.lightdark')
 
@@ -33,4 +37,5 @@
     @include('frontend.component.js')
     <!-- JAVASCRIPTS -->
 </body>
+
 </html>

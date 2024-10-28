@@ -21,4 +21,12 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    var updateStatusUrl = '{{ route("admin.blog.updateStatus") }}';
+    var csrfToken = '{{ csrf_token() }}';
+</script>
+<script src="{{ asset('backend/assets/custom/js/ajax/set-status-blog.js') }}"></script>
+@endpush
 @endsection

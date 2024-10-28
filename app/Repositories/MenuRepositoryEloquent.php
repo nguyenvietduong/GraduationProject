@@ -37,8 +37,7 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
     public function getAllMenus(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
-        // dd($filters['priceFilter']);
-        // Apply search filters
+
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
                 $q->where('name', 'like', '%' . $filters['search'] . '%');
@@ -65,7 +64,7 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
             $query->whereBetween("price", [$filters['start_price'], $filters['end_price']]);
         }
         $query->orderBy('id', 'desc');
-        // Paginate results
+
         return $query->paginate($perPage);
     }
 
