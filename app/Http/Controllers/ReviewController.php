@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NotificationEvent;
+use App\Events\ReviewEvent;
 use App\Interfaces\Services\NotificationServiceInterface;
 use App\Interfaces\Services\ReviewServiceInterface;
 use App\Interfaces\Repositories\ReviewRepositoryInterface;
@@ -12,6 +13,7 @@ use App\Traits\HandleExceptionTrait;
 use App\Http\Requests\Frontend\Reviews\StoreRequest as ReviewStoreRequest;
 use App\Jobs\SendNotificationJob;
 use App\Models\Notification;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -43,7 +45,9 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view(self::PATH_VIEW);
+        return view(self::PATH_VIEW,  [
+            'dataReviews' => $this->reviewService->getAllReviews([], 4),
+        ]);
     }
 
     /**

@@ -1,7 +1,7 @@
 <!-- Meta Tags -->
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>Rizz | Rizz - Admin & Dashboard Template</title>
+<title>Trang Quản Trị - Hương Việt</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
 <meta content="Your Name or Company" name="author" />
@@ -34,4 +34,6 @@
 @endif
 
 @vite('resources/js/sendNotificationJob.js')
+@vite('resources/js/reviewEvent.js')
+@vite('resources/js/checkUserSession.js')
 @stack('css')

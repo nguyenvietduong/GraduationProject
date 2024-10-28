@@ -12,17 +12,11 @@ class NotificationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $title;
-    public $message;
-    public $type; // Kiểu thông báo (thông báo, cảnh báo, lỗi, v.v.)
-    public $data; // Dữ liệu bổ sung (nếu cần)
+    public $dataNotification;
 
-    public function __construct($title, $message, $type = 'info', $data = null)
+    public function __construct($dataNotification)
     {
-        $this->title = $title;
-        $this->message = $message;
-        $this->type = $type;
-        $this->data = $data;
+        $this->dataNotification = $dataNotification;
     }
 
     public function broadcastOn()
@@ -33,10 +27,7 @@ class NotificationEvent implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'title' => $this->title,
-            'message' => $this->message,
-            'type' => $this->type,
-            'data' => $this->data,
+            'dataNotification' => $this->dataNotification,
         ];
     }
 }

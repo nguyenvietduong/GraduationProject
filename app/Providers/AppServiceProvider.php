@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Role;
+use App\Services\NotificationService;
+use App\Services\ReviewService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Html\Builder;
 use Illuminate\Support\Facades\URL;
@@ -50,6 +52,19 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
+
+        View::composer('*', function ($view) {
+            $reviewService = app(ReviewService::class);
+            $newReviewCount = $reviewService->countNewReviews();
+    
+            $notificationService = app(NotificationService::class);
+            $dataNotification = $notificationService->getAllNotifications();
+            $unreadNotificationCount = $notificationService->countUnreadNotifications();
+    
+            $view->with('newReviewCount', $newReviewCount);
+            $view->with('dataNotification', $dataNotification);
+            $view->with('unreadNotificationCount', $unreadNotificationCount);
+        });
 
         Paginator::useBootstrapFive();
         Builder::useVite();

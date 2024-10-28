@@ -6,8 +6,9 @@
                 </div>
             </th>
             <th>#</th>
-            <th class="ps-0">Title</th>
-            <th>Blog Creator</th>
+            <th class="ps-0">{{ __('messages.blog.fields.title') }}</th>
+            <th>{{ __('messages.blog.fields.blog_creator') }}</th>
+            <th>{{ __('messages.system.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th class="text-center">{{ __('messages.system.table.fields.action') }}</th>
         </tr>
@@ -29,6 +30,20 @@
                     </td>
                     <td>{{ $data->user->full_name ?? __('messages.system.no_data_available') }}</td>
                     <td>
+                        @php
+                            $status = request('status') ?: old('status');
+                            $statuses = __('messages.blog.status');
+                        @endphp
+
+                        <select name="status" class="form-select status" data-blog-id="{{ $data->id }}">
+                            @foreach ($statuses as $key => $option)
+                                <option value="{{ $key }}" @selected($status == $key) @selected($data->status == $key)>
+                                    {{ $option }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
                         <span>{{ date('d/m/Y H:i:s', strtotime($data->created_at)) }}</span>
                     </td>
                     <td class="text-end">
@@ -36,8 +51,8 @@
                             <a href="{{ route(__('messages.' . $object . '.edit.route'), $data->id) }}" class="me-2">
                                 <i class="fas fa-edit btn btn-primary btn-sm"></i>
                             </a>
-                            <form action="{{ route(__('messages.' . $object . '.destroy.route'), $data->id) }}"
-                                method="post" class="d-inline-block" id="myForm_{{ $data->id }}">
+                            <form action="{{ route(__('messages.' . $object . '.destroy.route'), $data->id) }}" method="post"
+                                class="d-inline-block" id="myForm_{{ $data->id }}">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="executeExample('handleDismiss', 'myForm_{{ $data->id }}')" type="button"
@@ -51,7 +66,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="8" class="text-center">{{ __('messages.system.no_data_available') }}</td>
+                <td colspan="7" class="text-center">{{ __('messages.system.no_data_available') }}</td>
             </tr>
         @endif
     </tbody>

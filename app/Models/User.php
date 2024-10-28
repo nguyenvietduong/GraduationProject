@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -36,6 +37,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['image_url', 'role_name'];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'birthday' => 'date', // Đảm bảo rằng `birthday` được cast sang kiểu `date`
@@ -62,6 +65,43 @@ class User extends Authenticatable
     // Custom roles relationship
     public function role(): BelongsTo
     {
-        return $this->belongsTo(Role::class); // Mỗi người dùng chỉ có một vai trò
+        return $this->belongsTo(Role::class);
     }
+
+    // App\Models\User.php
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return checkFile($this->image);
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->role->name;
+    }
+
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class, 'notification_user')
+                    ->withTimestamps();
+    }    
 }

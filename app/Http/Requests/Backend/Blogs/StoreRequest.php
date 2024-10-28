@@ -33,6 +33,7 @@ class StoreRequest extends FormRequest
             'content' => 'required|string', // Nội dung bài viết
             'slug' => 'nullable|string|max:255|unique:blogs', // Đường dẫn thân thiện, có thể null
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Hình ảnh bài viết
+            'status' => 'required|in:active,inactive',
         ];
     }
 

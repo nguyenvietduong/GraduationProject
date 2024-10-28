@@ -124,6 +124,20 @@
                         href="{{ route('admin.menu.index') }}">
                         <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
                         <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
+
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"
+                        href="{{ route('admin.blog.index') }}">
+                        <i class="fa fa-newspaper menu-icon"></i>
+                        <span>Blog</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['review'], 'active', 'admin') }}"
+                        href="{{ route('admin.review.index') }}">
+                        <i class="fa fa-comments menu-icon"></i>
+                        <span id="new-review-count">Review ({{ $newReviewCount }})</span> <!-- Thêm ID cho span -->
                     </a>
                 </li> 
 
@@ -131,12 +145,13 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}" href="{{ route('admin.blog.index') }}">
-                        <i class="fa fa-newspaper menu-icon"></i>
-                        <span>Blog</span>
+                    <a class="nav-link {{ set_active(['chat'], 'active', 'admin') }}"
+                        href="{{ route('admin.chat.index') }}">
+                        <i class="fa fa-comment-alt menu-icon"></i>
+                        <span id="new-chat-count">Chat</span> <!-- Thêm ID cho span -->
                     </a>
                 </li>
-
+                
                 <!-- System -->
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
@@ -149,15 +164,7 @@
                         id="sidebarSystemManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
-                                    href="{{ route('admin.notification.index') }}">
-                                    <i class="fa fa-bell menu-icon"></i>
-                                    <span>Notification</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('home') }}">
                                     <i class="fa fa-arrow-left menu-icon"></i>
                                     <span>Back to HuongViet</span>
                                 </a>

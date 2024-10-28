@@ -16,6 +16,7 @@ class Blog extends Model
         'slug',      // Đường dẫn thân thiện
         'image',     // Đường dẫn hình ảnh
         'user_id',   // ID của người dùng đăng bài
+        'status'
     ];
 
     // Phương thức để lấy người dùng tạo bài viết

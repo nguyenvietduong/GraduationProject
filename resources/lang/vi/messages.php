@@ -33,6 +33,7 @@ return [
                 ],
             ],
         ],
+        'invoice_error' => 'Mã hóa đơn không thuộc về tài khoản của bạn.',
         'alert' => [
             'titleSuccess' => 'Thành công!',
             'success' => 'Thành công! Nhiệm vụ đã được hoàn thành.',
@@ -141,6 +142,9 @@ return [
 
 
 
+
+
+
     'menu' => [
         'title' => 'Menu',
         "filters" => [
@@ -176,6 +180,8 @@ return [
     ],
 
 
+
+
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
@@ -203,6 +209,7 @@ return [
         ],
     ],
 
+
     // Restaurant 
     'restaurant' => [
         'title' => 'Nhà hàng',
@@ -226,7 +233,70 @@ return [
             'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
             'image' =>  'Hình ảnh',
             'restaurant_information' => 'Thông tin nhà hàng',
-        ]
+        ],
+
+    // Fields for Review
+    'review' => [
+        'title' => 'Đánh Giá',
+        'status' => [
+            'active' => 'Đang hoạt động',
+            'inactive' => 'Ngừng hoạt động',
+            'pending' => 'Chờ phê duyệt',
+        ],
+        'fields' => [
+            'name' => 'Tên Đánh Giá',
+            'reviewsCount' => 'Số Lượng Đánh Giá',
+            'rating' => 'Xếp Hạng',
+            'review_creator' => 'Người Tạo Đánh Giá',
+            'comment' => 'Bình Luận',
+        ],
+        'index' => [
+            'route' => 'admin.review.index',
+        ],
+        'edit' => [
+            'route' => 'admin.review.edit',
+        ],
+        'update' => [
+            'route' => 'admin.review.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.review.destroy',
+        ],
+    ],
+    // Trường cho Blog
+    'blog' => [
+        'title' => 'Blog',
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Không hoạt động',
+        ],
+        'fields' => [
+            'name' => 'Tên Blog',
+            'accountsCount' => 'Số Lượng Blog',
+            'title' => 'Tiêu Đề',
+            'blog_creator' => 'Người Tạo Blog',
+            'slug' => 'Đường Dẫn Tĩnh',
+            'content' => 'Nội Dung',
+        ],
+        'index' => [
+            'route' => 'admin.blog.index',
+        ],
+        'create' => [
+            'route' => 'admin.blog.create',
+        ],
+        'store' => [
+            'route' => 'admin.blog.store',
+        ],
+        'edit' => [
+            'route' => 'admin.blog.edit',
+        ],
+        'update' => [
+            'route' => 'admin.blog.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.blog.destroy',
+        ],
+
     ],
     // Fields for Role
     'role' => [

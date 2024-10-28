@@ -20,3 +20,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('user-session.{userId}', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
 });
+
+Broadcast::channel('review.{reviewId}', function ($user, $reviewId) {
+    // Logic xác thực để kiểm tra xem người dùng có quyền nghe sự kiện này không
+    return true; // Hoặc kiểm tra quyền của người dùng
+});
