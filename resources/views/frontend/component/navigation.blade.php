@@ -11,11 +11,12 @@
 
          <li class="{{ set_active(['reservation'], 'active', '') }}"><a href="{{ route('reservation') }}" class="sub-menu-item">{{ __('messages.system.front_end.navbar.reservation') }}</a></li>
 
-        <li class="has-submenu parent-parent-menu-item {{ set_active(['team', 'contact'], 'active', '') }}"><a href="javascript:void(0)">{{ __('messages.system.front_end.navbar.about_us.title') }}</a><span
+        <li class="has-submenu parent-parent-menu-item {{ set_active(['team', 'contact', 'blog', 'blog-detail'], 'active', '') }}"><a href="javascript:void(0)">{{ __('messages.system.front_end.navbar.about_us.title') }}</a><span
                 class="menu-arrow"></span>
             <ul class="submenu">
                 <li><a href="{{route('team')}}" class="sub-menu-item">{{ __('messages.system.front_end.navbar.about_us.team') }}</a></li>
                 <li><a href="{{route('contact')}}" class="sub-menu-item">{{ __('messages.system.front_end.navbar.about_us.contact_us') }}</a></li>
+                <li><a href="{{route('blog.list')}}" class="sub-menu-item">Blog</a></li>
             </ul>
         </li>
 

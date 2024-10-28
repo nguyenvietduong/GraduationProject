@@ -88,8 +88,8 @@ return [
             ],
         ],
         'no_data_available' => 'No data available',
-        'start' => 'Start',
-        'end' => 'End',
+        'start' => 'Start to',
+        'end' => 'End from',
         'status' => 'Status',
         'account' => 'Account',
         'profile' => 'Profile',
@@ -188,6 +188,66 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
+     // Fields for Restaurant 
+     'restaurant' => [
+        'title' => 'Restaurant',
+        'fields' => [
+            'name' => 'Restaurant name',
+            'name_placeholder' => 'Please fill in the restaurant name ',
+            'slug' => 'Slug',
+            'address' => 'Address',
+            'address_placeholer' => 'Please fill in your address',
+            'phone' => 'Phone',
+            'phone_placeholer' => 'Please fill in your phone',
+            'opening_hours' => 'Opening_hours',
+            'opening_hours_placeholer' => 'Please fill in your opening hours',
+            'closing_time' => 'Closing_time',
+            'closing_time_placeholer' => 'Please fill in your closing time',
+            'rating' => 'Rating',
+            'rating_placeholer' => 'Please fill in your rating',
+            'description' =>  'Description',
+            'desciption_placeholer' => 'Please fill in your description',
+            'google_map_link' => 'Google_map_link',
+            'google_map_link_placeholer' => 'Please fill in your google map link',
+            'image' =>  'Image',
+            'restaurant_information' => 'Restaurant information',
+        ]
+    ],
+
+    'menu' => [
+        'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Price to",
+            "end_price" => "Price from"
+        ],
+        'fields' => [
+            'name' => 'Menu Name',
+            'slug' => 'Menu Slug',
+            'description' => 'Menu Description',
+            'price' => 'Menu Price ( USD )',
+            'category_id' => 'Category ID',
+            'image_url' => 'Menu Image',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
+    ],
+
     // Fields for Role
     'permission' => [
         'title' => 'Permission',
@@ -212,6 +272,32 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.permission.destroy',
+        ],
+    ],
+    // Fields for Blog
+    'blog' => [
+        'title' => 'Blog',
+        'fields' => [
+            'name' => 'Blog Name',
+            'accountsCount' => 'Blogs Count',
+        ],
+        'index' => [
+            'route' => 'admin.blog.index',
+        ],
+        'create' => [
+            'route' => 'admin.blog.create',
+        ],
+        'store' => [
+            'route' => 'admin.blog.store',
+        ],
+        'edit' => [
+            'route' => 'admin.blog.edit',
+        ],
+        'update' => [
+            'route' => 'admin.blog.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.blog.destroy',
         ],
     ],
     // Fields for Role
@@ -258,6 +344,7 @@ return [
             'email' => 'Email',
             'email_placeholder' => 'Enter email',
             'phone' => 'Phone',
+            'date' => 'Birthday',
             'phone_placeholder' => 'Enter phone',
             'total_friends' => 'Total Friends',
             'address' => 'Address',

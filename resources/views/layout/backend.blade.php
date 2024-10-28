@@ -28,7 +28,7 @@
     <div class="startbar d-print-none">
         <!--start brand-->
         <div class="brand">
-            <a href="index.html" class="logo">
+            <a href="{{ route('home') }}" class="logo">
                 @include('backend.component.logo')
             </a>
         </div>

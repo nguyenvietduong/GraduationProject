@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Interfaces\Services\NotificationServiceInterface;
 use App\Interfaces\Services\ReviewServiceInterface;
 use App\Interfaces\Repositories\ReviewRepositoryInterface;
@@ -42,7 +43,6 @@ class ReviewController extends Controller
      */
     public function index()
     {
-
         return view(self::PATH_VIEW);
     }
 
@@ -59,20 +59,21 @@ class ReviewController extends Controller
         try {
             $data['user_id'] = Auth::id();
 
-            // Tạo review mới
+            // Create a new review
             $review = $this->reviewService->createReview($data);
 
-            // Log thông tin về review đã tạo
+            // Log information about the created review
             Log::info('New review created', ['review_id' => $review->id]);
 
-            // Gửi thông báo chung
+            // Send general notification
             $title = 'Review';
             $message = 'A new review has been added!';
 
-            dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Thay thế 'info' và $review nếu cần
+            event(new NotificationEvent($title, $message, 'info', Auth::user()->full_name));
+            // dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Replace 'info' and $review if needed
 
             $data = [
-                'user_id'   => $data['user_id'],  // ID của người gui thông báo
+                'user_id'   => $data['user_id'],  // ID of the user sending the notification
                 'title'     => $title,
                 'message'   => $message,
             ];
@@ -83,7 +84,7 @@ class ReviewController extends Controller
 
             return redirect()->back()->with('success', __('messages.system.alert.success'));
         } catch (\Exception $e) {
-            // Log khi có lỗi xảy ra
+            // Log when an error occurs
             Log::error('Error in review creation', ['error' => $e->getMessage()]);
 
             return redirect()->back()->with('error', __('messages.system.alert.error.text'));

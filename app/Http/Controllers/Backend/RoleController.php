@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\Backend\RoleDataTable;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
 use App\Interfaces\Services\RoleServiceInterface;

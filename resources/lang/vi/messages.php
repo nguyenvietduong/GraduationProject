@@ -136,6 +136,46 @@ return [
         '4' => '“Những điều tốt đẹp đến với những ai biết chờ đợi, nhưng chỉ có những điều còn lại của những người chịu khó.” - Abraham Lincoln',
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
+
+
+
+
+
+    'menu' => [
+        'title' => 'Menu',
+        "filters" => [
+            "start_price" => "Giá từ",
+            "end_price" => "Giá đến"
+        ],
+        'fields' => [
+            'name' => 'Tên món ăn',
+            'slug' => 'Đường dẫn',
+            'description' => 'Mô tả món ăn',
+            'price' => 'Giá món ăn ( VND )',
+            'category_id' => 'Danh mục',
+            'image_url' => 'Hình ảnh ',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
+    ],
+
+
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
@@ -161,6 +201,32 @@ return [
         'destroy' => [
             'route' => 'admin.category.destroy',
         ],
+    ],
+
+    // Restaurant 
+    'restaurant' => [
+        'title' => 'Nhà hàng',
+        'fields' => [
+            'name' => 'Tên nhà hàng',
+            'name_placeholder' => 'Vui lòng điền tên nhà hàng ',
+            'slug' => 'Đường dẫn',
+            'address' => 'Địa chỉ',
+            'address_placeholer' => 'Vui lòng điền địa chỉ',
+            'phone' => 'Số điện thoại',
+            'phone_placeholer' => 'Vui lòng điền số điện thoại',
+            'opening_hours' => 'Giờ mở cửa',
+            'opening_hours_placeholer' => 'Vui lòng điền thời gian mở cửa',
+            'closing_time' => 'Giờ đóng cửa',
+            'closing_time_placeholer' => 'Vui lòng điền thời gian đóng cửa',
+            'rating' => 'Đánh giá',
+            'rating_placeholer' => 'Vui lòng điền đánh giá',
+            'description' =>  'Miêu tả',
+            'desciption_placeholer' => 'Vui lòng điền miêu tả',
+            'google_map_link' => 'Bản đồ',
+            'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
+            'image' =>  'Hình ảnh',
+            'restaurant_information' => 'Thông tin nhà hàng',
+        ]
     ],
     // Fields for Role
     'role' => [
@@ -206,6 +272,7 @@ return [
             'email' => 'Email',
             'email_placeholder' => 'Nhập email',
             'phone' => 'Điện thoại',
+            'date' => 'Ngày sinh',
             'phone_placeholder' => 'Nhập số điện thoại',
             'total_friends' => 'Tổng số bạn bè',
             'address' => 'Địa chỉ',

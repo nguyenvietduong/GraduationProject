@@ -13,7 +13,7 @@ class ReviewService extends BaseService implements ReviewServiceInterface
     protected $reviewRepository;
 
     /**
-     * Tạo mới instance của ReviewService.
+     * Create a new instance of ReviewService.
      *
      * @param ReviewRepositoryInterface $reviewRepository
      */
@@ -43,7 +43,7 @@ class ReviewService extends BaseService implements ReviewServiceInterface
     }
 
     /**
-     * Lấy chi tiết của review theo ID.
+     * Get the details of a review by ID.
      *
      * @param int $id
      * @return mixed
@@ -54,15 +54,15 @@ class ReviewService extends BaseService implements ReviewServiceInterface
         try {
             return $this->reviewRepository->getReviewDetail($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Reviews không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Review does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể lấy chi tiết review: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to retrieve review details: ' . $e->getMessage());
         }
     }
 
     /**
-     * Tạo mới một review.
+     * Create a new review.
      *
      * @param array $data
      * @return mixed
@@ -81,7 +81,7 @@ class ReviewService extends BaseService implements ReviewServiceInterface
     }
 
     /**
-     * Cập nhật một review theo ID.
+     * Update a review by ID.
      *
      * @param int $id
      * @param array $data
@@ -95,15 +95,15 @@ class ReviewService extends BaseService implements ReviewServiceInterface
 
             return $this->reviewRepository->updateReview($id, $data);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Reviews không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Review does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể cập nhật review: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to update review: ' . $e->getMessage());
         }
     }
 
     /**
-     * Xóa một review theo ID.
+     * Delete a review by ID.
      *
      * @param int $id
      * @return bool
@@ -114,34 +114,10 @@ class ReviewService extends BaseService implements ReviewServiceInterface
         try {
             return $this->reviewRepository->deleteReview($id);
         } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Reviews không tồn tại với ID: ' . $id);
+            throw new ModelNotFoundException('Review does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể xóa review: ' . $e->getMessage());
+            // Handle other errors if necessary
+            throw new Exception('Unable to delete review: ' . $e->getMessage());
         }
     }
-
-
-
-    public function updatePermission($request)
-    {
-        try {
-            $permissions = $request->input('permission');
-            // dd($permissions);
-            if (count($permissions)) {
-                foreach ($permissions as $key => $val) {
-                    $review = $this->reviewRepository->getReviewDetail($key);
-                    $review->permissions()->detach();
-                    $review->permissions()->sync($val);
-                }
-            }
-            // return $this->reviewRepository->updateReview($id, $data);
-        } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('');
-        } catch (Exception $e) {
-            // Xử lý lỗi khác nếu cần thiết
-            throw new Exception('Không thể cập nhật phân quyền: ' . $e->getMessage());
-        }
-    }
-
 }

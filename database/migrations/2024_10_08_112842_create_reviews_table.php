@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->integer('rating')->check('rating >= 1 AND rating <= 5');  // Đánh giá từ 1-5
             $table->text('comment')->nullable();
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
             $table->softDeletes();
         });
