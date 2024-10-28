@@ -18,102 +18,45 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             [
                 'id'   => 1,
-                'name' => 'Breakfast',
+                'name' => json_encode([
+                    'vi' => 'Bữa sáng',
+                    'en' => 'Breakfast'
+                ]),
                 'slug' => 'breakfast',
+                'status' => 'active',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'id'   => 2,
-                'name' => 'Lunch',
+                'name' => json_encode([
+                    'vi' => 'Bữa trưa',
+                    'en' => 'Lunch'
+                ]),
                 'slug' => 'lunch',
+                'status' => 'active',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'id'   => 3,
-                'name' => 'Dinner',
+                'name' => json_encode([
+                    'vi' => 'Bữa tối',
+                    'en' => 'Dinner'
+                ]),
                 'slug' => 'dinner',
+                'status' => 'active',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'id'   => 4,
-                'name' => 'Tea Coffee',
-                'slug' => 'tea-coffee',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ]);
-
-        DB::table('menus')->insert([
-            [
-                'name' => 'Rau muong sao toi',
-                'slug' => 'rau-muong-sao-toi',
-                'description' => 'description menu',
-                'price' => '1',
-                'category_id' => '1',
-                'image_url' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Dau phu luot song',
-                'slug' => 'dau-phu-luot-song',
-                'description' => 'description menu',
-                'price' => '1.2',
-                'category_id' => '1',
-                'image_url' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Thanh long sao toi',
-                'slug' => 'thanh-long-sao-toi',
-                'description' => 'description menu',
-                'price' => '2',
-                'category_id' => '1',
-                'image_url' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Ca chep hoa rong',
-                'slug' => 'ca-chep-hoa-rong',
-                'description' => 'description menu',
-                'price' => '4',
-                'category_id' => '2',
-                'image_url' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Thit kho ap chao',
-                'slug' => 'thit-kho-ap-chao',
-                'description' => 'description menu',
-                'price' => '3.5',
-                'category_id' => '2',
-                'image_url' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Ga nuong giay bac',
-                'slug' => 'ga-nuong-giay-bac',
-                'description' => 'description menu',
-                'price' => '4.5',
-                'category_id' => '2',
-                'image_url' => '',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Cocacola',
-                'slug' => 'cocacola',
-                'description' => 'description menu',
-                'price' => '0.5',
-                'category_id' => '4',
-                'image_url' => '',
+                'name' => json_encode([
+                    'vi' => 'Đồ uống',
+                    'en' => 'Beverages'
+                ]),
+                'slug' => 'beverages',
+                'status' => 'active',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

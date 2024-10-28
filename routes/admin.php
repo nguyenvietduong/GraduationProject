@@ -6,7 +6,7 @@ use App\Http\Controllers\Backend\Account\AdminController;
 use App\Http\Controllers\Backend\Account\StaffController;
 use App\Http\Controllers\Backend\Account\UserController;
 use App\Http\Controllers\Backend\BlogController;
-use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\Category\CategoryController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;

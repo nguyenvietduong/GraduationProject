@@ -172,9 +172,14 @@ return [
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Không hoạt động',
+        ],
         'fields' => [
             'name' => 'Tên',
             'slug' => 'Đường dẫn',
+            'status' => 'Trạng thái',
         ],
         'index' => [
             'route' => 'admin.category.index',
