@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\PermissionServiceInterface;
 use App\Interfaces\Repositories\PermissionRepositoryInterface;
+use App\Models\Role;
 use App\Traits\HandleExceptionTrait;
 
 // Requests
 use App\Http\Requests\BackEnd\Permissions\ListRequest as PermissionListRequest;
 use App\Http\Requests\BackEnd\Permissions\StoreRequest as PermissionStoreRequest;
 use App\Http\Requests\BackEnd\Permissions\UpdateRequest as PermissionUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionController extends Controller
 {
@@ -72,6 +74,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'permission',
         ]);
@@ -155,5 +158,17 @@ class PermissionController extends Controller
             // Return a JSON response if there is an error
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function ajaxGetPermission()
+    {
+        $user = Auth::user(); // Lấy người dùng hiện tại
+
+        $role = Role::with('permissions')->find($user->role_id);
+        return [
+            'response' => response()->json(['message' => 'Status updated successfully']),
+            'data' => $role
+        ];
+
     }
 }

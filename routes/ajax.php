@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\Promotion\AjaxPromotion;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request; // Import lớp Request
 use App\Http\Controllers\Ajax\LanguageController;
@@ -19,6 +21,8 @@ use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\RestaurantController;
 
 // Set System Ajax
+Route::post('admin/promotion/updateStatus', [AjaxPromotion::class, 'updateStatus'])->name('admin.promotion.updateStatus');
+Route::get('admin/permission/ajaxGetPermission', [PermissionController::class, 'ajaxGetPermission'])->name('admin.permission.ajaxGetPermission');
 Route::post('set-language', [LanguageController::class, 'setLanguage']);
 Route::post('set-theme', [ThemeController::class, 'setTheme'])->name('set.theme');
 Route::post('profile/update/image', [ProfileController::class, 'updateProfileImage'])->name('profile.update.image');
