@@ -6,12 +6,13 @@ use App\Http\Controllers\Backend\Account\AdminController;
 use App\Http\Controllers\Backend\Account\StaffController;
 use App\Http\Controllers\Backend\Account\UserController;
 use App\Http\Controllers\Backend\BlogController;
-use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\Category\CategoryController;
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\RestaurantController;
 use App\Http\Controllers\Backend\ReviewController;
 
 Route::middleware(['auth', 'role:1, 2'])->group(function () {
@@ -77,6 +78,7 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{permission}/destroy', [PermissionController::class, 'destroy'])->where('permission', '[0-9]+')->name('admin.permission.destroy');
         });
 
+
         Route::prefix('blog')->group(function () {
             Route::get('index', [BlogController::class, 'index'])->name('admin.blog.index');
             Route::get('create', [BlogController::class, 'create'])->name('admin.blog.create');
@@ -114,8 +116,12 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
         });
 
-        Route::prefix('chat')->group(function () {
-            Route::get('index', [ChatController::class, 'index'])->name('admin.chat.index');
+
+        Route::prefix('notification')->group(function () {
+            Route::get('index', [NotificationController::class, 'index'])->name('admin.notification.index');
+        });
+        Route::prefix('restaurant')->group(function(){
+            Route::get('index', [RestaurantController::class, 'index' ])->name('admin.restaurant');
         });
     });
 });
