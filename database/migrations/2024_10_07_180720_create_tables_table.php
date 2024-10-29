@@ -16,10 +16,10 @@ return new class extends Migration
             $table->json('name'); // Tên bàn hỗ trợ đa ngôn ngữ
             $table->integer('capacity'); // Số người tối đa có thể ngồi
             $table->enum('status', ['available', 'occupied', 'reserved', 'out_of_service'])->default('available'); // Trạng thái bàn
-            $table->text('description')->nullable(); // Mô tả bàn hỗ trợ đa ngôn ngữ
+            $table->json('description')->nullable(); // Mô tả bàn hỗ trợ đa ngôn ngữ
             $table->string('position'); // Vị trí bàn (ví dụ: A1, B3, C2... tương tự như bàn cờ vua)
             $table->timestamps(); // Thời gian tạo và cập nhật
-        });        
+        });
     }
 
     /**

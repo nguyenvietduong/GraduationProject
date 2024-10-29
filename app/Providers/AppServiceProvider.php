@@ -21,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\BaseService',
             'App\Interfaces\Services\AccountServiceInterface' => 'App\Services\AccountService',
             'App\Interfaces\Services\CategoryServiceInterface' => 'App\Services\CategoryService',
+            'App\Interfaces\Services\TableServiceInterface' => 'App\Services\TableService',
+
             'App\Interfaces\Services\RoleServiceInterface' => 'App\Services\RoleService',
             'App\Interfaces\Services\BlogServiceInterface' => 'App\Services\BlogService',
             'App\Interfaces\Services\PermissionServiceInterface' => 'App\Services\PermissionService',

@@ -195,6 +195,42 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
+    'table' => [
+        'title' => 'Bàn',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Tên bàn',
+            'name_vi' => 'Tên bàn VI',
+            'name_en' => 'Tên bàn EN',
+            'capacity' => 'Số người',
+            'status' => 'Trạng thái bàn',
+            'description' => 'Mô tả',
+            'description_vi' => 'Mô tả VI',
+            'description_en' => 'Mô tả EN',
+            'position' => 'Vị trí bàn',
+
+        ],
+
+        'index' => [
+            'route' => 'admin.table.index',
+        ],
+        'create' => [
+            'route' => 'admin.table.create',
+        ],
+        'store' => [
+            'route' => 'admin.table.store',
+        ],
+        'edit' => [
+            'route' => 'admin.table.edit',
+        ],
+        'update' => [
+            'route' => 'admin.table.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.table.destroy',
+        ],
+    ],
+
     // Fields for Role
     'role' => [
         'title' => 'Vai trò',

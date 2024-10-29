@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\TableController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Backend\Account\AdminController;
@@ -90,6 +91,15 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('{id}/edit', [CategoryController::class, 'edit'])->where('id', '[0-9]+')->name('admin.category.edit');
             Route::put('{id}/update', [CategoryController::class, 'update'])->where('id', '[0-9]+')->name('admin.category.update');
             Route::delete('{id}/destroy', [CategoryController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.category.destroy');
+        });
+
+        Route::prefix('table')->group(function () {
+            Route::get('index', [TableController::class, 'index'])->name('admin.table.index');
+            Route::get('create', [TableController::class, 'create'])->name('admin.table.create');
+            Route::post('store', [TableController::class, 'store'])->name('admin.table.store');
+            Route::get('{id}/edit', [TableController::class, 'edit'])->where('id', '[0-9]+')->name('admin.table.edit');
+            Route::put('{id}/update', [TableController::class, 'update'])->where('id', '[0-9]+')->name('admin.table.update');
+            Route::delete('{id}/destroy', [TableController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.table.destroy');
         });
 
         Route::prefix('menu')->group(function () {

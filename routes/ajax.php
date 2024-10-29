@@ -7,6 +7,8 @@ use App\Http\Controllers\Ajax\BlogController;
 use App\Http\Controllers\Ajax\ThemeController;
 use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Account\ProfileController;
+use App\Http\Controllers\Ajax\TableController;
+
 
 // Set System Ajax
 Route::post('set-language', [LanguageController::class, 'setLanguage']);
@@ -15,6 +17,8 @@ Route::post('profile/update/image', [ProfileController::class, 'updateProfileIma
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
+
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {
