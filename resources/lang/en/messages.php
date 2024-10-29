@@ -221,18 +221,30 @@ return [
     ],
 
     'menu' => [
-        'title' => 'Menu',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
+        'title' => 'Food',
         "filters" => [
             "start_price" => "Price to",
             "end_price" => "Price from"
         ],
         'fields' => [
-            'name' => 'Menu Name',
-            'slug' => 'Menu Slug',
-            'description' => 'Menu Description',
-            'price' => 'Menu Price ( USD )',
-            'category_id' => 'Category ID',
-            'image_url' => 'Menu Image',
+            "name" => "Name food" ,
+            'name_vi' => 'Food name (Vietnamese)',
+            'name_en' => 'Food name (English)',
+            'slug' => 'Food slug',
+            'description_vi' => 'Food description (Vietnamese)',
+            'description_en' => 'Food description (English)',
+            'price_vi' => 'Food price (Vietnamese)',
+            'price_en' => 'Food price (English)',
+            'price' => "Price",
+            'status' => 'Status',
+            'status_active' => 'Active',
+            'status_inactive' => 'Inactive',
+            'category_id' => 'Category',
+            'image_url' => 'Food image',
         ],
         'index' => [
             'route' => 'admin.menu.index',

@@ -25,4 +25,11 @@
             </div>
         </div>
     </div>
+    @push('script')
+        <script>
+            var updateStatusUrl = '{{ route('admin.menu.updateStatus') }}';
+            var csrfToken = '{{ csrf_token() }}';
+        </script>
+        <script src="{{ asset('backend/assets/custom/js/ajax/set-status-menu.js') }}"></script>
+    @endpush
 @endsection

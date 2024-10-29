@@ -53,6 +53,8 @@
 <script src="{{ asset('backend/assets/custom/js/set-language.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/set-theme.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/set-slug.js') }}"></script>
+<script src="{{ asset('backend/assets/custom/js/convertPrice.js') }}"></script>
+<script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script>
 <!-- <script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script> -->
 
 <script>

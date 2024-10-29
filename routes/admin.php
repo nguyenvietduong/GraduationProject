@@ -110,9 +110,9 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         Route::prefix('menu')->group(function () {
             Route::get('index', [MenuController::class, 'index'])->name('admin.menu.index');
             Route::get('create', [MenuController::class, 'create'])->name('admin.menu.create');
-            Route::post('store', [MenuController::class, 'store'])->name('admin.menu.store')->middleware("currency");
+            Route::post('store', [MenuController::class, 'store'])->name('admin.menu.store');
             Route::get('{id}/edit', [MenuController::class, 'edit'])->where('id', '[0-9]+')->name('admin.menu.edit');
-            Route::put('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update')->middleware("currency");
+            Route::put('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update');
             Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
         });
 

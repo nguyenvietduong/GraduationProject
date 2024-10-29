@@ -39,7 +39,15 @@
                     width: '100%' // Ensure Select2 occupies full width
                 });
             });
+            $(document).ready(function() {
+                // Initialize Select2 with responsive width
+                $('#status').select2({
+                    width: '100%' // Ensure Select2 occupies full width
+                });
+            });
     
         </script>
         @endpush
     @endsection
+<script src="{{ asset('backend/assets/custom/js/convertPrice.js') }}"></script>
+    

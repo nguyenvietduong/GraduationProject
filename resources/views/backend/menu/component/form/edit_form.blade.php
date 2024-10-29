@@ -4,45 +4,103 @@
     <div class="form-group">
         <div class="row">
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.name') }}</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                    name="name" value="{{ old('name', $menuData->name ?? "") }}" placeholder="" onkeyup="generateSlug('name', 'slug')">
-                @error('name')
+                <label for="name_vi" class="form-label">{{ __('messages.' . $object . '.fields.name_vi') }}</label>
+                <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name_vi"
+                    name="name[vi]" value="{{ old('name.vi',  $menuData->name['vi']?? "") }}" placeholder="">
+                @error('name.vi')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="slug" class="form-label">{{ __('messages.' . $object . '.fields.slug') }}</label>
-                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                    name="slug" value="{{ old('slug', $menuData->name ?? "") }}" placeholder="">
-                @error('slug')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.price') }}</label>
-                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price"
-                    name="price" value="{{ old('price' ,(app()->getLocale() == 'en'?$menuData->price : $menuData->price*24000)) }}" placeholder="">
-                @error('price')
+                <label for="name_en" class="form-label">{{ __('messages.' . $object . '.fields.name_en') }}</label>
+                <input type="text" class="form-control @error('name.en') is-invalid @enderror" id="name_en"
+                    name="name[en]" value="{{ old('name.en' ,$menuData->name['en']?? "") }}" placeholder=""
+                    onkeyup="generateSlug('name_en', 'slug')">
+                @error('name.en')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.category_id') }}</label>
+                <label for="price_vi" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }}</label>
+                <input type="text" class="form-control @error('price.vi') is-invalid @enderror" id="price_vi"
+                    name="price[vi]" value="{{ old('price.vi',$menuData->price['vi']?? "") }}" currency="VND" placeholder=""
+                    onkeyup="convertPrice('price_vi', 'price_en')">
+                @error('price.vi')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
+                <label for="price_en" class="form-label">{{ __('messages.' . $object . '.fields.price_en') }}</label>
+                <input type="text" class="form-control @error('price.en') is-invalid @enderror" id="price_en"
+                    name="price[en]" value="{{ old('price.en',$menuData->price['en']?? "") }}" currency="USD" placeholder=""
+                    onkeyup="convertPrice('price_en', 'price_vi')">
+                @error('price.en')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
+                <label for="description_vi"
+                    class="form-label">{{ __('messages.' . $object . '.fields.description_vi') }} </label>
+                <textarea name="description[vi]" id="description_vi" cols="30" rows=""
+                    class="form-control
+                 @error('description[vi]') is-invalid @enderror">{{ old('description.vi',$menuData->description['vi']?? "") }}</textarea>
+                @error('description[vi]')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
+                <label for="description_en"
+                    class="form-label">{{ __('messages.' . $object . '.fields.description_en') }}</label>
+                <textarea name="description[en]" id="description_en" cols="30" rows="2"
+                    class="form-control
+                 @error('description[en]') is-invalid @enderror">{{ old('description.en',$menuData->description['en']?? "") }}</textarea>
+                @error('description[en]')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
+                <label for="name"
+                    class="form-label">{{ __('messages.' . $object . '.fields.category_id') }}</label>
                 <select name="category_id" id="category_id"
-                    class="form-select @error('category_id') is-invalid @enderror" id="category_id">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{$menuData->category_id == $category->id ? "selected" : ""}}>{{ $category->name }}</option>
+                    class="form-select form-select-lm  @error('category_id') is-invalid @enderror">
+                    @foreach ($categories as $category) 
+                        <option value="{{ $category->id }}" @selected($category->id == $menuData->category_id)>{{ renderDataByLang($category->name) }}</option>
                     @endforeach
                 </select>
                 @error('category_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
+                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.status') }}</label>
+                <select name="status" id="status"
+                    class="form-select form-select-lm  @error('status') is-invalid @enderror" id="status">
+                    @php
+                        $status = request('status') ?: old('status');
+                        $statuses = __('messages.menu.status');
+                    @endphp
+                    @foreach ($statuses as $key => $option)
+                        <option value="{{ $key }}" @selected($key == $menuData->status)>
+                            {{ $option }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('status')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-lg-6 col-6 mb-2 mb-lg-1">
+                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.slug') }} </label>
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
+                    name="slug" value="{{ old('slug' ,$menuData->slug?? "") }}" placeholder="">
+                @error('slug')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 container">
                 <div class="row">
-
                     <div class="col-lg-9 col-12 col-sm-12 mb-2 ">
                         <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.image_url') }}</label>
                         <input type="file" name="image_url" id="image_url"
@@ -58,15 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-12 col-sm-12">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.description') }}</label>
-                <textarea name="description" id="" cols="30" rows="4" class="form-control @error('description') is-invalid @enderror" id="description">
-                    {{ old('name' , $menuData->description , "") }}
-                </textarea>
-                @error('description')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+
             <!--end col-->
         </div>
         <!--end row-->
@@ -80,3 +130,11 @@
             <button type="button" class="btn btn-danger">{{ __('messages.system.button.cancel') }}</button></a>
     </div>
 </form>
+<script>
+    function convertPrice(idElement1, idElement2) {
+        const inputCurrent = document.getElementById(idElement1);
+        const inputTransfer = document.getElementById(idElement2);
+        inputCurrent.getAttribute('currency') == "VND" ? inputTransfer.value = inputCurrent.value /
+        @json(USD) : inputTransfer.value = inputCurrent.value * @json(USD);
+    }
+</script>
