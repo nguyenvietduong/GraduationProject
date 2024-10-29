@@ -5,17 +5,18 @@ use Illuminate\Http\Request; // Import lớp Request
 use App\Http\Controllers\Ajax\LanguageController;
 use App\Http\Controllers\Ajax\BlogController;
 use App\Http\Controllers\Ajax\ThemeController;
-use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusAccount;
-use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Account\ProfileController;
 use App\Http\Controllers\Ajax\TableController;
 
 use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
+
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
+use App\Http\Controllers\Backend\RestaurantController;
 
 // Set System Ajax
 Route::post('set-language', [LanguageController::class, 'setLanguage']);

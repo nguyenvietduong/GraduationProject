@@ -126,10 +126,14 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
         });
 
+        Route::prefix('chat')->group(function () {
+            Route::get('index', [NotificationController::class, 'index'])->name('admin.chat.index');
+        });
 
         Route::prefix('notification')->group(function () {
             Route::get('index', [NotificationController::class, 'index'])->name('admin.notification.index');
         });
+
         Route::prefix('restaurant')->group(function(){
             Route::get('index', [RestaurantController::class, 'index' ])->name('admin.restaurant');
         });
