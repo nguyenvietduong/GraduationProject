@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
+use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
 
 // Set System Ajax
 Route::post('set-language', [LanguageController::class, 'setLanguage']);
@@ -20,6 +21,7 @@ Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
+Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 Route::get('/count-new-reviews-endpoint', [UpdateStatusReview::class, 'getNewReviewCount']);
 

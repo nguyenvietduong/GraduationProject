@@ -166,9 +166,14 @@ return [
     // Fields for Category
     'category' => [
         'title' => 'Category',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
         'fields' => [
             'name' => 'Category Name',
             'slug' => 'Slug',
+            'status' => 'Status',
         ],
         'index' => [
             'route' => 'admin.category.index',
