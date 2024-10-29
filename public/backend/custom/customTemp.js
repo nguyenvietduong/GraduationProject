@@ -74,7 +74,7 @@
         PMD.int()
         PMD.addCommas()
         PMD.formatUppercase()
-        PMD.checkPermissionMenu()
+        // PMD.checkPermissionMenu()
     })
 
 })(jQuery)
