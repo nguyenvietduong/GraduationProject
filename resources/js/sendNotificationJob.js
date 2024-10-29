@@ -78,18 +78,7 @@ window.Echo.channel('notifications')
         // Add flash class to the notification icon
         $('#notificationDropdown').addClass('flash');
 
-        // Fetch new notification count
-        $.ajax({
-            url: '/count-new-notifications-endpoint',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                $('#countNotificationNoRead').html(data); // Update the notification count
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('AJAX Error:', textStatus, errorThrown);
-            }
-        });
+        countNotificationNoRead();
 
         // Remove flash class after animation duration
         setTimeout(() => {
