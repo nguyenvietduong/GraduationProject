@@ -1,6 +1,6 @@
 @php
-    $segment = request()->segment(2);
-    // dd($segment)
+$segment = request()->segment(2);
+// dd($segment)
 @endphp
 <!--start startbar-menu-->
 <div class="startbar-menu">
@@ -80,58 +80,46 @@
 
                 <!-- System -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}" href="#sidebarFoodManagement"
-                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}"
+                        href="#sidebarFoodManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarFoodManagement">
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
                         <span>Food</span>
                     </a>
 
                     <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
-
-
-                     <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
-
                         id="sidebarAccountManagement">
 
-                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarFoodManagement">
+                        <div class="collapse {{ set_active(['category'], 'show', 'admin') }}"
+                            id="sidebarFoodManagement">
 
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
-                                    href="{{ route('admin.category.index') }}">
-                                    <i class="fa fa-list menu-icon"></i>
-                                    <span>Category</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                                    href="{{ route('admin.menu.index') }}">
-                                    <i class="fa fa-utensils menu-icon"></i>
-                                    <span>Menu</span>
-                                </a>
-                            </li>
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
+                                        href="{{ route('admin.category.index') }}">
+                                        <i class="fa fa-list menu-icon"></i>
+                                        <span>Category</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
+                                        href="{{ route('admin.menu.index') }}">
+                                        <i class="fa fa-utensils menu-icon"></i>
+                                        <span>Menu</span>
+                                    </a>
+                                </li>
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['table'], 'active', 'admin') }}"
-                       href="{{ route('admin.table.index') }}">
+                        href="{{ route('admin.table.index') }}">
                         <i class="fa fa-table menu-icon"></i>
                         <span>Table</span>
                     </a>
                 </li>
-
-
-
-
-
-                 <li class="nav-item {{ set_active(['menu']) }}">
-                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                        href="{{ route('admin.menu.index') }}">
-                        <i class="fa fa-bars menu-icon"></i> <!-- Biểu tượng menu điều hướng -->
-                        <span>{{ __('messages.system.menu.menu') }}</span> <!-- Từ "menu" ở đây hiểu là điều hướng -->
 
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"
@@ -147,7 +135,7 @@
                         <i class="fa fa-comments menu-icon"></i>
                         <span id="new-review-count">Review ({{ $newReviewCount }})</span> <!-- Thêm ID cho span -->
                     </a>
-                </li> 
+                </li>
 
 
 
@@ -159,7 +147,7 @@
                         <span id="new-chat-count">Chat</span> <!-- Thêm ID cho span -->
                     </a>
                 </li>
-                
+
                 <!-- System -->
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
