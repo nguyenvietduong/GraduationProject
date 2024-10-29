@@ -50,21 +50,8 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('title', 'like', '%' . $filters['search'] . '%')
-                    ->orWhere('message', 'like', '%' . $filters['search'] . '%');
+                $q->where('title', 'like', '%' . $filters['search'] . '%');
             });
-        }
-
-        if (!empty($filters['start_date'])) {
-            $query->whereDate('notifications.created_at', '>=', $filters['start_date']);
-        }
-
-        if (!empty($filters['end_date'])) {
-            $query->whereDate('notifications.created_at', '<=', $filters['end_date']);
-        }
-
-        if (!empty($filters['title'])) {
-            $query->where('title', $filters['title']);
         }
 
         // Paginate results
@@ -128,7 +115,7 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         return $this->delete($id);
     }
 
- /**
+    /**
      * Count the number of unread notifications for a specific user.
      *
      * @return int
@@ -137,9 +124,9 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
     {
         return Notification::whereNotExists(function ($query) use ($userId) {
             $query->select(DB::raw(1))
-                  ->from('notification_user')
-                  ->whereRaw('notification_user.notification_id = notifications.id')
-                  ->where('notification_user.user_id', $userId);
+                ->from('notification_user')
+                ->whereRaw('notification_user.notification_id = notifications.id')
+                ->where('notification_user.user_id', $userId);
         })->count();
-    }     
+    }
 }

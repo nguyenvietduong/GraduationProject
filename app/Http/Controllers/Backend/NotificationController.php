@@ -46,34 +46,44 @@ class NotificationController extends Controller
      */
     public function index(NotificationListRequest $request)
     {
-        session()->forget('image_temp'); // Clear temporary image value
-        // Validate the request data
-        $request->validated();
-    
         // Extract filters from the request
-        $params = $request->all();
-    
-        // Apply filters from the request
-        $filters = [
-            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
-            'start_date' => $params['start_date'] ?? '',
-            'end_date' => $params['end_date'] ?? '',
-            'title' => $params['title'] ?? '',
-        ];
+        $notifications = $this->notificationService->getAllNotifications([]);
 
-    
-        // Fetch notifications with pagination
-        $notifications = $this->notificationService->getAllNotifications($filters);
-        
         // Prepare the response data
         $response = [
             'total' => $this->notificationRepository->count(),
             'notifications' => $notifications,
         ];
-    
+
         // Return JSON response
         return response()->json($response);
-    }    
+    }
+
+    public function search(NotificationListRequest $request)
+    {
+        session()->forget('image_temp'); // Clear temporary image value
+
+        // Validate the request data
+        $request->validated();
+
+        // Extract filters from the request, and use an empty string if 'keyword' is not provided
+        $keyword = $request->input('keyword', '');
+
+        // Set filters based on the keyword only if it has a value
+        $filters = [
+            'search' => $keyword, // Empty string will fetch all notifications
+        ];
+
+        // Fetch notifications based on the filters
+        $notifications = $this->notificationService->getAllNotifications($filters);
+
+        $response = [
+            'total' => $this->notificationRepository->count(),
+            'notifications' => $notifications,
+        ];
+
+        return response()->json($response);
+    }
 
     /**
      * Show the form for creating a new notification.
@@ -179,9 +189,9 @@ class NotificationController extends Controller
 
         return response()->json(['success' => false]);
     }
-    
+
     public function countUnreadNotifications()
     {
         return $this->notificationService->countUnreadNotifications();
-    }    
+    }
 }

@@ -1,6 +1,5 @@
 @php
 $segment = request()->segment(2);
-// dd($segment)
 @endphp
 <!--start startbar-menu-->
 <div class="startbar-menu">
@@ -88,29 +87,23 @@ $segment = request()->segment(2);
                     </a>
 
                     <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
-                        id="sidebarAccountManagement">
-
-                        <div class="collapse {{ set_active(['category'], 'show', 'admin') }}"
-                            id="sidebarFoodManagement">
-
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
-                                        href="{{ route('admin.category.index') }}">
-                                        <i class="fa fa-list menu-icon"></i>
-                                        <span>Category</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                                        href="{{ route('admin.menu.index') }}">
-                                        <i class="fa fa-utensils menu-icon"></i>
-                                        <span>Menu</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </div>
+                        id="sidebarFoodManagement">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
+                                    href="{{ route('admin.category.index') }}">
+                                    <i class="fa fa-list menu-icon"></i>
+                                    <span>Category</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
+                                    href="{{ route('admin.menu.index') }}">
+                                    <i class="fa fa-utensils menu-icon"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -136,9 +129,6 @@ $segment = request()->segment(2);
                         <span id="new-review-count">Review ({{ $newReviewCount }})</span> <!-- Thêm ID cho span -->
                     </a>
                 </li>
-
-
-
 
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['chat'], 'active', 'admin') }}"
