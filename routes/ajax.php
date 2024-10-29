@@ -43,3 +43,22 @@ Route::post('/remove-temp-image', function (Request $request) {
 
     return response()->json(['success' => false], 400);
 })->name('image.removeTemp');
+
+
+Route::post('restaurant/update/image', [RestaurantController::class, 'updateRestaurantImage'])->name('restaurant.update.image');
+Route::post('restaurant{id}/update', [RestaurantController::class, 'updateRestaurant'])->name('restaurant.update');
+
+
+Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+
+
+// Xóa ảnh tạm thời trong session
+Route::post('/remove-temp-image', function (Request $request) {
+    if ($request->remove_image) {
+        // Xóa ảnh tạm thời trong session
+        session()->forget('image_temp');
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false], 400);
+})->name('image.removeTemp');
