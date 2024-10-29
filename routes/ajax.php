@@ -12,10 +12,10 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
 
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
-use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\RestaurantController;
 
 // Set System Ajax

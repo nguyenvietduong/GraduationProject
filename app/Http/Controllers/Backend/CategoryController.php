@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Category;
+namespace App\Http\Controllers\Backend;
 
 use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
