@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Account\Ajax;
+namespace App\Http\Controllers\Backend\Ajax;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

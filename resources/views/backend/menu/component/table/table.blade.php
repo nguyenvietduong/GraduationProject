@@ -87,7 +87,7 @@
         @endforeach
         @else
         <tr>
-            <td colspan="6" class="text-center">{{ __('messages.system.no_data_available') }}</td>
+            <td colspan="12" class="text-center">{{ __('messages.system.no_data_available') }}</td>
         </tr>
         @endif
     </tbody>

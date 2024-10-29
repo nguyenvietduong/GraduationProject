@@ -5,8 +5,7 @@ use Illuminate\Http\Request; // Import lớp Request
 use App\Http\Controllers\Ajax\LanguageController;
 use App\Http\Controllers\Ajax\BlogController;
 use App\Http\Controllers\Ajax\ThemeController;
-use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusAccount;
-use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusMenu;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Account\ProfileController;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
