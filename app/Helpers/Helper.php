@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
 
@@ -19,7 +20,7 @@ if (!function_exists('set_active')) {
         $segment = request()->segment($segmentIndex); // Get the segment based on layout
 
         // Check if the current segment matches any of the routes
-        return in_array($segment, (array)$routes) ? $activeClass : '';
+        return in_array($segment, (array) $routes) ? $activeClass : '';
     }
 }
 
@@ -234,7 +235,8 @@ if (!function_exists('convertCurrency')) {
      * @return float The converted amount in either VND or USD based on locale.
      * @throws Exception If the currency conversion is unsupported.
      */
-    function convertCurrency($amount) {
+    function convertCurrency($amount)
+    {
         // Define the exchange rates
         $exchangeRate = [
             'USD' => 24845, // 1 USD = 24.845 VND
@@ -263,8 +265,38 @@ if (!function_exists('formatCurrency')) {
      * @param float $amount The amount in VND.
      * @return string The formatted amount as a string.
      */
-    function formatCurrency($amount) {
+    function formatCurrency($amount)
+    {
         // Định dạng số với dấu phẩy và thêm ký hiệu "đ"
-        return number_format($amount, 0, ',', '.') . ' đ';
+        return number_format($amount, 0, ',', '.');
+    }
+}
+
+
+if (!function_exists('formatDate')) {
+    function formatDate($amount)
+    {
+        if ($amount == null || $amount == '') {
+            return '';
+        }
+        return Carbon::parse($amount)->format('d-m-Y H:i');
+    }
+}
+
+// if (!function_exists('formatCreateDate')) {
+//     function formatCreateDate($amount)
+//     {
+//         if ($amount == null || $amount == '') {
+//             return '';
+//         }
+        
+//         return Carbon::parse($amount)->format('Y-m-d H:i:s');
+//     }
+// }
+
+if (!function_exists('formatDiscount')) {
+    function formatDiscount($value)
+    {
+        return str_replace('.', replace: '', subject: $value);
     }
 }

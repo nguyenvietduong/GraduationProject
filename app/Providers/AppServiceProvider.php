@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\NotificationServiceInterface' => 'App\Services\NotificationService',
             'App\Interfaces\Services\ReviewServiceInterface' => 'App\Services\ReviewService',
             'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',
+            'App\Interfaces\Services\PromotionServiceInterface' => 'App\Services\PromotionService',
         ];
 
         foreach ($services as $interface => $implementation) {

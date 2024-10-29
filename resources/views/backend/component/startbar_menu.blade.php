@@ -31,35 +31,35 @@
                     <div class="collapse {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'show', 'admin') }}"
                         id="sidebarAccountManagement">
                         <ul class="nav flex-column">
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['user'], 'active', 'admin') }}"
                                     href="{{ route('admin.user.index') }}">
                                     <i class="fa fa-user menu-icon"></i>
                                     <span>Customers</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['staff'], 'active', 'admin') }}"
                                     href="{{ route('admin.staff.index') }}">
                                     <i class="fas fa-user-friends menu-icon"></i>
                                     <span>Staffs</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['admin'], 'active', 'admin') }}"
                                     href="{{ route('admin.admin.index') }}">
                                     <i class="fa fa-user-tie menu-icon"></i>
                                     <span>Admins</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['role'], 'active', 'admin') }}"
                                     href="{{ route('admin.role.index') }}">
                                     <i class="fas fa-key menu-icon"></i>
                                     <span>Roles</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['permission'], 'active', 'admin') }}"
                                     href="{{ route('admin.permission.index') }}">
                                     <i class="fas fa-lock menu-icon"></i>
@@ -72,22 +72,22 @@
 
                 <!-- System -->
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}" href="#sidebarFoodManagement"
-                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}"
+                        href="#sidebarFoodManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarFoodManagement">
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
                         <span>Food</span>
                     </a>
                     <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarFoodManagement">
                         <ul class="nav flex-column">
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
                                     href="{{ route('admin.category.index') }}">
                                     <i class="fa fa-list menu-icon"></i>
                                     <span>Category</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
                                     href="{{ route('admin.menu.index') }}">
                                     <i class="fa fa-utensils menu-icon"></i>
@@ -98,13 +98,21 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}" href="{{ route('admin.blog.index') }}">
+                <li class="nav-item checkPermissionMenu">
+                    <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"
+                        href="{{ route('admin.blog.index') }}">
                         <i class="fa fa-newspaper menu-icon"></i>
                         <span>Blog</span>
                     </a>
                 </li>
-
+                {{-- Promotions --}}
+                <li class="nav-item checkPermissionMenu">
+                    <a class="nav-link {{ set_active(['promotion', 'admin']) }}"
+                        href="{{ route('admin.promotion.index') }}">
+                        <i class="fa fa-tachometer menu-icon"></i>
+                        <span>{{ __('messages.system.menu.promotion') }}</span>
+                    </a>
+                </li>
                 <!-- System -->
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
@@ -116,7 +124,7 @@
                     <div class="collapse {{ set_active(['notification'], 'show', 'admin') }}"
                         id="sidebarSystemManagement">
                         <ul class="nav flex-column">
-                            <li class="nav-item">
+                            <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
                                     href="{{ route('admin.notification.index') }}">
                                     <i class="fa fa-bell menu-icon"></i>
@@ -124,8 +132,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('home') }}">
                                     <i class="fa fa-arrow-left menu-icon"></i>
                                     <span>Back to HuongViet</span>
                                 </a>
