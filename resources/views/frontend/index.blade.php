@@ -345,13 +345,11 @@
                                     <li class="text-sm uppercase font-medium cursor-pointer relative border-b border-transparent text-slate-400 duration-500 active"
                                         data-group="all">All</li>
                                     <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                                        data-group="break">Breakfast</li>
+                                        data-group="1">Breakfast</li>
                                     <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
                                         data-group="lunch">Lunch</li>
                                     <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
                                         data-group="dinner">Dinner</li>
-                                    <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                                        data-group="tea">Tea & Coffee</li>
                                 </ul>
                             </div>
                         </div>
@@ -360,7 +358,7 @@
 
                 <div class="lg:col-span-9 md:col-span-9">
                     <div id="grid" class="md:flex">
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
+                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["1"]'>
                             <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
                                 <img src="/frontend/assets/images/menu/1.jpg" class="" alt="">
 
@@ -378,7 +376,7 @@
                             </div>
                         </div>
 
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
+                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["1"]'>
                             <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
                                 <img src="/frontend/assets/images/menu/2.jpg" class="" alt="">
 

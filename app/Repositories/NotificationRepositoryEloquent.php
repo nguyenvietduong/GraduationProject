@@ -50,21 +50,8 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('title', 'like', '%' . $filters['search'] . '%')
-                    ->orWhere('message', 'like', '%' . $filters['search'] . '%');
+                $q->where('title', 'like', '%' . $filters['search'] . '%');
             });
-        }
-
-        if (!empty($filters['start_date'])) {
-            $query->whereDate('notifications.created_at', '>=', $filters['start_date']);
-        }
-
-        if (!empty($filters['end_date'])) {
-            $query->whereDate('notifications.created_at', '<=', $filters['end_date']);
-        }
-
-        if (!empty($filters['title'])) {
-            $query->where('title', $filters['title']);
         }
 
         // Paginate results

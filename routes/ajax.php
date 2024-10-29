@@ -28,6 +28,7 @@ Route::post('/messages/send', [ChatController::class, 'sendMessage']);
 Route::get('/messages/{userId}', [ChatController::class, 'getMessages']);
 
 Route::get('/notifications/index', [NotificationController::class, 'index'])->name('notification.index');
+Route::get('/notifications/search', [NotificationController::class, 'search'])->name('notification.search');
 Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
 
