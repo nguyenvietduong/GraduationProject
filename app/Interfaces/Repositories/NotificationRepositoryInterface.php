@@ -13,7 +13,7 @@ interface NotificationRepositoryInterface extends RepositoryInterface
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllNotifications(array $filters = [], $perPage = 5);
+    public function getAllNotifications(array $filters = []);
 
     /**
      * Get notification details by ID.

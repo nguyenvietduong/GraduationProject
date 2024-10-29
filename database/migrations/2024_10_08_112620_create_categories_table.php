@@ -21,6 +21,11 @@ return new class extends Migration
         });
     }
 
+    // {
+    //     'vi' => 'Món khai vị',
+    //     'en' => 'Mon Khai Vi',
+    // }
+
     /**
      * Reverse the migrations.
      */

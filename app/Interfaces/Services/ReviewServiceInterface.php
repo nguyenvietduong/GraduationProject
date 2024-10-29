@@ -47,4 +47,5 @@ interface ReviewServiceInterface
      */
     public function deleteReview(int $id);
 
+    public function countNewReviews();
 }

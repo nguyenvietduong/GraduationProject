@@ -1,7 +1,7 @@
 <!-- Meta Tags -->
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>Rizz | Rizz - Admin & Dashboard Template</title>
+<title>Trang Quản Trị - Hương Việt</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
 <meta content="Your Name or Company" name="author" />
@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="{{ asset('backend/assets/libs/jsvectormap/css/jsvectormap.min.css') }}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" rel="stylesheet">
 <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('backend/assets/css/index.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
@@ -34,4 +35,6 @@
 @endif
 
 @vite('resources/js/sendNotificationJob.js')
+@vite('resources/js/reviewEvent.js')
+@vite('resources/js/checkUserSession.js')
 @stack('css')

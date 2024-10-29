@@ -268,3 +268,17 @@ if (!function_exists('formatCurrency')) {
         return number_format($amount, 0, ',', '.') . ' đ';
     }
 }
+if (!function_exists('renderDataByLang')) {
+    /**
+     * Format an amount in VND to a string with commas and currency symbol.
+     *
+     * @param float $amount The amount in VND.
+     * @return string The formatted amount as a string.
+     */
+    function renderDataByLang($dataItem , $option = "") {
+        if($option == "price"){
+            return app()->getLocale() == "en" ? $dataItem["en"] . " $":$dataItem["vi"] ." VND";  
+        }
+        return app()->getLocale() == "en" ? $dataItem["en"]:$dataItem["vi"];
+    }
+}

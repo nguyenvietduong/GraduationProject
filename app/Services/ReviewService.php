@@ -120,4 +120,9 @@ class ReviewService extends BaseService implements ReviewServiceInterface
             throw new Exception('Unable to delete review: ' . $e->getMessage());
         }
     }
+
+    public function countNewReviews(): int
+    {
+        return $this->reviewRepository->countNewReviews();
+    }
 }

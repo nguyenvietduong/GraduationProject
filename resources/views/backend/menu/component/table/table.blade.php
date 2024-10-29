@@ -8,10 +8,10 @@
             </th>
             <th class="ps-0">#</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.name') }}</th>
-            <th class="ps-0" width="20%">{{ __('messages.'. $object .'.fields.description') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.price') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.category_id') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.image_url') }}</th>
+            <th class="ps-0">{{ __('messages.'. $object .'.fields.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
         </tr>
@@ -19,7 +19,7 @@
     <tbody>
         @if (isset($menuDatas) && is_object($menuDatas) && $menuDatas->isNotEmpty())
         @foreach ($menuDatas as $item)
-        <tr>
+        <tr class="{{$item->status == "active" ? "" : "bg_status"}}">
             <td style="width: 16px;">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" value="{{ $item->id }}" name="check"
@@ -31,29 +31,37 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ $item->name ?? __('messages.system.no_data_available') }}
-                </p>
-            </td>
-           
-            <td class="ps-0">
-                <p class="d-inline-block align-middle mb-0">
-                    {{ $item->description ?? __('messages.system.no_data_available') }}
+                    {{renderDataByLang($item->name) ?? __('messages.system.no_data_available') }}
                 </p>
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ (app()->getLocale() == 'en'?$item->price." $" : ($item->price*24000)." VND")?? __('messages.system.no_data_available') }}
+                    {{renderDataByLang($item->price , "price")?? __('messages.system.no_data_available') }}
                 </p>
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
                     
-                    {{ $item->category->name ?? __('messages.system.no_data_available') }}
+                    {{ renderDataByLang($item->category->name) ?? __('messages.system.no_data_available') }}
                 </p>
             </td>
             <td class="ps-0">
                <img src="{{checkFile($item->image_url) }}" alt="Image" style="width:60px">
 
+            </td>
+            <td>
+                @php
+                    $status = request('status') ?: old('status');
+                    $statuses = __('messages.menu.status');
+                @endphp
+
+                <select name="status" class="form-select status" data-menu-id="{{ $item->id }}">
+                    @foreach ($statuses as $key => $option)
+                        <option value="{{ $key }}" @selected($status == $key) @selected($item->status == $key)>
+                            {{ $option }}
+                        </option>
+                    @endforeach
+                </select>
             </td>
             <td>
                 <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available')

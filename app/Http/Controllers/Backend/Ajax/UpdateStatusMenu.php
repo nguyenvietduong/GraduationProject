@@ -4,28 +4,27 @@ namespace App\Http\Controllers\Backend\Account\Ajax;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User; // Assuming you're using the User model
+use App\Models\Menu; // Assuming you're using the menu model
 
-class UpdateStatusAccount extends Controller
+class UpdateStatusMenu extends Controller
 {
     public function updateStatus(Request $request)
     {
         // Validate input
         $request->validate([
-            'id' => 'required|exists:users,id',
             'status' => 'required|string',
         ]);
 
-        // Find the user by ID
-        $user = User::find($request->id);
+        // Find the menu by ID
+        $menu = Menu::find($request->id);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        if (!$menu) {
+            return response()->json(['message' => 'menu not found'], 404);
         }
 
         // Update the status
-        $user->status = $request->status;
-        $user->save();
+        $menu->status = $request->status;
+        $menu->save();
 
         return response()->json(['message' => 'Status updated successfully']);
     }

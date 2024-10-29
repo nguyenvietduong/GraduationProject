@@ -1,5 +1,5 @@
 // Get all dropdown items
-const languageItems = document.querySelectorAll('.dropdown-item');
+const languageItems = document.querySelectorAll('.set-language');
 
 // Add click event listener to each item
 languageItems.forEach(item => {

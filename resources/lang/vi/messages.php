@@ -33,6 +33,7 @@ return [
                 ],
             ],
         ],
+        'invoice_error' => 'Mã hóa đơn không thuộc về tài khoản của bạn.',
         'alert' => [
             'titleSuccess' => 'Thành công!',
             'success' => 'Thành công! Nhiệm vụ đã được hoàn thành.',
@@ -136,17 +137,37 @@ return [
         '4' => '“Những điều tốt đẹp đến với những ai biết chờ đợi, nhưng chỉ có những điều còn lại của những người chịu khó.” - Abraham Lincoln',
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
+
+
+
+
+
+
+
+
     'menu' => [
-        'title' => 'Menu',
+        'title' => 'Món ăn',
         "filters" => [
             "start_price" => "Giá từ",
             "end_price" => "Giá đến"
         ],
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Tạm dừng',
+        ],
         'fields' => [
-            'name' => 'Tên món ăn',
+            'name_vi' => 'Tên món ăn (Tiếng việt)',
+            'name_en' => 'Tên món ăn (Tiếng anh)',
             'slug' => 'Đường dẫn',
-            'description' => 'Mô tả món ăn',
-            'price' => 'Giá món ăn ( VND )',
+            'name' => "Tên món ăn" ,
+            'description_vi' => 'Mô tả món ăn (Tiếng việt)',
+            'description_en' => 'Mô tả món ăn (Tiếng anh)',
+            'price_vi' => 'Giá món ăn (Tiếng việt)',
+            'price_en' => 'Giá món ăn (tiếng anh)',
+            "price" =>  "Giá",
+            'status' => 'Trạng thái',
+            'status_active' => 'Hoạt động',
+            'status_inactive' => 'Không hoạt động',
             'category_id' => 'Danh mục',
             'image_url' => 'Hình ảnh ',
         ],
@@ -169,12 +190,21 @@ return [
             'route' => 'admin.menu.destroy',
         ],
     ],
+
+
+
+
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Không hoạt động',
+        ],
         'fields' => [
             'name' => 'Tên',
             'slug' => 'Đường dẫn',
+            'status' => 'Trạng thái',
         ],
         'index' => [
             'route' => 'admin.category.index',
@@ -230,7 +260,94 @@ return [
             'route' => 'admin.table.destroy',
         ],
     ],
+    // Restaurant 
+    'restaurant' => [
+        'title' => 'Nhà hàng',
+        'fields' => [
+            'name' => 'Tên nhà hàng',
+            'name_placeholder' => 'Vui lòng điền tên nhà hàng ',
+            'slug' => 'Đường dẫn',
+            'address' => 'Địa chỉ',
+            'address_placeholer' => 'Vui lòng điền địa chỉ',
+            'phone' => 'Số điện thoại',
+            'phone_placeholer' => 'Vui lòng điền số điện thoại',
+            'opening_hours' => 'Giờ mở cửa',
+            'opening_hours_placeholer' => 'Vui lòng điền thời gian mở cửa',
+            'closing_time' => 'Giờ đóng cửa',
+            'closing_time_placeholer' => 'Vui lòng điền thời gian đóng cửa',
+            'rating' => 'Đánh giá',
+            'rating_placeholer' => 'Vui lòng điền đánh giá',
+            'description' =>  'Miêu tả',
+            'desciption_placeholer' => 'Vui lòng điền miêu tả',
+            'google_map_link' => 'Bản đồ',
+            'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
+            'image' =>  'Hình ảnh',
+            'restaurant_information' => 'Thông tin nhà hàng',
+        ],
 
+    // Fields for Review
+    'review' => [
+        'title' => 'Đánh Giá',
+        'status' => [
+            'active' => 'Đang hoạt động',
+            'inactive' => 'Ngừng hoạt động',
+            'pending' => 'Chờ phê duyệt',
+        ],
+        'fields' => [
+            'name' => 'Tên Đánh Giá',
+            'reviewsCount' => 'Số Lượng Đánh Giá',
+            'rating' => 'Xếp Hạng',
+            'review_creator' => 'Người Tạo Đánh Giá',
+            'comment' => 'Bình Luận',
+        ],
+        'index' => [
+            'route' => 'admin.review.index',
+        ],
+        'edit' => [
+            'route' => 'admin.review.edit',
+        ],
+        'update' => [
+            'route' => 'admin.review.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.review.destroy',
+        ],
+    ],
+    // Trường cho Blog
+    'blog' => [
+        'title' => 'Blog',
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Không hoạt động',
+        ],
+        'fields' => [
+            'name' => 'Tên Blog',
+            'accountsCount' => 'Số Lượng Blog',
+            'title' => 'Tiêu Đề',
+            'blog_creator' => 'Người Tạo Blog',
+            'slug' => 'Đường Dẫn Tĩnh',
+            'content' => 'Nội Dung',
+        ],
+        'index' => [
+            'route' => 'admin.blog.index',
+        ],
+        'create' => [
+            'route' => 'admin.blog.create',
+        ],
+        'store' => [
+            'route' => 'admin.blog.store',
+        ],
+        'edit' => [
+            'route' => 'admin.blog.edit',
+        ],
+        'update' => [
+            'route' => 'admin.blog.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.blog.destroy',
+        ],
+
+    ],
     // Fields for Role
     'role' => [
         'title' => 'Vai trò',
