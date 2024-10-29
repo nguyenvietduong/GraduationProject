@@ -28,6 +28,7 @@ Route::post('set-theme', [ThemeController::class, 'setTheme'])->name('set.theme'
 Route::post('profile/update/image', [ProfileController::class, 'updateProfileImage'])->name('profile.update.image');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
+Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 Route::post('admin/account/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
@@ -43,6 +44,7 @@ Route::post('/messages/send', [ChatController::class, 'sendMessage']);
 Route::get('/messages/{userId}', [ChatController::class, 'getMessages']);
 
 Route::get('/notifications/index', [NotificationController::class, 'index'])->name('notification.index');
+Route::get('/notifications/search', [NotificationController::class, 'search'])->name('notification.search');
 Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
 
@@ -60,9 +62,6 @@ Route::post('/remove-temp-image', function (Request $request) {
 
 Route::post('restaurant/update/image', [RestaurantController::class, 'updateRestaurantImage'])->name('restaurant.update.image');
 Route::post('restaurant{id}/update', [RestaurantController::class, 'updateRestaurant'])->name('restaurant.update');
-
-
-Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 
 
 // Xóa ảnh tạm thời trong session
