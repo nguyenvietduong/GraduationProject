@@ -17,6 +17,13 @@ class Menu extends Model
         "category_id" ,
         "image_url" ,
         "slug" ,
+        "status"
+    ];
+
+    protected $casts = [
+        "name" => "array", 
+        "description" => "array", 
+        "price" => "array" 
     ];
 
     public function category(){

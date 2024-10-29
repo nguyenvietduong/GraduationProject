@@ -138,16 +138,28 @@ return [
         '5' => '“Điều duy nhất đứng giữa bạn và giấc mơ của bạn là sự sẵn lòng làm việc vì nó.” - Joel Brown',
     ],
     'menu' => [
-        'title' => 'Menu',
+        'title' => 'Món ăn',
         "filters" => [
             "start_price" => "Giá từ",
             "end_price" => "Giá đến"
         ],
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Tạm dừng',
+        ],
         'fields' => [
-            'name' => 'Tên món ăn',
+            'name_vi' => 'Tên món ăn (Tiếng việt)',
+            'name_en' => 'Tên món ăn (Tiếng anh)',
             'slug' => 'Đường dẫn',
-            'description' => 'Mô tả món ăn',
-            'price' => 'Giá món ăn ( VND )',
+            'name' => "Tên món ăn",
+            'description_vi' => 'Mô tả món ăn (Tiếng việt)',
+            'description_en' => 'Mô tả món ăn (Tiếng anh)',
+            'price_vi' => 'Giá món ăn (Tiếng việt)',
+            'price_en' => 'Giá món ăn (tiếng anh)',
+            "price" =>  "Giá",
+            'status' => 'Trạng thái',
+            'status_active' => 'Hoạt động',
+            'status_inactive' => 'Không hoạt động',
             'category_id' => 'Danh mục',
             'image_url' => 'Hình ảnh ',
         ],
@@ -170,12 +182,18 @@ return [
             'route' => 'admin.menu.destroy',
         ],
     ],
+
     // Fields for Category
     'category' => [
         'title' => 'Danh Mục',
+        'status' => [
+            'active' => 'Hoạt động',
+            'inactive' => 'Không hoạt động',
+        ],
         'fields' => [
             'name' => 'Tên',
             'slug' => 'Đường dẫn',
+            'status' => 'Trạng thái',
         ],
         'index' => [
             'route' => 'admin.category.index',
@@ -196,193 +214,255 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
-    // Fields for Review
-    'review' => [
-        'title' => 'Đánh Giá',
-        'status' => [
-            'active' => 'Đang hoạt động',
-            'inactive' => 'Ngừng hoạt động',
-            'pending' => 'Chờ phê duyệt',
-        ],
+    'table' => [
+        'title' => 'Bàn',
         'fields' => [
-            'name' => 'Tên Đánh Giá',
-            'reviewsCount' => 'Số Lượng Đánh Giá',
-            'rating' => 'Xếp Hạng',
-            'review_creator' => 'Người Tạo Đánh Giá',
-            'comment' => 'Bình Luận',
-        ],
-        'index' => [
-            'route' => 'admin.review.index',
-        ],
-        'edit' => [
-            'route' => 'admin.review.edit',
-        ],
-        'update' => [
-            'route' => 'admin.review.update',
-        ],
-        'destroy' => [
-            'route' => 'admin.review.destroy',
-        ],
-    ],
-    // Trường cho Blog
-    'blog' => [
-        'title' => 'Blog',
-        'status' => [
-            'active' => 'Hoạt động',
-            'inactive' => 'Không hoạt động',
-        ],
-        'fields' => [
-            'name' => 'Tên Blog',
-            'accountsCount' => 'Số Lượng Blog',
-            'title' => 'Tiêu Đề',
-            'blog_creator' => 'Người Tạo Blog',
-            'slug' => 'Đường Dẫn Tĩnh',
-            'content' => 'Nội Dung',
-        ],
-        'index' => [
-            'route' => 'admin.blog.index',
-        ],
-        'create' => [
-            'route' => 'admin.blog.create',
-        ],
-        'store' => [
-            'route' => 'admin.blog.store',
-        ],
-        'edit' => [
-            'route' => 'admin.blog.edit',
-        ],
-        'update' => [
-            'route' => 'admin.blog.update',
-        ],
-        'destroy' => [
-            'route' => 'admin.blog.destroy',
-        ],
-    ],
-    // Fields for Role
-    'role' => [
-        'title' => 'Vai trò',
-        'fields' => [
-            'name' => 'Tên vai trò',
-            'accountsCount' => 'Số tài khoản',
-        ],
-        'role' => [
-            'user' => 'Người dùng',
-            'manager' => 'Giám đốc',
-            'admin' => 'Quản trị viên',
-        ],
-        'index' => [
-            'route' => 'admin.role.index',
-        ],
-        'create' => [
-            'route' => 'admin.role.create',
-        ],
-        'store' => [
-            'route' => 'admin.role.store',
-        ],
-        'edit' => [
-            'route' => 'admin.role.edit',
-        ],
-        'update' => [
-            'route' => 'admin.role.update',
-        ],
-        'destroy' => [
-            'route' => 'admin.role.destroy',
-        ],
-    ],
-    // Fields for Account
-    'account' => [
-        'status' => [
-            'normal' => 'Bình thường',
-            'locked' => 'Đã khóa',
-            'warning' => 'Cảnh báo',
-        ],
-        'fields' => [
-            'full_name' => 'Họ Tên',
-            'name_placeholder' => 'Nhập họ tên người dùng',
-            'email' => 'Email',
-            'email_placeholder' => 'Nhập email',
-            'phone' => 'Điện thoại',
-            'date' => 'Ngày sinh',
-            'phone_placeholder' => 'Nhập số điện thoại',
-            'total_friends' => 'Tổng số bạn bè',
-            'address' => 'Địa chỉ',
-            'address_placeholder' => 'Nhập địa chỉ',
-            'password' => 'Mật khẩu',
-            'password_placeholder' => 'Nhập mật khẩu',
-            're_password' => 'Xác nhận Mật khẩu',
-            're_password_placeholder' => 'Nhập lại mật khẩu',
-            'role' => 'Vai trò',
-            'profile_picture' => 'Ảnh đại diện',
-        ],
-        'user' => [
-            'title' => 'Tài Khoản Khách Hàng',
-            'index' => [
-                'route' => 'admin.user.index',
-            ],
-            'create' => [
-                'route' => 'admin.user.create',
-            ],
-            'store' => [
-                'route' => 'admin.user.store',
-            ],
-            'edit' => [
-                'route' => 'admin.user.edit',
-            ],
-            'update' => [
-                'route' => 'admin.user.update',
-            ],
-            'destroy' => [
-                'route' => 'admin.user.destroy',
-            ],
-        ],
-        'staff' => [
-            'title' => 'Tài khoản nhân viên',
-            'index' => [
-                'route' => 'admin.staff.index',
-            ],
-            'create' => [
-                'route' => 'admin.staff.create',
-            ],
-            'store' => [
-                'route' => 'admin.staff.store',
-            ],
-            'edit' => [
-                'route' => 'admin.staff.edit',
-            ],
-            'update' => [
-                'route' => 'admin.staff.update',
-            ],
-            'destroy' => [
-                'route' => 'admin.staff.destroy',
-            ],
-        ],
-        'admin' => [
-            'title' => 'Tài Khoản Quản Trị',
-            'index' => [
-                'route' => 'admin.admin.index',
-            ],
-            'create' => [
-                'route' => 'admin.admin.create',
-            ],
-            'store' => [
-                'route' => 'admin.admin.store',
-            ],
-            'edit' => [
-                'route' => 'admin.admin.edit',
-            ],
-            'update' => [
-                'route' => 'admin.admin.update',
-            ],
-            'destroy' => [
-                'route' => 'admin.admin.destroy',
-            ],
-        ],
-    ],
+            'id' => 'ID',
+            'name' => 'Tên bàn',
+            'name_vi' => 'Tên bàn VI',
+            'name_en' => 'Tên bàn EN',
+            'capacity' => 'Số người',
+            'status' => 'Trạng thái bàn',
+            'description' => 'Mô tả',
+            'description_vi' => 'Mô tả VI',
+            'description_en' => 'Mô tả EN',
+            'position' => 'Vị trí bàn',
 
-    'version' => '<b>Phiên bản</b> :version',
-    'copyright' => '<strong>Bản quyền © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> Tất cả các quyền được bảo lưu.',
-    'created' => 'Tạo thành công!',
-    'updated' => 'Cập nhật thành công!',
-    'deleted' => 'Xóa thành công!',
-    'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
+        ],
+
+        'index' => [
+            'route' => 'admin.table.index',
+        ],
+        'create' => [
+            'route' => 'admin.table.create',
+        ],
+        'store' => [
+            'route' => 'admin.table.store',
+        ],
+        'edit' => [
+            'route' => 'admin.table.edit',
+        ],
+        'update' => [
+            'route' => 'admin.table.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.table.destroy',
+        ],
+    ],
+    // Restaurant 
+    'restaurant' => [
+        'title' => 'Nhà hàng',
+        'fields' => [
+            'name' => 'Tên nhà hàng',
+            'name_placeholder' => 'Vui lòng điền tên nhà hàng ',
+            'slug' => 'Đường dẫn',
+            'address' => 'Địa chỉ',
+            'address_placeholer' => 'Vui lòng điền địa chỉ',
+            'phone' => 'Số điện thoại',
+            'phone_placeholer' => 'Vui lòng điền số điện thoại',
+            'opening_hours' => 'Giờ mở cửa',
+            'opening_hours_placeholer' => 'Vui lòng điền thời gian mở cửa',
+            'closing_time' => 'Giờ đóng cửa',
+            'closing_time_placeholer' => 'Vui lòng điền thời gian đóng cửa',
+            'rating' => 'Đánh giá',
+            'rating_placeholer' => 'Vui lòng điền đánh giá',
+            'description' =>  'Miêu tả',
+            'desciption_placeholer' => 'Vui lòng điền miêu tả',
+            'google_map_link' => 'Bản đồ',
+            'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
+            'image' =>  'Hình ảnh',
+            'restaurant_information' => 'Thông tin nhà hàng',
+        ],
+
+        // Fields for Review
+        'review' => [
+            'title' => 'Đánh Giá',
+            'status' => [
+                'active' => 'Đang hoạt động',
+                'inactive' => 'Ngừng hoạt động',
+                'pending' => 'Chờ phê duyệt',
+            ],
+            'fields' => [
+                'name' => 'Tên Đánh Giá',
+                'reviewsCount' => 'Số Lượng Đánh Giá',
+                'rating' => 'Xếp Hạng',
+                'review_creator' => 'Người Tạo Đánh Giá',
+                'comment' => 'Bình Luận',
+            ],
+            'index' => [
+                'route' => 'admin.review.index',
+            ],
+            'edit' => [
+                'route' => 'admin.review.edit',
+            ],
+            'update' => [
+                'route' => 'admin.review.update',
+            ],
+            'destroy' => [
+                'route' => 'admin.review.destroy',
+            ],
+        ],
+        // Trường cho Blog
+        'blog' => [
+            'title' => 'Blog',
+            'status' => [
+                'active' => 'Hoạt động',
+                'inactive' => 'Không hoạt động',
+            ],
+            'fields' => [
+                'name' => 'Tên Blog',
+                'accountsCount' => 'Số Lượng Blog',
+                'title' => 'Tiêu Đề',
+                'blog_creator' => 'Người Tạo Blog',
+                'slug' => 'Đường Dẫn Tĩnh',
+                'content' => 'Nội Dung',
+            ],
+            'index' => [
+                'route' => 'admin.blog.index',
+            ],
+            'create' => [
+                'route' => 'admin.blog.create',
+            ],
+            'store' => [
+                'route' => 'admin.blog.store',
+            ],
+            'edit' => [
+                'route' => 'admin.blog.edit',
+            ],
+            'update' => [
+                'route' => 'admin.blog.update',
+            ],
+            'destroy' => [
+                'route' => 'admin.blog.destroy',
+            ],
+
+        ],
+        // Fields for Role
+        'role' => [
+            'title' => 'Vai trò',
+            'fields' => [
+                'name' => 'Tên vai trò',
+                'accountsCount' => 'Số tài khoản',
+            ],
+            'role' => [
+                'user' => 'Người dùng',
+                'manager' => 'Giám đốc',
+                'admin' => 'Quản trị viên',
+            ],
+            'index' => [
+                'route' => 'admin.role.index',
+            ],
+            'create' => [
+                'route' => 'admin.role.create',
+            ],
+            'store' => [
+                'route' => 'admin.role.store',
+            ],
+            'edit' => [
+                'route' => 'admin.role.edit',
+            ],
+            'update' => [
+                'route' => 'admin.role.update',
+            ],
+            'destroy' => [
+                'route' => 'admin.role.destroy',
+            ],
+        ],
+        // Fields for Account
+        'account' => [
+            'status' => [
+                'normal' => 'Bình thường',
+                'locked' => 'Đã khóa',
+                'warning' => 'Cảnh báo',
+            ],
+            'fields' => [
+                'full_name' => 'Họ Tên',
+                'name_placeholder' => 'Nhập họ tên người dùng',
+                'email' => 'Email',
+                'email_placeholder' => 'Nhập email',
+                'phone' => 'Điện thoại',
+                'date' => 'Ngày sinh',
+                'phone_placeholder' => 'Nhập số điện thoại',
+                'total_friends' => 'Tổng số bạn bè',
+                'address' => 'Địa chỉ',
+                'address_placeholder' => 'Nhập địa chỉ',
+                'password' => 'Mật khẩu',
+                'password_placeholder' => 'Nhập mật khẩu',
+                're_password' => 'Xác nhận Mật khẩu',
+                're_password_placeholder' => 'Nhập lại mật khẩu',
+                'role' => 'Vai trò',
+                'profile_picture' => 'Ảnh đại diện',
+            ],
+            'user' => [
+                'title' => 'Tài Khoản Khách Hàng',
+                'index' => [
+                    'route' => 'admin.user.index',
+                ],
+                'create' => [
+                    'route' => 'admin.user.create',
+                ],
+                'store' => [
+                    'route' => 'admin.user.store',
+                ],
+                'edit' => [
+                    'route' => 'admin.user.edit',
+                ],
+                'update' => [
+                    'route' => 'admin.user.update',
+                ],
+                'destroy' => [
+                    'route' => 'admin.user.destroy',
+                ],
+            ],
+            'staff' => [
+                'title' => 'Tài khoản nhân viên',
+                'index' => [
+                    'route' => 'admin.staff.index',
+                ],
+                'create' => [
+                    'route' => 'admin.staff.create',
+                ],
+                'store' => [
+                    'route' => 'admin.staff.store',
+                ],
+                'edit' => [
+                    'route' => 'admin.staff.edit',
+                ],
+                'update' => [
+                    'route' => 'admin.staff.update',
+                ],
+                'destroy' => [
+                    'route' => 'admin.staff.destroy',
+                ],
+            ],
+            'admin' => [
+                'title' => 'Tài Khoản Quản Trị',
+                'index' => [
+                    'route' => 'admin.admin.index',
+                ],
+                'create' => [
+                    'route' => 'admin.admin.create',
+                ],
+                'store' => [
+                    'route' => 'admin.admin.store',
+                ],
+                'edit' => [
+                    'route' => 'admin.admin.edit',
+                ],
+                'update' => [
+                    'route' => 'admin.admin.update',
+                ],
+                'destroy' => [
+                    'route' => 'admin.admin.destroy',
+                ],
+            ],
+        ],
+
+        'version' => '<b>Phiên bản</b> :version',
+        'copyright' => '<strong>Bản quyền © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> Tất cả các quyền được bảo lưu.',
+        'created' => 'Tạo thành công!',
+        'updated' => 'Cập nhật thành công!',
+        'deleted' => 'Xóa thành công!',
+        'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
+    ]
 ];

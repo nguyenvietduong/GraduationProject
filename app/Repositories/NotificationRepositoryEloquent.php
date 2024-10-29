@@ -115,7 +115,7 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         return $this->delete($id);
     }
 
- /**
+    /**
      * Count the number of unread notifications for a specific user.
      *
      * @return int
@@ -124,9 +124,9 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
     {
         return Notification::whereNotExists(function ($query) use ($userId) {
             $query->select(DB::raw(1))
-                  ->from('notification_user')
-                  ->whereRaw('notification_user.notification_id = notifications.id')
-                  ->where('notification_user.user_id', $userId);
+                ->from('notification_user')
+                ->whereRaw('notification_user.notification_id = notifications.id')
+                ->where('notification_user.user_id', $userId);
         })->count();
-    }     
+    }
 }

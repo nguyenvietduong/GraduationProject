@@ -77,9 +77,9 @@ class MenuService extends BaseService implements MenuServiceInterface
         try {
             // Hash the password before storing it
             $image = null;
-            if($data["currency"] == "VND") {
-                $data["price"] = $data["price"]/24000;
-            }
+            // if($data["currency"] == "VND") {
+            //     $data["price"] = $data["price"]/24000;
+            // }
             // Handle image upload from the request if present
             if (isset($data['image_url'])) {
                 $data['image_url'] = $this->imageService->storeImage('menu_files', $data['image_url']);

@@ -51,9 +51,27 @@
         </div>
     </div>
 </div>
-<div class="col-12 col-md mb-2">
-    <input type="text" class="form-control" id="search" placeholder="{{app()->getLocale()!=="en" ? "Tìm kiếm theo tên ...": "Name search ..." }}" name="keyword"
-        value="{{ request('keyword') ?: old('keyword') }}">
+<div class="col-12 col-md mb-2 container">
+    <div class="row">
+       <div class="mb-2">
+            <input type="text" class="form-control" id="search" placeholder="{{app()->getLocale()!=="en" ? "Tìm kiếm theo tên ...": "Name search ..." }}" name="keyword"
+            value="{{ request('keyword') ?: old('keyword') }}">
+       </div>
+       <div>
+        @php
+        $status = request('status') ?: old('status');
+        $statuses = __('messages.menu.status');
+        @endphp
+        <select name="status" class="form-select  filter">
+            <option value="">{{app()->getLocale() == "en" ? "--choose option--":"--chọn--"}}</option>
+            @foreach ($statuses as $key => $option)
+            <option value="{{ $key }}" {{ $status==$key ? 'selected' : '' }}>
+                {{ $option }}
+            </option>
+            @endforeach
+        </select>
+       </div>
+    </div>
 </div>
 
 
