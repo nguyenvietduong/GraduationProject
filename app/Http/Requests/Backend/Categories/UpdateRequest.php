@@ -25,8 +25,10 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:255|unique:categories,name,' . $this->id,
-            'slug'          => 'required',
+            'name.en'  => 'required',
+            'name.vi'  => 'required',
+            'slug'     => 'required|string|max:255|unique:categories,name,' . $this->id,
+            'status'   => 'required'
         ];
     }
 
@@ -38,8 +40,10 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'categories name', // This will replace 'name' in error messages
-            'slug' => 'slug name'
+            'name.en'   => 'category name english', // This will replace 'name' in error messages
+            'name.vi'   => 'category name vietnamese', // This will replace 'name' in error messages
+            'slug'      => 'slug name',
+            'status'    => 'status'
         ];
     }
 }

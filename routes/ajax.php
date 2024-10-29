@@ -7,11 +7,17 @@ use App\Http\Controllers\Ajax\BlogController;
 use App\Http\Controllers\Ajax\ThemeController;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Account\ProfileController;
+use App\Http\Controllers\Ajax\TableController;
+
 use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
+use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
+
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
+use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
+use App\Http\Controllers\Backend\RestaurantController;
 
 // Set System Ajax
 Route::post('set-language', [LanguageController::class, 'setLanguage']);
@@ -22,7 +28,11 @@ Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateSt
 Route::post('admin/account/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
+Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+
+Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
+
 Route::get('/count-new-reviews-endpoint', [UpdateStatusReview::class, 'getNewReviewCount']);
 
 Route::get('/messages/users', [ChatController::class, 'getUsersWithMessages']);
@@ -32,6 +42,25 @@ Route::get('/messages/{userId}', [ChatController::class, 'getMessages']);
 Route::get('/notifications/index', [NotificationController::class, 'index'])->name('notification.index');
 Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
+
+// Xóa ảnh tạm thời trong session
+Route::post('/remove-temp-image', function (Request $request) {
+    if ($request->remove_image) {
+        // Xóa ảnh tạm thời trong session
+        session()->forget('image_temp');
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false], 400);
+})->name('image.removeTemp');
+
+
+Route::post('restaurant/update/image', [RestaurantController::class, 'updateRestaurantImage'])->name('restaurant.update.image');
+Route::post('restaurant{id}/update', [RestaurantController::class, 'updateRestaurant'])->name('restaurant.update');
+
+
+Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {

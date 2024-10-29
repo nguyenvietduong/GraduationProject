@@ -66,7 +66,25 @@ class ReviewController extends Controller
             // Create a new review
             $review = $this->reviewService->createReview($data);
 
-            event(new ReviewEvent($review));
+            // Log information about the created review
+            Log::info('New review created', ['review_id' => $review->id]);
+
+            // Send general notification
+            $title = 'Review';
+            $message = 'A new review has been added!';
+
+            event(new NotificationEvent($title, $message, 'info', Auth::user()->full_name));
+            // dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Replace 'info' and $review if needed
+
+            $data = [
+                'user_id'   => $data['user_id'],  // ID of the user sending the notification
+                'title'     => $title,
+                'message'   => $message,
+            ];
+
+            $this->notificationService->createNotification($data);
+
+            Log::info('SendNotificationJob dispatched', ['review_id' => $review->id]);
 
             return redirect()->back()->with('success', __('messages.system.alert.success'));
         } catch (\Exception $e) {

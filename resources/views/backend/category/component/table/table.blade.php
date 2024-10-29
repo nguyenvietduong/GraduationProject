@@ -7,6 +7,7 @@
             </th>
             <th class="ps-0">#</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.name') }}</th>
+            <th class="ps-0">{{ __('messages.'. $object .'.fields.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th>{{ __('messages.system.table.fields.updated_at') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
@@ -15,7 +16,7 @@
     <tbody>
         @if (isset($categoryDatas) && is_object($categoryDatas) && $categoryDatas->isNotEmpty())
         @foreach ($categoryDatas as $item)
-        <tr>
+        <tr class="{{ $item->status == 'inactive' ? 'bg-secondary' : '' }}">
             <td style="width: 16px;">
                 <div class="form-check">
                 </div>
@@ -25,8 +26,22 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ $item->name ?? __('messages.system.no_data_available') }}
+                    {{ app()->getLocale() == 'vi' ? $item->name['vi'] : $item->name['en'] ?? __('messages.system.no_data_available') }}
                 </p>
+            </td>
+            <td>
+                @php
+                    $status = request('status') ?: old('status');
+                    $statuses = __('messages.category.status');
+                @endphp
+
+                <select name="status" class="form-select status" data-category-id="{{ $item->id }}">
+                    @foreach ($statuses as $key => $option)
+                        <option value="{{ $key }}" @selected($status == $key) @selected($item->status == $key)>
+                            {{ $option }}
+                        </option>
+                    @endforeach
+                </select>
             </td>
             <td>
                 <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available')
@@ -56,7 +71,7 @@
         @endforeach
         @else
         <tr>
-            <td colspan="6" class="text-center">{{ __('messages.system.no_data_available') }}</td>
+            <td colspan="7" class="text-center">{{ __('messages.system.no_data_available') }}</td>
         </tr>
         @endif
     </tbody>

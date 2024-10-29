@@ -1,5 +1,6 @@
 @php
-    $segment = request()->segment(2);
+$segment = request()->segment(2);
+// dd($segment)
 @endphp
 <!--start startbar-menu-->
 <div class="startbar-menu">
@@ -9,6 +10,14 @@
             <ul class="navbar-nav mb-auto w-100">
                 <li class="menu-label pt-0 mt-0">
                     <span>Main Menu</span>
+                </li>
+
+                <!-- Restaurant -->
+                <li class="nav-item {{ set_active(['restaurant', 'admin']) }}">
+                    <a class="nav-link" href="{{ route('admin.restaurant') }}">
+                        <i class="fas fa-store-alt menu-icon"></i>
+                        <span>Restaurant</span>
+                    </a>
                 </li>
 
                 <!-- Admin Dashboard -->
@@ -77,24 +86,39 @@
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
                         <span>Food</span>
                     </a>
-                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarFoodManagement">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
-                                    href="{{ route('admin.category.index') }}">
-                                    <i class="fa fa-list menu-icon"></i>
-                                    <span>Category</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                                    href="{{ route('admin.menu.index') }}">
-                                    <i class="fa fa-utensils menu-icon"></i>
-                                    <span>Menu</span>
-                                </a>
-                            </li>
-                        </ul>
+
+                    <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
+                        id="sidebarAccountManagement">
+
+                        <div class="collapse {{ set_active(['category'], 'show', 'admin') }}"
+                            id="sidebarFoodManagement">
+
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
+                                        href="{{ route('admin.category.index') }}">
+                                        <i class="fa fa-list menu-icon"></i>
+                                        <span>Category</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
+                                        href="{{ route('admin.menu.index') }}">
+                                        <i class="fa fa-utensils menu-icon"></i>
+                                        <span>Menu</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['table'], 'active', 'admin') }}"
+                        href="{{ route('admin.table.index') }}">
+                        <i class="fa fa-table menu-icon"></i>
+                        <span>Table</span>
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -113,6 +137,9 @@
                     </a>
                 </li>
 
+
+
+
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['chat'], 'active', 'admin') }}"
                         href="{{ route('admin.chat.index') }}">
@@ -120,7 +147,7 @@
                         <span id="new-chat-count">Chat</span> <!-- Thêm ID cho span -->
                     </a>
                 </li>
-                
+
                 <!-- System -->
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['notification'], 'active', 'admin') }}"
