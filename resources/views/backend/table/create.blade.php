@@ -7,7 +7,8 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <h4 class="card-title">Cấp quyền</h4>
+                                <h4 class="card-title">{{ __('messages.system.button.create') }}
+                                    {{ __('messages.' . $object . '.title') }}</h4>
                             </div>
                         </div>
                     </div>
@@ -18,7 +19,7 @@
                         <div class="card-body p-0">
                             <div class="row g-0 h-100">
                                 <div class="col-lg-12 border-end">
-                                    @include('backend.role.component.form.update_permission')
+                                    @include('backend.table.component.form.create_form')
                                 </div>
                             </div>
                         </div>
@@ -26,4 +27,4 @@
                 </div>
             </div>
         </div>
-    @endsection
+@endsection

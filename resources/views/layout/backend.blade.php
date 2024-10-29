@@ -28,7 +28,7 @@
     <div class="startbar d-print-none">
         <!--start brand-->
         <div class="brand">
-            <a href="{{ route('home') }}" class="logo">
+            <a href="{{ route('admin.dashboard.index') }}" class="logo">
                 @include('backend.component.logo')
             </a>
         </div>
@@ -55,6 +55,28 @@
         <!-- end page content -->
     </div>
     <!-- end page-wrapper -->
+
+    <!-- Modal for Notification -->
+    <div class="modal fade" id="messageModalNotification" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 id="modalTitle"></h6>
+                    <p id="modalMessage"></p>
+                    <p id="modalType"></p>
+                    <p id="modalData"></p>
+                    <p id="modalCreatedAt"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @include('backend.component.Javascript')
 </body>

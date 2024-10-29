@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Account\Ajax;
+namespace App\Http\Controllers\Backend\Category\Ajax;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\User; // Assuming you're using the User model
 
-class UpdateStatusAccount extends Controller
+class UpdateStatusCategory extends Controller
 {
     public function updateStatus(Request $request)
     {
@@ -17,15 +17,15 @@ class UpdateStatusAccount extends Controller
         ]);
 
         // Find the user by ID
-        $user = User::find($request->id);
+        $category = Category::find($request->id);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        if (!$category) {
+            return response()->json(['message' => 'category not found'], 404);
         }
 
         // Update the status
-        $user->status = $request->status;
-        $user->save();
+        $category->status = $request->status;
+        $category->save();
 
         return response()->json(['message' => 'Status updated successfully']);
     }

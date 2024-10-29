@@ -41,8 +41,17 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+                $search = strtolower($filters['search']); // Chuyển chuỗi tìm kiếm thành chữ thường
+                if (app()->getLocale() == 'vi') {
+                    $q->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.vi'))) LIKE ?", ['%' . $search . '%']);
+                } else {
+                    $q->WhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ['%' . $search . '%']);
+                }
             });
+        }
+
+        if (!empty($filters['status'])) {
+            $query->where('status', $filters['status']);
         }
 
         if (!empty($filters['start_date'])) {
@@ -54,7 +63,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
         }
 
         // Sort by creation date (latest first)
-        $query->orderBy('id', 'desc');
+        $query->orderByRaw("FIELD(status, 'active', 'inactive')");
 
         // Paginate results
         return $query->paginate($perPage);

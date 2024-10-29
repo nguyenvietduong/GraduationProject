@@ -5,7 +5,7 @@
         </div>
         <div class="col-10">
             <input type="datetime-local" class="form-control" id="start_date" name="start_date"
-                value="{{ request('start_date') ?: old('start_date') }}">
+                   value="{{ request('start_date') ?: old('start_date') }}">
         </div>
     </div>
 </div>
@@ -17,23 +17,14 @@
         </div>
         <div class="col-10">
             <input type="datetime-local" class="form-control" id="end_date" name="end_date"
-                value="{{ request('end_date') ?: old('end_date') }}">
+                   value="{{ request('end_date') ?: old('end_date') }}">
         </div>
     </div>
 </div>
 
-<div class="col-12 col-md-auto mb-2">
-    <!-- Keep this column for per_page dropdown -->
-    <select name="title" class="form-select">
-        <option value="Booking" {{ request('title')=='Booking' ? 'selected' : '' }}>Booking</option>
-        <option value="Review" {{ request('title')=='Review' ? 'selected' : '' }}>Review</option>
-        <option value="System" {{ request('title')=='System' ? 'selected' : '' }}>System</option>
-    </select>
-</div>
-
 <div class="col-12 col-md mb-2">
     <input type="text" class="form-control" id="search" placeholder="Search..." name="keyword"
-        value="{{ request('keyword') ?: old('keyword') }}">
+           value="{{ request('keyword') ?: old('keyword') }}">
 </div>
 
 <script>

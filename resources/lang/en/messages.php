@@ -33,6 +33,7 @@ return [
                 ],
             ],
         ],
+        'invoice_error' => 'The invoice code does not belong to your account.',
         'alert' => [
             'titleSuccess' => 'Success!',
             'success' => 'Success! The task has been completed.',
@@ -166,9 +167,14 @@ return [
     // Fields for Category
     'category' => [
         'title' => 'Category',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
         'fields' => [
             'name' => 'Category Name',
             'slug' => 'Slug',
+            'status' => 'Status',
         ],
         'index' => [
             'route' => 'admin.category.index',
@@ -189,19 +195,57 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
+     // Fields for Restaurant 
+     'restaurant' => [
+        'title' => 'Restaurant',
+        'fields' => [
+            'name' => 'Restaurant name',
+            'name_placeholder' => 'Please fill in the restaurant name ',
+            'slug' => 'Slug',
+            'address' => 'Address',
+            'address_placeholer' => 'Please fill in your address',
+            'phone' => 'Phone',
+            'phone_placeholer' => 'Please fill in your phone',
+            'opening_hours' => 'Opening_hours',
+            'opening_hours_placeholer' => 'Please fill in your opening hours',
+            'closing_time' => 'Closing_time',
+            'closing_time_placeholer' => 'Please fill in your closing time',
+            'rating' => 'Rating',
+            'rating_placeholer' => 'Please fill in your rating',
+            'description' =>  'Description',
+            'desciption_placeholer' => 'Please fill in your description',
+            'google_map_link' => 'Google_map_link',
+            'google_map_link_placeholer' => 'Please fill in your google map link',
+            'image' =>  'Image',
+            'restaurant_information' => 'Restaurant information',
+        ]
+    ],
+
     'menu' => [
-        'title' => 'Menu',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
+        'title' => 'Food',
         "filters" => [
             "start_price" => "Price to",
             "end_price" => "Price from"
         ],
         'fields' => [
-            'name' => 'Menu Name',
-            'slug' => 'Menu Slug',
-            'description' => 'Menu Description',
-            'price' => 'Menu Price ( USD )',
-            'category_id' => 'Category ID',
-            'image_url' => 'Menu Image',
+            "name" => "Name food" ,
+            'name_vi' => 'Food name (Vietnamese)',
+            'name_en' => 'Food name (English)',
+            'slug' => 'Food slug',
+            'description_vi' => 'Food description (Vietnamese)',
+            'description_en' => 'Food description (English)',
+            'price_vi' => 'Food price (Vietnamese)',
+            'price_en' => 'Food price (English)',
+            'price' => "Price",
+            'status' => 'Status',
+            'status_active' => 'Active',
+            'status_inactive' => 'Inactive',
+            'category_id' => 'Category',
+            'image_url' => 'Food image',
         ],
         'index' => [
             'route' => 'admin.menu.index',
@@ -247,6 +291,101 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.permission.destroy',
+        ],
+    ],
+    'table' => [
+        'title' => 'Table',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Table Name',
+            'name_vi' => 'Table Name VI',
+            'name_en' => 'Table Name EN',
+            'capacity' => 'Capacity',
+            'status' => 'Status',
+            'description' => 'Description',
+            'description_vi' => 'Description VI',
+            'description_en' => 'Description EN',
+            'position' => 'Position',
+        ],
+        'index' => [
+            'route' => 'admin.table.index',
+        ],
+        'create' => [
+            'route' => 'admin.table.create',
+        ],
+        'store' => [
+            'route' => 'admin.table.store',
+        ],
+        'edit' => [
+            'route' => 'admin.table.edit',
+        ],
+        'update' => [
+            'route' => 'admin.table.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.table.destroy',
+        ],
+    ],
+    // Fields for Review
+    'review' => [
+        'title' => 'Review',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+            'pending' => 'Pending',
+        ],
+        'fields' => [
+            'name' => 'Review Name',
+            'reviewsCount' => 'Reviews Count',
+            'rating' => 'Rating',
+            'review_creator' => 'Review Creator',
+            'comment' => 'Comment',
+        ],
+        'index' => [
+            'route' => 'admin.review.index',
+        ],
+        'edit' => [
+            'route' => 'admin.review.edit',
+        ],
+        'update' => [
+            'route' => 'admin.review.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.review.destroy',
+        ],
+    ],
+    // Fields for Blog
+    'blog' => [
+        'title' => 'Blog',
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
+        'fields' => [
+            'name' => 'Blog Name',
+            'blogsCount' => 'Blogs Count',
+            'title' => 'Title',
+            'blog_creator' => 'Blog Creator',
+            'slug' => 'Blog Slug',
+            'content' => 'Content',
+        ],
+        'index' => [
+            'route' => 'admin.blog.index',
+        ],
+        'create' => [
+            'route' => 'admin.blog.create',
+        ],
+        'store' => [
+            'route' => 'admin.blog.store',
+        ],
+        'edit' => [
+            'route' => 'admin.blog.edit',
+        ],
+        'update' => [
+            'route' => 'admin.blog.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.blog.destroy',
         ],
     ],
     // Fields for Blog

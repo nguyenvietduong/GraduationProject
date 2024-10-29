@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Role;
+use App\Services\NotificationService;
+use App\Services\ReviewService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Html\Builder;
 use Illuminate\Support\Facades\URL;
@@ -21,11 +23,14 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\BaseService',
             'App\Interfaces\Services\AccountServiceInterface' => 'App\Services\AccountService',
             'App\Interfaces\Services\CategoryServiceInterface' => 'App\Services\CategoryService',
+            'App\Interfaces\Services\TableServiceInterface' => 'App\Services\TableService',
+
             'App\Interfaces\Services\RoleServiceInterface' => 'App\Services\RoleService',
             'App\Interfaces\Services\BlogServiceInterface' => 'App\Services\BlogService',
             'App\Interfaces\Services\PermissionServiceInterface' => 'App\Services\PermissionService',
             'App\Interfaces\Services\NotificationServiceInterface' => 'App\Services\NotificationService',
             'App\Interfaces\Services\ReviewServiceInterface' => 'App\Services\ReviewService',
+            'App\Interfaces\Services\RestaurantServiceInterface' => 'App\Services\RestaurantService',
             'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',
             'App\Interfaces\Services\PromotionServiceInterface' => 'App\Services\PromotionService',
         ];
@@ -44,6 +49,19 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
+
+        View::composer('*', function ($view) {
+            $reviewService = app(ReviewService::class);
+            $newReviewCount = $reviewService->countNewReviews();
+    
+            $notificationService = app(NotificationService::class);
+            $dataNotification = $notificationService->getAllNotifications();
+            $unreadNotificationCount = $notificationService->countUnreadNotifications();
+    
+            $view->with('newReviewCount', $newReviewCount);
+            $view->with('dataNotification', $dataNotification);
+            $view->with('unreadNotificationCount', $unreadNotificationCount);
+        });
 
         Paginator::useBootstrapFive();
         Builder::useVite();

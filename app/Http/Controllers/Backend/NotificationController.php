@@ -12,7 +12,9 @@ use App\Traits\HandleExceptionTrait;
 use App\Http\Requests\BackEnd\Notifications\ListRequest as NotificationListRequest;
 use App\Http\Requests\BackEnd\Notifications\StoreRequest as NotificationStoreRequest;
 use App\Http\Requests\BackEnd\Notifications\UpdateRequest as NotificationUpdateRequest;
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -25,8 +27,6 @@ class NotificationController extends Controller
 
     // Base path for views
     const PATH_VIEW = 'backend.notification.';
-    const PER_PAGE_DEFAULT = 5;
-    const OBJECT = 'notification';
 
     public function __construct(
         NotificationServiceInterface $notificationService,
@@ -49,10 +49,10 @@ class NotificationController extends Controller
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
-
+    
         // Extract filters from the request
         $params = $request->all();
-
+    
         // Apply filters from the request
         $filters = [
             'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
@@ -61,15 +61,19 @@ class NotificationController extends Controller
             'title' => $params['title'] ?? '',
         ];
 
-        // Get the per_page value
-        $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
-
-        return view(self::PATH_VIEW . __FUNCTION__, [
-            'object' => self::OBJECT,
-            'notificationTotalRecords' => $this->notificationRepository->count(), // Total records for display
-            'notificationDatas' => $this->notificationService->getAllNotifications($filters, $perPage, self::OBJECT), // Paginated notification list for the view
-        ]);
-    }
+    
+        // Fetch notifications with pagination
+        $notifications = $this->notificationService->getAllNotifications($filters);
+        
+        // Prepare the response data
+        $response = [
+            'total' => $this->notificationRepository->count(),
+            'notifications' => $notifications,
+        ];
+    
+        // Return JSON response
+        return response()->json($response);
+    }    
 
     /**
      * Show the form for creating a new notification.
@@ -163,30 +167,21 @@ class NotificationController extends Controller
         }
     }
 
-    public function permission()
+    public function markAsRead(Notification $notification)
     {
-        $notifications = $this->notificationRepository->all();
-        $permissions = $this->permissionRepository->all();
-        // dd($permissions);
-        return view('backend.notification.permission', [
-            'object' => 'notification',
-            'notifications' => $notifications,
-            'permissions' => $permissions
-        ]);
-    }
+        $user = Auth::user();
 
+        if (!$notification->users()->where('user_id', $user->id)->exists()) {
+            $notification->users()->attach($user->id);
 
-    public function updatePermission(Request $request)
-    {
-        try {
-            // Delete the notification
-            // echo 1; die;
-            $this->notificationService->updatePermission($request);
-
-            return redirect()->back()->with('success', 'Notification Permission update successfully');
-        } catch (\Exception $e) {
-            // Return a JSON response if there is an error
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json(['success' => true]);
         }
+
+        return response()->json(['success' => false]);
     }
+    
+    public function countUnreadNotifications()
+    {
+        return $this->notificationService->countUnreadNotifications();
+    }    
 }

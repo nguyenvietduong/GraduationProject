@@ -29,12 +29,16 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|array',
+            'name.*' => 'required|string',
             'slug' => 'required|string|unique:menus',
-            'price' => 'required|numeric|between:0,99999999.99',
-            'description' => 'nullable',
+            'price' => 'required|array',
+            'price.*' => 'required|numeric|between:0,99999999.99',
+            'description' => 'required|array',
+            'description.*' => 'nullable',
             'category_id' => 'required|integer|exists:categories,id',
             'image_url' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'status' => 'required|in:active,inactive'
         ];
     }
 
@@ -47,15 +51,19 @@ class StoreRequest extends FormRequest
     {
         if(app()->getLocale() !== "en"){
             return [
-                'name' => 'tên món ăn',
+                'name.*' => 'tên món ăn',
                 "slug" => "dường dẫn",
-                'price' => 'giá',
-                'description' => 'mô tả',
+                'price.*' => 'giá',
+                'description.*' => 'mô tả',
                 'category_id' => 'danh mục',
                 'image_url' => 'ảnh',
             ];
         }
-        return [];
+        return [
+            "name.*" => "name" , 
+            "price.*" => "price" , 
+            "description.*" => "description" , 
+        ];
     }
     protected function failedValidation(Validator $validator)
     {
