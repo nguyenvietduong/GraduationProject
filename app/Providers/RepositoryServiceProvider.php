@@ -19,6 +19,8 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Interfaces\Repositories\BlogRepositoryInterface::class => \App\Repositories\BlogRepositoryEloquent::class,
             \App\Interfaces\Repositories\BlogRepositoryInterface::class => \App\Repositories\BlogRepositoryEloquent::class,
             \App\Interfaces\Repositories\CategoryRepositoryInterface::class => \App\Repositories\CategoryRepositoryEloquent::class,
+            \App\Interfaces\Repositories\TableRepositoryInterface::class => \App\Repositories\TableRepositoryEloquent::class,
+
             \App\Interfaces\Repositories\PermissionRepositoryInterface::class => \App\Repositories\PermissionRepositoryEloquent::class,
             \App\Interfaces\Repositories\NotificationRepositoryInterface::class => \App\Repositories\NotificationRepositoryEloquent::class,
             \App\Interfaces\Repositories\ReviewRepositoryInterface::class => \App\Repositories\ReviewRepositoryEloquent::class,

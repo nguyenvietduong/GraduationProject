@@ -111,8 +111,16 @@
                                     <span>Menu</span>
                                 </a>
                             </li>
+
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['table'], 'active', 'admin') }}"
+                       href="{{ route('admin.table.index') }}">
+                        <i class="fa fa-table menu-icon"></i>
+                        <span>Table</span>
+                    </a>
                 </li>
 
 

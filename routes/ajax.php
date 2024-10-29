@@ -8,6 +8,8 @@ use App\Http\Controllers\Ajax\ThemeController;
 use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Account\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Account\ProfileController;
+use App\Http\Controllers\Ajax\TableController;
+
 use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
@@ -26,6 +28,9 @@ Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus']
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+
+Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
+
 Route::get('/count-new-reviews-endpoint', [UpdateStatusReview::class, 'getNewReviewCount']);
 
 Route::get('/messages/users', [ChatController::class, 'getUsersWithMessages']);

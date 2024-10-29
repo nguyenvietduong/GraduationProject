@@ -292,6 +292,39 @@ return [
             'route' => 'admin.permission.destroy',
         ],
     ],
+    'table' => [
+        'title' => 'Table',
+        'fields' => [
+            'id' => 'ID',
+            'name' => 'Table Name',
+            'name_vi' => 'Table Name VI',
+            'name_en' => 'Table Name EN',
+            'capacity' => 'Capacity',
+            'status' => 'Status',
+            'description' => 'Description',
+            'description_vi' => 'Description VI',
+            'description_en' => 'Description EN',
+            'position' => 'Position',
+        ],
+        'index' => [
+            'route' => 'admin.table.index',
+        ],
+        'create' => [
+            'route' => 'admin.table.create',
+        ],
+        'store' => [
+            'route' => 'admin.table.store',
+        ],
+        'edit' => [
+            'route' => 'admin.table.edit',
+        ],
+        'update' => [
+            'route' => 'admin.table.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.table.destroy',
+        ],
+    ],
     // Fields for Review
     'review' => [
         'title' => 'Review',
