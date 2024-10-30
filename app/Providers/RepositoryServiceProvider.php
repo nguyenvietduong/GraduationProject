@@ -30,8 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Interfaces\Repositories\RestaurantRepositoryInterface::class => \App\Repositories\RestaurantRepositoryEloquent::class,
 
             \App\Interfaces\Repositories\MenuRepositoryInterface::class => \App\Repositories\MenuRepositoryEloquent::class,
-
-
+            \App\Interfaces\Repositories\PromotionRepositoryInterface::class => \App\Repositories\PromotionRepositoryEloquent::class,
         ];
 
         foreach ($repositories as $interface => $implementation) {
