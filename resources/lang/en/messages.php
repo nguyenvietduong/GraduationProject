@@ -388,40 +388,6 @@ return [
             'route' => 'admin.blog.destroy',
         ],
     ],
-    // Fields for Blog
-    'blog' => [
-        'title' => 'Blog',
-        'status' => [
-            'active' => 'Active',
-            'inactive' => 'Inactive',
-        ],
-        'fields' => [
-            'name' => 'Blog Name',
-            'blogsCount' => 'Blogs Count',
-            'title' => 'Title',
-            'blog_creator' => 'Blog Creator',
-            'slug' => 'Blog Slug',
-            'content' => 'Content',
-        ],
-        'index' => [
-            'route' => 'admin.blog.index',
-        ],
-        'create' => [
-            'route' => 'admin.blog.create',
-        ],
-        'store' => [
-            'route' => 'admin.blog.store',
-        ],
-        'edit' => [
-            'route' => 'admin.blog.edit',
-        ],
-        'update' => [
-            'route' => 'admin.blog.update',
-        ],
-        'destroy' => [
-            'route' => 'admin.blog.destroy',
-        ],
-    ],
     // Fields for Role
     'role' => [
         'title' => 'Role',

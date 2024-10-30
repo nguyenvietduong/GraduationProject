@@ -97,7 +97,7 @@
             },
             success: function(response) {
                 console.log(response);
-                
+
                 if (response) {
                     // Move the read notification to the bottom of the list
                     const notificationContainer = $('#allNotification');
@@ -105,10 +105,27 @@
 
                     // Append the notification to the end of the container
                     notificationContainer.append(element);
+                    countNotificationNoRead();
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Failed to mark notification as read:', textStatus, errorThrown);
+            }
+        });
+    }
+</script>
+
+<script>
+    function countNotificationNoRead() {
+        $.ajax({
+            url: '/count-new-notifications-endpoint',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $('#countNotificationNoRead').html(data); // Update the notification count
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX Error:', textStatus, errorThrown);
             }
         });
     }
