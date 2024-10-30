@@ -77,4 +77,8 @@ class TableService implements TableServiceInterface
     {
         return $this->tableRepository->deleteTable($id);
     }
+    public function getAllTablesByPosition(): mixed
+    {
+        return $this->tableRepository->getAllTablesByPosition();
+    }
 }

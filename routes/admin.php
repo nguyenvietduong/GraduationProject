@@ -115,6 +115,7 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('{id}/edit', [TableController::class, 'edit'])->where('id', '[0-9]+')->name('admin.table.edit');
             Route::put('{id}/update', [TableController::class, 'update'])->where('id', '[0-9]+')->name('admin.table.update');
             Route::delete('{id}/destroy', [TableController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.table.destroy');
+            Route::get('position', [TableController::class, 'tablePosition'])->name('admin.table.position');
         });
 
         Route::prefix('menu')->group(function () {

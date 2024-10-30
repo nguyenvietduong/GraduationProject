@@ -173,7 +173,11 @@ class TableController extends Controller
         }
     }
 
-
-
-
+    public function tablePosition(){
+        $tables = $this->tableRepository->getAllTablesByPosition();
+        return view(self::PATH_VIEW . 'position', [
+            'tables' => $tables,
+            'object' => self::OBJECT,
+        ]);
+    }
 }

@@ -30,7 +30,7 @@ class UpdateRequest extends FormRequest
             'status' => 'required|in:available,occupied,reserved,out_of_service', // Trạng thái phải nằm trong danh sách cho phép
             'description.en' => 'nullable|string|max:255', // Mỗi mô tả phải là một chuỗi, nếu có
             'description.vi' => 'nullable|string|max:255', // Mỗi mô tả phải là một chuỗi, nếu có
-            'position' => 'required|string|regex:/^[A-H][1-8]$/|unique:tables,position,' . $tableId, // Vị trí bàn phải theo định dạng và không trùng, trừ bản ghi hiện tại
+            'position' => 'required|integer', // Vị trí bàn phải theo định dạng và không trùng, trừ bản ghi hiện tại
         ];
     }
 

@@ -294,6 +294,12 @@ return [
     ],
     'table' => [
         'title' => 'Table',
+        'status' => [
+            'available' => 'Available',
+            'occupied' => 'Occupied',
+            'reserved' => 'Reserved',
+            'out_of_service' => 'Inactive',
+        ],
         'fields' => [
             'id' => 'ID',
             'name' => 'Table Name',
