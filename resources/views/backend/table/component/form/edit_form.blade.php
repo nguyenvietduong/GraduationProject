@@ -8,7 +8,7 @@
             <div class="col-lg-6 col-12 mb-2">
                 <label for="name" class="form-label">{{ __('messages.table.fields.name_en') }}</label>
                 <input type="text" class="form-control @error('name.en') is-invalid @enderror" id="name" name="name[en]"
-                       value="{{ $tableData->getLocalizedNameAttribute('en') }}" placeholder="{{ __('messages.table.fields.name_en') }}">
+                       value="{{ $tableData->name['en'] }}" placeholder="{{ __('messages.table.fields.name_en') }}">
 
                 @error('name.en')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -19,7 +19,7 @@
             <div class="col-lg-6 col-12 mb-2">
                 <label for="name" class="form-label">{{ __('messages.table.fields.name_vi') }}</label>
                 <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name" name="name[vi]"
-                       value="{{ $tableData->getLocalizedNameAttribute('vi') }}" placeholder="{{ __('messages.table.fields.name_vi') }}">
+                       value="{{ $tableData->name['vi'] }}" placeholder="{{ __('messages.table.fields.name_vi') }}">
 
                 @error('name.vi')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -33,7 +33,7 @@
             <div class="col-lg-6 col-12 mb-2">
                 <label for="description" class="form-label">{{ __('messages.table.fields.description_en') }}</label>
                 <input type="text" class="form-control @error('description.en') is-invalid @enderror" id="description"
-                       name="description[en]" value="{{ $tableData->getLocalizedDescriptionAttribute('en') }}" placeholder="{{ __('messages.table.fields.description_en') }}">
+                       name="description[en]" value="{{ $tableData->description['vi'] }}" placeholder="{{ __('messages.table.fields.description_en') }}">
                 @error('description.en')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -43,7 +43,7 @@
             <div class="col-lg-6 col-12 mb-2">
                 <label for="description" class="form-label">{{ __('messages.table.fields.description_vi') }}</label>
                 <input type="text" class="form-control @error('description.vi') is-invalid @enderror" id="description"
-                       name="description[vi]" value="{{ $tableData->getLocalizedDescriptionAttribute('vi') }}" placeholder="{{ __('messages.table.fields.description_vi') }}">
+                       name="description[vi]" value="{{ $tableData->description['vi'] }}" placeholder="{{ __('messages.table.fields.description_vi') }}">
                 @error('description.vi')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -52,15 +52,22 @@
 
         <div class="row">
             <!-- Trạng thái -->
-            <div class="col-lg-6 col-12 mb-2">
-                <label for="status" class="form-label">{{ __('messages.table.fields.status') }}</label>
-                <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-                    @foreach(\App\Models\Table::$STATUS as $key => $item)
-                        <option value="{{ $key }}" {{ ($tableData->status == $key) ? 'selected' : '' }}>{{ $item }}</option>
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
+                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.status') }}</label>
+                <select name="status" id="status"
+                    class="form-select form-select-lm  @error('status') is-invalid @enderror" id="status">
+                    @php
+                        $status = request('status') ?: old('status');
+                        $statuses = __('messages.table.status');
+                    @endphp
+                    @foreach ($statuses as $key => $option)
+                        <option value="{{ $key }}" @selected($key == $tableData->status)>
+                            {{ $option }}
+                        </option>
                     @endforeach
                 </select>
                 @error('status')
-                <div class="invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
@@ -79,7 +86,7 @@
         <!-- Vị trí -->
         <div class="mb-2">
             <label for="position" class="form-label">{{ __('messages.table.fields.position') }}</label>
-            <input type="text" class="form-control @error('position') is-invalid @enderror" id="position"
+            <input type="number" class="form-control @error('position') is-invalid @enderror" id="position"
                    name="position" value="{{ $tableData->position }}" placeholder="{{ __('messages.table.fields.position') }}" onkeyup="checkPosition(this)"
                    required>
             @error('position')
