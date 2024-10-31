@@ -60,7 +60,7 @@ return [
         ],
         'menu' => [
             'adminDashboard' => 'Bảng điều khiển quản trị',
-            'menu' => 'Menu'
+            'menu' => 'Menu',
             'adminDashboard' => 'Quản trị',
             'menu' => 'Thực đơn',
             'promotion' => 'Mã giảm giá'
@@ -371,6 +371,8 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.blog.destroy',
+        ],
+    ],
     'promotion' => [
         'title' => 'Permission',
         'titleFormR' => 'Thông tin chi tiết',
