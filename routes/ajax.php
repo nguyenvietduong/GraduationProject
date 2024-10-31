@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request; // Import lớp Request
 use App\Http\Controllers\Ajax\LanguageController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
-
+use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
@@ -24,8 +25,13 @@ Route::post('set-theme', [ThemeController::class, 'setTheme'])->name('set.theme'
 Route::post('profile/update/image', [ProfileController::class, 'updateProfileImage'])->name('profile.update.image');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
+
+Route::post('admin/reservation/updateStatus', [UpdateStatusReservation::class, 'updateStatus'])->name('admin.reservation.updateStatus');
+Route::get('/get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
+Route::get('/get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
+
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
-Route::post('admin/account/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
+Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
@@ -43,6 +49,8 @@ Route::get('/notifications/index', [NotificationController::class, 'index'])->na
 Route::get('/notifications/search', [NotificationController::class, 'search'])->name('notification.search');
 Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
+
+Route::post('/check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {

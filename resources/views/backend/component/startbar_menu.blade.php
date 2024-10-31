@@ -106,11 +106,20 @@ $segment = request()->segment(2);
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['table'], 'active', 'admin') }}"
                         href="{{ route('admin.table.index') }}">
                         <i class="fa fa-table menu-icon"></i>
                         <span>Table</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['reservation'], 'active', 'admin') }}"
+                        href="{{ route('admin.reservation.index') }}">
+                        <i class="fa fa-calendar-check menu-icon"></i>
+                        <span>Reservation</span>
                     </a>
                 </li>
 
