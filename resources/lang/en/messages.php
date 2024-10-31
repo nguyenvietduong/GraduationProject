@@ -60,7 +60,8 @@ return [
         ],
         'menu' => [
             'adminDashboard' => 'Admin Dashboard',
-            'menu' => 'Menu'
+            'menu' => 'Menu',
+            'promotion' => 'Promotion'
         ],
         'front_end' => [
             'navbar' => [
@@ -423,6 +424,63 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.role.destroy',
+        ],
+    ],
+    'promotion' => [
+        'title' => 'Promotion',
+        'titleFormR' => 'Detailed Information',
+        'titleFormL' => 'General Information',
+        'fields' => [
+            'name' => 'Name',
+            'accountsCount' => 'Promotions Count',
+            'code' => 'Code',
+            'description' => 'Description',
+            'type' => 'Type',
+            'discount' => 'Discount',
+            'minOrder' => 'Min Value Order',
+            'maxDiscount' => 'Max Discount',
+            'startDate' => 'Start Date',
+            'endDate' => 'End Date',
+            'total' => 'Total',
+            'isActive' => 'Status'
+        ],
+        'system' => [
+            'random' => 'random',
+            'warning' => 'You can only make edits to the description, start date and end date',
+            'cardTop' => 'General information',
+            'vn' => 'Vietnamese',
+            'en' => 'English',
+            'cardBody' => 'Public information',
+            'times' => 'times',
+            'noTime' => 'There is no end date',
+            'cardBot' => 'Detailed information',
+
+        ],
+        'type' => [
+            'percentage' => '%',
+            'fixed' => 'Cash',
+        ],
+        'status' => [
+            '1' => 'Active',
+            '2' => 'Unactive'
+        ],
+        'index' => [
+            'route' => 'admin.promotion.index',
+        ],
+        'create' => [
+            'route' => 'admin.promotion.create',
+        ],
+        'store' => [
+            'route' => 'admin.promotion.store',
+        ],
+        'edit' => [
+            'route' => 'admin.promotion.edit',
+        ],
+        'update' => [
+            'route' => 'admin.promotion.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.promotion.destroy',
         ],
     ],
     // Fields for Account

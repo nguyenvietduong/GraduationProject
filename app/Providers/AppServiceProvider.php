@@ -34,9 +34,9 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\RestaurantServiceInterface' => 'App\Services\RestaurantService',
             'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',
 
-
             // FRONTEND
             'App\Interfaces\Services\ReservationServiceInterface' => 'App\Services\ReservationService',
+            'App\Interfaces\Services\PromotionServiceInterface' => 'App\Services\PromotionService',
         ];
 
         foreach ($services as $interface => $implementation) {

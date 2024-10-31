@@ -61,6 +61,9 @@ return [
         'menu' => [
             'adminDashboard' => 'Bảng điều khiển quản trị',
             'menu' => 'Menu'
+            'adminDashboard' => 'Quản trị',
+            'menu' => 'Thực đơn',
+            'promotion' => 'Mã giảm giá'
         ],
         'front_end' => [
             'navbar' => [
@@ -191,7 +194,7 @@ return [
             'description_en' => 'Mô tả món ăn (Tiếng anh)',
             'price_vi' => 'Giá món ăn (Tiếng việt)',
             'price_en' => 'Giá món ăn (tiếng anh)',
-            "price" =>  "Giá",
+            "price" => "Giá",
             'status' => 'Trạng thái',
             'status_active' => 'Hoạt động',
             'status_inactive' => 'Không hoạt động',
@@ -368,6 +371,87 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.blog.destroy',
+    'promotion' => [
+        'title' => 'Permission',
+        'titleFormR' => 'Thông tin chi tiết',
+        'titleFormL' => 'Thông tin chung',
+        'fields' => [
+            'name' => 'Tên',
+            'code' => 'Mã giảm giá',
+            'description' => 'Mô tả',
+            'type' => 'Chọn loại giảm giá',
+            'discount' => 'Số tiền giảm',
+            'minOrder' => 'Số tiền tối thiểu',
+            'maxDiscount' => 'Tiền giảm tối đa',
+            'startDate' => 'Ngày bắt đầu',
+            'endDate' => 'Ngày kết thúc',
+            'total' => 'Số lượng',
+            'isActive' => 'Trạng thái'
+        ],
+        'system' => [
+            'random' => 'ngẫu nhiên',
+            'warning' => 'Bạn chỉ có thể thực hiện chỉnh sửa mô tả, ngày bắt đầu và ngày kết thúc',
+            'cardTop' => 'Thông tin tổng quát',
+            'vn' => 'Tiếng Việt',
+            'en' => 'Tiếng Anh',
+            'cardBody' => 'Thông tin chung',
+            'times' => 'lần',
+            'noTime' => 'Không có ngày kết thúc',
+            'cardBot' => 'Thông tin chi tiết',
+
+        ],
+        'type' => [
+            'percentage' => '%',
+            'fixed' => 'Tiền mặt',
+        ],
+        'status' => [
+            '1' => 'Kích hoạt',
+            '2' => 'Không kích hoạt'
+        ],
+        'index' => [
+            'route' => 'admin.promotion.index',
+        ],
+        'create' => [
+            'route' => 'admin.promotion.create',
+        ],
+        'store' => [
+            'route' => 'admin.promotion.store',
+        ],
+        'edit' => [
+            'route' => 'admin.promotion.edit',
+        ],
+        'update' => [
+            'route' => 'admin.promotion.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.promotion.destroy',
+        ],
+    ],
+    // Fields for Account
+
+    // Restaurant 
+    'restaurant' => [
+        'title' => 'Nhà hàng',
+        'fields' => [
+            'name' => 'Tên nhà hàng',
+            'name_placeholder' => 'Vui lòng điền tên nhà hàng ',
+            'slug' => 'Đường dẫn',
+            'address' => 'Địa chỉ',
+            'address_placeholer' => 'Vui lòng điền địa chỉ',
+            'phone' => 'Số điện thoại',
+            'phone_placeholer' => 'Vui lòng điền số điện thoại',
+            'opening_hours' => 'Giờ mở cửa',
+            'opening_hours_placeholer' => 'Vui lòng điền thời gian mở cửa',
+            'closing_time' => 'Giờ đóng cửa',
+            'closing_time_placeholer' => 'Vui lòng điền thời gian đóng cửa',
+            'rating' => 'Đánh giá',
+            'rating_placeholer' => 'Vui lòng điền đánh giá',
+            'description' => 'Miêu tả',
+            'desciption_placeholer' => 'Vui lòng điền miêu tả',
+            'google_map_link' => 'Bản đồ',
+            'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
+            'image' => 'Hình ảnh',
+            'restaurant_information' => 'Thông tin nhà hàng',
         ],
 
     ],

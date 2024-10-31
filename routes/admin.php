@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\TableController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,14 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{permission}/destroy', [PermissionController::class, 'destroy'])->where('permission', '[0-9]+')->name('admin.permission.destroy');
         });
 
+        Route::prefix('promotion')->group(function () {
+            Route::get('index', [PromotionController::class, 'index'])->name('admin.promotion.index');
+            Route::get('create', [PromotionController::class, 'create'])->name('admin.promotion.create');
+            Route::post('store', [PromotionController::class, 'store'])->name('admin.promotion.store');
+            Route::get('{promotion}/edit', [PromotionController::class, 'edit'])->where('promotion', '[0-9]+')->name('admin.promotion.edit');
+            Route::put('{promotion}/update', [PromotionController::class, 'update'])->where('promotion', '[0-9]+')->name('admin.promotion.update');
+            Route::delete('{promotion}/destroy', [PromotionController::class, 'destroy'])->where('promotion', '[0-9]+')->name('admin.promotion.destroy');
+        });
 
         Route::prefix('blog')->group(function () {
             Route::get('index', [BlogController::class, 'index'])->name('admin.blog.index');
