@@ -102,26 +102,6 @@
                                 </a>
                             </li>
                         </ul>
-
-                        <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
-                            id="sidebarFoodManagement">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
-                                        href="{{ route('admin.category.index') }}">
-                                        <i class="fa fa-list menu-icon"></i>
-                                        <span>Category</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                                        href="{{ route('admin.menu.index') }}">
-                                        <i class="fa fa-utensils menu-icon"></i>
-                                        <span>Menu</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['table'], 'active', 'admin') }}"

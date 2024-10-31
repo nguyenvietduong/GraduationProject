@@ -107,4 +107,15 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
     {
         return $this->delete($id);
     }
+    /**
+     * Get all data by position.
+     *
+     * @return mixed
+     */
+    public function getAllTablesByPosition(): mixed
+    {
+        $query = $this->model->query();
+        $query->orderBy('position','asc');
+        return $query->get();
+    }
 }

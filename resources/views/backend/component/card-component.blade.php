@@ -27,6 +27,16 @@
                 </a>
             </div>
             @endif
+            @if(isset($positionRoute))
+            <div class="col-auto mt-1">
+                <a href="{{ $positionRoute }}">
+                    <button type="button" class="btn btn-warning w-100">
+                        <i class="fa-solid fa-up-down-left-right me-1"></i>
+                        {{ __('messages.table.text.position_route') }}
+                    </button>
+                </a>
+            </div>
+            @endif
         </div>
     </div>
 </div>

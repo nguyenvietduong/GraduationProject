@@ -76,16 +76,16 @@
             </div>
         </div>
 
-        <!-- Vị trí -->
+        {{-- <!-- Vị trí -->
         <div class="mb-2">
             <label for="position" class="form-label">{{ __('messages.table.fields.position') }}</label>
-            <input type="text" class="form-control @error('position') is-invalid @enderror" id="position"
+            <input type="number" class="form-control @error('position') is-invalid @enderror" id="position"
                    name="position" value="{{ old('position') }}" placeholder="{{ __('messages.table.fields.position') }}" onkeyup="checkPosition(this)"
                    required>
             @error('position')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
-        </div>
+        </div> --}}
 
     </div>
 
