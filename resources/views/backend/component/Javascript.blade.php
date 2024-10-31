@@ -3,7 +3,7 @@
     const translations = @json(trans('messages.system', [], app()->getLocale()));
 
     // Detect the user's preferred language
-    const language = `{{ App::getLocale() }}`;
+    const language = '{{ App::getLocale() }}';
 </script>
 
 <!-- Check session flash messages -->
@@ -11,12 +11,8 @@
     $(document).ready(function() {
         // Check for session flash messages
         @if(session('success'))
-        executeExample('success');
-        @elseif(session('error'))
-        executeExample('error');
-        @if (session('success'))
             executeExample('success');
-        @elseif (session('error'))
+        @elseif(session('error'))
             executeExample('error');
         @endif
     });
@@ -26,15 +22,13 @@
             Swal.fire({
                 icon: 'success',
                 title: translations.successTitle, // Use your translation
-                text: '{{ session('
-                                success ') }}', // Flash message from session
+                text: '{{ session('success') }}', // Flash message from session
             });
         } else if (type === 'error') {
             Swal.fire({
                 icon: 'error',
                 title: translations.errorTitle, // Use your translation
-                text: '{{ session('
-                                error ') }}', // Flash message from session
+                text: '{{ session('error') }}', // Flash message from session
             });
         }
     }
@@ -42,7 +36,7 @@
 
 <!-- Truyền biến session cho JS -->
 <script>
-    window.hasImageTemp = @json(session()-> has('image_temp'));
+    window.hasImageTemp = @json(session()->has('image_temp'));
 </script>
 
 <!-- Bootstrap v5 JS (after jQuery) -->
@@ -68,13 +62,10 @@
 
 <script>
     var csrfToken = '{{ csrf_token() }}';
-</script>
-
-<script>
     var updateStatusUrl = '{{ route('admin.review.updateStatus') }}';
 </script>
-<script src="{{ asset('backend/assets/custom/js/ajax/set-status-review.js') }}"></script>
 
+<script src="{{ asset('backend/assets/custom/js/ajax/set-status-review.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/ajax/set-notification.js') }}"></script>
 
 @stack('script')
