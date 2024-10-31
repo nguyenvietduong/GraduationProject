@@ -24,6 +24,8 @@
 <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
+<link href="{{ asset('backend/assets/libs/uppy/uppy.min.css') }}" rel="stylesheet" type="text/css" />
+
 <!-- Sweet Alert -->
 <link href="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('backend/assets/libs/animate.css/animate.min.css') }}" rel="stylesheet" type="text/css">

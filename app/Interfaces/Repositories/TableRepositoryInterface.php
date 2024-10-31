@@ -47,4 +47,6 @@ interface TableRepositoryInterface extends RepositoryInterface
      * @return bool
      */
     public function deleteTable(int $id): bool;
+
+    public function checkAvailableTables($reservation_time, array $params);
 }
