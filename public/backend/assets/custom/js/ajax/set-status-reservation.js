@@ -104,33 +104,28 @@ $(document).ready(function () {
         });
     }
 
-    // Function to handle the modal shown event
-    $('#exampleModal').on('shown.bs.modal', function (event) { // Pass 'event' as a parameter
-        var button = $(event.relatedTarget); // Button that triggered the modal
+    $('#exampleModal').on('shown.bs.modal', function (event) {
+        var button = $(event.relatedTarget); 
 
-        if (button.length) { // Check if the button exists
-            var reservationId = button.data('reservation-id'); // Extract info from data-* attributes
-            var guestsReservation = button.data('guestsreservation'); // Extract guests number
+        if (button.length) { 
+            var reservationId = button.data('reservation-id'); 
+            var guestsReservation = button.data('guestsreservation'); 
 
-            // Update modal fields with the data from the button
             $('#reservationId').val(reservationId);
             $('#guestsReservation').val(guestsReservation);
 
             if ($.isNumeric(guestsReservation) && guestsReservation > 0) {
                 fetchAvailableTables(guestsReservation);
             } else {
-                fetchAvailableTables(); // Fetch all tables if no valid input
+                fetchAvailableTables(); 
             }
         } else {
-            // Default logic if no button data is available
-
-            // Get initial number of guests value when page loads
             var initialGuests = $('#guestsReservation').val();
 
             if ($.isNumeric(initialGuests) && initialGuests > 0) {
                 fetchAvailableTables(initialGuests);
             } else {
-                fetchAvailableTables(); // Fetch all tables if no valid input
+                fetchAvailableTables();
             }
         }
 
