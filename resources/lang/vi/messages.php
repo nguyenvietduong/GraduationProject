@@ -180,6 +180,7 @@ return [
         "filters" => [
             "start_price" => "Giá từ",
             "end_price" => "Giá đến"
+
         ],
         'status' => [
             'active' => 'Hoạt động',
@@ -631,3 +632,4 @@ return [
     'deleted' => 'Xóa thành công!',
     'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
 ];
+
