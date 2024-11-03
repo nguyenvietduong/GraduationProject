@@ -26,8 +26,5 @@ class Promotion extends Model
     protected $casts = [
         'title' => 'array', // hoặc 'json'
         'description' => 'array',
-        'discount' => 'array',
-        'min_order_value' => 'array',
-        'max_discount' => 'array',
     ];
 }
