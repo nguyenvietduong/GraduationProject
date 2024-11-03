@@ -116,4 +116,11 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
     {
         return $this->delete($id);
     }
+
+    public function getConfirmedReservationsByDate($date)
+    {
+        return Reservation::whereDate('reservation_time', '=', $date)
+            ->where('status', '=', 'confirmed')
+            ->get();
+    }
 }

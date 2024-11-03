@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $categories = Category::with('menus')->get();
+
+
+        return view('frontend.index', compact('categories'));
     }
 
     public function reservation()
@@ -33,7 +37,10 @@ class HomeController extends Controller
 
     public function menu()
     {
-        return view('frontend.menu');
+        $categories = Category::with('menus')->get();
+
+        return view('frontend.menu', compact('categories'));
+
     }
 
     public function team()

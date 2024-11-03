@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Table;
 use App\Interfaces\Services\TableServiceInterface;
 use App\Interfaces\Repositories\TableRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
@@ -48,15 +47,11 @@ class TableController extends Controller
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
         $tables = $this->tableRepository->getAllTables($filters, $perPage, self::OBJECT);
         $tableTotalRecords = $this->tableRepository->count();
-
         return view(self::PATH_VIEW . 'index', [
             'tables' => $tables,
             'tableTotalRecords' => $tableTotalRecords,
             'object' => self::OBJECT,
         ]);
-
-
-
     }
 
     /**
@@ -80,24 +75,14 @@ class TableController extends Controller
     public function store(TablesStoreRequest $request)
     {
         $data = $request->validated();
-
-        // Kiểm tra và mã hóa lại `name` với cả hai ngôn ngữ
-        $data['name'] = json_encode([
-            'en' => $data['name']['en'] ?? 'Default Name',
-            'vi' => $data['name']['vi'] ?? 'Tên mặc định'
-        ], JSON_OBJECT_AS_ARRAY);
-
-
-        // Kiểm tra và mã hóa lại `description` với cả hai ngôn ngữ
-        $data['description'] = json_encode([
-            'en' => $data['description']['en'] ?? 'No Description',
-            'vi' => $data['description']['vi'] ?? 'Không có mô tả'
-        ], JSON_OBJECT_AS_ARRAY);
-
-        // Lưu dữ liệu vào database
-        $this->tableRepository->createTable($data);
-
-        return redirect()->route('admin.table.index')->with('success', __('messages.table.store.success'));
+        // dd($data);
+        try {
+            // Create a new table
+            $this->tableRepository->createTable($data);
+            return redirect()->back()->with('success', 'Table created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
 
@@ -134,21 +119,8 @@ class TableController extends Controller
         // Validate the data from the request using CategoryUpdateRequest
         $data = $request->validated();
         try {
-
-            // Kiểm tra và mã hóa lại `name` với cả hai ngôn ngữ
-            $data['name'] = json_encode([
-                'en' => $data['name']['en'] ?? 'Default Name',
-                'vi' => $data['name']['vi'] ?? 'Tên mặc định'
-            ], JSON_OBJECT_AS_ARRAY);
-
-            // Kiểm tra và mã hóa lại `description` với cả hai ngôn ngữ
-            $data['description'] = json_encode([
-                'en' => $data['description']['en'] ?? 'No Description',
-                'vi' => $data['description']['vi'] ?? 'Không có mô tả'
-            ], JSON_OBJECT_AS_ARRAY);
             // Update the table
             $this->tableService->updateTable($id, $data);
-
             return redirect()->route('admin.table.index')->with('success', 'Table updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -172,8 +144,11 @@ class TableController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-
-
-
-
+    public function tablePosition(){
+        $tables = $this->tableRepository->getAllTablesByPosition();
+        return view(self::PATH_VIEW . 'position', [
+            'tables' => $tables,
+            'object' => self::OBJECT,
+        ]);
+    }
 }

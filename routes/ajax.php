@@ -4,7 +4,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\Promotion\AjaxPromotion;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request; // Import lớp Request
+use Illuminate\Http\Request;
 use App\Http\Controllers\Ajax\LanguageController;
 use App\Http\Controllers\Ajax\BlogController;
 use App\Http\Controllers\Ajax\ThemeController;
@@ -15,10 +15,16 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
-use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+
+use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
+use App\Http\Controllers\Backend\Ajax\UpdatePositionTable;
+
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
-use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
+
+use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
+
 use App\Http\Controllers\Backend\RestaurantController;
 
 // Set System Ajax
@@ -39,6 +45,7 @@ Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus']
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
+Route::post('admin/table/updatePositions', [UpdatePositionTable::class, 'updatePositions'])->name('admin.table.updatePositions');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 
 Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
@@ -55,6 +62,7 @@ Route::post('/notifications/{notification}/read', [NotificationController::class
 Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
 
 Route::post('/check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
+Route::get('/checkTable', [BackendReservationController::class, 'checkTableFullyBookedTimes'])->name('checkTableFullyBookedTimes');
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {
