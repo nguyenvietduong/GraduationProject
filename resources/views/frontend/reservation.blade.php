@@ -147,7 +147,7 @@
                             <label class="">{{ __('messages.reservation.fields.time') }}</label>
                             <select name="input-time" id="input-time" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
                                 <option value="">{{ __('messages.reservation.fields.time') }}</option>
-                                @for ($i = 6; $i < 24; $i +=0.5)
+                                @for ($i = 8; $i < 24; $i +=0.5)
                                     @php
                                     $displayHour=floor($i);
                                     $displayMinute=($i - $displayHour) * 60;
@@ -157,14 +157,15 @@
                                     // Use the same value as the formatted time
                                     $timeValue=sprintf('%02d:%02d', $displayHour, $displayMinute);
                                     @endphp
-                                    <option value="{{ $timeValue }}">{{ $formattedTime }}</option>
+                                    <option value="{{ $timeValue }}">{{ $formattedTime }}
+                                    <p>(Het ban)</p>
+                                    </option>
                                     @endfor
                             </select>
                             @error('input-time')
                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-
                     </div><!--end grid-->
 
                     <div class="grid grid-cols-1 mt-4">
@@ -283,46 +284,51 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const select = document.getElementById('dateSelect');
+        const selectDate = document.getElementById('dateSelect');
         const today = new Date();
 
         // Function to format date to YYYY-MM-DD
         const formatDate = (date) => date.toISOString().split('T')[0];
 
-        // Add today and the next two days as options
-        for (let i = 0; i < 3; i++) {
+        // Add today and the next six days as options
+        for (let i = 0; i < 7; i++) {
             const optionDate = new Date(today);
             optionDate.setDate(today.getDate() + i); // Increment the date
             const option = document.createElement('option');
             option.value = formatDate(optionDate);
             option.textContent = formatDate(optionDate); // Display in the dropdown
-            select.appendChild(option);
+            selectDate.appendChild(option);
         }
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $('#input-time').change(function() {
-            let selectedTime = $(this).val();
-            let selectedDate = $('#reservation-date').val();
 
-            if (selectedDate && selectedTime) {
+        // Listen for changes in the date selection
+        selectDate.addEventListener('change', function() {
+            const selectedDate = this.value; // Get the selected date
+
+            // Call AJAX to check availability
+            if (selectedDate) {
                 $.ajax({
-                    url: '/check-availability', // Update this to your route
-                    method: 'POST',
+                    url: '/checkTable', // Route to check availability
+                    method: 'GET', // Change this to POST if needed
                     data: {
-                        date: selectedDate,
-                        time: selectedTime,
-                        _token: '{{ csrf_token() }}' // CSRF token for protection
+                        date: selectedDate, // Send the selected date
+                        _token: csrfToken // CSRF token for protection
                     },
                     success: function(response) {
-                        if (response.available) {
-                            // Time is available
-                            alert('Time is available!');
+                        if (response.success) {
+                            // Check availability based on server response
+                            const availability = response.availability;
+                            const timeSlotKey = selectedTime; // Use the selected time as the key
+
+                            if (availability[timeSlotKey]) {
+                                // Time is available
+                                alert('Time is available!');
+                            } else {
+                                // Time is not available
+                                alert('Selected time is already booked.');
+                                $('#input-time').val(''); // Reset the selection if not available
+                            }
                         } else {
-                            // Time is not available
-                            alert('Selected time is already booked.');
-                            $('#input-time').val(''); // Reset the selection if not available
+                            alert('Could not check availability. Please try again.');
                         }
                     },
                     error: function() {

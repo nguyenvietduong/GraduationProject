@@ -16,6 +16,7 @@ composer dump-autoload
 npm install
 npm run dev
 php artisan queue:work
+php artisan schedule:work
 
 php artisan datatables:make + Tên Bảng (Setup datatable) (Không cần tạo ngay vì sau này chia case thì mới dùng)
 Tên database : graduation_project

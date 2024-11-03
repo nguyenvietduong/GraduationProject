@@ -25,7 +25,7 @@ return new class extends Migration {
 
             // Adding indexes for optimization
             $table->unique(['table_id', 'reservation_time'], 'unique_user_table_reservation');
-            $table->index(['user_id', 'table_id']);
+            // $table->index(['user_id', 'table_id']);
             $table->index('reservation_time');
             $table->index('status');
         });

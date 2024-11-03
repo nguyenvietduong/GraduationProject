@@ -37,3 +37,7 @@
         });
     </script>
 @endif
+
+<script>
+    var csrfToken = '{{ csrf_token() }}';
+</script>
