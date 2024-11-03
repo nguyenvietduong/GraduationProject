@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Table;
 use App\Interfaces\Services\TableServiceInterface;
 use App\Interfaces\Repositories\TableRepositoryInterface;
 use App\Traits\HandleExceptionTrait;
@@ -54,9 +53,6 @@ class TableController extends Controller
             'tableTotalRecords' => $tableTotalRecords,
             'object' => self::OBJECT,
         ]);
-
-
-
     }
 
     /**
@@ -172,8 +168,4 @@ class TableController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-
-
-
-
 }
