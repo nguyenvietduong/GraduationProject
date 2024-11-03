@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $services = [
+            //BACKEND
             'App\Interfaces\Services\ImageServiceInterface' => 'App\Services\ImageService',
             'App\Interfaces\Services\TempImageServiceInterface' => 'App\Services\TempImageService',
             'App\Services\BaseService',
@@ -34,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\ReviewServiceInterface' => 'App\Services\ReviewService',
             'App\Interfaces\Services\RestaurantServiceInterface' => 'App\Services\RestaurantService',
             'App\Interfaces\Services\MenuServiceInterface' => 'App\Services\MenuService',
+
+            // FRONTEND
+            'App\Interfaces\Services\ReservationServiceInterface' => 'App\Services\ReservationService',
             'App\Interfaces\Services\PromotionServiceInterface' => 'App\Services\PromotionService',
         ];
 
