@@ -22,6 +22,21 @@
     </div>
 </div>
 
+<div class="col-12 col-md-auto mb-2">
+    <!-- Keep this column for status dropdown -->
+    @php
+    $status = request('is_active') ?: old('is_active');
+    $statuses = __('messages.promotion.status');
+    @endphp
+    <select name="is_active" class="form-select status filter">
+        @foreach ($statuses as $key => $option)
+        <option value="{{ $key }}" {{ $status==$key ? 'selected' : '' }}>
+            {{ $option }}
+        </option>
+        @endforeach
+    </select>
+</div>
+
 <div class="col-12 col-md mb-2">
     <input type="text" class="form-control" id="search" placeholder="Search..." name="keyword"
         value="{{ request('keyword') ?: old('keyword') }}">
