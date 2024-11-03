@@ -41,7 +41,9 @@ class PromotionRepositoryEloquent extends BaseRepository implements PromotionRep
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('code', 'like', '%' . $filters['search'] . '%');
+                $q->where('code', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('title', 'like', '%' . $filters['search'] . '%')
+                    ;
             });
         }
 
@@ -51,6 +53,10 @@ class PromotionRepositoryEloquent extends BaseRepository implements PromotionRep
 
         if (!empty($filters['end_date'])) {
             $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+
+        if (!empty($filters['is_active'])) {
+            $query->where('is_active', $filters['is_active']);
         }
 
         // Sort by creation date (latest first)
