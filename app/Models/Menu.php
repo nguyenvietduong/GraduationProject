@@ -23,7 +23,6 @@ class Menu extends Model
     protected $casts = [
         "name" => "array", 
         "description" => "array", 
-        "price" => "array" 
     ];
 
     public function category(){
