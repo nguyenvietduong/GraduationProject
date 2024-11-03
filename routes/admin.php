@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\ReservationController;
 use App\Http\Controllers\Backend\RestaurantController;
 use App\Http\Controllers\Backend\ReviewController;
 
@@ -117,6 +118,15 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{id}/destroy', [CategoryController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.category.destroy');
         });
 
+        Route::prefix('menu')->group(function () {
+            Route::get('index', [MenuController::class, 'index'])->name('admin.menu.index');
+            Route::get('create', [MenuController::class, 'create'])->name('admin.menu.create');
+            Route::post('store', [MenuController::class, 'store'])->name('admin.menu.store');
+            Route::get('{id}/edit', [MenuController::class, 'edit'])->where('id', '[0-9]+')->name('admin.menu.edit');
+            Route::put('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update');
+            Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
+        });
+
         Route::prefix('table')->group(function () {
             Route::get('index', [TableController::class, 'index'])->name('admin.table.index');
             Route::get('create', [TableController::class, 'create'])->name('admin.table.create');
@@ -126,13 +136,13 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{id}/destroy', [TableController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.table.destroy');
         });
 
-        Route::prefix('menu')->group(function () {
-            Route::get('index', [MenuController::class, 'index'])->name('admin.menu.index');
-            Route::get('create', [MenuController::class, 'create'])->name('admin.menu.create');
-            Route::post('store', [MenuController::class, 'store'])->name('admin.menu.store');
-            Route::get('{id}/edit', [MenuController::class, 'edit'])->where('id', '[0-9]+')->name('admin.menu.edit');
-            Route::put('{id}/update', [MenuController::class, 'update'])->where('id', '[0-9]+')->name('admin.menu.update');
-            Route::delete('{id}/destroy', [MenuController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.menu.destroy');
+        Route::prefix('reservation')->group(function () {
+            Route::get('index', [ReservationController::class, 'index'])->name('admin.reservation.index');
+            Route::get('create', [ReservationController::class, 'create'])->name('admin.reservation.create');
+            Route::post('store', [ReservationController::class, 'store'])->name('admin.reservation.store');
+            Route::get('{id}/edit', [ReservationController::class, 'edit'])->where('id', '[0-9]+')->name('admin.reservation.edit');
+            Route::put('{id}/update', [ReservationController::class, 'update'])->where('id', '[0-9]+')->name('admin.reservation.update');
+            Route::delete('{id}/destroy', [ReservationController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.reservation.destroy');
         });
 
         Route::prefix('chat')->group(function () {
@@ -143,8 +153,8 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('index', [NotificationController::class, 'index'])->name('admin.notification.index');
         });
 
-        Route::prefix('restaurant')->group(function(){
-            Route::get('index', [RestaurantController::class, 'index' ])->name('admin.restaurant');
+        Route::prefix('restaurant')->group(function () {
+            Route::get('index', [RestaurantController::class, 'index'])->name('admin.restaurant');
         });
     });
 });

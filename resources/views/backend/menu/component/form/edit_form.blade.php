@@ -21,21 +21,11 @@
                 @enderror
             </div>
 
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="price_vi" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }}</label>
-                <input type="text" class="form-control @error('price.vi') is-invalid @enderror" id="price_vi"
-                    name="price[vi]" value="{{ old('price.vi',$menuData->price['vi']?? "") }}" currency="VND" placeholder=""
-                    onkeyup="convertPrice('price_vi', 'price_en')">
-                @error('price.vi')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="price_en" class="form-label">{{ __('messages.' . $object . '.fields.price_en') }}</label>
-                <input type="text" class="form-control @error('price.en') is-invalid @enderror" id="price_en"
-                    name="price[en]" value="{{ old('price.en',$menuData->price['en']?? "") }}" currency="USD" placeholder=""
-                    onkeyup="convertPrice('price_en', 'price_vi')">
-                @error('price.en')
+            <div class="col-lg-12 col-12 col-sm-12 mb-2 ">
+                <label for="price" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }}</label>
+                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
+                    name="price" value="{{ old('price',$menuData->price?? "") }}" currency="VND" placeholder="">
+                @error('price')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -130,11 +120,3 @@
             <button type="button" class="btn btn-danger">{{ __('messages.system.button.cancel') }}</button></a>
     </div>
 </form>
-<script>
-    function convertPrice(idElement1, idElement2) {
-        const inputCurrent = document.getElementById(idElement1);
-        const inputTransfer = document.getElementById(idElement2);
-        inputCurrent.getAttribute('currency') == "VND" ? inputTransfer.value = inputCurrent.value /
-        @json(USD) : inputTransfer.value = inputCurrent.value * @json(USD);
-    }
-</script>

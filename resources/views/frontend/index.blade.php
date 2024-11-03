@@ -121,13 +121,12 @@
                     </div>
 
                     <div class="content mt-7">
-                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Food Meets Style</a>
-                        <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and
-                            benefit</p>
+                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Đáp ứng phong cách ẩm thực</a>
+                        <p class="text-slate-400 mt-3">Đáp ứng phong cách ẩm thực của mọi người</p>
 
-                        <div class="mt-5">
+                        {{-- <div class="mt-5">
                             <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -138,13 +137,12 @@
                     </div>
 
                     <div class="content mt-7">
-                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Quality Check</a>
-                        <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and
-                            benefit</p>
+                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Chất lượng nhà hàng</a>
+                        <p class="text-slate-400 mt-3"> Chất lượng nhà hàng đặt lên hàng đầu </p>
 
-                        <div class="mt-5">
+                        {{-- <div class="mt-5">
                             <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -155,13 +153,12 @@
                     </div>
 
                     <div class="content mt-7">
-                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Home Delivery</a>
-                        <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and
-                            benefit</p>
+                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Giao hàng tận nhà</a>
+                        <p class="text-slate-400 mt-3">Giao hàng tận nơi, đến tận tay người dùng</p>
 
-                        <div class="mt-5">
+                        {{-- <div class="mt-5">
                             <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
