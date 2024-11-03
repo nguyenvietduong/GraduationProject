@@ -93,22 +93,8 @@
     {
       "id": "1",
       "reservation_id": "1",
-      "totalAmount": 225000,
+      "totalAmount": 165000,
       "invoice_item": [
-        {
-          "id": 3,
-          "name": "Xôi mặn",
-          "quantity": 1,
-          "price": 25000,
-          "total": 25000
-        },
-        {
-          "id": 4,
-          "name": "Cháo thịt bằm",
-          "quantity": 1,
-          "price": 35000,
-          "total": 35000
-        },
         {
           "id": 5,
           "name": "Phở gà",

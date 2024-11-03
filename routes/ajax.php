@@ -23,9 +23,6 @@ use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
-use App\Http\Controllers\Backend\ChatController;
-use App\Http\Controllers\Backend\NotificationController;
-use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
 
 use App\Http\Controllers\Backend\RestaurantController;

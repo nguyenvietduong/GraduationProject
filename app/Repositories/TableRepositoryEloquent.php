@@ -118,9 +118,9 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
     public function getAllTablesByPosition(): mixed
     {
         $query = $this->model->query();
-        $query->orderBy('position','asc');
+        $query->orderBy('position', 'asc');
         return $query->get();
-
+    }
     public function checkAvailableTables($reservationTime, $guests)
     {
         // Tính toán số lượng bàn cho phép đặt online
