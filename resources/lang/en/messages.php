@@ -179,7 +179,8 @@ return [
         'title' => 'Food',
         "filters" => [
             "start_price" => "Price to",
-            "end_price" => "Price from"
+            "end_price" => "Price from",
+            'all' => 'All'
         ],
         'fields' => [
             "name" => "Name food",
@@ -195,6 +196,7 @@ return [
             'status_inactive' => 'Inactive',
             'category_id' => 'Category',
             'image_url' => 'Food image',
+            'all' => 'Tất cả',
         ],
         'index' => [
             'route' => 'admin.menu.index',
@@ -301,6 +303,17 @@ return [
     ],
     'table' => [
         'title' => 'Table',
+        'status' => [
+            'available' => 'Available',
+            'occupied' => 'Occupied',
+            'reserved' => 'Reserved',
+            'out_of_service' => 'Inactive',
+        ],
+        'text' => [
+            'position_route' => 'Table Position',
+            'max_guests' => 'Max Guests',
+            'back_previous' => 'Back previous'
+        ],
         'fields' => [
             'id' => 'ID',
             'name' => 'Table Name',
@@ -571,7 +584,6 @@ return [
             ],
         ],
     ],
-
     'reservation' => [
         'status' => [
             'pending' => 'Pending',
@@ -625,3 +637,4 @@ return [
     'deleted' => 'Deleted successfully!',
     'confirmDelete' => 'Are you sure you want to delete this item?',
 ];
+

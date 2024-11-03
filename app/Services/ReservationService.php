@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
 use App\Interfaces\Repositories\TableRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 
@@ -133,5 +134,36 @@ class ReservationService extends BaseService implements ReservationServiceInterf
             // Handle other errors if necessary
             throw new Exception('Unable to delete reservation: ' . $e->getMessage());
         }
+    }
+
+    public function checkTableFullyBookedTimes($selectedDate)
+    {
+        // Convert selected date to Carbon for further processing
+        $now = Carbon::parse($selectedDate);
+        $totalTables = 10;
+        $threshold = $totalTables * (2 / 3);
+
+        // Get all confirmed reservations for the selected date
+        $reservations = $this->reservationRepository->getConfirmedReservationsByDate($now);
+
+        // Group reservations by time slot (hour and 30 minutes)
+        $overdueReservationsByTimeSlot = $reservations->groupBy(function ($reservation) {
+            $reservationTime = Carbon::parse($reservation->reservation_time);
+            $hour = $reservationTime->format('H');
+            $minutes = $reservationTime->minute < 30 ? '00' : '30';
+            return "$hour:$minutes";
+        });
+
+        $fullyBookedTimeSlots = [];
+
+        foreach ($overdueReservationsByTimeSlot as $timeSlot => $timeSlotReservations) {
+            $reservationCount = $timeSlotReservations->count();
+            // Add time slot to fully booked list if reservations exceed the threshold
+            if ($reservationCount >= $threshold) {
+                $fullyBookedTimeSlots[] = $timeSlot; // Only store times that are fully booked
+            }
+        }
+
+        return $fullyBookedTimeSlots;
     }
 }

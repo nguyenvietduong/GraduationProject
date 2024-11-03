@@ -180,6 +180,7 @@ return [
         "filters" => [
             "start_price" => "Giá từ",
             "end_price" => "Giá đến"
+
         ],
         'status' => [
             'active' => 'Hoạt động',
@@ -277,6 +278,17 @@ return [
     ],
     'table' => [
         'title' => 'Bàn',
+        'status' => [
+            'available' => 'Còn chỗ',
+            'occupied' => 'Đang dùng',
+            'reserved' => 'Có người đặt',
+            'out_of_service' => 'Không hoạt động',
+        ],
+        'text' => [
+            'position_route' => 'Vị trí bàn',
+            'max_guests' => 'Số khách tối đa',
+            'back_previous' => 'Trở về'
+        ],
         'fields' => [
             'id' => 'ID',
             'name' => 'Tên bàn',
@@ -631,3 +643,4 @@ return [
     'deleted' => 'Xóa thành công!',
     'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
 ];
+

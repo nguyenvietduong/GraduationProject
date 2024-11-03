@@ -45,4 +45,10 @@ interface TableServiceInterface
      * @return bool
      */
     public function deleteTable(int $id): bool;
+    /**
+     * Get all data by position.
+     *
+     * @return mixed
+     */
+    public function getAllTablesByPosition(): mixed;
 }
