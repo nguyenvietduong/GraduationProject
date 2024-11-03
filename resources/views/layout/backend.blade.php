@@ -22,7 +22,7 @@
 
     <!-- Top Bar Start -->
     @include('backend.component.top_bar')
-    <!-- Top Bar End -->
+    <!-- Top Bar End -->ư
 
     <!-- leftbar-tab-menu -->
     <div class="startbar d-print-none">
@@ -61,17 +61,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel">Message Details</h5>
+                    <h5 class="modal-title" id="messageModalLabel">Chi tiết đặt bàn</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6 id="modalTitle"></h6>
-                    <p id="modalMessage"></p>
-                    <p id="modalType"></p>
-                    <p id="modalData"></p>
-                    <p id="modalCreatedAt"></p>
+                    <p id="modalName"></p>
+                    <p id="modalPhone"></p>
+                    <p id="modalEmail"></p>
                 </div>
                 <div class="modal-footer">
+                    <a href="" type="button" class="btn btn-success">Chi tiết</a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -81,5 +80,4 @@
     @include('backend.component.Javascript')
 </body>
 <!--end body-->
-
 </html>

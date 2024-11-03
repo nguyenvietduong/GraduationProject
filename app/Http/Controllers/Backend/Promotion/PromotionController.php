@@ -30,7 +30,7 @@ class PromotionController extends Controller
 
     public function index(ListRequest $request)
     {
-        $this->authorize('modules', '' . self::OBJECT . '.index');
+        // $this->authorize('modules', '' . self::OBJECT . '.index');
         $request->validated();
         $params = $request->all();
 

@@ -47,10 +47,13 @@ interface TableRepositoryInterface extends RepositoryInterface
      * @return bool
      */
     public function deleteTable(int $id): bool;
+
     /**
      * Get all data by position.
      *
      * @return mixed
      */
     public function getAllTablesByPosition(): mixed;
+
+    public function checkAvailableTables($reservation_time, array $params);
 }

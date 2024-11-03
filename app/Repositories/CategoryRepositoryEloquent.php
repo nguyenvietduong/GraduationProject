@@ -64,7 +64,8 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
 
         // Sort by creation date (latest first)
         $query->orderByRaw("FIELD(status, 'active', 'inactive')");
-
+        // Order by created date (newest first)
+        $query->orderBy('id', 'desc');
         // Paginate results
         return $query->paginate($perPage);
     }

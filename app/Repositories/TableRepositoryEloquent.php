@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\Table;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\Repositories\TableRepositoryInterface;
+
 class TableRepositoryEloquent extends BaseRepository implements TableRepositoryInterface
 {
     /**
@@ -107,6 +109,7 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
     {
         return $this->delete($id);
     }
+
     /**
      * Get all data by position.
      *
@@ -117,5 +120,27 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
         $query = $this->model->query();
         $query->orderBy('position','asc');
         return $query->get();
+
+    public function checkAvailableTables($reservationTime, $guests)
+    {
+        // Tính toán số lượng bàn cho phép đặt online
+        $totalTables = $this->model->count();
+        $onlineReservableTablesCount = ceil($totalTables * (2 / 3));
+
+        // Calculate the time window for reservations (2 hours before and 2 hours after the desired reservation time)
+        $twoHoursBefore = \Carbon\Carbon::parse($reservationTime)->subHours(2);
+        $twoHoursAfter = \Carbon\Carbon::parse($reservationTime)->addHours(2);
+
+        // Lấy danh sách các bàn trống, sắp xếp để ưu tiên bàn có sức chứa gần nhất và giới hạn theo số lượng cho phép
+        return $this->model->where('status', 'available') // Chỉ lấy những bàn có trạng thái "available"
+            ->where('capacity', '>=', $guests)
+            ->whereDoesntHave('reservations', function ($query) use ($twoHoursBefore, $twoHoursAfter) {
+                $query->where('reservation_time', '>=', $twoHoursBefore) // Check for reservations starting after two hours before the desired time
+                    ->where('reservation_time', '<=', $twoHoursAfter) // And ending before two hours after the reservation time
+                    ->where('status', 'confirmed');
+            })
+            ->orderByRaw('capacity - ? ASC', [$guests]) // Sắp xếp theo độ chênh lệch giữa sức chứa và số khách
+            ->take($onlineReservableTablesCount)
+            ->get();
     }
 }
