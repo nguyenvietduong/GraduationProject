@@ -303,6 +303,17 @@ return [
     ],
     'table' => [
         'title' => 'Table',
+        'status' => [
+            'available' => 'Available',
+            'occupied' => 'Occupied',
+            'reserved' => 'Reserved',
+            'out_of_service' => 'Inactive',
+        ],
+        'text' => [
+            'position_route' => 'Table Position',
+            'max_guests' => 'Max Guests',
+            'back_previous' => 'Back previous'
+        ],
         'fields' => [
             'id' => 'ID',
             'name' => 'Table Name',

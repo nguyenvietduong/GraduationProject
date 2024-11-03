@@ -15,11 +15,19 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
+
+use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
+use App\Http\Controllers\Backend\Ajax\UpdatePositionTable;
+
+use App\Http\Controllers\Backend\ChatController;
+use App\Http\Controllers\Backend\NotificationController;
+
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\Category\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
+
 use App\Http\Controllers\Backend\RestaurantController;
 
 // Set System Ajax
@@ -40,6 +48,7 @@ Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus']
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
+Route::post('admin/table/updatePositions', [UpdatePositionTable::class, 'updatePositions'])->name('admin.table.updatePositions');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 
 Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
