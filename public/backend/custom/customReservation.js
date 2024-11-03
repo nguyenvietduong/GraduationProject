@@ -88,6 +88,7 @@
             success: function (response) {
                 $('#availableMenu').empty()
                 let data = response.menus
+                // console.log(data);
                 if (data && data.length > 0) {
                     PMD.renderListMenu(data)
                 } else {
@@ -118,10 +119,10 @@
     PMD.renderListMenu = (data) => {
         data.forEach(function (menu) {
             $('#availableMenu').append(`
-                <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name[language]}" data-menu-price="${menu.price[language]}">
+                <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name[language]}" data-menu-price="${menu.price}">
                     <img class="my-2" src="${menu.image}" alt="" width="60px" height="60px" style="border-radius: 50%object-fit: cover">
                     <p>${menu.name[language]}</p>
-                    <p>${language === 'vi' ? 'Giá' : 'Price'}: ${menu.price[language]}</p>
+                    <p>${language === 'vi' ? 'Giá' : 'Price'}: ${menu.price}</p>
                 </div>
             `)
         })
@@ -179,6 +180,7 @@
                     let selectedMenus = {
                         id: invoiceDetail.id,
                         reservation_id: invoiceDetail.reservation_id,
+                        totalAmount: invoiceDetail.totalAmount,
                         invoice_item: invoiceDetail.invoice_item
                     };
                     await PMD.fetchAvailableMenus()
@@ -202,6 +204,7 @@
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                         }
+                        console.log(selectedMenus);
 
                         PMD.renderSelectedMenus(selectedMenus)
 
@@ -240,20 +243,18 @@
 
                         if ($(this).hasClass('selected')) {
                             selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
-                            selectedMenus.totalAmount += menuPrice
+                            // selectedMenus.totalAmount += menuPrice
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
-                            selectedMenus.totalAmount -= menuPrice
-
+                            // selectedMenus.totalAmount -= menuPrice
                         }
-
-                        console.log(selectedMenus);
+                        console.log("Goi khi them sp");
+                        // console.log(selectedMenus.totalAmount);
 
                         PMD.renderSelectedMenus(selectedMenus)
 
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
-                    console.log('Sau khi them mang thi log');
 
                     PMD.quantityInput(selectedMenus)
 
@@ -269,9 +270,14 @@
     //End Show Modal Data
 
     PMD.totalAmount = (selectedMenus) => {
+        let tempTotal = 0
         selectedMenus.invoice_item.forEach(item => {
-
+            tempTotal += item.total
         })
+        selectedMenus.totalAmount = tempTotal
+        console.log("Da goi den totalAmount tong bang: " + selectedMenus.totalAmount);
+
+        $('.total-invoice').html(selectedMenus.totalAmount)
     }
 
 
@@ -337,6 +343,8 @@
                 menu.total = newPrice
                 console.log(newPrice)
                 $('.price-invoice-item-' + menu.id).html(menu.total)
+                PMD.totalAmount(selectedMenus)
+                // PMD.totalAmount(selectedMenus)
             }
         })
     }
@@ -362,6 +370,14 @@
                     </tr>
                 `)
             })
+
+            $('#array-menu').append(`
+            <tr>
+                <td>Tổng hóa đơn: <span class="total-invoice">0</span></td>
+            </tr>
+            `)
+            
+            PMD.totalAmount(selectedMenus)
         }
     }
 
