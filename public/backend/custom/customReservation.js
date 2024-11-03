@@ -15,13 +15,11 @@
         $(document).on('change', '.selectReservation', function (e) {
             let selectedValue = $(this).val()
             let accountId = $(this).attr('data-account-id')
-
             let data = {
                 _token: _token,
                 id: accountId,
                 status: selectedValue
             }
-
             $.ajax({
                 url: '/admin/reservation/updateStatus',
                 type: 'POST',
@@ -29,10 +27,8 @@
                 success: function (response) {
                     if (response.data.status === 'arrived') {
                         PMD.renderTdMenu()
-
                         $('#exampleModal').modal('show')
                     }
-
                     executeExample('success')
                 },
                 error: function (xhr, status, error) {
@@ -88,7 +84,6 @@
             success: function (response) {
                 $('#availableMenu').empty()
                 let data = response.menus
-                // console.log(data);
                 if (data && data.length > 0) {
                     PMD.renderListMenu(data)
                 } else {
@@ -133,13 +128,13 @@
         let reservationId = reservation.attr('data-reservation')
         let tableId = reservation.attr('data-table')
         let dataGuest = reservation.attr('data-guest')
-
         let html = `
         <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" data-bs-target="#exampleModal">
-                Order
-                </button>
-            </td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" data-bs-target="#exampleModal">
+            Order
+            </button>
+            <button class="btn btn-warning">Thanh toán</button>
+        </td>
         `
         return reservation.append(html)
     }
@@ -269,18 +264,22 @@
     }
     //End Show Modal Data
 
+
+
+    //Start Total Amount
     PMD.totalAmount = (selectedMenus) => {
         let tempTotal = 0
         selectedMenus.invoice_item.forEach(item => {
             tempTotal += item.total
         })
         selectedMenus.totalAmount = tempTotal
-        console.log("Da goi den totalAmount tong bang: " + selectedMenus.totalAmount);
-
         $('.total-invoice').html(selectedMenus.totalAmount)
     }
+    //End Total Amount
 
 
+
+    //Start Render Button Amount
     PMD.checkRenderButtonAmount = (condition = true, invoice = false) => {
         if (condition == true) {
             if (conditionTemp == 1) {
@@ -292,7 +291,12 @@
             $('.modal-footer').empty()
         }
     }
+    //End Render Button Amount
 
+
+
+
+    //Start Guest Reservation
     PMD.guestReservation = () => {
         $('#guestsReservation').on('input', function () {
             const numberOfGuests = $(this).val()
@@ -307,7 +311,12 @@
             }, 500))
         })
     }
+    //End Guest Reservation
 
+
+
+
+    //Selected Table
     PMD.selectedTable = () => {
         $('#availableTables').on('click', '.table-info', function () {
             $('.table-info').removeClass('selected')
@@ -316,9 +325,13 @@
             var tableName = $(this).data('table-name')
             return tableId, tableName
         })
-
     }
+    //End Selected Table
 
+
+
+
+    //Button Add Invoice
     PMD.checkButtonAddInvoice = (item, invoice = false) => {
         $(document).on('click', '.btnSaveInvoice', function () {
             if (invoice == true) {
@@ -330,26 +343,31 @@
             executeExample('success')
         })
     }
+    //End Button Add Invoice
 
+
+
+    //Quantity Input
     PMD.quantityInput = (selectedMenus) => {
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id')
             const newQuantity = parseInt($(this).val(), 10) || 1
-            console.log(newQuantity);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
             const newPrice = newQuantity * menu.price
             if (menu) {
                 menu.quantity = newQuantity
                 menu.total = newPrice
-                console.log(newPrice)
                 $('.price-invoice-item-' + menu.id).html(menu.total)
                 PMD.totalAmount(selectedMenus)
-                // PMD.totalAmount(selectedMenus)
             }
         })
     }
+    //End Quantity Input
 
 
+
+
+    //Start Render Selected Menu
     PMD.renderSelectedMenus = (selectedMenus) => {
         $('#array-menu').empty()
         if (selectedMenus.invoice_item.length === 0) {
@@ -376,10 +394,11 @@
                 <td>Tổng hóa đơn: <span class="total-invoice">0</span></td>
             </tr>
             `)
-            
+
             PMD.totalAmount(selectedMenus)
         }
     }
+    //End Render Selected Menu
 
 
 
