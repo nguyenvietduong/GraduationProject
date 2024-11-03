@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Restaurant;
 use App\Services\NotificationService;
 use App\Services\ReviewService;
 use Illuminate\Support\Facades\View;
@@ -9,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Html\Builder;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
+use App\Helpers\Helper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -58,6 +60,14 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $reviewService = app(ReviewService::class);
             $newReviewCount = $reviewService->countNewReviews();
+
+            $restaurantDatas = app(Restaurant::class);
+            $restaurantDatas = $restaurantDatas->first();
+
+            $description = json_decode($restaurantDatas->description, true);
+            $priceData = json_decode($restaurantDatas->price, true); // Giả sử bạn có giá trong cơ sở dữ liệu cũng được lưu dưới dạng JSON
+     
+         
     
             $notificationService = app(NotificationService::class);
             $dataNotification = $notificationService->getAllNotifications();
@@ -66,6 +76,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('newReviewCount', $newReviewCount);
             $view->with('dataNotification', $dataNotification);
             $view->with('unreadNotificationCount', $unreadNotificationCount);
+            $view->with('restaurantDatas', $restaurantDatas);
+            $view->with('description', $description);
+            $view->with('priceData', $priceData);
         });
 
         Paginator::useBootstrapFive();
