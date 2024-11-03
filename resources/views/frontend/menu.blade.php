@@ -39,8 +39,13 @@
                     <div class="mt-4 text-center">
                         <a href="#" class="text-lg h5 block hover:text-amber-500 duration-500">Black bean dip</a>
                         <span class="text-slate-400 mt-2 block">A reader will be distracted by the readable</span>
+                        
 
-                        <h5 class="text-amber-500 font-medium mt-4">$25.00</h5>
+                        <h5 class="text-amber-500 font-medium mt-4">$25.00</h5> 
+                        <div class="favorite-action text-2xl">
+                            <i class=" fa-regular fa-heart"></i>
+                            <i class=" fa-solid fa-heart"></i>
+                        </div>
                     </div>
                 </div><!--end col-->
 
