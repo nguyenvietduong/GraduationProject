@@ -111,7 +111,7 @@
                         <i class="fa fa-table menu-icon"></i>
                         <span>Table</span>
                     </a>
-                </li>
+                </li> 
 
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['reservation'], 'active', 'admin') }}"
