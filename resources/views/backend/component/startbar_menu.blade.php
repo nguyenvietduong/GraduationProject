@@ -33,7 +33,7 @@
                         href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarAccountManagement">
                         <i class="fa fa-users menu-icon"></i>
-                        <span>Account Management</span>
+                        <span>Account</span>
                     </a>
                     <div class="collapse {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'show', 'admin') }}"
                         id="sidebarAccountManagement">
@@ -85,7 +85,7 @@
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
                         <span>Food</span>
                     </a>
-                    <div class="collapse {{ set_active(['category'], 'show', 'admin') }}" id="sidebarFoodManagement">
+                    <div class="collapse {{ set_active(['category', 'menu'], 'show', 'admin') }}" id="sidebarFoodManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
@@ -102,26 +102,7 @@
                                 </a>
                             </li>
                         </ul>
-
-                        <div class="collapse {{ set_active(['menu', 'category'], 'show', 'menu') }}"
-                            id="sidebarFoodManagement">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
-                                        href="{{ route('admin.category.index') }}">
-                                        <i class="fa fa-list menu-icon"></i>
-                                        <span>Category</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ set_active(['menu'], 'active', 'admin') }}"
-                                        href="{{ route('admin.menu.index') }}">
-                                        <i class="fa fa-utensils menu-icon"></i>
-                                        <span>Menu</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    </div>
                 </li>
 
                 <li class="nav-item">

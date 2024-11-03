@@ -66,6 +66,7 @@ class MenuController extends Controller
             'end_price'     =>    $params['end_price'] ?? 0,
             'status'        =>    $params['status'] ?? '',
         ];
+
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
         return view(self::PATH_VIEW . __FUNCTION__, [
