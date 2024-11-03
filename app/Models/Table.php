@@ -50,5 +50,8 @@ class Table extends Model
         return $description[$locale] ?? 'No Description Available';
     }
 
-
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

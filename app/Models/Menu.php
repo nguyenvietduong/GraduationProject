@@ -23,10 +23,14 @@ class Menu extends Model
     protected $casts = [
         "name" => "array", 
         "description" => "array", 
-        "price" => "array" 
     ];
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'table_id','id');
     }
 }

@@ -30,7 +30,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="lg:col-span-9 md:col-span-9">
                     <div id="grid" class="md:flex flex-wrap">
                         @foreach ($categories as $category)

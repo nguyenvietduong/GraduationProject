@@ -22,6 +22,10 @@ return [
             'upload' => 'Upload Image',
             'previous' => 'Previous',
             'next' => 'Next',
+            'book_a_table' => 'Book a table',
+            'choose_table' => 'Choose table',
+            'choose_dish' => 'Choose dish',
+            'change_dish' => 'Change dish',
             'confirm' => [
                 'title' => 'Are you sure?',
                 'text' => 'You won\'t be able to revert this!',
@@ -56,7 +60,8 @@ return [
         ],
         'menu' => [
             'adminDashboard' => 'Admin Dashboard',
-            'menu' => 'Menu'
+            'menu' => 'Menu',
+            'promotion' => 'Promotion'
         ],
         'front_end' => [
             'navbar' => [
@@ -69,7 +74,6 @@ return [
                     'contact_us' => 'Reviews',
                 ],
             ],
-
             'page' => [
                 'about_us' => [
                     'contact_us' => [
@@ -85,6 +89,11 @@ return [
                             'sendMessage' => 'Send Message',
                         ]
                     ]
+                ],
+                'reservation' => [
+                    'titleHeader' => 'Reserve A Table',
+                    'title' => 'Reserve A Table',
+                    'messages' => 'We make it a priority to offer flexible services to accomodate your needs'
                 ]
             ],
         ],
@@ -108,7 +117,8 @@ return [
             ]
         ],
         'adminPage' => 'Admin Page',
-        'buttonPermission' => 'Authorize'
+        'buttonPermission' => 'Authorize',
+        'titleNotificationReservation' => 'New table order available',
     ],
 
     'welcome' => 'Welcome to our application!',
@@ -135,6 +145,77 @@ return [
         '3' => '“Success is not a destination, it’s a journey.” - Zig Ziglar',
         '4' => '“Good things come to those who wait, but only the things left by those who hustle.” - Abraham Lincoln',
         '5' => '“The only thing standing between you and your dream is the willingness to work for it.” - Joel Brown',
+    ],
+    // Fields for Restaurant 
+    'restaurant' => [
+        'title' => 'Restaurant',
+        'fields' => [
+            'name' => 'Restaurant name',
+            'name_placeholder' => 'Please fill in the restaurant name ',
+            'slug' => 'Slug',
+            'address' => 'Address',
+            'address_placeholer' => 'Please fill in your address',
+            'phone' => 'Phone',
+            'phone_placeholer' => 'Please fill in your phone',
+            'opening_hours' => 'Opening hours',
+            'opening_hours_placeholer' => 'Please fill in your opening hours',
+            'closing_time' => 'Closing time',
+            'closing_time_placeholer' => 'Please fill in your closing time',
+            'rating' => 'Rating',
+            'rating_placeholer' => 'Please fill in your rating',
+            'description' =>  'Description',
+            'desciption_placeholer' => 'Please fill in your description',
+            'google_map_link' => 'Google_map_link',
+            'google_map_link_placeholer' => 'Please fill in your google map link',
+            'image' =>  'Image',
+            'restaurant_information' => 'Restaurant information',
+        ]
+    ],
+    'menu' => [
+        'status' => [
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+        ],
+        'title' => 'Food',
+        "filters" => [
+            "start_price" => "Price to",
+            "end_price" => "Price from",
+            'all' => 'All'
+        ],
+        'fields' => [
+            "name" => "Name food",
+            'name_vi' => 'Food name (Vietnamese)',
+            'name_en' => 'Food name (English)',
+            'slug' => 'Food slug',
+            'description_vi' => 'Food description (Vietnamese)',
+            'description_en' => 'Food description (English)',
+            'price_vi' => 'Food price',
+            'price' => "Price",
+            'status' => 'Status',
+            'status_active' => 'Active',
+            'status_inactive' => 'Inactive',
+            'category_id' => 'Category',
+            'image_url' => 'Food image',
+            'all' => 'Tất cả',
+        ],
+        'index' => [
+            'route' => 'admin.menu.index',
+        ],
+        'create' => [
+            'route' => 'admin.menu.create',
+        ],
+        'store' => [
+            'route' => 'admin.menu.store',
+        ],
+        'edit' => [
+            'route' => 'admin.menu.edit',
+        ],
+        'update' => [
+            'route' => 'admin.menu.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.menu.destroy',
+        ],
     ],
     // Fields for notification
     'notification' => [
@@ -194,80 +275,6 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
-     // Fields for Restaurant
-     'restaurant' => [
-        'title' => 'Restaurant',
-        'fields' => [
-            'name' => 'Restaurant name',
-            'name_placeholder' => 'Please fill in the restaurant name ',
-            'slug' => 'Slug',
-            'address' => 'Address',
-            'address_placeholer' => 'Please fill in your address',
-            'phone' => 'Phone',
-            'phone_placeholer' => 'Please fill in your phone',
-            'opening_hours' => 'Opening_hours',
-            'opening_hours_placeholer' => 'Please fill in your opening hours',
-            'closing_time' => 'Closing_time',
-            'closing_time_placeholer' => 'Please fill in your closing time',
-            'rating' => 'Rating',
-            'rating_placeholer' => 'Please fill in your rating',
-            'description' =>  'Description',
-            'desciption_placeholer' => 'Please fill in your description',
-            'google_map_link' => 'Google_map_link',
-            'google_map_link_placeholer' => 'Please fill in your google map link',
-            'image' =>  'Image',
-            'restaurant_information' => 'Restaurant information',
-        ]
-    ],
-
-    'menu' => [
-        'status' => [
-            'active' => 'Active',
-            'inactive' => 'Inactive',
-        ],
-        'title' => 'Food',
-        "filters" => [
-            "start_price" => "Price to",
-            "end_price" => "Price from",
-            'all' => 'All'
-        ],
-        'fields' => [
-            "name" => "Name food" ,
-            'name_vi' => 'Food name (Vietnamese)',
-            'name_en' => 'Food name (English)',
-            'slug' => 'Food slug',
-            'description_vi' => 'Food description (Vietnamese)',
-            'description_en' => 'Food description (English)',
-            'price_vi' => 'Food price (Vietnamese)',
-            'price_en' => 'Food price (English)',
-            'price' => "Price",
-            'status' => 'Status',
-            'status_active' => 'Active',
-            'status_inactive' => 'Inactive',
-            'category_id' => 'Category',
-            'image_url' => 'Food image',
-            'all' => 'Tất cả',
-        ],
-        'index' => [
-            'route' => 'admin.menu.index',
-        ],
-        'create' => [
-            'route' => 'admin.menu.create',
-        ],
-        'store' => [
-            'route' => 'admin.menu.store',
-        ],
-        'edit' => [
-            'route' => 'admin.menu.edit',
-        ],
-        'update' => [
-            'route' => 'admin.menu.update',
-        ],
-        'destroy' => [
-            'route' => 'admin.menu.destroy',
-        ],
-    ],
-
     // Fields for Role
     'permission' => [
         'title' => 'Permission',
@@ -389,32 +396,6 @@ return [
             'route' => 'admin.blog.destroy',
         ],
     ],
-    // Fields for Blog
-    'blog' => [
-        'title' => 'Blog',
-        'fields' => [
-            'name' => 'Blog Name',
-            'accountsCount' => 'Blogs Count',
-        ],
-        'index' => [
-            'route' => 'admin.blog.index',
-        ],
-        'create' => [
-            'route' => 'admin.blog.create',
-        ],
-        'store' => [
-            'route' => 'admin.blog.store',
-        ],
-        'edit' => [
-            'route' => 'admin.blog.edit',
-        ],
-        'update' => [
-            'route' => 'admin.blog.update',
-        ],
-        'destroy' => [
-            'route' => 'admin.blog.destroy',
-        ],
-    ],
     // Fields for Role
     'role' => [
         'title' => 'Role',
@@ -444,6 +425,63 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.role.destroy',
+        ],
+    ],
+    'promotion' => [
+        'title' => 'Promotion',
+        'titleFormR' => 'Detailed Information',
+        'titleFormL' => 'General Information',
+        'fields' => [
+            'name' => 'Name',
+            'accountsCount' => 'Promotions Count',
+            'code' => 'Code',
+            'description' => 'Description',
+            'type' => 'Type',
+            'discount' => 'Discount',
+            'minOrder' => 'Min Value Order',
+            'maxDiscount' => 'Max Discount',
+            'startDate' => 'Start Date',
+            'endDate' => 'End Date',
+            'total' => 'Total',
+            'isActive' => 'Status'
+        ],
+        'system' => [
+            'random' => 'random',
+            'warning' => 'You can only make edits to the description, start date and end date',
+            'cardTop' => 'General information',
+            'vn' => 'Vietnamese',
+            'en' => 'English',
+            'cardBody' => 'Public information',
+            'times' => 'times',
+            'noTime' => 'There is no end date',
+            'cardBot' => 'Detailed information',
+
+        ],
+        'type' => [
+            'percentage' => '%',
+            'fixed' => 'Cash',
+        ],
+        'status' => [
+            '1' => 'Active',
+            '2' => 'Unactive'
+        ],
+        'index' => [
+            'route' => 'admin.promotion.index',
+        ],
+        'create' => [
+            'route' => 'admin.promotion.create',
+        ],
+        'store' => [
+            'route' => 'admin.promotion.store',
+        ],
+        'edit' => [
+            'route' => 'admin.promotion.edit',
+        ],
+        'update' => [
+            'route' => 'admin.promotion.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.promotion.destroy',
         ],
     ],
     // Fields for Account
@@ -535,7 +573,51 @@ return [
             ],
         ],
     ],
-
+    'reservation' => [
+        'status' => [
+            'pending' => 'Pending',
+            'confirmed' => 'Confirmed',
+            'canceled' => 'Canceled',
+            'arrived' => 'Arrived',
+            'completed' => 'Completed',
+        ],
+        'fields' => [
+            'table' => 'Table',
+            'full_name' => 'Full Name',
+            'name_placeholder' => 'Enter fullname',
+            'email' => 'Email',
+            'email_placeholder' => 'Enter email',
+            'phone' => 'Phone',
+            'date' => 'Date',
+            'time' => 'Time',
+            'reservation_time' => 'Booking time',
+            'phone_placeholder' => 'Enter phone',
+            'guests' => 'Guests',
+            'guests_placeholder' => 'Enter guests',
+            'special_request' => 'Note',
+            'special_request_placeholder' => 'Enter note',
+            'reservation_information' => 'Reservation information',
+            'dish' => 'Dish'
+        ],
+        'index' => [
+            'route' => 'admin.reservation.index',
+        ],
+        'create' => [
+            'route' => 'admin.reservation.create',
+        ],
+        'store' => [
+            'route' => 'admin.reservation.store',
+        ],
+        'edit' => [
+            'route' => 'admin.reservation.edit',
+        ],
+        'update' => [
+            'route' => 'admin.reservation.update',
+        ],
+        'destroy' => [
+            'route' => 'admin.reservation.destroy',
+        ],
+    ],
 
     'version' => '<b>Version</b> :version',
     'copyright' => '<strong>Copyright © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> All rights reserved.',

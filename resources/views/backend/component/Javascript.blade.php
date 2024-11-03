@@ -2,15 +2,17 @@
 <script>
     const translations = @json(trans('messages.system', [], app()->getLocale()));
 
+    // Detect the user's preferred language
+    const language = '{{ App::getLocale() }}';
 </script>
 
 <!-- Check session flash messages -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Check for session flash messages
-        @if(session('success'))
+        @if (session('success'))
             executeExample('success');
-        @elseif(session('error'))
+        @elseif (session('error'))
             executeExample('error');
         @endif
     });
@@ -18,17 +20,15 @@
     function executeExample(type) {
         if (type === 'success') {
             Swal.fire({
-                icon: 'success'
-                , title: translations.successTitle, // Use your translation
-                text: '{{ session('
-                success ') }}', // Flash message from session
+                icon: 'success',
+                title: translations.successTitle, // Use your translation
+                text: '{{ session('success') }}', // Flash message from session
             });
         } else if (type === 'error') {
             Swal.fire({
-                icon: 'error'
-                , title: translations.errorTitle, // Use your translation
-                text: '{{ session('
-                error ') }}', // Flash message from session
+                icon: 'error',
+                title: translations.errorTitle, // Use your translation
+                text: '{{ session('error') }}', // Flash message from session
             });
         }
     }
@@ -54,18 +54,20 @@
 <script src="{{ asset('backend/assets/custom/js/set-theme.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/set-slug.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/convertPrice.js') }}"></script>
-<script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script>
 <!-- <script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script> -->
+<script src="{{ asset('backend/custom/customTemp.js') }}"></script>
+<script src="{{ asset('backend/custom/data.js') }}"></script>
+<script src="{{ asset('backend/custom/customReservation.js') }}"></script>
 
-<script>
+<script src="{{ asset('backend/assets/libs/uppy/uppy.legacy.min.js') }}"></script>
+<script src="{{ asset('backend/assets/js/pages/file-upload.init.js') }}"></script>
+
+{{-- <script>
     var csrfToken = '{{ csrf_token() }}';
-</script>
+    var updateStatusUrl = '{{ route('admin.review.updateStatus') }}';
+</script> --}}
 
-<script>
-    var updateStatusUrl = '{{ route("admin.review.updateStatus") }}';
-</script>
 <script src="{{ asset('backend/assets/custom/js/ajax/set-status-review.js') }}"></script>
-
 <script src="{{ asset('backend/assets/custom/js/ajax/set-notification.js') }}"></script>
 
 @stack('script')
