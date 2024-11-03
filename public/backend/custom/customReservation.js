@@ -168,33 +168,14 @@
                 }
             }
 
-            function renderSelectedMenus(selectedMenus) {
-                $('#array-menu').empty()
-                if (selectedMenus.invoice_item.length === 0) {
-                    PMD.checkRenderButtonAmount(false)
-                    conditionTemp = 1
-                    $('#array-menu').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
-                } else {
-                    PMD.checkRenderButtonAmount()
-                    conditionTemp = 2
-                    selectedMenus.invoice_item.forEach(menu => {
-                        $('#array-menu').append(`
-                            <tr>
-                                <td>${menu.name}</td>
-                                <td>
-                                    <input type="number" class="quantity-input" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
-                                </td>
-                                <td>${menu.price}</td>
-                            </tr>
-                        `)
-                    })
-                }
-            }
+            // console.log(invoiceData);
 
 
             if (invoiceData && Array.isArray(invoiceData)) {
                 const invoiceDetail = invoiceData.find(item => item.reservation_id === reservationId);
+                console.log(invoiceDetail);
                 if (invoiceDetail) {
+                    console.log("Truong hop co detail");
                     let selectedMenus = {
                         id: invoiceDetail.id,
                         reservation_id: invoiceDetail.reservation_id,
@@ -202,7 +183,7 @@
                     };
                     await PMD.fetchAvailableMenus()
 
-                    renderSelectedMenus(selectedMenus)
+                    PMD.renderSelectedMenus(selectedMenus)
                     conditionTemp = 2
                     selectedMenus.invoice_item.forEach(item => {
                         $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected');
@@ -216,33 +197,38 @@
                         const menuName = $(this).data('menu-name')
 
                         if ($(this).hasClass('selected')) {
-                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice }) // Initialize quantity to 1
+                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
                             console.log(selectedMenus.invoice_item);
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                         }
 
-                        renderSelectedMenus(selectedMenus)
+                        PMD.renderSelectedMenus(selectedMenus)
 
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
 
 
-                    PMD.quantityInput()
+                    PMD.quantityInput(selectedMenus)
 
                     PMD.checkButtonAddInvoice(selectedMenus, true)
                 } else {
+                    console.log("Truong hop khong co detail");
+
                     let selectedMenus = {
                         id: reservationId,
                         reservation_id: reservationId,
+                        totalAmount: 0,
                         invoice_item: []
                     };
 
                     PMD.fetchAvailableMenus()
 
                     selectedMenus.invoice_item = []
-                    renderSelectedMenus(selectedMenus)
+                    PMD.renderSelectedMenus(selectedMenus)
                     $('#confirmSelection').hide()
+
+                    // const totalAmount = 0
 
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
                         $(this).toggleClass('selected')
@@ -250,18 +236,26 @@
                         const menuPrice = $(this).data('menu-price')
                         const menuName = $(this).data('menu-name')
 
+                        // totalAmount += menuPrice
+
                         if ($(this).hasClass('selected')) {
-                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice }) // Initialize quantity to 1
+                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
+                            selectedMenus.totalAmount += menuPrice
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
+                            selectedMenus.totalAmount -= menuPrice
+
                         }
 
-                        renderSelectedMenus(selectedMenus)
+                        console.log(selectedMenus);
+
+                        PMD.renderSelectedMenus(selectedMenus)
 
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
+                    console.log('Sau khi them mang thi log');
 
-                    PMD.quantityInput()
+                    PMD.quantityInput(selectedMenus)
 
                     PMD.checkButtonAddInvoice(selectedMenus)
                 }
@@ -274,6 +268,11 @@
     }
     //End Show Modal Data
 
+    PMD.totalAmount = (selectedMenus) => {
+        selectedMenus.invoice_item.forEach(item => {
+
+        })
+    }
 
 
     PMD.checkRenderButtonAmount = (condition = true, invoice = false) => {
@@ -316,23 +315,54 @@
 
     PMD.checkButtonAddInvoice = (item, invoice = false) => {
         $(document).on('click', '.btnSaveInvoice', function () {
-            if (invoice = true) {
+            if (invoice == true) {
                 PMD.updateInvoice(item)
             } else {
                 PMD.addInvoice(item)
             }
+            $('#exampleModal').modal('hide')
+            executeExample('success')
         })
     }
 
-    PMD.quantityInput = () => {
+    PMD.quantityInput = (selectedMenus) => {
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id')
             const newQuantity = parseInt($(this).val(), 10) || 1
+            console.log(newQuantity);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
+            const newPrice = newQuantity * menu.price
             if (menu) {
                 menu.quantity = newQuantity
+                menu.total = newPrice
+                console.log(newPrice)
+                $('.price-invoice-item-' + menu.id).html(menu.total)
             }
         })
+    }
+
+
+    PMD.renderSelectedMenus = (selectedMenus) => {
+        $('#array-menu').empty()
+        if (selectedMenus.invoice_item.length === 0) {
+            PMD.checkRenderButtonAmount(false)
+            conditionTemp = 1
+            $('#array-menu').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
+        } else {
+            PMD.checkRenderButtonAmount()
+            conditionTemp = 2
+            selectedMenus.invoice_item.forEach(menu => {
+                $('#array-menu').append(`
+                    <tr>
+                        <td>${menu.name}</td>
+                        <td>
+                            <input type="number" class="quantity-input" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
+                        </td>
+                        <td class="price-invoice-item-${menu.id}">${menu.total}</td>
+                    </tr>
+                `)
+            })
+        }
     }
 
 
