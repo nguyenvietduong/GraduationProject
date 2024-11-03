@@ -88,6 +88,13 @@
         opacity: 1;
         /* Make visible when shown */
     }
+
+    select option[disabled] {
+        color: #999;
+        /* Màu sắc nhạt cho các tùy chọn hết bàn */
+        background-color: #f0f0f0;
+        /* Màu nền nhạt cho các tùy chọn hết bàn */
+    }
 </style>
 
 <!-- Start -->
@@ -144,22 +151,17 @@
                         </div>
 
                         <div>
-                            <label class="">{{ __('messages.reservation.fields.time') }}</label>
+                            <label>{{ __('messages.reservation.fields.time') }}</label>
                             <select name="input-time" id="input-time" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
                                 <option value="">{{ __('messages.reservation.fields.time') }}</option>
                                 @for ($i = 8; $i < 24; $i +=0.5)
                                     @php
                                     $displayHour=floor($i);
                                     $displayMinute=($i - $displayHour) * 60;
-
-                                    // Format time as 24-hour
                                     $formattedTime=sprintf('%02d:%02d', $displayHour, $displayMinute);
-                                    // Use the same value as the formatted time
                                     $timeValue=sprintf('%02d:%02d', $displayHour, $displayMinute);
                                     @endphp
-                                    <option value="{{ $timeValue }}">{{ $formattedTime }}
-                                    <p>(Het ban)</p>
-                                    </option>
+                                    <option value="{{ $timeValue }}" data-available="false">{{ $formattedTime }}</option>
                                     @endfor
                             </select>
                             @error('input-time')
@@ -285,48 +287,54 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const selectDate = document.getElementById('dateSelect');
+        const inputTime = document.getElementById('input-time');
         const today = new Date();
 
-        // Function to format date to YYYY-MM-DD
         const formatDate = (date) => date.toISOString().split('T')[0];
 
-        // Add today and the next six days as options
         for (let i = 0; i < 7; i++) {
             const optionDate = new Date(today);
-            optionDate.setDate(today.getDate() + i); // Increment the date
+            optionDate.setDate(today.getDate() + i);
             const option = document.createElement('option');
             option.value = formatDate(optionDate);
-            option.textContent = formatDate(optionDate); // Display in the dropdown
+            option.textContent = formatDate(optionDate);
             selectDate.appendChild(option);
         }
 
-        // Listen for changes in the date selection
-        selectDate.addEventListener('change', function() {
-            const selectedDate = this.value; // Get the selected date
+        checkAvailability(selectDate.value);
 
-            // Call AJAX to check availability
-            if (selectedDate) {
+        selectDate.addEventListener('change', function() {
+            checkAvailability(this.value);
+        });
+
+        function checkAvailability(date) {
+            if (date) {
                 $.ajax({
-                    url: '/checkTable', // Route to check availability
-                    method: 'GET', // Change this to POST if needed
+                    url: '/checkTable',
+                    method: 'GET',
                     data: {
-                        date: selectedDate, // Send the selected date
-                        _token: csrfToken // CSRF token for protection
+                        date: date,
+                        _token: csrfToken
                     },
                     success: function(response) {
                         if (response.success) {
-                            // Check availability based on server response
-                            const availability = response.availability;
-                            const timeSlotKey = selectedTime; // Use the selected time as the key
+                            const fullyBookedTimes = response.fullyBookedTimes; // Danh sách các giờ đã hết bàn
+                            console.log(fullyBookedTimes);
 
-                            if (availability[timeSlotKey]) {
-                                // Time is available
-                                alert('Time is available!');
-                            } else {
-                                // Time is not available
-                                alert('Selected time is already booked.');
-                                $('#input-time').val(''); // Reset the selection if not available
-                            }
+                            $('#input-time option').each(function() {
+                                const timeSlot = $(this).val();
+                                console.log('Time Slot:', timeSlot);
+
+                                if (fullyBookedTimes.includes(timeSlot)) { // Kiểm tra nếu giờ nằm trong danh sách hết bàn
+                                    $(this).text(`${timeSlot} - (Hết bàn)`); // Hiển thị "(Hết bàn)"
+                                    $(this).attr('data-available', 'false');
+                                    $(this).attr('disabled', 'disabled'); // Thêm thuộc tính disabled
+                                } else {
+                                    $(this).text(timeSlot); // Nếu còn bàn, chỉ hiển thị giờ
+                                    $(this).attr('data-available', 'true');
+                                    $(this).removeAttr('disabled'); // Bỏ thuộc tính disabled
+                                }
+                            });
                         } else {
                             alert('Could not check availability. Please try again.');
                         }
@@ -335,6 +343,14 @@
                         alert('An error occurred. Please try again.');
                     }
                 });
+            }
+        }
+
+        inputTime.addEventListener('change', function() {
+            const selectedOption = inputTime.options[inputTime.selectedIndex];
+            if (selectedOption.getAttribute('data-available') === 'false') {
+                alert('Selected time is already booked.');
+                inputTime.value = ''; // Reset selection
             }
         });
     });

@@ -157,4 +157,17 @@ class ReservationController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function checkTableFullyBookedTimes(Request $request)
+    {
+        $selectedDate = $request->input('date');
+
+        $fullyBookedTimes = $this->reservationService->checkTableFullyBookedTimes($selectedDate);
+
+        // Return only the fully booked time slots as JSON
+        return response()->json([
+            'success' => true,
+            'fullyBookedTimes' => $fullyBookedTimes,
+        ]);
+    }
 }
