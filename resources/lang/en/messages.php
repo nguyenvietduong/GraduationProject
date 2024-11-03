@@ -194,7 +194,7 @@ return [
             'route' => 'admin.category.destroy',
         ],
     ],
-     // Fields for Restaurant 
+     // Fields for Restaurant
      'restaurant' => [
         'title' => 'Restaurant',
         'fields' => [
@@ -228,7 +228,8 @@ return [
         'title' => 'Food',
         "filters" => [
             "start_price" => "Price to",
-            "end_price" => "Price from"
+            "end_price" => "Price from",
+            'all' => 'All'
         ],
         'fields' => [
             "name" => "Name food" ,
@@ -245,6 +246,7 @@ return [
             'status_inactive' => 'Inactive',
             'category_id' => 'Category',
             'image_url' => 'Food image',
+            'all' => 'Tất cả',
         ],
         'index' => [
             'route' => 'admin.menu.index',
@@ -534,6 +536,7 @@ return [
         ],
     ],
 
+
     'version' => '<b>Version</b> :version',
     'copyright' => '<strong>Copyright © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> All rights reserved.',
     'created' => 'Created successfully!',
@@ -541,3 +544,4 @@ return [
     'deleted' => 'Deleted successfully!',
     'confirmDelete' => 'Are you sure you want to delete this item?',
 ];
+

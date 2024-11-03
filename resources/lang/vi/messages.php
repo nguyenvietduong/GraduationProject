@@ -142,6 +142,7 @@ return [
         "filters" => [
             "start_price" => "Giá từ",
             "end_price" => "Giá đến"
+
         ],
         'status' => [
             'active' => 'Hoạt động',
@@ -249,7 +250,7 @@ return [
             'route' => 'admin.table.destroy',
         ],
     ],
-    // Restaurant 
+    // Restaurant
     'restaurant' => [
         'title' => 'Nhà hàng',
         'fields' => [
@@ -464,5 +465,8 @@ return [
         'updated' => 'Cập nhật thành công!',
         'deleted' => 'Xóa thành công!',
         'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
-    ]
+    ],
+    'All' => 'Tất cả',
+
 ];
+
