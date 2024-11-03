@@ -61,8 +61,8 @@ return [
         'menu' => [
             'adminDashboard' => 'Bảng điều khiển quản trị',
             'menu' => 'Menu',
-            'adminDashboard' => 'Quản trị',
-            'menu' => 'Thực đơn',
+            // 'adminDashboard' => 'Quản trị',
+            // 'menu' => 'Thực đơn',
             'promotion' => 'Mã giảm giá'
         ],
         'front_end' => [
@@ -167,11 +167,11 @@ return [
             'closing_time_placeholer' => 'Vui lòng điền thời gian đóng cửa',
             'rating' => 'Đánh giá',
             'rating_placeholer' => 'Vui lòng điền đánh giá',
-            'description' =>  'Miêu tả',
+            'description' => 'Miêu tả',
             'desciption_placeholer' => 'Vui lòng điền miêu tả',
             'google_map_link' => 'Bản đồ',
             'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
-            'image' =>  'Hình ảnh',
+            'image' => 'Hình ảnh',
             'restaurant_information' => 'Thông tin nhà hàng',
         ],
     ],
@@ -431,32 +431,6 @@ return [
     ],
     // Fields for Account
 
-    // Restaurant 
-    'restaurant' => [
-        'title' => 'Nhà hàng',
-        'fields' => [
-            'name' => 'Tên nhà hàng',
-            'name_placeholder' => 'Vui lòng điền tên nhà hàng ',
-            'slug' => 'Đường dẫn',
-            'address' => 'Địa chỉ',
-            'address_placeholer' => 'Vui lòng điền địa chỉ',
-            'phone' => 'Số điện thoại',
-            'phone_placeholer' => 'Vui lòng điền số điện thoại',
-            'opening_hours' => 'Giờ mở cửa',
-            'opening_hours_placeholer' => 'Vui lòng điền thời gian mở cửa',
-            'closing_time' => 'Giờ đóng cửa',
-            'closing_time_placeholer' => 'Vui lòng điền thời gian đóng cửa',
-            'rating' => 'Đánh giá',
-            'rating_placeholer' => 'Vui lòng điền đánh giá',
-            'description' => 'Miêu tả',
-            'desciption_placeholer' => 'Vui lòng điền miêu tả',
-            'google_map_link' => 'Bản đồ',
-            'google_map_link_placeholer' => 'Vui lòng điền liên kết bản đồ',
-            'image' => 'Hình ảnh',
-            'restaurant_information' => 'Thông tin nhà hàng',
-        ],
-
-    ],
     // Fields for Role
     'role' => [
         'title' => 'Vai trò',

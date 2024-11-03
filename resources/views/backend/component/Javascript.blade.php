@@ -10,9 +10,9 @@
 <script>
     $(document).ready(function() {
         // Check for session flash messages
-        @if(session('success'))
+        @if (session('success'))
             executeExample('success');
-        @elseif(session('error'))
+        @elseif (session('error'))
             executeExample('error');
         @endif
     });
@@ -56,14 +56,16 @@
 <script src="{{ asset('backend/assets/custom/js/convertPrice.js') }}"></script>
 <!-- <script src="{{ asset('backend/assets/custom/js/set-select_all_checkbox.js') }}"></script> -->
 <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
+<script src="{{ asset('backend/custom/data.js') }}"></script>
+<script src="{{ asset('backend/custom/customReservation.js') }}"></script>
 
 <script src="{{ asset('backend/assets/libs/uppy/uppy.legacy.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/pages/file-upload.init.js') }}"></script>
 
-<script>
+{{-- <script>
     var csrfToken = '{{ csrf_token() }}';
     var updateStatusUrl = '{{ route('admin.review.updateStatus') }}';
-</script>
+</script> --}}
 
 <script src="{{ asset('backend/assets/custom/js/ajax/set-status-review.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/ajax/set-notification.js') }}"></script>

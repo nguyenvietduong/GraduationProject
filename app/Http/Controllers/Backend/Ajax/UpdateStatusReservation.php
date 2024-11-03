@@ -16,13 +16,10 @@ class UpdateStatusReservation extends Controller
     public function updateStatus(Request $request)
     {
         // Validate input
-        $request->validate([
-            'id' => 'required|exists:reservations,id',
-            'status' => 'required|string',
-        ]);
-
+        $data = $request->all();
+        // dd($data);
         // Find the reservation by ID
-        $reservation = Reservation::find($request->id);
+        $reservation = Reservation::find($data['id']);
 
         if (!$reservation) {
             return response()->json(['message' => 'User not found'], 404);
@@ -63,10 +60,6 @@ class UpdateStatusReservation extends Controller
 
         // Retrieve all active menus
         $availableMenus = Menu::where('status', 'active')->get();
-
-        foreach ($availableMenus as $menu => $item) {
-            $availableMenus[$menu]['image'] = checkFile($item->image_url);
-        }
 
         return response()->json(['menus' => $availableMenus]);
     }
