@@ -18,7 +18,7 @@
     <tbody>
         @if (isset($datas) && is_object($datas) && $datas->isNotEmpty())
             @foreach ($datas as $data)
-                <tr class="{{ $data->status == 'pending' ? 'bg-warning bg-opacity-50' : '' }} tdReservation"
+                <tr class="{{ $data->status == 'pending' ? 'bg-warning bg-opacity-50' : '' }} tdReservation-{{ $data->id }}"
                     data-reservation="{{ $data->id }}" data-table="{{ $data->table_id }}"
                     data-guest="{{ $data->guests }}">
                     <td style="width: 16px;">
@@ -72,7 +72,7 @@
                                         </option>
                                     @endif
                                 @elseif ($data->status == 'arrived')
-                                    @if ($key != 'pending' && $key != 'canceled' && $key != 'confirmed')
+                                    @if ($key != 'pending' && $key != 'canceled' && $key != 'confirmed' && $key != 'completed')
                                         <option value="{{ $key }}" @selected($status == $key)
                                             @selected($data->status == $key)>
                                             {{ $option }}
@@ -136,6 +136,6 @@
     </tbody>
 </table>
 
-<div class="pagination-container">
+<div class="pagination-container mt-2">
     {{ $datas->links() }}
 </div>

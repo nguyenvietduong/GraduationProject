@@ -37,6 +37,8 @@ Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
 
 Route::post('admin/reservation/updateStatus', [UpdateStatusReservation::class, 'updateStatus'])->name('admin.reservation.updateStatus');
+Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::class, 'updateTableStatus'])->name('admin.reservation.updateTableStatus');
+
 Route::get('/get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
 Route::get('/get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
 
