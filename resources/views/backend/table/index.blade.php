@@ -5,15 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-12">
             @include('backend.component.card-component', [
-                'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
-                'totalRecords' => $tableTotalRecords,
-                'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
-                'positionRoute' => route('admin.'.$object.'.position'),
+            'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
+            'totalRecords' => $tableTotalRecords,
+            'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
+            'positionRoute' => route('admin.'.$object.'.position'),
             ])
 
             <div class="card-body pt-0">
                 @include('backend.component.filter', [
-                    'object' => $object,
+                'object' => $object,
                 ])
             </div>
         </div>
@@ -29,30 +29,42 @@
 </div>
 @endsection
 @push('script')
-    <script type="text/javascript">
-        $('body').on('change', '.selectStatus', function (e) {
+<script>
+    $(document).ready(function() {
+        $('body').on('change', '.status', function(e) {
             e.preventDefault();
-            let id = $(this).data('id');
+            let id = $(this).data('table-id');
             let status = $(this).val();
+            console.log(status);
+
             $.ajax({
-                url: '{{ url('table/updateStatus') }}',
-                method: "GET",
+                url: '/table/updateStatus', // Use route helper for more reliable URL generation
+                method: "GET", // Change to "POST" if necessary
                 data: {
-                    'id': id,
-                    'status': status
+                    id: id,
+                    status: status,
+                    _token: '{{ csrf_token() }}' // Add CSRF token if needed
                 },
-                success: function (response) {
-                    const data = response;
-                    if (data.status) {
+                success: function(response) {
+                    if (response.status) {
                         Swal.fire({
                             icon: 'success',
-                            title: translations.successTitle, // Use your translation
-                            text: 'Cập nhật trạng thái thành công', // Flash message from session
+                            title: '{{ __('Success') }}', // Direct translation usage
+                            text: 'Cập nhật trạng thái thành công',
+                        }).then(() => {
+                            window.location.reload(); // Reloads the page correctly
                         });
                     }
-                    window.location.reload = true;
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '{{ __('Error') }}',
+                        text: 'Có lỗi xảy ra, vui lòng thử lại sau.',
+                    });
                 }
             });
         });
-    </script>
+    });
+</script>
 @endpush

@@ -137,7 +137,12 @@
 
                         <div>
                             <label class="">{{ __('messages.reservation.fields.guests') }}</label>
-                            <input type="number" min="0" autocomplete="off" id="guests" name="guests" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror" required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}" value="{{ old('guests') }}">
+                            <select id="guests" name="guests" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror">
+                                @for ($i = 1; $i <= 6; $i++)
+                                    <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                            </select>
+                            <!-- <input type="number" min="0" autocomplete="off" id="guests" name="guests" class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror" required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}" value="{{ old('guests') }}"> -->
                             @error('guests')
                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -199,6 +204,9 @@
             // Get form data
             var formData = $(this).serialize();
 
+            // Show the loading overlay
+            $('#loadingOverlay').show();
+
             $.ajax({
                 url: $(this).attr('action'), // Get URL from form action attribute
                 type: 'POST',
@@ -216,6 +224,7 @@
 
                     // Re-enable the button and reset text
                     submitButton.prop('disabled', false).val(originalButtonText); // Reset to original text
+                    $('#loadingOverlay').hide(); // Hide the loading overlay
 
                     // Clear response message after 2 seconds
                     setTimeout(function() {
@@ -273,7 +282,8 @@
 
                     // Re-enable the button and reset text
                     submitButton.prop('disabled', false).val(originalButtonText); // Reset to original text
-
+                    $('#loadingOverlay').hide(); // Hide the loading overlay
+                    
                     // Re-enable the button after a delay
                     setTimeout(function() {
                         submitButton.prop('disabled', false).val(originalButtonText); // Reset button text

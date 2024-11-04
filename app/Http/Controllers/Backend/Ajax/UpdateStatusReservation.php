@@ -42,14 +42,47 @@ class UpdateStatusReservation extends Controller
         ]);
     }
 
+    public function updateTableStatus(Request $request)
+    {
+        // dd(123123);
+        $data = $request->all();
+        $reservation = Reservation::find($data['reservation_id']);
+
+        if (!$reservation) {
+            dd("Reservation with ID {$data['reservation_id']} not found.");
+        }
+
+        $table = Table::find($data['table_id']);
+
+        if (!$table) {
+            dd("Table with ID {$data['table_id']} not found.");
+        }
+
+
+        $reservation->table_id = $request['table_id'];
+        $table->status = 'occupied';
+
+        $reservation->save();
+        $table->save();
+
+        return response()->json(['message' => 'Status updated successfully']);
+    }
+
     public function getAvailableTables(Request $request)
     {
         $guests = $request->input('guests');
 
+        // $currentTableId = Reservation::where('id', $reservationId)->value('table_id');
+
         // Lọc các bàn có trạng thái 'available' và có sức chứa >= số người yêu cầu
-        $availableTables = Table::where('status', 'available')
-            ->where('capacity', '>=', $guests) // Fixed this line
-            ->get(['id', 'name', 'capacity', 'description']);
+        // $availableTables = Table::where('status', 'available')
+        //     ->where('capacity', '>=', $guests) // Fixed this line
+        //     ->get(['id', 'name', 'capacity', 'description']);
+
+        // return response()->json(['tables' => $availableTables]);
+
+        $availableTables = Table::where('capacity', '>=', $guests) // Fixed this line
+            ->get(['id', 'name', 'capacity', 'status', 'description']);
 
         return response()->json(['tables' => $availableTables]);
     }

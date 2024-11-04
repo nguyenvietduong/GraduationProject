@@ -19,7 +19,7 @@
                                     dressing.</p>
 
                                 <div class="mt-8">
-                                    <a href="menu-one.html"
+                                    <a href="{{ route('menu') }}"
                                         class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">View
                                         Our Menu</a>
                                 </div>
@@ -42,7 +42,7 @@
                                     dressing.</p>
 
                                 <div class="mt-8">
-                                    <a href="reservation.html"
+                                    <a href="{{ route('reservation') }}"
                                         class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">Book
                                         A Table</a>
                                 </div>

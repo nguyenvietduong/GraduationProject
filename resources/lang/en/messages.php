@@ -93,7 +93,7 @@ return [
                 'reservation' => [
                     'titleHeader' => 'Reserve A Table',
                     'title' => 'Reserve A Table',
-                    'messages' => 'We make it a priority to offer flexible services to accomodate your needs'
+                    'messages' => 'Our tables accommodate up to 9 guests. For larger group reservations, please contact us for the best possible assistance!'
                 ]
             ],
         ],

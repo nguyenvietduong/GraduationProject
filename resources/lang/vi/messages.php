@@ -95,7 +95,7 @@ return [
                 'reservation' => [
                     'titleHeader' => 'Đặt bàn',
                     'title' => 'Đặt bàn',
-                    'messages' => 'Chúng tôi ưu tiên cung cấp các dịch vụ linh hoạt để đáp ứng nhu cầu của bạn'
+                    'messages' => 'Bàn tại nhà hàng chúng tôi phục vụ tối đa 9 khách. Nếu quý khách có nhu cầu đặt chỗ cho nhóm lớn hơn, vui lòng liên hệ để được hỗ trợ tốt nhất!'
                 ]
             ],
 
