@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
 use App\Interfaces\Repositories\TableRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
+use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
@@ -81,16 +82,26 @@ class ReservationService extends BaseService implements ReservationServiceInterf
 
             // Kiểm tra bàn trống cho thời gian này
             $availableTables = $this->tableRepository->checkAvailableTables($reservation_time, $data['guests']);
-
             if ($availableTables->isEmpty()) {
                 throw new Exception('No tables are available for the selected time.');
             }
 
-            // Chọn bàn trống đầu tiên và gán cho đặt chỗ
-            $data['table_id'] = $availableTables->first()->id;
-            $data['status'] = 'confirmed'; // Tự động xác nhận
-            // Tạo đặt chỗ
-            return $this->reservationRepository->createReservation($data);
+            // Duyệt qua danh sách bàn trống và kiểm tra trùng lặp
+            foreach ($availableTables as $table) {
+                // Kiểm tra nếu đã có đặt chỗ cùng bàn và thời gian này
+                $existingReservation = $this->reservationRepository->existingReservation($table->id, $data['reservation_time']);
+                // Nếu không trùng lặp, chọn bàn này
+                if (!$existingReservation) {
+                    $data['table_id'] = $table->id;
+                    $data['status'] = 'confirmed'; // Tự động xác nhận
+
+                    // Tạo đặt chỗ
+                    return $this->reservationRepository->createReservation($data);
+                }
+            }
+
+            // Nếu không tìm được bàn nào phù hợp, ném ngoại lệ
+            throw new Exception('No tables are available without conflicts for the selected time.');
         } catch (Exception $e) {
             \Log::error('Unable to create reservation: ' . $e->getMessage());
             return false;

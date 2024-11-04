@@ -66,11 +66,10 @@ class ReservationController extends Controller
     {
         // Validate the data from the request using ReservationStoreRequest
         $data = $request->validated();
-
+        
         try {
             // Create a new reservation
             $reservationNew = $this->reservationService->createReservation($data);
-
             if ($reservationNew === false) {
                 // Reservation failed, send cancellation email
                 if (isset($data['email'])) {
