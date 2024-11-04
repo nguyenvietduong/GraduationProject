@@ -119,8 +119,16 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
 
     public function getConfirmedReservationsByDate($date)
     {
-        return Reservation::whereDate('reservation_time', '=', $date)
+        return $this->model->whereDate('reservation_time', '=', $date)
             ->where('status', '=', 'confirmed')
             ->get();
+    }
+
+    // Kiểm tra nếu đã có đặt chỗ cùng bàn và thời gian này
+    public function existingReservation($IdTable, $data = [])
+    {
+        return $this->model->where('table_id', $IdTable)
+        ->where('reservation_time', $data)
+        ->first();
     }
 }

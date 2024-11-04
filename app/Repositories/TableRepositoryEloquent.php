@@ -127,17 +127,17 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
         $totalTables = $this->model->count();
         $onlineReservableTablesCount = ceil($totalTables * (2 / 3));
 
-        // Calculate the time window for reservations (2 hours before and 2 hours after the desired reservation time)
+        // Tính toán khoảng thời gian cho phép đặt (trước và sau 2 giờ so với thời gian đặt mong muốn)
         $twoHoursBefore = \Carbon\Carbon::parse($reservationTime)->subHours(2);
         $twoHoursAfter = \Carbon\Carbon::parse($reservationTime)->addHours(2);
 
-        // Lấy danh sách các bàn trống, sắp xếp để ưu tiên bàn có sức chứa gần nhất và giới hạn theo số lượng cho phép
+        // Lấy danh sách các bàn trống, sắp xếp ưu tiên bàn có sức chứa gần nhất và giới hạn theo số lượng cho phép
         return $this->model->where('status', 'available') // Chỉ lấy những bàn có trạng thái "available"
             ->where('capacity', '>=', $guests)
             ->whereDoesntHave('reservations', function ($query) use ($twoHoursBefore, $twoHoursAfter) {
-                $query->where('reservation_time', '>=', $twoHoursBefore) // Check for reservations starting after two hours before the desired time
-                    ->where('reservation_time', '<=', $twoHoursAfter) // And ending before two hours after the reservation time
-                    ->where('status', 'confirmed');
+                $query->where('reservation_time', '>=', $twoHoursBefore) // Kiểm tra các đặt chỗ bắt đầu sau hai giờ trước thời gian mong muốn
+                    ->where('reservation_time', '<=', $twoHoursAfter) // Và kết thúc trước hai giờ sau thời gian đặt mong muốn
+                    ->whereIn('status', ['confirmed', 'completed']); // Sử dụng whereIn để kiểm tra nhiều giá trị
             })
             ->orderByRaw('capacity - ? ASC', [$guests]) // Sắp xếp theo độ chênh lệch giữa sức chứa và số khách
             ->take($onlineReservableTablesCount)
