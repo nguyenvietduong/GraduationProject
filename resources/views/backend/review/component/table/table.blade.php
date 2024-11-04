@@ -15,44 +15,44 @@
     </thead>
     <tbody>
         @if (isset($reviewDatas) && is_object($reviewDatas) && $reviewDatas->isNotEmpty())
-            @foreach ($reviewDatas as $data)
-                <tr id="tr-review-id-{{ $data->id }}" class="{{ $data->status == 'pending' ? 'bg-warning bg-opacity-50' : '' }}">
-                    <td style="width: 16px;">
-                        <div class="form-check">
-                        </div>
-                    </td>
-                    <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
-                    <td class="ps-0">
-                        <img src="{{ checkFile($data->image) }}" alt width="50">
-                        <p class="d-inline-block align-middle mb-0">
-                            {{ $data->user->full_name ?? __('messages.system.no_data_available') }}
-                        </p>
-                    </td>
-                    <td>{{ $data->rating ?? __('messages.system.no_data_available') }}</td>
-                    <td>{{ $data->comment ?? __('messages.system.no_data_available') }}</td>
-                    <td>
-                        @php
-                            $status = request('status') ?: old('status');
-                            $statuses = __('messages.review.status');
-                        @endphp
+        @foreach ($reviewDatas as $data)
+        <tr id="tr-review-id-{{ $data->id }}" class="{{ $data->status == 'pending' ? 'bg-warning bg-opacity-50' : '' }}">
+            <td style="width: 16px;">
+                <div class="form-check">
+                </div>
+            </td>
+            <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
+            <td class="ps-0">
+                <img src="{{ checkFile($data->image) }}" alt width="50">
+                <p class="d-inline-block align-middle mb-0">
+                    {{ $data->user->full_name ?? __('messages.system.no_data_available') }}
+                </p>
+            </td>
+            <td>{{ $data->rating ?? __('messages.system.no_data_available') }}</td>
+            <td>{{ $data->comment ?? __('messages.system.no_data_available') }}</td>
+            <td>
+                @php
+                $status = request('status') ?: old('status');
+                $statuses = __('messages.review.status');
+                @endphp
 
-                        <select name="status" class="form-select status" data-review-id="{{ $data->id }}">
-                            @foreach ($statuses as $key => $option)
-                                <option value="{{ $key }}" @selected($status == $key) @selected($data->status == $key)>
-                                    {{ $option }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <span>{{ date('d/m/Y H:i:s', strtotime($data->created_at)) }}</span>
-                    </td>
-                </tr>
-            @endforeach
+                <select name="status" class="form-select status" data-review-id="{{ $data->id }}">
+                    @foreach ($statuses as $key => $option)
+                    <option value="{{ $key }}" @selected($status==$key) @selected($data->status == $key)>
+                        {{ $option }}
+                    </option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <span>{{ date('d/m/Y H:i:s', strtotime($data->created_at)) }}</span>
+            </td>
+        </tr>
+        @endforeach
         @else
-            <tr>
-                <td colspan="6" class="text-center">{{ __('messages.system.no_data_available') }}</td>
-            </tr>
+        <tr>
+            <td colspan="6" class="text-center">{{ __('messages.system.no_data_available') }}</td>
+        </tr>
         @endif
     </tbody>
 </table>
