@@ -1,3 +1,8 @@
-.bg_status{
+.bg_status {
     background-color: rgb(240, 240, 240);
+}
+
+.disableTable {
+    pointer-events: none;
+    opacity: 0.6;
 }
