@@ -12,7 +12,6 @@ use App\Http\Controllers\Ajax\TableController;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusBlog;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
-use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
@@ -25,7 +24,7 @@ Route::post('set-theme', [ThemeController::class, 'setTheme'])->name('set.theme'
 Route::post('profile/update/image', [ProfileController::class, 'updateProfileImage'])->name('profile.update.image');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateStatus'])->name('admin.account.updateStatus');
-Route::post('admin/account/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
+Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
