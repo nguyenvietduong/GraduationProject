@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\NotificationEvent;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
@@ -22,7 +23,8 @@ Route::get('/', function () {
 });
 
 Route::get('', [HomeController::class, 'index'])->name('home');
-Route::get('reservation', [HomeController::class, 'reservation'])->name('reservation');
+Route::get('reservation', [ReservationController::class, 'create'])->name('reservation');
+Route::post('reservation', [ReservationController::class, 'store'])->name('reservation');
 Route::get('menu', [HomeController::class, 'menu'])->name('menu');
 Route::get('team', [HomeController::class, 'team'])->name('team');
 Route::get('review', [ReviewController::class, 'index'])->name('contact');
@@ -34,7 +36,7 @@ Route::get('notification', function () {
     $dataNotification = [
         'title' => 'Hello Tân',
         'message' => 'Hay',
-        'type' => 'success', 
+        'type' => 'success',
         'data' => 'Duong2004',
         'created_at' => '24/10/2024 16:04:33',
     ];

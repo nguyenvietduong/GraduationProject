@@ -19,7 +19,7 @@
                                     dressing.</p>
 
                                 <div class="mt-8">
-                                    <a href="menu-one.html"
+                                    <a href="{{ route('menu') }}"
                                         class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">View
                                         Our Menu</a>
                                 </div>
@@ -42,7 +42,7 @@
                                     dressing.</p>
 
                                 <div class="mt-8">
-                                    <a href="reservation.html"
+                                    <a href="{{ route('reservation') }}"
                                         class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">Book
                                         A Table</a>
                                 </div>
@@ -121,13 +121,12 @@
                     </div>
 
                     <div class="content mt-7">
-                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Food Meets Style</a>
-                        <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and
-                            benefit</p>
+                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Đáp ứng phong cách ẩm thực</a>
+                        <p class="text-slate-400 mt-3">Đáp ứng phong cách ẩm thực của mọi người</p>
 
-                        <div class="mt-5">
+                        {{-- <div class="mt-5">
                             <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -138,13 +137,12 @@
                     </div>
 
                     <div class="content mt-7">
-                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Quality Check</a>
-                        <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and
-                            benefit</p>
+                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Chất lượng nhà hàng</a>
+                        <p class="text-slate-400 mt-3"> Chất lượng nhà hàng đặt lên hàng đầu </p>
 
-                        <div class="mt-5">
+                        {{-- <div class="mt-5">
                             <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -155,13 +153,12 @@
                     </div>
 
                     <div class="content mt-7">
-                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Home Delivery</a>
-                        <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and
-                            benefit</p>
+                        <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Giao hàng tận nhà</a>
+                        <p class="text-slate-400 mt-3">Giao hàng tận nơi, đến tận tay người dùng</p>
 
-                        <div class="mt-5">
+                        {{-- <div class="mt-5">
                             <a href="#" class="hover:text-amber-500">Read More <i class="mdi mdi-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -210,6 +207,7 @@
                         <div class="tiny-slide">
                             <div class="text-center">
                                 <p class="text-lg text-white/80 italic"> " I highly recommend Veganfry as the new way to
+
                                     sell your home "by owner". My home sold in 24 hours for the asking price. Best $400
                                     you could spend to sell your home. " </p>
 
@@ -325,7 +323,7 @@
                         </div>
                     </div>
                 </div>
-            </div><!--end grid-->
+            </div>
         </div>
 
         <div class="absolute bottom-0 start-0 end-0 text-center px-3">
@@ -343,13 +341,14 @@
                             <div class="filters-group">
                                 <ul class="mb-0 list-none container-filter-border-bottom filter-options">
                                     <li class="text-sm uppercase font-medium cursor-pointer relative border-b border-transparent text-slate-400 duration-500 active"
-                                        data-group="all">All</li>
-                                    <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                                        data-group="1">Breakfast</li>
-                                    <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                                        data-group="lunch">Lunch</li>
-                                    <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                                        data-group="dinner">Dinner</li>
+                                        data-group="all">{{ __('All') }}</li>
+
+                                    @foreach ($categories as $category)
+                                        <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
+                                            data-group="{{ $category->id }}">
+                                            {{ $category->name[app()->getLocale()] ?? __('Unknown Name') }}
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -357,401 +356,28 @@
                 </div>
 
                 <div class="lg:col-span-9 md:col-span-9">
-                    <div id="grid" class="md:flex">
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["1"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/1.jpg" class="" alt="">
+                    <div id="grid" class="md:flex flex-wrap">
+                        @foreach ($categories as $category)
+                            @foreach ($category->menus as $menu)
+                                <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["{{ $category->id }}"]'>
+                                    <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
+                                        <img src="{{ checkFile($menu->image_url) }}"
+                                             alt="{{ $menu->name[app()->getLocale()] ?? 'No Name' }}"><div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
 
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
+                                        <div class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
+                                            <a href="#"
+                                               class="text-lg h5 block text-white hover:text-amber-500 duration-500">{{ $menu->name[app()->getLocale()] ?? __('Food Name') }}</a>
+                                            <h5 class="text-amber-500 font-medium">{{ $menu->price }} VND</h5>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Black bean
-                                        dip</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["1"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/2.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Onion
-                                        Pizza</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/3.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Chicken
-                                        Breast</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["dinner"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/4.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Veg
-                                        Pizza</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/5.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Cordon
-                                        Bleu</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/6.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Boerewors</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/7.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Tarte
-                                        Tatin</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/8.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Green
-                                        Tea</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/9.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Special
-                                        Coffee</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["dinner"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/10.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Lemon
-                                        Tea</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/11.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Pancakes</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["lunch"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/12.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">American
-                                        Item</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/13.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Country
-                                        side pizza</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["dinner"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/14.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Chilly
-                                        garlic potato</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["tea"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/15.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Brownie
-                                        with vanilla</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["break"]'>
-                            <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                <img src="/frontend/assets/images/menu/1.jpg" class="" alt="">
-
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
-                                </div>
-
-                                <div
-                                    class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
-                                    <a href="#"
-                                        class="text-lg h5 block text-white hover:text-amber-500 duration-500">Black bean
-                                        dip</a>
-                                    <h5 class="text-amber-500 font-medium">$25.00</h5>
-                                </div>
-                            </div>
-                        </div>
+                            @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="container relative md:mt-24 mt-16">
-            <div class="grid grid-cols-1 pb-8 text-center">
-                <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Food Blogs</h3>
-
-                <p class="text-slate-400 max-w-xl mx-auto">Our buzzy food-hall style concept is inspired by
-                    international dining styles, especially in Asia.</p>
-            </div><!--end grid-->
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-6 gap-6">
-                <div
-                    class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-                    <div class="relative overflow-hidden">
-                        <img src="/frontend/assets/images/blog/1.jpg"
-                            class="group-hover:scale-110 group-hover:rotate-3 duration-500" alt="">
-
-                        <div class="absolute bottom-0 start-0 p-6">
-                            <a href="#"
-                                class="bg-amber-500 text-white text-[12px] font-semibold px-2.5 py-0.5">Salad</a>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <a href="blog-detail.html" class="text-lg hover:text-amber-500 h5">Giant Multi-Stuffed Soft
-                            Pretzel</a>
-                        <p class="text-slate-400 mt-2">Ut enim ad minim veniamquis nostrud exercitation ullamco</p>
-
-                        <div
-                            class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">
-                            <span class="flex items-center">
-                                <img src="/frontend/assets/images/client/1.jpg" class="size-7 rounded-full"
-                                    alt="">
-                                <a href="#" class="ms-2 text-slate-400 hover:text-amber-500">Calvin Carlo</a>
-                            </span>
-
-                            <span class="flex items-center text-[14px]"><i data-feather="calendar" class="h-4 w-4"></i>
-                                <span class="ms-1 text-slate-400">April 10, 2024</span></span>
-                        </div>
-                    </div>
-                </div><!--end content-->
-
-                <div
-                    class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-                    <div class="relative overflow-hidden">
-                        <img src="/frontend/assets/images/blog/2.jpg"
-                            class="group-hover:scale-110 group-hover:rotate-3 duration-500" alt="">
-
-                        <div class="absolute bottom-0 start-0 p-6">
-                            <a href="#"
-                                class="bg-amber-500 text-white text-[12px] font-semibold px-2.5 py-0.5">Breakfast</a>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <a href="blog-detail.html" class="text-lg hover:text-amber-500 h5">Romantic Breakfast for
-                            Two</a>
-                        <p class="text-slate-400 mt-2">Ut enim ad minim veniamquis nostrud exercitation ullamco</p>
-
-                        <div
-                            class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">
-                            <span class="flex items-center">
-                                <img src="/frontend/assets/images/client/1.jpg" class="size-7 rounded-full"
-                                    alt="">
-                                <a href="#" class="ms-2 text-slate-400 hover:text-amber-500">Calvin Carlo</a>
-                            </span>
-
-                            <span class="flex items-center text-[14px]"><i data-feather="calendar" class="h-4 w-4"></i>
-                                <span class="ms-1 text-slate-400">April 10, 2024</span></span>
-                        </div>
-                    </div>
-                </div><!--end content-->
-
-                <div
-                    class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
-                    <div class="relative overflow-hidden">
-                        <img src="/frontend/assets/images/blog/3.jpg"
-                            class="group-hover:scale-110 group-hover:rotate-3 duration-500" alt="">
-
-                        <div class="absolute bottom-0 start-0 p-6">
-                            <a href="#"
-                                class="bg-amber-500 text-white text-[12px] font-semibold px-2.5 py-0.5">Breads</a>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <a href="blog-detail.html" class="text-lg hover:text-amber-500 h5">Macchiato Pumpkin Soup</a>
-                        <p class="text-slate-400 mt-2">Ut enim ad minim veniamquis nostrud exercitation ullamco</p>
-
-                        <div
-                            class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">
-                            <span class="flex items-center">
-                                <img src="/frontend/assets/images/client/1.jpg" class="size-7 rounded-full"
-                                    alt="">
-                                <a href="#" class="ms-2 text-slate-400 hover:text-amber-500">Calvin Carlo</a>
-                            </span>
-
-                            <span class="flex items-center text-[14px]"><i data-feather="calendar" class="h-4 w-4"></i>
-                                <span class="ms-1 text-slate-400">April 10, 2024</span></span>
-                        </div>
-                    </div>
-                </div><!--end content-->
-            </div>
-        </div>
     </section>
-    <!-- End -->
 
     <!-- Insta Post Start -->
     <div class="container-fluid relative">

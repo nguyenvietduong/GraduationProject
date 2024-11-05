@@ -12,17 +12,25 @@ php artisan db:seed --class=RoleSeeder
 php artisan db:seed --class=UserSeeder
 php artisan db:seed --class=RestaurantSeeder
 php artisan db:seed --class=CategorySeeder
-php artisan db:seed --class=CategorySeeder
+php artisan db:seed --class=TableSeeder
+
 composer dump-autoload
 npm install
 npm run dev
 php artisan queue:work
+php artisan schedule:work
 
 php artisan datatables:make + Tên Bảng (Setup datatable) (Không cần tạo ngay vì sau này chia case thì mới dùng)
 Tên database : graduation_project
 
 Mỗi người khi colone về thì tự tạo nhánh mới của mình trên git. VD: git branch -b duongnvph33352
 Và mỗi người chỉ được quyền đẩy code lên nhánh của mình..
+
+*Nhớ pull code về trước khi push code mới
+
+*Khi pull code về nhớ chạy composer-update => Luôn luôn nhớ
+
+Câu lệnh json-server --watch db.json
 
 Lúc đặt bàn thì xin số điện thoại để còn xác nhận
 

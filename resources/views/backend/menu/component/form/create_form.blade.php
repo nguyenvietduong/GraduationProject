@@ -9,7 +9,7 @@
                 <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name_vi"
                     name="name[vi]" value="{{ old('name.vi') }}" placeholder="">
                 @error('name.vi')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
@@ -18,26 +18,16 @@
                     name="name[en]" value="{{ old('name.en') }}" placeholder=""
                     onkeyup="generateSlug('name_en', 'slug')">
                 @error('name.en')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="price_vi" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }}</label>
-                <input type="text" class="form-control @error('price.vi') is-invalid @enderror" id="price_vi"
-                    name="price[vi]" value="{{ old('price.vi') }}" currency="VND" placeholder=""
-                    onkeyup="convertPrice('price_vi', 'price_en')">
+            <div class="col-lg-12 col-12 col-sm-12 mb-2 ">
+                <label for="price" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }}</label>
+                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
+                    name="price" value="{{ old('price') }}" currency="VND" placeholder="" min="0">
                 @error('price.vi')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="price_en" class="form-label">{{ __('messages.' . $object . '.fields.price_en') }}</label>
-                <input type="text" class="form-control @error('price.en') is-invalid @enderror" id="price_en"
-                    name="price[en]" value="{{ old('price.en') }}" currency="USD" placeholder=""
-                    onkeyup="convertPrice('price_en', 'price_vi')">
-                @error('price.en')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
@@ -48,7 +38,7 @@
                     class="form-control
                  @error('description[vi]') is-invalid @enderror">{{ old('description.vi') }}</textarea>
                 @error('description[vi]')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
@@ -58,7 +48,7 @@
                     class="form-control
                  @error('description[en]') is-invalid @enderror">{{ old('description.en') }}</textarea>
                 @error('description[en]')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
@@ -67,11 +57,11 @@
                 <select name="category_id" id="category_id"
                     class="form-select form-select-lm  @error('category_id') is-invalid @enderror">
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ renderDataByLang($category->name) }}</option>
+                    <option value="{{ $category->id }}">{{ renderDataByLang($category->name) }}</option>
                     @endforeach
                 </select>
                 @error('category_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
@@ -79,17 +69,17 @@
                 <select name="status" id="status"
                     class="form-select form-select-lm  @error('status') is-invalid @enderror" id="status">
                     @php
-                        $status = request('status') ?: old('status');
-                        $statuses = __('messages.menu.status');
+                    $status = request('status') ?: old('status');
+                    $statuses = __('messages.menu.status');
                     @endphp
                     @foreach ($statuses as $key => $option)
-                        <option value="{{ $key }}">
-                            {{ $option }}
-                        </option>
+                    <option value="{{ $key }}">
+                        {{ $option }}
+                    </option>
                     @endforeach
                 </select>
                 @error('status')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-6 mb-2 mb-lg-1">
@@ -97,7 +87,7 @@
                 <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
                     name="slug" value="{{ old('slug') }}" placeholder="">
                 @error('slug')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
@@ -105,7 +95,7 @@
                 <input type="file" name="image_url" id="image_url"
                     class="form-control @error('image_url') is-invalid @enderror">
                 @error('image_url')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
@@ -121,11 +111,3 @@
                 class="btn btn-danger">{{ __('messages.system.button.cancel') }}</button></a>
     </div>
 </form>
-<script>
-    function convertPrice(idElement1, idElement2) {
-        const inputCurrent = document.getElementById(idElement1);
-        const inputTransfer = document.getElementById(idElement2);
-        inputCurrent.getAttribute('currency') == "VND" ? inputTransfer.value = inputCurrent.value /
-            @json(USD) : inputTransfer.value = inputCurrent.value * @json(USD);
-    }
-</script>

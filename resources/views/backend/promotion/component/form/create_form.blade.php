@@ -16,14 +16,14 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h4 class="card-title">{{__('messages.promotion.system.cardTop')}} </h4>
+                            <h4 class="card-title">{{ __('messages.promotion.system.cardTop') }} </h4>
                         </div><!--end col-->
                     </div> <!--end row-->
                 </div><!--end card-header-->
                 <div class="card-body pt-0">
                     <div class="row">
                         <div class="col-lg-6">
-                            <h6>{{__('messages.promotion.system.vn')}}</h6>
+                            <h6>{{ __('messages.promotion.system.vn') }}</h6>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }}</label>
@@ -39,7 +39,7 @@
                             </div><!-- end row -->
                         </div>
                         <div class="col-lg-6">
-                            <h6>{{__('messages.promotion.system.en')}}</h6>
+                            <h6>{{ __('messages.promotion.system.en') }}</h6>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }}</label>
@@ -64,7 +64,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h4 class="card-title">{{__('messages.promotion.system.cardBody')}} </h4>
+                            <h4 class="card-title">{{ __('messages.promotion.system.cardBot') }}</h4>
                         </div><!--end col-->
                     </div> <!--end row-->
                 </div><!--end card-header-->
@@ -74,12 +74,14 @@
                         <div class="col-lg-6">
                             <label class="mb-2">{{ __('messages.' . $object . '.fields.code') }}</label>
                             <div class="input-group mb-2">
-                                <input class="form-control inputCodePromotion uppercase @error('code') is-invalid @enderror"
+                                <input
+                                    class="form-control inputCodePromotion uppercase @error('code') is-invalid @enderror"
                                     type="text" name="code" value="{{ old('code') }}">
                                 @error('code')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                                <button class="btn btn-secondary randomCodePromotion" type="button" id="button-addon2">{{__('messages.promotion.system.random')}}</button>
+                                <button class="btn btn-secondary randomCodePromotion" type="button"
+                                    id="button-addon2">{{ __('messages.promotion.system.random') }}</button>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -99,11 +101,27 @@
                                 <input type="text" name="total"
                                     class="form-control @error('total') is-invalid @enderror"
                                     value="{{ old('total') }}">
-                                <span class="input-group-text" id="basic-addon2">{{__('messages.promotion.system.times')}}</span>
+                                <span class="input-group-text"
+                                    id="basic-addon2">{{ __('messages.promotion.system.times') }}</span>
                                 @error('total')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            {{-- <div class="col-lg-6"> --}}
+                            <div class="mb-2">
+                                <label class="mb-2">{{ __('messages.' . $object . '.fields.discount') }}</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" name="discount"
+                                        class="form-control inputDiscount @error('discount') is-invalid @enderror"
+                                        value="{{ old('discount') }}">
+                                    <span class="input-group-text typePromotion" id="basic-addon2">%</span>
+                                    @error('discount')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- </div> --}}
                             <div class="mb-2">
                                 <label class="mb-2">{{ __('messages.' . $object . '.fields.startDate') }}</label>
                                 <input type="datetime-local" name="start_date"
@@ -114,6 +132,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="mb-2">
                                 <label class="mb-2">{{ __('messages.' . $object . '.fields.isActive') }}</label>
@@ -123,115 +142,44 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.minOrder') }}</label>
+                                    <div class="input-group mb-2">
+                                        <input type="number" name="min_order_value"
+                                            class="form-control @error('min_order_value') is-invalid @enderror"
+                                            value="{{ old('min_order_value') }}">
+                                        <span class="input-group-text" id="basic-addon2">đ</span>
+                                        @error('min_order_value')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <label
+                                        class="mb-2">{{ __('messages.' . $object . '.fields.maxDiscount') }}</label>
+                                    <div class="input-group mb-2">
+                                        <input type="number"
+                                            class="form-control @error('max_discount') is-invalid @enderror"
+                                            name="max_discount" value="{{ old('max_discount') }}">
+                                        <span class="input-group-text" id="basic-addon2">đ</span>
+                                        @error('max_discount')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mb-2">
                                 <label class="mb-2">{{ __('messages.' . $object . '.fields.endDate') }}</label>
-                                <input type="datetime-local" class="form-control @error('end_date') is-invalid @enderror"
-                                    name="end_date" value="{{ old('end_date') }}">
+                                <input type="datetime-local"
+                                    class="form-control @error('end_date') is-invalid @enderror" name="end_date"
+                                    value="{{ old('end_date') }}">
                                 @error('end_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row promotionDetail">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h4 class="card-title">{{__('messages.promotion.system.cardBot')}}</h4>
-                        </div><!--end col-->
-                    </div> <!--end row-->
-                </div><!--end card-header-->
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h6>{{__('messages.promotion.system.vn')}}</h6>
-                            <div class="row">
-                                <div class="mb-2">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.discount') }}</label>
-                                    <div class="input-group mb-2">
-                                        <input type="number" name="discount[vn]"
-                                            class="form-control inputDiscount @error('discount.vn') is-invalid @enderror"
-                                            value="{{ old('discount.vn') }}">
-                                        <span class="input-group-text typePromotion" id="basic-addon2">%</span>
-                                        @error('discount.vn')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.minOrder') }}</label>
-                                    <div class="input-group mb-2">
-                                        <input type="number" name="min_order_value[vn]"
-                                            class="form-control @error('min_order_value.vn') is-invalid @enderror"
-                                            value="{{ old('min_order_value.vn') }}">
-                                        <span class="input-group-text" id="basic-addon2">đ</span>
-                                        @error('min_order_value.vn')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6">
-                                    <label
-                                        class="mb-2">{{ __('messages.' . $object . '.fields.maxDiscount') }}</label>
-                                    <div class="input-group mb-2">
-                                        <input type="number"
-                                            class="form-control @error('max_discount.vn') is-invalid @enderror"
-                                            name="max_discount[vn]" value="{{ old('max_discount.vn') }}">
-                                        <span class="input-group-text" id="basic-addon2">đ</span>
-                                        @error('max_discount.vn')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div><!-- end row -->
-                        </div>
-                        <div class="col-lg-6">
-                            <h6>{{__('messages.promotion.system.en')}}</h6>
-                            <div class="row">
-                                <div class="mb-2">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.discount') }}</label>
-                                    <div class="input-group mb-2">
-                                        <input type="number" name="discount[en]"
-                                            class="form-control inputDiscount @error('discount.en') is-invalid @enderror"
-                                            value="{{ old('discount.en') }}">
-                                        <span class="input-group-text typePromotion" id="basic-addon2">%</span>
-                                        @error('discount.en')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.minOrder') }}</label>
-                                    <div class="input-group mb-2">
-                                        <input type="number" name="min_order_value[en]"
-                                            class="form-control @error('min_order_value.en') is-invalid @enderror"
-                                            value="{{ old('min_order_value.en') }}">
-                                        <span class="input-group-text" id="basic-addon2">đ</span>
-                                        @error('min_order_value.en')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6">
-                                    <label
-                                        class="mb-2">{{ __('messages.' . $object . '.fields.maxDiscount') }}</label>
-                                    <div class="input-group mb-2">
-                                        <input type="number"
-                                            class="form-control @error('max_discount.en') is-invalid @enderror"
-                                            name="max_discount[en]" value="{{ old('max_discount.en') }}">
-                                        <span class="input-group-text" id="basic-addon2">đ</span>
-                                        @error('max_discount.en')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div><!-- end row -->
-                        </div>
                     </div>
                 </div>
             </div>

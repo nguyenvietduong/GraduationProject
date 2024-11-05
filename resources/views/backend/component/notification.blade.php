@@ -75,18 +75,17 @@
         const jsonStringTitle = element.getAttribute('data-title');
         const jsonStringMessage = element.getAttribute('data-message-full');
         const jsonData = JSON.parse(jsonStringMessage);
-
-        const data = jsonData.data;
-        const type = jsonData.type;
+        console.log(jsonData);
+        
         const title = jsonStringTitle;
-        const message = jsonData.message;
-        const createdAt = jsonData.created_at;
+        const name = jsonData.name;
+        const phone = jsonData.phone;
+        const email = jsonData.email;
 
-        document.getElementById('modalTitle').innerText = `Title: ${title}`;
-        document.getElementById('modalType').innerText = `Type: ${type}`;
-        document.getElementById('modalMessage').innerText = `Message: ${message}`;
-        document.getElementById('modalData').innerText = `Data: ${data}`;
-        document.getElementById('modalCreatedAt').innerText = `Created At: ${createdAt}`;
+        document.getElementById('messageModalLabel').innerText = `${title}`;
+        document.getElementById('modalName').innerText = `Name: ${name}`;
+        document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
+        document.getElementById('modalEmail').innerText = `Email: ${email}`;
 
         // AJAX request to mark the notification as read
         $.ajax({
@@ -251,7 +250,7 @@
                                 </div>
                                 <div class="flex-grow-1 ms-2 text-truncate">
                                     <h6 class="my-0 fw-normal text-dark fs-13">${notification.title}</h6>
-                                    <small class="text-muted mb-0">${messageData.data || 'No data available'}</small>
+                                    <small class="text-muted mb-0">${messageData.name || 'No data available'}</small>
                                 </div>
                             </div>
                         </a>`;
