@@ -9,6 +9,7 @@
 
 <!-- include libraries(jQuer) -->
 <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
 
 <!-- Bootstrap v5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +24,8 @@
 <link href="{{ asset('backend/assets/css/index.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+
+<link href="{{ asset('backend/assets/libs/uppy/uppy.min.css') }}" rel="stylesheet" type="text/css" />
 
 <!-- Sweet Alert -->
 <link href="{{ asset('backend/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">

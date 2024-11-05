@@ -5,22 +5,21 @@
                 <div class="py-[60px] px-0">
                     <div class="grid lg:grid-cols-3 md:grid-cols-2 justify-center gap-6">
                         <div class="text-center">
-                            <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Open Hours</h5>
-                            <p class="mb-2 text-gray-200/80">Monday - Friday: 10:00AM - 11:00PM</p>
-                            <p class="mb-0 text-gray-200/80">Saturday - Sunday: 9:00AM - 1:00PM</p>
+                            <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">{{ __('messages.restaurant.fields.opening_hours') }}</h5>
+                            <p class="mb-2 text-gray-200/80">{{ $restaurantDatas->opening_hours }} AM - {{ $restaurantDatas->closing_time }} PM</p>
+                            
                         </div>
 
                         <div class="text-center">
-                            <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Reservation</h5>
-                            <p class="mb-2"><a href="tel:+152534-468-854" class="text-gray-200/80">+152
-                                    534-468-854</a></p>
-                            <p class="mb-0"><a href="mailto:contact@example.com"
-                                    class="text-gray-200/80">contact@example.com</a></p>
+                            <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">{{ __('messages.restaurant.fields.phone') }}</h5>
+                            <p class="mb-2"><a href="tel:+152534-468-854" class="text-gray-200/80">{{ $restaurantDatas->phone }}</a></p>
+                            {{-- <p class="mb-0"><a href="mailto:contact@example.com"
+                                    class="text-gray-200/80">contact@example.com</a></p> --}}
                         </div>
 
                         <div class="text-center">
-                            <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">Address</h5>
-                            <p class="mb-0 text-gray-200/80">C/54 Northwest Freeway, <br> Suite 558, USA 485</p>
+                            <h5 class="tracking-[1px] text-gray-100 font-medium text-lg mb-4">{{ __('messages.restaurant.fields.address') }}</h5>
+                            <p class="mb-0 text-gray-200/80">{{ $restaurantDatas->address }}</p>
                         </div>
                     </div>
                     <!--end grid-->
@@ -28,10 +27,8 @@
 
                     <div class="grid grid-cols-1 mt-12">
                         <div class="text-center">
-                            <img src="/frontend/assets/images/white-icon.png" class="block mx-auto" alt="">
-                            <p class="max-w-xl mx-auto mt-6">Splash your dream color Bring your home to lively
-                                Colors. We make it a priority to offer flexible services to accomodate your needs
-                            </p>
+                            <img src="{{checkFile($restaurantDatas->image) }}" class="block mx-auto" alt="">
+                            <p class="max-w-xl mx-auto mt-6">{{ renderDataByLang($description) }}</p>
                         </div>
 
                         <ul class="list-none text-center mt-6">

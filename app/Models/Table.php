@@ -22,33 +22,8 @@ class Table extends Model
         'description' => 'array',  // Tự động giải mã JSON thành mảng
     ];
 
-    public static $STATUS = [
-        "available" => "Available",
-        "reserved" => "Reserved",
-        "occupied" => "Occupied"
-    ];
-
-    /**
-     * Lấy tên theo ngôn ngữ hiện tại
-     */
-    public function getLocalizedNameAttribute($locale)
+    public function reservations()
     {
-        $locale = $locale ?? app()->getLocale();
-        // Decode the JSON string into an associative array
-        $name = json_decode($this->name, true);
-        return $name[$locale] ?? 'No Name Available';
+        return $this->hasMany(Reservation::class);
     }
-
-    /**
-     * Lấy mô tả theo ngôn ngữ hiện tại
-     */
-    public function getLocalizedDescriptionAttribute($locale)
-    {
-        $locale = $locale ?? app()->getLocale();
-        // Decode the JSON string into an associative array
-        $description = json_decode($this->description, true);
-        return $description[$locale] ?? 'No Description Available';
-    }
-
-
 }

@@ -36,7 +36,7 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{renderDataByLang($item->price , "price")?? __('messages.system.no_data_available') }}
+                    {{ $item->price ?? __('messages.system.no_data_available') }} VND
                 </p>
             </td>
             <td class="ps-0">

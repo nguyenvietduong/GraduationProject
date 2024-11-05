@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('reservation_id')->nullable()->constrained('reservations')->onDelete('cascade');
             $table->json('total_amount');  // Tổng số tiền thanh toán hỗ trợ đa loại tiền tệ
             $table->json('payment_method');  // Phương thức thanh toán hỗ trợ đa ngôn ngữ

@@ -12,16 +12,12 @@
     <meta name="email" content="support@shreethemes.in">
     <meta name="version" content="1.0.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favicon.ico') }}">
-
     <!-- Css -->
     <!-- Main Css -->
     <link href="{{ asset('frontend/assets/css/tailwind.min.css') }}" rel="stylesheet" type="text/css">
-
     <link href="{{ asset('frontend/assets/css/tailwind.min.css" rel="stylesheet') }}" type="text/css">
-
 </head>
 
 <body class="dark:bg-slate-900">
@@ -30,7 +26,7 @@
             <div class="grid grid-cols-1">
                 <div class="flex flex-col min-h-screen justify-center md:px-10 py-10 px-4">
                     <div class="text-center">
-                        <a href="index.html">
+                        <a href="{{ route('home') }}">
                             <img src="{{ asset('frontend/assets/images/logo-dark.png') }}"
                                 class="mx-auto dark:hidden block" alt="">
                             <img src="{{ asset('frontend/assets/images/logo-light.png') }}"

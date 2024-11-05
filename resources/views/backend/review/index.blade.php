@@ -21,4 +21,11 @@
         </div>
     </div>
 </div>
+@push('script')
+<script>
+    var updateStatusReviewUrl = '{{ route('admin.review.updateStatus') }}';
+    var csrfToken = '{{ csrf_token() }}';
+</script>
+<script src="{{ asset('backend/assets/custom/js/ajax/set-status-review.js') }}"></script>
+@endpush
 @endsection
