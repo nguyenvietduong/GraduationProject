@@ -10,6 +10,7 @@
             <th class="ps-0">{{ __('messages.' . $object . '.fields.name') }}</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.capacity') }}</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.status') }}</th>
+            <th class="ps-0">{{ __('messages.' . $object . '.fields.description') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
         </tr>
@@ -51,6 +52,11 @@
                                 </option>
                             @endforeach
                         </select>
+                    </td>
+                    <td class="ps-0">
+                        <p class="d-inline-block align-middle mb-0">
+                            {{ renderDataByLang($item->description) ?? __('messages.system.no_data_available') }}
+                        </p>
                     </td>
                     <td>
                         <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available') }}</span>
