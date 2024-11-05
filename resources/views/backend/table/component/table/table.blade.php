@@ -10,7 +10,6 @@
             <th class="ps-0">{{ __('messages.' . $object . '.fields.name') }}</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.capacity') }}</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.status') }}</th>
-            <th class="ps-0">{{ __('messages.' . $object . '.fields.description') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
         </tr>
