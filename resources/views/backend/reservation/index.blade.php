@@ -177,27 +177,7 @@
                                                         <th>Giá</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="array-menu">
-                                                    <tr>
-                                                        <td>Giả cầy</td>
-                                                        <td>1</td>
-                                                        <td>200000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Giả cầy</td>
-                                                        <td>1</td>
-                                                        <td>200000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Giả cầy</td>
-                                                        <td>1</td>
-                                                        <td>200000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Giả cầy</td>
-                                                        <td>1</td>
-                                                        <td>200000</td>
-                                                    </tr>
+                                                <tbody id="list_menu_item">
                                                 </tbody>
                                             </table>
                                         </div><!--end card-body-->
@@ -215,8 +195,8 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <label for="">Tổng tiền: 80000</label> <br>
-                                    <label for="">Mã giảm giá: 8000</label> <br>
+                                    <label for="" id="total_amount">Tổng tiền: 80000</label> <br>
+                                    <label for="" id="voucher">Mã giảm giá: 8000</label> <br>
                                     <hr>
                                     <label for="">Nhập mã giảm giá</label>
                                     <div class="row">

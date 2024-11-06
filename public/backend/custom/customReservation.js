@@ -1,6 +1,7 @@
 (function ($) {
     "use strict"
     var PMD = {}
+    var TC = {}
     var invoices
     let urlData = 'http://localhost:3000/invoice'
     let conditionTemp = 1
@@ -151,10 +152,12 @@
         let dataGuest = reservation.attr('data-guest')
         let html = `
         <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
+            dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" data-bs-target="#exampleModal">
             Order
             </button>
-            <button class="btn btn-warning" data-bs-toggle="modal" dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" 
+            dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
         return reservation.append(html)
@@ -459,6 +462,56 @@
             .catch(error => console.error('Lỗi khi cập nhật:', error))
     }
     //End Json Server
+
+
+    // future payment
+
+    TC.fetchInvoiceDetail = async (url) => {
+        try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Mạng lỗi hoặc file không tồn tại.')
+            }
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Lỗi:', error)
+        }
+    }
+
+    TC.renderMenuItem = async (menuItems) => {
+        $('#list_menu_item').empty()
+        if (menuItems[0].invoice_item.length === 0) {
+            $('#list_menu_item').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
+        } else {
+            await menuItems[0].invoice_item.forEach(menu => {
+                $('#list_menu_item').append(`
+                    <tr>
+                        <td>${menu.name}</td>
+                        <td>
+                            <span>${menu.quantity}</span>
+                        </td>
+                        <td class="price-invoice-item-${menu.id}">${menu.total}</td>
+                    </tr>
+                `)
+            })
+           $("#total_amount").text(`Tổng tiền : ${menuItems[0].totalAmount} VND`)
+        }
+    }
+    //Show Modal Data
+    TC.showBsModal = () => {
+        $('#pay').on('show.bs.modal', async function (event) {
+            var button = $(event.relatedTarget)
+            let invoiceDetail;
+            let reservationId;
+            if (button.length) {
+                reservationId = button.attr('dataReservationId')
+                invoiceDetail = await TC.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
+                TC.renderMenuItem(invoiceDetail);
+            }
+        })
+    }
+    //End Show Modal Data
    
 
     $(document).ready(function () {
@@ -469,5 +522,6 @@
         PMD.showBsModal()
         PMD.guestReservation()
         PMD.selectedTable()
+        TC.showBsModal();
     })
 })(jQuery)
