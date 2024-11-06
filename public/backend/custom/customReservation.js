@@ -154,7 +154,7 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" data-bs-target="#exampleModal">
             Order
             </button>
-            <button class="btn btn-warning">Thanh toán</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
         return reservation.append(html)
@@ -459,8 +459,7 @@
             .catch(error => console.error('Lỗi khi cập nhật:', error))
     }
     //End Json Server
-
-
+   
 
     $(document).ready(function () {
         PMD.fetchData()
