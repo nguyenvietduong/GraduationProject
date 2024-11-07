@@ -195,20 +195,31 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <h5 for="" id="">Tổng tiền: <span for="" id="total_amount">80000</span></h5>
-                                    <h5 for="" id="">Mã giảm giá: <span for="" id="voucher">0</span></h5>
+                                    <h5 for="" id="">Tổng hóa đơn : <span for=""
+                                            id="total_amount"></span> VNĐ</h5>
+                                    <h5 for="" id="">Giảm giá : <span for=""
+                                            id="voucher">0</span> VNĐ</h5>
+                                    <h5 for="" id="">Tổng thanh toán : <span for=""
+                                            id="total_payment">0</span> VNĐ</h5>
                                     <hr>
                                     <label for="">Nhập mã giảm giá</label>
-                                    <div class="row">
+                                    <div class="row mt-3">
                                         <div class="col-6">
-                                            <input type="text" class="form-control" placeholder="Nhập mã giảm giá"
-                                            value="giam10phantram">
+                                            <input id="input_voucher" type="text" class="form-control "
+                                                placeholder="Nhập mã giảm giá" value="">
+                                            <span id="feedback_voucher"></span>
                                         </div>
                                         <div class="col-6">
-                                            <button class="btn btn-secondary" >Nhập mã giảm giá</button>
+                                            <button class="btn btn-secondary" id="btn_voucher">Nhập mã giảm giá</button>
                                         </div>
                                     </div>
-                                    <button class="btn btn-success py-2 px-5 mt-3">Thanh toán</button>
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3" id="btn_paid">Đã thanh
+                                        toán</button>
+
+                                    <button class="btn btn-warning py-2 px-3 mx-1 mt-3" id="exportPDF">Xuất hóa
+                                        đơn</button>
+
+
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>
@@ -222,6 +233,6 @@
     @push('script')
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
-        <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
+        <script src="{{ asset('backend/custom/customReservation.js?v=1') }}"></script>
     @endpush
 @endsection

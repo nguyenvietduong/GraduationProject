@@ -23,7 +23,6 @@
     <p>Tên khách hàng: </p>
     <p>Địa chỉ: </p>
     <p>Số điện thoại: </p>
-
     <!-- Chi tiết hóa đơn -->
     <h3>Chi tiết hóa đơn</h3>
     <table>

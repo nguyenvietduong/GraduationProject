@@ -1,62 +1,6 @@
 {
   "invoice": [
     {
-      "id": "2",
-      "reservation_id": "99",
-      "totalAmount": 264000,
-      "invoice_item": [
-        {
-          "id": 37,
-          "name": "Bánh mì trứng",
-          "quantity": 1,
-          "price": 20000,
-          "total": 20000
-        },
-        {
-          "id": 38,
-          "name": "Bánh cuốn",
-          "quantity": 1,
-          "price": 30000,
-          "total": 30000
-        },
-        {
-          "id": 39,
-          "name": "Xôi mặn",
-          "quantity": 1,
-          "price": 25000,
-          "total": 25000
-        },
-        {
-          "id": 44,
-          "name": "Miến gà",
-          "quantity": 1,
-          "price": 38000,
-          "total": 38000
-        },
-        {
-          "id": 43,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        },
-        {
-          "id": 60,
-          "name": "Cá nướng muối ớt",
-          "quantity": 1,
-          "price": 65000,
-          "total": 65000
-        },
-        {
-          "id": 55,
-          "name": "Bún chả",
-          "quantity": 1,
-          "price": 58000,
-          "total": 58000
-        }
-      ]
-    },
-    {
       "id": "1",
       "reservation_id": "1",
       "totalAmount": 274000,
@@ -193,6 +137,27 @@
           "quantity": 1,
           "price": 30000,
           "total": 30000
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "reservation_id": "3",
+      "totalAmount": 55000,
+      "invoice_item": [
+        {
+          "id": 38,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 39,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
         }
       ]
     }
