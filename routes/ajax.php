@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
 
 use App\Http\Controllers\Backend\RestaurantController;
@@ -92,3 +93,5 @@ Route::post('/remove-temp-image', function (Request $request) {
 
     return response()->json(['success' => false], 400);
 })->name('image.removeTemp');
+
+Route::get("/checkVoucher" , [AjaxPromotion::class , "getDetailVoucher"]) ;
