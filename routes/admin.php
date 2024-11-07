@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Account\UserController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChatController;
+use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
@@ -156,6 +157,9 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
 
         Route::prefix('restaurant')->group(function () {
             Route::get('index', [RestaurantController::class, 'index'])->name('admin.restaurant');
+        });
+        Route::prefix('invoice')->group(function () {
+            Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
         });
     });
 });

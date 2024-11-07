@@ -20,9 +20,9 @@
 
     <!-- Thông tin khách hàng -->
     <h3>Thông tin khách hàng</h3>
-    <p>Tên khách hàng: {{ $invoice->customer->name }}</p>
-    <p>Địa chỉ: {{ $invoice->customer->address }}</p>
-    <p>Số điện thoại: {{ $invoice->customer->phone }}</p>
+    <p>Tên khách hàng: </p>
+    <p>Địa chỉ: </p>
+    <p>Số điện thoại: </p>
 
     <!-- Chi tiết hóa đơn -->
     <h3>Chi tiết hóa đơn</h3>
@@ -37,25 +37,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($invoice->invoice_item as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>{{ number_format($item->price, 0, ',', '.') }}</td>
-                    <td>{{ number_format($item->total, 0, ',', '.') }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
-            @endforeach
         </tbody>
     </table>
 
     <!-- Tổng số tiền -->
-    <h3 style="text-align: right;">Tổng số tiền: {{ number_format($invoice->totalAmount, 0, ',', '.') }} VND</h3>
+    <h3 style="text-align: right;">Tổng số tiền:  VND</h3>
 
     <!-- Mã QR Code -->
     <div class="qr-code">
         <p>Quét mã QR để xem chi tiết hóa đơn hoặc thanh toán</p>
-        <img src="data:image/png;base64,{{ $qrCode }}" alt="QR Code">
+        <img src="data:image/png;base64," alt="QR Code">
     </div>
 
     <div class="footer">
