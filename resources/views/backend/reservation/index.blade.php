@@ -195,8 +195,8 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <label for="" id="total_amount">Tổng tiền: 80000</label> <br>
-                                    <label for="" id="voucher">Mã giảm giá: 8000</label> <br>
+                                    <h5 for="" id="">Tổng tiền: <span for="" id="total_amount">80000</span></h5>
+                                    <h5 for="" id="">Mã giảm giá: <span for="" id="voucher">0</span></h5>
                                     <hr>
                                     <label for="">Nhập mã giảm giá</label>
                                     <div class="row">
@@ -208,15 +208,7 @@
                                             <button class="btn btn-secondary" >Nhập mã giảm giá</button>
                                         </div>
                                     </div>
-                                    <label for="" class="mt-2">Phương thức thanh toán</label>
-
-                                    <div class="my-2">
-                                        <input type="radio" name="paymethod" value="cash"> Tiền mặt
-                                        <input type="radio" name="paymethod" value="bank"> Chuyển khoản
-                                    </div>
-
-                                    <button class="btn btn-success py-2 px-4">Thanh toán</button>
-                                    <button class="btn btn-info py-2 px-4">In hóa đơn</button>
+                                    <button class="btn btn-success py-2 px-5 mt-3">Thanh toán</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>

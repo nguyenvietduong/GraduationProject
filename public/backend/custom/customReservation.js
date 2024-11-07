@@ -495,7 +495,7 @@
                     </tr>
                 `)
             })
-           $("#total_amount").text(`Tổng tiền : ${menuItems[0].totalAmount} VND`)
+           $("#total_amount").text(`${menuItems[0].totalAmount}`)
         }
     }
     //Show Modal Data
