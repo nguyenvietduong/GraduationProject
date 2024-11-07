@@ -510,14 +510,14 @@
             })
         }
     }
-    TC.addInvoice = (data) => {
+    TC.addInvoice = (item) => {
         
         fetch("http://graduationproject.test/admin/invoice/store", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(item)
         })
             .then(response => response.json())
             .then(data => console.log('Thêm thành công:', data))
