@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Invoice_item;
+use App\Models\Promotion;
 use App\Models\Reservation;
 use App\Models\Restaurant;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -61,9 +62,17 @@ class InvoiceController extends Controller
     {
         // Lấy dữ liệu từ request
         $data = $request->all();
-        $res = Restaurant::first();
+        $invoice_item = $request->invoice_item;
+        $total_payment = $request->total_payment;
+        $voucher_discount = $request->voucher_discount;
+        $code = null;
+        if(isset($request->code)){
+            $code = Promotion::where('code',$request->code)->first();
+        }
+        $res = Restaurant::get()->first();
+        $reservation = Reservation::find($request->reservation_id);
         // Tạo file PDF từ view với dữ liệu truyền vào
-        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', $data);
+        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('res','reservation','invoice_item','total_payment','code','voucher_discount'));
 
         // Tên file PDF và đường dẫn lưu trữ
         $fileName = 'invoice_' . time() . '.pdf';
