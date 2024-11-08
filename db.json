@@ -1,37 +1,23 @@
 {
   "invoice": [
     {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 274000,
+      "id": "11",
+      "reservation_id": "11",
+      "totalAmount": 103000,
       "invoice_item": [
         {
-          "id": 45,
-          "name": "Cháo lòng",
+          "id": 44,
+          "name": "Miến gà",
           "quantity": 1,
-          "price": 32000,
-          "total": 32000
+          "price": 38000,
+          "total": 38000
         },
         {
-          "id": 52,
-          "name": "Gà kho gừng",
+          "id": 38,
+          "name": "Bánh cuốn",
           "quantity": 1,
-          "price": 52000,
-          "total": 52000
-        },
-        {
-          "id": 47,
-          "name": "Cơm tấm sườn",
-          "quantity": 1,
-          "price": 55000,
-          "total": 55000
-        },
-        {
-          "id": 48,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
+          "price": 30000,
+          "total": 30000
         },
         {
           "id": 40,
@@ -39,89 +25,12 @@
           "quantity": 1,
           "price": 35000,
           "total": 35000
-        },
-        {
-          "id": 41,
-          "name": "Phở gà",
-          "quantity": 1,
-          "price": 40000,
-          "total": 40000
         }
       ]
     },
     {
-      "id": "8",
-      "reservation_id": "8",
-      "totalAmount": 130000,
-      "invoice_item": [
-        {
-          "id": 4,
-          "name": "Cháo thịt bằm",
-          "quantity": 1,
-          "price": 35000,
-          "total": 35000
-        },
-        {
-          "id": 3,
-          "name": "Xôi mặn",
-          "quantity": 1,
-          "price": 25000,
-          "total": 25000
-        },
-        {
-          "id": 2,
-          "name": "Bánh cuốn",
-          "quantity": 1,
-          "price": 30000,
-          "total": 30000
-        },
-        {
-          "id": 5,
-          "name": "Phở gà",
-          "quantity": 1,
-          "price": 40000,
-          "total": 40000
-        }
-      ]
-    },
-    {
-      "id": "6",
-      "reservation_id": "6",
-      "totalAmount": 145000,
-      "invoice_item": [
-        {
-          "id": 4,
-          "name": "Cháo thịt bằm",
-          "quantity": 1,
-          "price": 35000,
-          "total": 35000
-        },
-        {
-          "id": 3,
-          "name": "Xôi mặn",
-          "quantity": 1,
-          "price": 25000,
-          "total": 25000
-        },
-        {
-          "id": 5,
-          "name": "Phở gà",
-          "quantity": 1,
-          "price": 40000,
-          "total": 40000
-        },
-        {
-          "id": 6,
-          "name": "Bún thịt nướng",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        }
-      ]
-    },
-    {
-      "id": "2",
-      "reservation_id": "2",
+      "id": "10",
+      "reservation_id": "10",
       "totalAmount": 50000,
       "invoice_item": [
         {
@@ -141,23 +50,16 @@
       ]
     },
     {
-      "id": "3",
-      "reservation_id": "3",
-      "totalAmount": 55000,
+      "id": "12",
+      "reservation_id": "12",
+      "totalAmount": 40000,
       "invoice_item": [
         {
-          "id": 38,
-          "name": "Bánh cuốn",
+          "id": 41,
+          "name": "Phở gà",
           "quantity": 1,
-          "price": 30000,
-          "total": 30000
-        },
-        {
-          "id": 39,
-          "name": "Xôi mặn",
-          "quantity": 1,
-          "price": 25000,
-          "total": 25000
+          "price": 40000,
+          "total": 40000
         }
       ]
     }

@@ -520,39 +520,35 @@
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(data => executeExample('success'), $('#pay').modal('hide'), console.error('LOG:', data))
+            .then(data => executeExample('success'),
+                $('#pay').modal('hide'),
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 2000)
+            )
             .catch(error => console.error('Lỗi khi thêm:', error))
     }
-    // TC.exportPDF = (data) => {
-    //     fetch("http://graduationproject.test/admin/invoice/exportPDF", {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.success) {
-    //                 window.open(data.redirect_url, data);
-    //             } else {
-    //                 alert('Lỗi khi tạo hóa đơn.');
-    //             }
-    //         })
-    //         .catch(error => console.error('Lỗi khi thêm:', error));
-    // }
-    TC.exportPDF = (data) => {
-        $.ajax({
-            url: '/admin/invoice/exportPDF',
-            type: 'GET',
-            data: data,
-            success: function (response) {
-                window.open('/admin/invoice/exportPDF')
+
+    TC.exportAndSavePDF = (data) => {
+        fetch("http://graduationproject.test/admin/invoice/exportPDF", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            error: function () {
-               
-            }
+            body: JSON.stringify(data)
         })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mở URL của file PDF đã lưu trong tab mới
+                    window.open(data.file_url, '_blank');
+                } else {
+                    alert('Lỗi khi tạo và lưu hóa đơn.');
+                }
+                console.log(data);
+
+            })
+            .catch(error => console.error('Lỗi khi thêm:', error));
     }
     //Show Modal Data
     TC.showBsModal = () => {
@@ -562,12 +558,22 @@
             let reservationId;
             let voucher;
             let total_payment;
+            let payment_method;
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
                 invoiceDetail = await TC.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
+                console.log(invoiceDetail);
+                
                 TC.renderMenuItem(invoiceDetail);
             }
             total_payment = invoiceDetail[0].totalAmount
+            $('input[name="payment_method"]').on('change', function () {
+                if ($(this).val() === 'bank') {
+                    $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
+                } else {
+                    $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
+                }
+            });
             $("#btn_voucher").click(async (e) => {
                 let input_voucher = $("#input_voucher");
                 let feedback_voucher = $("#feedback_voucher");
@@ -599,20 +605,17 @@
             $("#total_amount").text(`${invoiceDetail[0].totalAmount}`)
             $("#total_payment").text(`${total_payment}`)
             $("#btn_paid").click((e) => {
+                payment_method = $('input[name="payment_method"]:checked').val();
                 let data = {
                     _token: _token,
                     ...invoiceDetail[0],
-                    total_payment
+                    total_payment,
+                    payment_method
                 }
                 TC.addInvoice(data)
+                TC.exportAndSavePDF(data)
             });
-            $("#exportPDF").click((e) => {
-                let data = {
-                    ...invoiceDetail[0],
-                    total_payment
-                }
-                TC.exportPDF(data)
-            });
+
         })
     }
 

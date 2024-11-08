@@ -196,7 +196,7 @@
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
                                     <h5 for="" id="">Tổng hóa đơn : <span for=""
-                                            id="total_amount"></span> VNĐ</h5>
+                                            id="total_amount">0</span> VNĐ</h5>
                                     <h5 for="" id="">Giảm giá : <span for=""
                                             id="voucher">0</span> VNĐ</h5>
                                     <h5 for="" id="">Tổng thanh toán : <span for=""
@@ -213,13 +213,26 @@
                                             <button class="btn btn-secondary" id="btn_voucher">Nhập mã giảm giá</button>
                                         </div>
                                     </div>
+                                    <div>
+                                        <label for="" class="py-2">Phương thức thanh toán</label> <br>
+                                        <input type="radio" name="payment_method" id="" value="cash"
+                                            checked> Tiền mặt
+                                        <input type="radio" name="payment_method" id="" value="bank">
+                                        Chuyển khoản
+                                    </div>
+                                    <div id="qr-image" style="display: none" class="row">
+                                        <div class="col-4">
+                                            <img src="{{ asset('storage/qrcode_images/qrcode.jpg') }}" alt="QR Code"
+                                                style="width: 150px;">
+                                        </div>
+                                        <div class="col-8 mt-4">
+                                            <p>Số tài khoản: 1907 3092 0610 17</p>
+                                            <p>Ngân hàng: TECHCOMBANK</p>
+                                            <p>Tên: NGUYEN VIET DUONG</p>
+                                        </div>
+                                    </div>
                                     <button class="btn btn-primary py-2 px-3 mx-1 mt-3" id="btn_paid">Đã thanh
                                         toán</button>
-
-                                    <button class="btn btn-warning py-2 px-3 mx-1 mt-3" id="exportPDF">Xuất hóa
-                                        đơn</button>
-
-
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>
@@ -233,6 +246,6 @@
     @push('script')
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
-        <script src="{{ asset('backend/custom/customReservation.js?v=1') }}"></script>
+        <script src="{{ asset('backend/custom/customReservation.js?v=4') }}"></script>
     @endpush
 @endsection
