@@ -479,7 +479,7 @@
         }
     }
 
-    TC.fetchVoucher =  async (url)=>{
+    TC.fetchVoucher = async (url) => {
         try {
             const response = await fetch(url)
             if (!response.ok) {
@@ -510,18 +510,49 @@
             })
         }
     }
-    TC.addInvoice = (item) => {
-        
+    TC.addInvoice = (data) => {
+
         fetch("http://graduationproject.test/admin/invoice/store", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(item)
+            body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(data => console.log('Thêm thành công:', data))
+            .then(data => executeExample('success'), $('#pay').modal('hide'), console.error('LOG:', data))
             .catch(error => console.error('Lỗi khi thêm:', error))
+    }
+    // TC.exportPDF = (data) => {
+    //     fetch("http://graduationproject.test/admin/invoice/exportPDF", {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(data)
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.success) {
+    //                 window.open(data.redirect_url, data);
+    //             } else {
+    //                 alert('Lỗi khi tạo hóa đơn.');
+    //             }
+    //         })
+    //         .catch(error => console.error('Lỗi khi thêm:', error));
+    // }
+    TC.exportPDF = (data) => {
+        $.ajax({
+            url: '/admin/invoice/exportPDF',
+            type: 'GET',
+            data: data,
+            success: function (response) {
+                window.open('/admin/invoice/exportPDF')
+            },
+            error: function () {
+               
+            }
+        })
     }
     //Show Modal Data
     TC.showBsModal = () => {
@@ -530,36 +561,36 @@
             let invoiceDetail;
             let reservationId;
             let voucher;
-            let total_payment ;
+            let total_payment;
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
                 invoiceDetail = await TC.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
+                console.log(invoiceDetail);
                 TC.renderMenuItem(invoiceDetail);
             }
-            total_payment  = invoiceDetail[0].totalAmount
-            $("#btn_voucher").click(async (e)=>{
-                let input_voucher =  $("#input_voucher");
-                let feedback_voucher =  $("#feedback_voucher");
+            total_payment = invoiceDetail[0].totalAmount
+            $("#btn_voucher").click(async (e) => {
+                let input_voucher = $("#input_voucher");
+                let feedback_voucher = $("#feedback_voucher");
                 voucher = await TC.fetchVoucher(`/checkVoucher?code=${input_voucher.val()}&totalAmount=${invoiceDetail[0].totalAmount}`);
-                console.log(voucher);
-                if(voucher[0]){
+                if (voucher[0]) {
                     input_voucher.addClass("is-valid");
                     feedback_voucher.addClass("valid-feedback");
                     feedback_voucher.text("Mã giảm giá hợp lệ");
 
-                    
-                    total_payment  = (voucher[0].type == "fixed")
-                     ? invoiceDetail[0].totalAmount - voucher[0].discount 
-                     :invoiceDetail[0].totalAmount - (((invoiceDetail[0].totalAmount/100*voucher[0].discount)
-                     >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount/100*voucher[0].discount) );
+
+                    total_payment = (voucher[0].type == "fixed")
+                        ? invoiceDetail[0].totalAmount - voucher[0].discount
+                        : invoiceDetail[0].totalAmount - (((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
+                            >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount));
 
 
                     $("#total_payment").text(`${total_payment}`)
-                    $("#voucher").text(`${(voucher[0].type == "fixed") 
-                        ? voucher[0].discount 
-                        : ((invoiceDetail[0].totalAmount/100*voucher[0].discount)
-                        >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount/100*voucher[0].discount) }`)
-                }else{
+                    $("#voucher").text(`${(voucher[0].type == "fixed")
+                        ? voucher[0].discount
+                        : ((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
+                            >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount)}`)
+                } else {
                     input_voucher.addClass("is-invalid");
                     feedback_voucher.addClass("invalid-feedback");
                     feedback_voucher.text("Mã giảm giá không hợp lệ");
@@ -567,13 +598,20 @@
             })
             $("#total_amount").text(`${invoiceDetail[0].totalAmount}`)
             $("#total_payment").text(`${total_payment}`)
-            $("#btn_paid").click((e)=>{
-               let data = {
-                _token: _token , 
-                ...invoiceDetail[0] , 
-                total_payment
-               }
-                TC.addInvoice(data);
+            $("#btn_paid").click((e) => {
+                let data = {
+                    _token: _token,
+                    ...invoiceDetail[0],
+                    total_payment
+                }
+                TC.addInvoice(data)
+            });
+            $("#exportPDF").click((e) => {
+                let data = {
+                    ...invoiceDetail[0],
+                    total_payment
+                }
+                TC.exportPDF(data)
             });
         })
     }

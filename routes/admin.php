@@ -148,6 +148,7 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         });
         Route::prefix('invoice')->group(function () {
             Route::post('store', [InvoiceController::class, 'store'])->name('admin.invoice.store');
+            Route::get('exportPDF', [InvoiceController::class, 'exportPDF'])->name('admin.invoice.exportPDF');
         });
 
         Route::prefix('chat')->group(function () {
@@ -160,6 +161,9 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
 
         Route::prefix('restaurant')->group(function () {
             Route::get('index', [RestaurantController::class, 'index'])->name('admin.restaurant');
+        });
+        Route::prefix('invoice')->group(function () {
+            Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
         });
     });
 });
