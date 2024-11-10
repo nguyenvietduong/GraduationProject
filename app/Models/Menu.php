@@ -10,6 +10,7 @@ class Menu extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $appends = ['favorited'];
     protected $fillable = [
         "name" ,
         "price" ,
@@ -33,4 +34,14 @@ class Menu extends Model
     {
         return $this->hasMany(Reservation::class, 'table_id','id');
     }
+
+    public function getFavoritedAttribute(){
+        $favorited = Favorite::where(['menu_id' => $this->id,  'user_id' => auth()->id()])->first();
+        return $favorited ? true : false;
+    }
+    public function favoritedBy()
+{
+    return $this->belongsToMany(User::class, 'favorites');
+}
+
 }

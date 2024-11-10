@@ -57,7 +57,10 @@
             <a href="{{ route('login') }}">{{ __('messages.system.login') }}</a>
         </li>
         @endif
+
+        
     </ul>
+    
     <!--end navigation menu-->
 </div>
 

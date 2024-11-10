@@ -17,13 +17,16 @@ $title = 'Menu'
                             data-group="all">All</li>
                         @foreach ($categories as $category)
                         <li class="inline-block text-sm uppercase font-medium mb-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                            data-group="{{ $category->id }}">{{ $category->name[app()->getLocale()] ?? __('Unknown Name') }}</li>
+                            data-group="{{ $category->id }}">{{ $category->name[app()->getLocale()] ?? __('Unknown
+                            Name') }}</li>
                         @endforeach
                     </ul>
                 </div>
             </div>
-        </div><!--grid-->
-    </div><!--end container-->
+        </div>
+        <!--grid-->
+    </div>
+    <!--end container-->
 
     <div class="container relative mt-8">
         <div id="grid" class="md:flex justify-center">
@@ -31,18 +34,33 @@ $title = 'Menu'
             @foreach ($category->menus as $menu)
             <div class="group lg:w-1/5 md:w-1/3 picture-item p-3 mt-6" data-groups='["{{ $category->id }}"]'>
                 <img src="{{ checkFile($menu->image_url) }}"
-                    class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]" alt="{{ $menu->name[app()->getLocale()] ?? 'No Name' }}">
+                    class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]"
+                    alt="{{ $menu->name[app()->getLocale()] ?? 'No Name' }}">
 
                 <div class="mt-4 text-center">
-                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name[app()->getLocale()] ?? __('Food Name') }}</a>
+                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{
+                        $menu->name[app()->getLocale()] ?? __('Food Name') }}</a>
 
                     <h5 class="text-amber-500 font-medium mt-4">{{ $menu->price }} VND</h5>
                 </div>
-            </div><!--end col-->
+                @if(auth()->check())
+                <div class="favorite-action text-xl text-center">
+                    <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">
+                        <i id="favorite-icon-{{ $menu->id }}"
+                            class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
+                    </a>
+                </div>
+                @endif 
+            </div>
+            <!--end col-->
             @endforeach
             @endforeach
         </div>
-    </div><!--end container-->
-</section><!--end section-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
 <!-- End -->
+@include('backend.ajax.favorite')
+
 @endsection

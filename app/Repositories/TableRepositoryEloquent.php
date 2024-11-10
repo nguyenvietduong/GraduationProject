@@ -120,6 +120,7 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
         $query = $this->model->query();
         $query->orderBy('position','asc');
         return $query->get();
+    }
 
     public function checkAvailableTables($reservationTime, $guests)
     {
