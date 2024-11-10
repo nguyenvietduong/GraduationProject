@@ -141,6 +141,7 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('index', [ReservationController::class, 'index'])->name('admin.reservation.index');
             Route::get('create', [ReservationController::class, 'create'])->name('admin.reservation.create');
             Route::post('store', [ReservationController::class, 'store'])->name('admin.reservation.store');
+            Route::get('{id}/detail', [ReservationController::class, 'detail'])->where('id', '[0-9]+')->name('admin.reservation.detail');
             Route::get('{id}/edit', [ReservationController::class, 'edit'])->where('id', '[0-9]+')->name('admin.reservation.edit');
             Route::put('{id}/update', [ReservationController::class, 'update'])->where('id', '[0-9]+')->name('admin.reservation.update');
             Route::delete('{id}/destroy', [ReservationController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.reservation.destroy');

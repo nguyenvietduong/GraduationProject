@@ -50,7 +50,10 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('title', 'like', '%' . $filters['search'] . '%');
+                $q->where('JSON_EXTRACT(notifications.message, "$.title") LIKE ?', ['%' . $filters['search'] . '%'])
+                ->orWhereRaw('JSON_EXTRACT(notifications.message, "$.name") LIKE ?', ['%' . $filters['search'] . '%'])
+                ->orWhereRaw('JSON_EXTRACT(notifications.message, "$.email") LIKE ?', ['%' . $filters['search'] . '%'])
+                ->orWhereRaw('JSON_EXTRACT(notifications.message, "$.phone") LIKE ?', ['%' . $filters['search'] . '%']);
             });
         }
 

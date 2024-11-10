@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Tiêu đề của thông báo
-            $table->text('message'); // Nội dung thông báo
+            $table->string('title');
+            $table->text('message');
             $table->timestamps();
         });
     }
