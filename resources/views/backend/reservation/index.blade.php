@@ -10,11 +10,6 @@
             transition: transform 0.2s, background-color 0.2s;
         }
 
-        /* .table-info:hover {
-                                                                background-color: #f0f0f0;
-                                                                transform: scale(1.05);
-                                                            } */
-
         .table-info.selected {
             border-color: #007bff;
             background-color: #e0f7ff;
@@ -145,24 +140,109 @@
                             </div><!--end card-->
                         </div> <!--end col-->
                     </div>
-
-
-
-
                 </div>
                 <div class="modal-footer">
                 </div>
             </div>
         </div>
     </div>
-
-   
-
-    {{-- @push('script')
-<script>
-    var csrfToken = '{{ csrf_token() }}';
-</script>
-<script src="{{ asset('backend/custom/customReservation.js') }}"></script> --}}
-
-    {{-- @endpush --}}
+    <!-- Second Modal -->
+    <div class="modal fade" id="pay" tabindex="-1" aria-labelledby="paylable" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="paylable">Thanh toán</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-7 col-lg-7">
+                            <div class="card">
+                                <div class="card-body pt-0">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <p>Món đã chọn:</p>
+                                                    <input type="hidden" name="" id="">
+                                                </div><!--end col-->
+                                            </div> <!--end row-->
+                                        </div><!--end card-header-->
+                                        <div class="card-body pt-0">
+                                            <table border="1" class="table mb-0 checkbox-all" id="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên món</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Giá</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="list_menu_item">
+                                                </tbody>
+                                            </table>
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+                                </div><!--end card-body-->
+                            </div><!--end card-->
+                        </div> <!--end col-->
+                        <div class="col-md-5 col-lg-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <p>Thanh toán</p>
+                                        </div><!--end col-->
+                                    </div> <!--end row-->
+                                </div><!--end card-header-->
+                                <div class="card-body pt-0">
+                                    <h5>Tổng hóa đơn : <span class="total-amount">0</span> VNĐ</h5>
+                                    <h5>Giảm giá : <span class="voucher-discount">0</span> VNĐ</h5>
+                                    <h5>Tổng thanh toán : <span class="total-payment">0</span> VNĐ</h5>
+                                    <hr>
+                                    <label>Nhập mã giảm giá</label>
+                                    <div class="row mt-3">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control input-voucher"
+                                                placeholder="Nhập mã giảm giá" value="">
+                                            <span class="feedback-voucher"></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-secondary btn-apply-voucher">Nhập mã giảm giá</button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="" class="py-2">Phương thức thanh toán</label> <br>
+                                        <input type="radio" name="payment_method" id="" value="cash"
+                                            checked> Tiền mặt
+                                        <input type="radio" name="payment_method" id="" value="bank">
+                                        Chuyển khoản
+                                    </div>
+                                    <div id="qr-image" style="display: none" class="row">
+                                        <div class="col-4">
+                                            <img src="{{ asset('storage/qrcode_images/qrcode.jpg') }}" alt="QR Code"
+                                                style="width: 150px;">
+                                        </div>
+                                        <div class="col-8 mt-4">
+                                            <p>Số tài khoản: 1907 3092 0610 17</p>
+                                            <p>Ngân hàng: TECHCOMBANK</p>
+                                            <p>Tên ctk: NGUYEN VIET DUONG</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Đã thanh
+                                        toán</button>
+                                </div><!--end card-body-->
+                            </div><!--end card-->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    @push('script')
+        <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
+        <script src="{{ asset('backend/custom/data.js') }}"></script>
+        <script src="{{ asset('backend/custom/customReservation.js?v=9') }}"></script>
+    @endpush
 @endsection

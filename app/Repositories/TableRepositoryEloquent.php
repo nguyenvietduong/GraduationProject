@@ -125,7 +125,7 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
     {
         // Tính toán số lượng bàn cho phép đặt online
         $totalTables = $this->model->count();
-        $onlineReservableTablesCount = ceil($totalTables * (2 / 3));
+        $onlineReservableTablesCount = ceil($totalTables * (3 / 3));
 
         // Tính toán khoảng thời gian cho phép đặt (trước và sau 2 giờ so với thời gian đặt mong muốn)
         $twoHoursBefore = \Carbon\Carbon::parse($reservationTime)->subHours(2);

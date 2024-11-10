@@ -152,7 +152,7 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         // Convert selected date to Carbon for further processing
         $now = Carbon::parse($selectedDate);
         $totalTables = 10;
-        $threshold = $totalTables * (2 / 3);
+        $threshold = $totalTables * (3 / 3);
 
         // Get all confirmed reservations for the selected date
         $reservations = $this->reservationRepository->getConfirmedReservationsByDate($now);

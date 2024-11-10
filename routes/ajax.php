@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
 
 use App\Http\Controllers\Backend\RestaurantController;
@@ -39,8 +40,8 @@ Route::post('admin/account/updateStatus', [UpdateStatusAccount::class, 'updateSt
 Route::post('admin/reservation/updateStatus', [UpdateStatusReservation::class, 'updateStatus'])->name('admin.reservation.updateStatus');
 Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::class, 'updateTableStatus'])->name('admin.reservation.updateTableStatus');
 
-Route::get('/get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
-Route::get('/get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
+Route::get('get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
+Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
 
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
@@ -52,19 +53,19 @@ Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.u
 
 Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
 
-Route::get('/count-new-reviews-endpoint', [UpdateStatusReview::class, 'getNewReviewCount']);
+Route::get('count-new-reviews-endpoint', [UpdateStatusReview::class, 'getNewReviewCount']);
 
-Route::get('/messages/users', [ChatController::class, 'getUsersWithMessages']);
-Route::post('/messages/send', [ChatController::class, 'sendMessage']);
-Route::get('/messages/{userId}', [ChatController::class, 'getMessages']);
+Route::get('messages/users', [ChatController::class, 'getUsersWithMessages']);
+Route::post('messages/send', [ChatController::class, 'sendMessage']);
+Route::get('messages/{userId}', [ChatController::class, 'getMessages']);
 
-Route::get('/notifications/index', [NotificationController::class, 'index'])->name('notification.index');
-Route::get('/notifications/search', [NotificationController::class, 'search'])->name('notification.search');
-Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
-Route::get('/count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
+Route::get('notifications/index', [NotificationController::class, 'index'])->name('notification.index');
+Route::get('notifications/search', [NotificationController::class, 'search'])->name('notification.search');
+Route::post('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+Route::get('count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
 
-Route::post('/check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
-Route::get('/checkTable', [BackendReservationController::class, 'checkTableFullyBookedTimes'])->name('checkTableFullyBookedTimes');
+Route::post('check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
+Route::get('checkTable', [BackendReservationController::class, 'checkTableFullyBookedTimes'])->name('checkTableFullyBookedTimes');
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {
@@ -92,3 +93,5 @@ Route::post('/remove-temp-image', function (Request $request) {
 
     return response()->json(['success' => false], 400);
 })->name('image.removeTemp');
+
+Route::get("/checkVoucher" , [AjaxPromotion::class , "getDetailVoucher"]) ;
