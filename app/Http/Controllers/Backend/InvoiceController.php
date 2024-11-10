@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Invoice_item;
 use App\Models\Reservation;
+use App\Models\Restaurant;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -37,7 +39,7 @@ class InvoiceController extends Controller
                 $dataInvoice = [
                     'reservation_id' => $request->reservation_id,
                     'total_amount' => $request->total_payment,
-                    'payment_method' => 'cash',
+                    'payment_method' => $request->payment_method,
                     'status' => 'paid',
                 ];
                 $invoice = Invoice::create($dataInvoice);
@@ -55,15 +57,28 @@ class InvoiceController extends Controller
         } catch (\Throwable $th) {
         }
     }
-    public function exportPDF(Request $request)
+    public function exportAndSavePDF(Request $request)
     {
+        // Lấy dữ liệu từ request
         $data = $request->all();
-        // Render view thành file PDF
-        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', $data);  // 'invoice_pdf' là view bạn muốn sử dụng để tạo PDF
+        $res = Restaurant::first();
+        // Tạo file PDF từ view với dữ liệu truyền vào
+        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', $data);
 
-        // Trả về URL để người dùng có thể mở file PDF
-        return $pdf->stream('invoice.pdf');
-        ;
+        // Tên file PDF và đường dẫn lưu trữ
+        $fileName = 'invoice_' . time() . '.pdf';
+        $filePath = 'public/invoices/' . $fileName;  // Sử dụng 'public/' để lưu trong thư mục storage/app/public
+
+        // Lưu file PDF vào storage
+        Storage::put($filePath, $pdf->output());
+
+        // Trả về URL của file PDF đã lưu
+        $fileUrl = Storage::url($filePath);
+
+        return response()->json([
+            'success' => true,
+            'file_url' => $fileUrl  // URL để tải hoặc xem file PDF
+        ]);
     }
     /**
      * Display the specified resource.

@@ -148,7 +148,7 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         });
         Route::prefix('invoice')->group(function () {
             Route::post('store', [InvoiceController::class, 'store'])->name('admin.invoice.store');
-            Route::get('exportPDF', [InvoiceController::class, 'exportPDF'])->name('admin.invoice.exportPDF');
+            Route::post('exportPDF', [InvoiceController::class, 'exportAndSavePDF'])->name('admin.invoice.exportPDF');
         });
 
         Route::prefix('chat')->group(function () {
