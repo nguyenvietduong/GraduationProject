@@ -73,8 +73,15 @@
     {
       "id": "12",
       "reservation_id": "12",
-      "totalAmount": 20000,
+      "totalAmount": 40000,
       "invoice_item": [
+        {
+          "id": 40,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        },
         {
           "id": 1,
           "name": "Bánh mì trứng",

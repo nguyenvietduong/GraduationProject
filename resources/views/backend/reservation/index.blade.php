@@ -195,22 +195,19 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <h5 for="" id="">Tổng hóa đơn : <span for=""
-                                            id="total_amount">0</span> VNĐ</h5>
-                                    <h5 for="" id="">Giảm giá : <span for=""
-                                            id="voucher">0</span> VNĐ</h5>
-                                    <h5 for="" id="">Tổng thanh toán : <span for=""
-                                            id="total_payment">0</span> VNĐ</h5>
+                                    <h5>Tổng hóa đơn : <span class="total-amount">0</span> VNĐ</h5>
+                                    <h5>Giảm giá : <span class="voucher-discount">0</span> VNĐ</h5>
+                                    <h5>Tổng thanh toán : <span class="total-payment">0</span> VNĐ</h5>
                                     <hr>
-                                    <label for="">Nhập mã giảm giá</label>
+                                    <label>Nhập mã giảm giá</label>
                                     <div class="row mt-3">
                                         <div class="col-6">
-                                            <input id="input_voucher" type="text" class="form-control "
+                                            <input type="text" class="form-control input-voucher"
                                                 placeholder="Nhập mã giảm giá" value="">
-                                            <span id="feedback_voucher"></span>
+                                            <span class="feedback-voucher"></span>
                                         </div>
                                         <div class="col-6">
-                                            <button class="btn btn-secondary" id="btn_voucher">Nhập mã giảm giá</button>
+                                            <button class="btn btn-secondary btn-apply-voucher">Nhập mã giảm giá</button>
                                         </div>
                                     </div>
                                     <div>
@@ -228,10 +225,10 @@
                                         <div class="col-8 mt-4">
                                             <p>Số tài khoản: 1907 3092 0610 17</p>
                                             <p>Ngân hàng: TECHCOMBANK</p>
-                                            <p>Tên: NGUYEN VIET DUONG</p>
+                                            <p>Tên ctk: NGUYEN VIET DUONG</p>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3" id="btn_paid">Đã thanh
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Đã thanh
                                         toán</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
@@ -246,6 +243,6 @@
     @push('script')
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
-        <script src="{{ asset('backend/custom/customReservation.js?v=4') }}"></script>
+        <script src="{{ asset('backend/custom/customReservation.js?v=9') }}"></script>
     @endpush
 @endsection

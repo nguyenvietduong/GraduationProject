@@ -521,10 +521,7 @@
         })
             .then(response => response.json())
             .then(data => executeExample('success'),
-                $('#pay').modal('hide'),
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, 2000)
+                
             )
             .catch(error => console.error('Lỗi khi thêm:', error))
     }
@@ -554,19 +551,24 @@
     TC.showBsModal = () => {
         $('#pay').on('show.bs.modal', async function (event) {
             var button = $(event.relatedTarget)
-            let invoiceDetail;
             let reservationId;
-            let voucher;
-            let total_payment;
-            let payment_method;
+            let invoiceDetail;
+
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
                 invoiceDetail = await TC.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
                 console.log(invoiceDetail);
-                
                 TC.renderMenuItem(invoiceDetail);
             }
-            total_payment = invoiceDetail[0].totalAmount
+            let voucher_discount = 0;
+            let code;
+
+            $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
+
+            let total_amount = invoiceDetail[0].totalAmount;
+            let total_payment = invoiceDetail[0].totalAmount;
+            $('#pay').find('.total-amount').text(total_amount)
+            $('#pay').find('.total-payment').text(total_payment)
             $('input[name="payment_method"]').on('change', function () {
                 if ($(this).val() === 'bank') {
                     $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
@@ -574,48 +576,91 @@
                     $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
                 }
             });
-            $("#btn_voucher").click(async (e) => {
-                let input_voucher = $("#input_voucher");
-                let feedback_voucher = $("#feedback_voucher");
-                voucher = await TC.fetchVoucher(`/checkVoucher?code=${input_voucher.val()}&totalAmount=${invoiceDetail[0].totalAmount}`);
+            $('#pay').find('.btn-apply-voucher').off('click').on('click', async function () {
+                let inputVoucher = $('#pay').find('.input-voucher').val();
+                let feedback = $('#pay').find('.feedback-voucher');
+                let voucher = await TC.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
                 if (voucher[0]) {
-                    input_voucher.addClass("is-valid");
-                    feedback_voucher.addClass("valid-feedback");
-                    feedback_voucher.text("Mã giảm giá hợp lệ");
+                    code = voucher[0].code;
+                    feedback.text("Mã giảm giá hợp lệ").css("color", "green");
+                    if (voucher[0].type == 'fixed') {
+                        total_payment = total_amount - voucher[0].discount
+                        voucher_discount = voucher[0].discount
+                    } else {
+                        if (total_amount * voucher[0].discount / 100 > voucher[0].max_discount) {
+                            total_payment = total_amount - voucher[0].max_discount
+                            voucher_discount = voucher[0].max_discount
+                        } else {
+                            total_payment = total_amount - (total_amount * voucher[0].discount) / 100
+                            voucher_discount = (total_amount * voucher[0].discount) / 100
+                        }
+                    }
+                    console.log(total_payment);
 
-
-                    total_payment = (voucher[0].type == "fixed")
-                        ? invoiceDetail[0].totalAmount - voucher[0].discount
-                        : invoiceDetail[0].totalAmount - (((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
-                            >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount));
-
-
-                    $("#total_payment").text(`${total_payment}`)
-                    $("#voucher").text(`${(voucher[0].type == "fixed")
-                        ? voucher[0].discount
-                        : ((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
-                            >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount)}`)
+                    $('#pay').find('.voucher-discount').text(voucher_discount);
+                    $('#pay').find('.total-payment').text(total_payment);
                 } else {
-                    input_voucher.addClass("is-invalid");
-                    feedback_voucher.addClass("invalid-feedback");
-                    feedback_voucher.text("Mã giảm giá không hợp lệ");
+                    $('#pay').find('.voucher-discount').text('0');
+                    $('#pay').find('.total-payment').text(total_amount);
+                    feedback.text("Mã giảm giá không hợp lệ").css("color", "red");
                 }
-            })
-            $("#total_amount").text(`${invoiceDetail[0].totalAmount}`)
-            $("#total_payment").text(`${total_payment}`)
-            $("#btn_paid").click((e) => {
-                payment_method = $('input[name="payment_method"]:checked').val();
+            });
+
+            // $("#btn_voucher").click(async (e) => {
+            //     let input_voucher = $("#input_voucher");
+            //     let feedback_voucher = $("#feedback_voucher");
+            //     voucher = await TC.fetchVoucher(`/checkVoucher?code=${input_voucher.val()}&totalAmount=${invoiceDetail[0].totalAmount}`);
+            //     console.log(voucher);
+            //     if (voucher[0]) {
+            //         input_voucher.addClass("is-valid");
+            //         feedback_voucher.addClass("valid-feedback");
+            //         feedback_voucher.text("Mã giảm giá hợp lệ");
+
+
+            //         total_payment = (voucher[0].type == "fixed")
+            //             ? invoiceDetail[0].totalAmount - voucher[0].discount
+            //             : invoiceDetail[0].totalAmount - (((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
+            //                 >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount));
+
+
+            //         $("#total_payment").text(`${total_payment}`)
+            //         $("#voucher").text(`${(voucher[0].type == "fixed")
+            //             ? voucher[0].discount
+            //             : ((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
+            //                 >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount)}`)
+            //     } else {
+            //         input_voucher.addClass("is-invalid");
+            //         feedback_voucher.addClass("invalid-feedback");
+            //         feedback_voucher.text("Mã giảm giá không hợp lệ");
+            //     }
+            // })
+            $(`#btn_paid_${reservationId}`).off('click').click((e) => {
+                let payment_method = $('input[name="payment_method"]:checked').val();
                 let data = {
                     _token: _token,
                     ...invoiceDetail[0],
                     total_payment,
-                    payment_method
+                    payment_method,
+                    voucher_discount,
+                    code
                 }
+                $('#pay').modal('hide'),
+
                 TC.addInvoice(data)
                 TC.exportAndSavePDF(data)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000)
             });
 
         })
+        $('#pay').on('hidden.bs.modal', function () {
+            // Đặt lại các giá trị giảm giá
+            $('#pay').find('.input-voucher').val('');
+            $('#pay').find('.feedback-voucher').text('');
+            $('#pay').find('.voucher-discount').text(0);  // Đặt lại giảm giá về 0
+            $('#pay').find('.total-payment').text(totalAmount); // Đặt lại tổng thanh toán về tổng hóa đơn
+        });
     }
 
     //End Show Modal Data
