@@ -56,7 +56,8 @@
         <h5 class="dropdown-item-text m-0 py-2 d-flex justify-content-between align-items-center">
             <span class="countNotification">Notifications</span>
         </h5>
-        <input type="text" class="form-control" id="searchInput" placeholder="{{ __('messages.system.button.search') }}">
+        <input type="text" class="form-control" id="searchInput"
+            placeholder="{{ __('messages.system.button.search') }}">
         <div class="ms-0" style="max-height:230px;" data-simplebar>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="allNotification" role="tabpanel" aria-labelledby="all-tab"
@@ -75,17 +76,38 @@
         const jsonStringTitle = element.getAttribute('data-title');
         const jsonStringMessage = element.getAttribute('data-message-full');
         const jsonData = JSON.parse(jsonStringMessage);
-        console.log(jsonData);
-        
+
         const title = jsonStringTitle;
         const name = jsonData.name;
         const phone = jsonData.phone;
         const email = jsonData.email;
+        const guest = jsonData.guests;
+        const reservationTime = jsonData.reservation_time;
+        const specialRequest = jsonData.special_request;
+
+        // Chuyển đổi chuỗi ngày giờ thành đối tượng Date
+        const date = new Date(reservationTime);
+
+        // Lấy các thành phần của ngày và giờ
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Thêm số 0 vào tháng nếu là tháng đơn
+        const day = ('0' + date.getDate()).slice(-2); // Thêm số 0 vào ngày nếu là ngày đơn
+        const hours = ('0' + date.getHours()).slice(-2); // Thêm số 0 vào giờ nếu là giờ đơn
+        const minutes = ('0' + date.getMinutes()).slice(-2); // Thêm số 0 vào phút nếu là phút đơn
+        const seconds = ('0' + date.getSeconds()).slice(-2); // Thêm số 0 vào giây nếu là giây đơn
+
+        // Xây dựng chuỗi ngày giờ theo định dạng yêu cầu
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
         document.getElementById('messageModalLabel').innerText = `${title}`;
-        document.getElementById('modalName').innerText = `Name: ${name}`;
-        document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
+        document.getElementById('modalName').innerText = `Họ và Tên: ${name}`;
+        document.getElementById('modalPhone').innerText = `Số điện thoại: ${phone}`;
         document.getElementById('modalEmail').innerText = `Email: ${email}`;
+        document.getElementById('modalGuest').innerText = `Số khách: ${guest}`;
+        document.getElementById('modalReservationTime').innerText = `Thời gian đặt: ${formattedDate}`;
+        document.getElementById('modalSpecialRequest').innerText = `Yêu cầu đặc biệt: ${specialRequest}`;
+        document.getElementById('reservation-detail').href = "{{ route('admin.reservation.detail', ':id') }}".replace(
+            ':id', notificationId);
 
         // AJAX request to mark the notification as read
         $.ajax({
@@ -201,7 +223,8 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.notifications.length === 0) {
-                        $('#allNotification').html('<p class="text-center text-muted py-1 pt-3">No results found</p>');
+                        $('#allNotification').html(
+                            '<p class="text-center text-muted py-1 pt-3">No results found</p>');
                     } else {
                         displayNotifications(data.notifications, data.total);
                     }
@@ -251,6 +274,8 @@
                                 <div class="flex-grow-1 ms-2 text-truncate">
                                     <h6 class="my-0 fw-normal text-dark fs-13">${notification.title}</h6>
                                     <small class="text-muted mb-0">${messageData.name || 'No data available'}</small>
+                                    <br>
+                                    <small class="text-muted mb-0">${messageData.phone || 'No data available'}</small>
                                 </div>
                             </div>
                         </a>`;

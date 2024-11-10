@@ -8,12 +8,15 @@
                     <img src="/frontend/assets/images/logo-light.png" class="mx-auto hidden dark:block" alt="">
                 </a>
             </div>
+            
+            <form class="text-start lg:py-16 py-8" action="{{ route('register') }}" method="post">
+                @csrf
 
-            <form class="text-start lg:py-16 py-8" action="https://shreethemes.in/veganfry/layouts/signup-success.html">
                 <div class="grid grid-cols-1">
                     <div class="mb-4">
                         <label class="font-medium" for="RegisterFull_name">Your Name:</label>
                         <input id="RegisterFull_name" type="text" name="full_name"
+                               value="{{ old('full_name') }}"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('full_name') is-invalid @enderror">
                         @error('full_name')
                         <span class="err-message">*{{ $message }}</span>
@@ -21,8 +24,19 @@
                     </div>
 
                     <div class="mb-4">
+                        <label class="font-medium" for="LoginPhone">Phone:</label>
+                        <input id="LoginPhone" type="number" name="phone"
+                               value="{{ old('phone') }}"
+                               class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('phone') is-invalid @enderror">
+                        @error('phone')
+                        <span class="err-message">*{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
                         <label class="font-medium" for="LoginEmail">Email Address:</label>
-                        <input id="LoginEmail" type="email"
+                        <input id="LoginEmail" type="email" name="email"
+                               value="{{ old('email') }}"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('email') is-invalid @enderror">
                         @error('email')
                         <span class="err-message">*{{ $message }}</span>
@@ -31,19 +45,8 @@
 
                     <div class="mb-4">
                         <label class="font-medium" for="LoginPassword">Password:</label>
-                        <input id="LoginPassword" type="password"
+                        <input id="LoginPassword" type="password" name="password"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0">
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="flex items-center w-full mb-0">
-                            <input
-                                class="form-checkbox rounded border-gray-100 dark:border-gray-800 text-amber-500 focus:border-amber-300 focus:ring focus:ring-offset-0 focus:ring-amber-200 focus:ring-opacity-50 me-2"
-                                type="checkbox" value="" id="AcceptT&C">
-                            <label class="form-check-label text-slate-400" for="AcceptT&C">I Accept <a href="#"
-                                                                                                       class="text-amber-500">Terms
-                                    And Condition</a></label>
-                        </div>
                     </div>
 
                     <div class="mb-4">

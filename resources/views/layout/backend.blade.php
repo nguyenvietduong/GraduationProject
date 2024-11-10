@@ -68,9 +68,12 @@
                     <p id="modalName"></p>
                     <p id="modalPhone"></p>
                     <p id="modalEmail"></p>
+                    <p id="modalGuest"></p>
+                    <p id="modalReservationTime"></p>
+                    <p id="modalSpecialRequest"></p>
                 </div>
                 <div class="modal-footer">
-                    <a href="" type="button" class="btn btn-success">Chi tiết</a>
+                    <a id="reservation-detail" href="" type="button" class="btn btn-success">Chi tiết</a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>

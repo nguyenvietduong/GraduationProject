@@ -99,6 +99,25 @@ class ReservationController extends Controller
         }
     }
 
+        /**
+     * Show the form for editing a reservation.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
+    public function detail($id)
+    {
+        $reservation = $this->reservationService->getReservationDetail($id);
+        if ($reservation) {
+            return view(self::PATH_VIEW . __FUNCTION__, [
+                'data' => $reservation,
+                'object' => 'reservation',
+            ]);
+        }
+
+        abort(404);
+    }
+
     /**
      * Show the form for editing a reservation.
      *
