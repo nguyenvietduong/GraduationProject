@@ -124,7 +124,19 @@
                 url: `reservation/${reservationId}/canceled`, // Sử dụng backticks `...` thay cho dấu nháy đơn
                 type: 'GET',
                 success: function(response) {
-                    alert
+                    // Tìm hàng có reservationId tương ứng
+                    const row = document.querySelector(`tr[data-reservation-id="${reservationId}"]`);
+
+                    // Đổi màu hàng để biểu thị trạng thái đã hủy
+                    row.style.backgroundColor = 'cadetblue';
+
+                    // Cập nhật trạng thái thành "đã hủy"
+                    row.querySelector('.status').innerText = 'Đã hủy';
+
+                    // Ẩn nút "Hủy"
+                    row.querySelector('.cancel-button').classList.add('hidden');
+
+                    alert('Bạn đã hủy đặt bàn!');
                 },
                 error: function(error) {
                     console.error('Error canceling reservation:', error);
@@ -168,12 +180,13 @@
                         });
 
                         // Kiểm tra trạng thái để áp dụng lớp CSS
-                        const rowClass = reservation.status === 'canceled' ? 'background-color: cadetblue' : '';
+                        const rowClass = reservation.status === 'canceled' ?
+                            'background-color: cadetblue' : '';
                         const buttonClass = reservation.status === 'canceled' ? 'hidden' : '';
 
                         // Tạo chuỗi HTML
                         const rowHTML = `
-                            <tr style="${rowClass}" style="">
+                            <tr style="${rowClass}" data-reservation-id="${reservation.id}">
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
                                     <ul>
                                         <li>${reservation.name}</li>
@@ -183,22 +196,18 @@
                                 </td>
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">${reservation.guests}</td>
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">${formattedTime}</td>
-                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
+                                <td class="border-b py-2 px-4 text-center status" style="font-size: 13px">
                                     ${reservationStatuses[reservation.status]}
                                 </td>
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
-                                    <button type="button" class="text-red-500 button hover:underline ${buttonClass}" onclick="cancelReservation(${reservation.id}, event)">
+                                    <button type="button" class="text-red-500 button hover:underline cancel-button ${buttonClass}" onclick="cancelReservation(${reservation.id}, event)">
                                         Hủy
                                     </button>
                                 </td>
                             </tr>
                         `;
 
-                        if (reservation.status == 'confirmed') {
-                            reservationTableBody.innerHTML += rowHTML;
-                        } else {
-                            reservationTableBody.innerHTML += rowHTML;
-                        }
+                        reservationTableBody.innerHTML += rowHTML
                     },
                     error: function(error) {
                         console.log("Error fetching reservation details:", error);
