@@ -280,9 +280,9 @@ document.querySelectorAll(".dropdown").forEach(function (item) {
     });
   }
   
-  window.addEventListener('click', function (e) {
-    dismissDropdownMenu();
-  });
+//   window.addEventListener('click', function (e) {
+//     dismissDropdownMenu();
+//   });
 
 
 //=========================================//

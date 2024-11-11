@@ -78,6 +78,7 @@
         const jsonData = JSON.parse(jsonStringMessage);
 
         const title = jsonStringTitle;
+        const reservationId = jsonData.id;
         const name = jsonData.name;
         const phone = jsonData.phone;
         const email = jsonData.email;
@@ -106,8 +107,7 @@
         document.getElementById('modalGuest').innerText = `Số khách: ${guest}`;
         document.getElementById('modalReservationTime').innerText = `Thời gian đặt: ${formattedDate}`;
         document.getElementById('modalSpecialRequest').innerText = `Yêu cầu đặc biệt: ${specialRequest}`;
-        document.getElementById('reservation-detail').href = "{{ route('admin.reservation.detail', ':id') }}".replace(
-            ':id', notificationId);
+        document.getElementById('reservation-detail').href = "{{ route('admin.reservation.detail', ':id') }}".replace(':id', reservationId);
 
         // AJAX request to mark the notification as read
         $.ajax({

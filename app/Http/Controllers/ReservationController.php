@@ -23,8 +23,8 @@ class ReservationController extends Controller
     use HandleExceptionTrait;
 
     const successfulReservation = [
-        'vi' => 'Đặt bàn thành công!',
-        'en' => 'Booking successful!',
+        'vi' => 'Đơn đặt bàn cảu bạn đã được ghi lại!',
+        'en' => 'Your table reservation has been recorded!',
     ];
 
     const bookingFailed = [
@@ -70,16 +70,6 @@ class ReservationController extends Controller
         try {
             // Create a new reservation
             $reservationNew = $this->reservationService->createReservation($data);
-            if ($reservationNew === false) {
-                // Reservation failed, send cancellation email
-                if (isset($data['email'])) {
-                    Mail::to($data['email'])->send(new ReservationCancellationMail($data));
-                }
-                return response()->json([
-                    'success' => false,
-                    'message' => App::getLocale() == 'vi' ? self::bookingFailed['vi'] : self::bookingFailed['en'],
-                ], 400); // Bad Request
-            }
 
             // Reservation created successfully
             $notificationData = [
@@ -111,40 +101,70 @@ class ReservationController extends Controller
 
     public function checkAvailability(Request $request)
     {
-        // Validate incoming request
         $request->validate([
             'date' => 'required|date',
             'time' => 'required|string',
-            'duration' => 'required|integer|min:1', // Duration in hours
+            'duration' => 'required|integer|min:1',
         ]);
 
-        // Get the date, time, and duration from the request
-        $date = $request->input('date'); // e.g., "2024-10-30"
-        $time = $request->input('time'); // e.g., "12:00"
-        $duration = $request->input('duration'); // e.g., 2 for 2 hours
+        $date = $request->input('date'); 
+        $time = $request->input('time');
+        $duration = $request->input('duration'); 
 
-        // Combine date and time into a single DateTime object
         $reservationStartTime = \Carbon\Carbon::parse("$date $time");
-        $reservationEndTime = $reservationStartTime->copy()->addHours($duration); // Calculate end time
+        $reservationEndTime = $reservationStartTime->copy()->addHours($duration); 
 
-        // Get IDs of tables that are reserved during the specified time
         $reservedTableIds = Reservation::whereBetween('reservation_time', [$reservationStartTime, $reservationEndTime])
-            ->pluck('table_id'); // Get IDs of reserved tables
+            ->pluck('table_id');
 
-        // Find available tables
         $availableTables = Table::whereNotIn('id', $reservedTableIds)->get();
 
-        // Count total tables and available tables
-        $totalTables = Table::count(); // Total number of tables
-        $availableCount = $availableTables->count(); // Count of available tables
+        $totalTables = Table::count();
+        $availableCount = $availableTables->count(); 
 
-        // Return response
         return response()->json([
-            'available' => $availableTables, // Optionally, you might want to return just IDs or a summary
+            'available' => $availableTables,
             'count' => $availableCount,
             'message' => $availableCount === 0
                 ? 'Sorry, all tables are reserved during this time.'
                 : "$availableCount table(s) available.",
         ]);
     }
+
+    public function detail($reservationId) 
+    {
+        // Tìm đơn hàng dựa vào ID
+        $reservation = Reservation::find($reservationId);
+        
+        // Kiểm tra nếu đơn hàng tồn tại
+        if ($reservation) {
+            return response()->json([
+                'success' => true,
+                'data' => $reservation
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Reservation not found.'
+            ], 404);
+        }
+    }    
+
+    public function canceled($reservationId) 
+    {
+        $updated = Reservation::where('id', $reservationId)->update(['status' => 'canceled']);
+    
+        // Kiểm tra xem bản ghi có được cập nhật thành công hay không
+        if ($updated) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Reservation has been canceled successfully.'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Reservation not found or could not be canceled.'
+            ], 404);
+        }
+    }    
 }

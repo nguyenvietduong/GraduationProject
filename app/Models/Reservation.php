@@ -23,8 +23,6 @@ class Reservation extends Model
         'guests',
         'special_request',
         'status',
-        'reserved_until',
-        'table_id'
     ];
 
     /**
@@ -36,16 +34,17 @@ class Reservation extends Model
         'reservation_time' => 'datetime',
     ];
 
+    // Thiết lập quan hệ với ReservationDetail
+    public function reservationDetails()
+    {
+        return $this->hasMany(ReservationDetail::class);
+    }
+
     /**
      * Define a relationship to the Invoice model.
      */
     public function invoice()
     {
         return $this->hasOne(Invoice::class);
-    }
-
-    public function table()
-    {
-        return $this->belongsTo(Table::class);
     }
 }
