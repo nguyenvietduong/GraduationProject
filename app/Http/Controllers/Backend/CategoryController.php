@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Services\CategoryServiceInterface;
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Interfaces\Services\NotificationServiceInterface;
 use App\Traits\HandleExceptionTrait;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 // Requests
 use App\Http\Requests\BackEnd\Categories\ListRequest as CategoryListRequest;
 use App\Http\Requests\BackEnd\Categories\StoreRequest as CategoryStoreRequest;
@@ -21,7 +18,6 @@ class CategoryController extends Controller
 
     protected $categoryService;
     protected $categoryRepository;
-    private $notificationService;
     // Base path for views
     const PATH_VIEW        = 'backend.category.';
     const PER_PAGE_DEFAULT = 5;
@@ -30,11 +26,9 @@ class CategoryController extends Controller
     public function __construct(
         CategoryServiceInterface $categoryService,
         CategoryRepositoryInterface $categoryRepository,
-        NotificationServiceInterface $notificationService,
     ) {
         $this->categoryService    = $categoryService;
         $this->categoryRepository = $categoryRepository;
-        $this->notificationService = $notificationService;
     }
 
     /**

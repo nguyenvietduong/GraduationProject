@@ -22,7 +22,7 @@
 
                 @include('backend.component.search_all')
 
-                @include('backend.component.language')
+                {{-- @include('backend.component.language') --}}
 
                 @include('backend.component.light_dark_mode')
 
