@@ -114,7 +114,8 @@
                         <div class="grid md:grid-cols-2 gap-4 mt-6">
                             <!-- Các trường nhập liệu như cũ -->
                             <div>
-                                <label class="">{{ __('messages.reservation.fields.full_name') }} <span style="color: red">*</span></label>
+                                <label class="">{{ __('messages.reservation.fields.full_name') }} <span
+                                        style="color: red">*</span></label>
                                 <input name="name" id="name" type="text"
                                     class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('name') border-red-500 @enderror"
                                     placeholder="{{ __('messages.reservation.fields.name_placeholder') }}"
@@ -125,7 +126,8 @@
                             </div>
 
                             <div>
-                                <label class="">{{ __('messages.reservation.fields.email') }} <span style="color: red">*</span></label>
+                                <label class="">{{ __('messages.reservation.fields.email') }} <span
+                                        style="color: red">*</span></label>
                                 <input name="email" id="email" type="email"
                                     class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('email') border-red-500 @enderror"
                                     placeholder="{{ __('messages.reservation.fields.email_placeholder') }}"
@@ -136,8 +138,9 @@
                             </div>
 
                             <div>
-                                <label class="">{{ __('messages.reservation.fields.phone') }} <span style="color: red">*</span></label>
-                                <input name="phone" type="number" id="phone" 
+                                <label class="">{{ __('messages.reservation.fields.phone') }} <span
+                                        style="color: red">*</span></label>
+                                <input name="phone" type="number" id="phone"
                                     class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('phone') border-red-500 @enderror"
                                     placeholder="{{ __('messages.reservation.fields.phone_placeholder') }}"
                                     value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}">
@@ -147,7 +150,8 @@
                             </div>
 
                             <div>
-                                <label class="">{{ __('messages.reservation.fields.guests') }} <span style="color: red">*</span></label>
+                                <label class="">{{ __('messages.reservation.fields.guests') }} <span
+                                        style="color: red">*</span></label>
                                 <input type="number" min="0" autocomplete="off" id="guests" name="guests"
                                     class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror"
                                     required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}"
@@ -158,7 +162,8 @@
                             </div>
 
                             <div>
-                                <label class="">{{ __('messages.reservation.fields.date') }} <span style="color: red">*</span></label>
+                                <label class="">{{ __('messages.reservation.fields.date') }} <span
+                                        style="color: red">*</span></label>
                                 <!-- Chỉ cho phép chọn ngày hôm nay trở đi -->
                                 <input type="date" min="{{ \Carbon\Carbon::today()->toDateString() }}"
                                     autocomplete="off" id="date" name="date"
@@ -171,7 +176,8 @@
                             </div>
 
                             <div>
-                                <label>{{ __('messages.reservation.fields.time') }} <span style="color: red">*</span></label>
+                                <label>{{ __('messages.reservation.fields.time') }} <span
+                                        style="color: red">*</span></label>
                                 <select name="input-time" id="input-time"
                                     class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
                                     <option value="">{{ __('messages.reservation.fields.time') }}</option>
@@ -233,7 +239,8 @@
                         // Kiểm tra nếu thành công
                         if (response.success) {
                             // Lưu thông tin đơn đặt bàn vào localStorage
-                            let reservations = JSON.parse(localStorage.getItem('myReservation')) || [];
+                            let reservations = JSON.parse(localStorage.getItem(
+                                'myReservation')) || [];
                             // Thêm đơn đặt chỗ mới vào mảng
                             reservations.push(response.data.id);
                             // Lưu lại mảng vào localStorage
@@ -313,24 +320,28 @@
                         success: function(response) {
                             if (response.success) {
                                 const fullyBookedTimes = response
-                                    .fullyBookedTimes; // Danh sách các giờ đã hết bàn
+                                .fullyBookedTimes;
+                                const currentDate = new Date(); 
+                                const isToday = (formatDate(currentDate) ===date);
 
                                 $('#input-time option').each(function() {
                                     const timeSlot = $(this).val();
+                                    const timeSlotDate = new Date(`${date}T${timeSlot}`);
 
-                                    if (fullyBookedTimes.includes(
-                                            timeSlot
-                                            )) { // Kiểm tra nếu giờ nằm trong danh sách hết bàn
-                                        $(this).text(
-                                            `${timeSlot} - (Hết bàn)`); // Hiển thị "(Hết bàn)"
+                                    // Kiểm tra nếu giờ nằm trong danh sách hết bàn
+                                    if (fullyBookedTimes.includes(timeSlot)) {
+                                        $(this).text(`${timeSlot} - (Hết bàn)`);
                                         $(this).attr('data-available', 'false');
-                                        $(this).attr('disabled',
-                                            'disabled'); // Thêm thuộc tính disabled
+                                        $(this).attr('disabled', 'disabled');
+                                    } else if (isToday && timeSlotDate < currentDate) {
+                                        // Nếu là hôm nay và giờ đã trôi qua, ẩn tùy chọn
+                                        $(this).attr('data-available', 'false');
+                                        $(this).attr('disabled', 'disabled');
+                                        $(this).text(`${timeSlot} - (Đã qua)`);
                                     } else {
                                         $(this).text(timeSlot); // Nếu còn bàn, chỉ hiển thị giờ
                                         $(this).attr('data-available', 'true');
-                                        $(this).removeAttr(
-                                            'disabled'); // Bỏ thuộc tính disabled
+                                        $(this).removeAttr('disabled');
                                     }
                                 });
                             } else {
