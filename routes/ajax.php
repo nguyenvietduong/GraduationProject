@@ -43,13 +43,14 @@ Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::cla
 Route::get('get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
 Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
 
-Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
 Route::post('admin/review/updateStatus', [UpdateStatusReview::class, 'updateStatus'])->name('admin.review.updateStatus');
 Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'updateStatus'])->name('admin.category.updateStatus');
 Route::post('admin/table/updatePositions', [UpdatePositionTable::class, 'updatePositions'])->name('admin.table.updatePositions');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
+Route::get('reservation/{id}/detail', [ReservationController::class, 'detail'])->where('id', '[0-9]+');
+Route::get('reservation/{reservationId}/canceled', [ReservationController::class, 'canceled']);
 
 Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
 
