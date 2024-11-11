@@ -2,7 +2,7 @@
 @section('contentUser')
 <!-- Start Hero -->
 @include('frontend.component.breadcrumb', [
-    'titleHeader' => 'Latest Blogs & News !',
+    'titleHeader' => 'Blog và tin tức mới nhất',
     'title' => 'Blogs',
 ])
 <!-- End Hero -->

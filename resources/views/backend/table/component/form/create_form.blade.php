@@ -5,7 +5,7 @@
         <div class="row">
             <!-- Tên bàn EN-->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="name" class="form-label">{{ __('messages.table.fields.name_en') }}</label>
+                <label for="name" class="form-label">{{ __('messages.table.fields.name_en') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name.en') is-invalid @enderror" id="name" name="name[en]"
                        value="{{ old('name.en') }}" placeholder="{{ __('messages.table.fields.name_en') }}">
 
@@ -15,7 +15,7 @@
             </div>
             <!-- Tên bàn VI-->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="name" class="form-label">{{ __('messages.table.fields.name_vi') }}</label>
+                <label for="name" class="form-label">{{ __('messages.table.fields.name_vi') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name" name="name[vi]"
                        value="{{ old('name.vi') }}" placeholder="{{ __('messages.table.fields.name_vi') }}">
 
@@ -29,7 +29,7 @@
         <div class="row">
             <!-- Mô tả  EN-->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="description" class="form-label">{{ __('messages.table.fields.description_en') }}</label>
+                <label for="description" class="form-label">{{ __('messages.table.fields.description_en') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('description.en') is-invalid @enderror" id="description2"
                        name="description[en]" value="{{ old('description.en') }}" placeholder="{{ __('messages.table.fields.description_en') }}">
                 @error('description.en')
@@ -39,7 +39,7 @@
 
             <!-- Mô tả VI-->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="description" class="form-label">{{ __('messages.table.fields.description_vi') }}</label>
+                <label for="description" class="form-label">{{ __('messages.table.fields.description_vi') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('description.vi') is-invalid @enderror" id="description"
                        name="description[vi]" value="{{ old('description.vi') }}" placeholder="{{ __('messages.table.fields.description_vi') }}">
                 @error('description.vi')
@@ -51,7 +51,7 @@
         <div class="row">
             <!-- Trạng thái -->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="status" class="form-label">{{ __('messages.table.fields.status') }}</label>
+                <label for="status" class="form-label">{{ __('messages.table.fields.status') }} <span class="text-danger">*</span></label>
                 <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
                     <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
                     <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>Occupied</option>
@@ -67,7 +67,7 @@
 
             <!-- Sức chứa -->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="capacity" class="form-label">{{ __('messages.table.fields.capacity') }}</label>
+                <label for="capacity" class="form-label">{{ __('messages.table.fields.capacity') }} <span class="text-danger">*</span></label>
                 <input type="number" class="form-control @error('capacity') is-invalid @enderror" id="capacity"
                        name="capacity" value="{{ old('capacity') }}" min="1" required>
                 @error('capacity')
@@ -75,18 +75,6 @@
                 @enderror
             </div>
         </div>
-
-        {{-- <!-- Vị trí -->
-        <div class="mb-2">
-            <label for="position" class="form-label">{{ __('messages.table.fields.position') }}</label>
-            <input type="number" class="form-control @error('position') is-invalid @enderror" id="position"
-                   name="position" value="{{ old('position') }}" placeholder="{{ __('messages.table.fields.position') }}" onkeyup="checkPosition(this)"
-                   required>
-            @error('position')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div> --}}
-
     </div>
 
     <div class="d-flex justify-content-end mt-3">
