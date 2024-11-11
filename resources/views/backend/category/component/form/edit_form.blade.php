@@ -5,7 +5,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-lg-6 col-12 mb-2 mb-lg-1">
-                <label for="name[en]" class="form-label">{{ __('messages.' . $object . '.fields.name').' ('.__('messages.system.lang.en').')' }}</label>
+                <label for="name[en]" class="form-label">{{ __('messages.' . $object . '.fields.name').' ('.__('messages.system.lang.en').')' }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name.en') is-invalid @enderror" id="name[en]"
                     name="name[en]" value="{{ old('name.en', $categoryData->name['en'] ?? '') }}" onkeyup="generateSlug('name[en]', 'slug')" placeholder="">
                 @error('name.en')
@@ -13,7 +13,7 @@
                 @enderror
             </div>
             <div class="col-lg-6 col-12 mb-2 mb-lg-1">
-                <label for="name[vi]" class="form-label">{{ __('messages.' . $object . '.fields.name').' ('.__('messages.system.lang.vi').')' }}</label>
+                <label for="name[vi]" class="form-label">{{ __('messages.' . $object . '.fields.name').' ('.__('messages.system.lang.vi').')' }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name[vi]"
                     name="name[vi]" value="{{ old('name.vi', $categoryData->name['vi'] ?? '') }}" placeholder="">
                 @error('name.vi')
@@ -25,7 +25,7 @@
         <!--end row-->
         <div class="row">
             <div class="col-lg-6 col-12 mb-2 mb-lg-1">
-                <label for="name[en]" class="form-label">{{ __('messages.' . $object . '.fields.slug') }}</label>
+                <label for="name[en]" class="form-label">{{ __('messages.' . $object . '.fields.slug') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
                     name="slug" value="{{ old('slug', $categoryData->slug ?? '') }}" onkeyup="generateSlug('name[en]', 'slug')" placeholder="">
                 @error('slug')
@@ -33,7 +33,7 @@
                 @enderror
             </div>
             <div class="col-lg-6 col-12 mb-2 mb-lg-1">
-                <label for="status" class="form-label mt-2">{{ __('messages.system.status') }}</label>
+                <label for="status" class="form-label mt-2">{{ __('messages.system.status') }} <span class="text-danger">*</span></label>
                 <select class="form-select form-select-lm @error('status') is-invalid @enderror" name="status"
                     id="status">
                     @foreach(__('messages.category.status') as $key => $value)

@@ -9,7 +9,7 @@
                     <div class="col-md-12 col-lg-12">
                         <div class="card">
                             <label for="profile_picture"
-                                class="form-label">{{ __('messages.system.button.upload') }}</label>
+                                class="form-label">{{ __('messages.system.button.upload') }} <span class="text-danger">*</span></label>
                             <div class="card-body pt-0">
                                 <div class="d-grid">
                                     <div class="row mb15">
@@ -18,7 +18,7 @@
                                                 <input type="file" id="imageInput" name="image" accept="image/*"
                                                     hidden />
                                                 <label class="btn-upload btn btn-primary mt-3"
-                                                    for="imageInput">{{ __('messages.system.button.upload') }}</label>
+                                                    for="imageInput">{{ __('messages.system.button.upload') }} <span class="text-danger">*</span></label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-6">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="col-lg-8 col-12 mb-2 mb-lg-1">
-                <label for="title" class="form-label">{{ __('messages.blog.fields.title') }}</label>
+                <label for="title" class="form-label">{{ __('messages.blog.fields.title') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
                     value="{{ old('title', $data->title) }}" onkeyup="generateSlug('title', 'slug')">
                 @error('title')
@@ -46,7 +46,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-lg-8 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2" for="slug">{{ __('messages.blog.fields.slug') }}</label>
+                <label class="form-label mt-2" for="slug">{{ __('messages.blog.fields.slug') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
                     value="{{ old('slug', $data->slug) }}">
                 @error('slug')
@@ -55,7 +55,7 @@
             </div>
 
             <div class="col-lg-4 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2">{{ __('messages.system.status') }}</label>
+                <label class="form-label mt-2">{{ __('messages.system.status') }} <span class="text-danger">*</span></label>
                 <select class="form-select form-select-lm @error('status') is-invalid @enderror" name="status"
                     id="status">
                     @foreach(__('messages.blog.status') as $key => $value)
@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-lg-12 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2" for="content">{{ __('messages.blog.fields.content') }}</label>
+                <label class="form-label mt-2" for="content">{{ __('messages.blog.fields.content') }} <span class="text-danger">*</span></label>
                 <textarea class="form-control @error('content') is-invalid @enderror" name="content"
                     id="summernote">{!! old('content', $data->content) !!}</textarea>
                 @error('content')

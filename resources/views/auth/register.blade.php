@@ -14,7 +14,7 @@
 
                 <div class="grid grid-cols-1">
                     <div class="mb-4">
-                        <label class="font-medium" for="RegisterFull_name">Your Name:</label>
+                        <label class="font-medium" for="RegisterFull_name">Tên của bạn <span style="color: red">*</span></label>
                         <input id="RegisterFull_name" type="text" name="full_name"
                                value="{{ old('full_name') }}"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('full_name') is-invalid @enderror">
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="font-medium" for="LoginPhone">Phone:</label>
+                        <label class="font-medium" for="LoginPhone">Số điện thoại <span style="color: red">*</span></label>
                         <input id="LoginPhone" type="number" name="phone"
                                value="{{ old('phone') }}"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('phone') is-invalid @enderror">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="font-medium" for="LoginEmail">Email Address:</label>
+                        <label class="font-medium" for="LoginEmail">Email <span style="color: red">*</span></label>
                         <input id="LoginEmail" type="email" name="email"
                                value="{{ old('email') }}"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('email') is-invalid @enderror">
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="font-medium" for="LoginPassword">Password:</label>
+                        <label class="font-medium" for="LoginPassword">Mật khẩu <span style="color: red">*</span></label>
                         <input id="LoginPassword" type="password" name="password"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0">
                     </div>
@@ -52,13 +52,13 @@
                     <div class="mb-4">
                         <input type="submit"
                                class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-md w-full"
-                               value="Register">
+                               value="Đăng ký">
                     </div>
 
                     <div class="text-center">
-                        <span class="text-slate-400 me-2">Already have an account ? </span> <a
+                        <span class="text-slate-400 me-2">Bạn đã có tài khoản? </span> <a
                             href="{{ route('login') }}"
-                            class="text-slate-900 dark:text-white font-bold inline-block">Sign in</a>
+                            class="text-slate-900 dark:text-white font-bold inline-block">Đăng nhập</a>
                     </div>
                 </div>
             </form>
