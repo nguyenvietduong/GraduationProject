@@ -26,7 +26,7 @@
     <!-- Keep this column for status dropdown -->
     @php
     $status = request('status') ?: old('status');
-    $statuses = __('messages.account.status');
+    $statuses = __('messages.reservation.status');
     @endphp
     <select name="status" class="form-select status filter">
         @foreach ($statuses as $key => $option)

@@ -65,7 +65,7 @@ class InvoiceController extends Controller
         $invoice_item = $request->invoice_item;
         $total_payment = $request->total_payment;
         $voucher_discount = $request->voucher_discount;
-        $code = null;
+        $code = '';
         if(isset($request->code)){
             $code = Promotion::where('code',$request->code)->first();
         }

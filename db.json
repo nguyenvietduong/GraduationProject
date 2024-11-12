@@ -69,6 +69,146 @@
           "total": 40000
         }
       ]
+    },
+    {
+      "id": "13",
+      "reservation_id": "13",
+      "totalAmount": 110000,
+      "invoice_item": [
+        {
+          "id": 37,
+          "name": "Bánh mì trứng",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 38,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 39,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        },
+        {
+          "id": 40,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "reservation_id": "13",
+      "totalAmount": 75000,
+      "invoice_item": [
+        {
+          "id": 37,
+          "name": "Bánh mì trứng",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 38,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 39,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "reservation_id": "14",
+      "totalAmount": 225000,
+      "invoice_item": [
+        {
+          "id": 37,
+          "name": "Bánh mì trứng",
+          "quantity": 2,
+          "price": 20000,
+          "total": 40000
+        },
+        {
+          "id": 46,
+          "name": "Bánh mì chả cá",
+          "quantity": 1,
+          "price": 22000,
+          "total": 22000
+        },
+        {
+          "id": 57,
+          "name": "Thịt kho tàu",
+          "quantity": 1,
+          "price": 70000,
+          "total": 70000
+        },
+        {
+          "id": 56,
+          "name": "Cơm bò nướng",
+          "quantity": 1,
+          "price": 63000,
+          "total": 63000
+        },
+        {
+          "id": 38,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "reservation_id": "14",
+      "totalAmount": 195000,
+      "invoice_item": [
+        {
+          "id": 37,
+          "name": "Bánh mì trứng",
+          "quantity": 2,
+          "price": 20000,
+          "total": 40000
+        },
+        {
+          "id": 46,
+          "name": "Bánh mì chả cá",
+          "quantity": 1,
+          "price": 22000,
+          "total": 22000
+        },
+        {
+          "id": 57,
+          "name": "Thịt kho tàu",
+          "quantity": 1,
+          "price": 70000,
+          "total": 70000
+        },
+        {
+          "id": 56,
+          "name": "Cơm bò nướng",
+          "quantity": 1,
+          "price": 63000,
+          "total": 63000
+        }
+      ]
     }
   ]
 }
