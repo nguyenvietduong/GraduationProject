@@ -1,5 +1,18 @@
 @extends('layout.frontend')
 @section('contentUser')
+<style>
+    /* Trái tim mặc định có màu xám */
+.favorite-action .fa-heart {
+    color: red;
+    transition: color 0.3s ease;
+}
+
+/* Khi yêu thích thì đổi sang màu đỏ */
+.favorite-action .fa-heart.favorited {
+    color: red;
+}
+
+</style>
 <!-- Start Hero -->
 <!-- Slide -->
 <section class="swiper-slider-hero relative block h-screen" id="home">
@@ -385,10 +398,11 @@
                                 @if(auth()->check())
                                 <div class="favorite-action text-xl text-center">
                                     <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">
+                                        <!-- Icon trái tim với màu đỏ -->
                                         <i id="favorite-icon-{{ $menu->id }}"
                                             class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
                                     </a>
-                                </div>
+                                </div>  
                                 @endif
                                 @include('backend.ajax.favorite')
 
