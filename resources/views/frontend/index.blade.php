@@ -1,27 +1,14 @@
 @extends('layout.frontend')
 @section('contentUser')
-<style>
-    /* Trái tim mặc định có màu xám */
-.favorite-action .fa-heart {
-    color: red;
-    transition: color 0.3s ease;
-}
-
-/* Khi yêu thích thì đổi sang màu đỏ */
-.favorite-action .fa-heart.favorited {
-    color: red;
-}
-
-</style>
-<!-- Start Hero -->
-<!-- Slide -->
-<section class="swiper-slider-hero relative block h-screen" id="home">
-    <div class="swiper-container absolute end-0 top-0 w-full h-full">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide flex items-center overflow-hidden">
-                <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;"
-                    data-background="/frontend/assets/images/bg/bg1.jpg">
-                    <div class="absolute inset-0 bg-slate-900/60"></div>
+    <!-- Start Hero -->
+    <!-- Slide -->
+    <section class="swiper-slider-hero relative block h-screen" id="home">
+        <div class="swiper-container absolute end-0 top-0 w-full h-full">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide flex items-center overflow-hidden">
+                    <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;"
+                        data-background="/frontend/assets/images/bg/bg1.jpg">
+                        <div class="absolute inset-0 bg-slate-900/60"></div>
                         <div class="container relative">
                             <div class="grid grid-cols-1">
                                 <h1
@@ -90,42 +77,9 @@
                             cách ăn uống quốc tế, đặc biệt là tại châu Á. Khám phá những quầy đồ ăn sôi động khi các đầu bếp
                             làm việc không ngừng.</p>
                     </div>
-                    <!--end grid-->
-                </div>
-            <!--end container-->
-        </div><!-- end slide-inner -->
-    </div> <!-- end swiper-slide -->
-    </div>
-    <!-- end swiper-wrapper -->
-
-    <!-- swipper controls -->
-    <!-- <div class="swiper-pagination"></div> -->
-    <div
-        class="swiper-button-next bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center">
-    </div>
-    <div
-        class="swiper-button-prev bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center">
-    </div>
-    </div>
-    <!--end container-->
-</section>
-<!--end section-->
-<!-- Hero End -->
-
-<!-- Start -->
-<section class="relative md:py-24 py-16">
-    <div class="container relative">
-        <div class="flex justify-center">
-            <div class="lg:w-1/2 md:w-2/3 w-full">
-                <div class="text-center">
-                    <h4 class="text-3xl font-semibold">Our Story</h4>
-
-                    <p class="text-slate-400 mt-6">Our buzzy food-hall style concept is inspired by international
-                        dining styles, especially in Asia. Explore the following fast-action food stations as busy
-                        chefs perform.</p>
                 </div>
             </div>
-        </div>
+
             <div class="flex justify-center mt-10">
                 <div class="lg:w-2/3 w-full">
                     <div class="grid md:grid-cols-2 gap-6">
@@ -137,7 +91,6 @@
                                 <h5 class="text-white/80 group-hover:text-white duration-500 text-xl">Thực Đơn Ăn Tối</h5>
                             </div>
                         </div>
-                    </div>
 
                         <div class="group relative">
                             <img src="/frontend/assets/images/menu/m3.jpg" alt="">
@@ -152,7 +105,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
         <div class="container relative md:mt-24 mt-16">
             <div class="grid grid-cols-1 pb-8 text-center">
@@ -162,12 +114,12 @@
                     phong cách ăn uống quốc tế, đặc biệt là tại châu Á.</p>
             </div><!--end grid-->
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-6 gap-6">
-            <div class="md:px-6 duration-500 text-center">
-                <div
-                    class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
-                    <i class="mdi mdi-pizza"></i>
-                </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-6 gap-6">
+                <div class="md:px-6 duration-500 text-center">
+                    <div
+                        class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
+                        <i class="mdi mdi-pizza"></i>
+                    </div>
 
                     <div class="content mt-7">
                         <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Đáp ứng phong cách ẩm
@@ -175,26 +127,24 @@
                         <p class="text-slate-400 mt-3">Đáp ứng phong cách ẩm thực của mọi người</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="md:px-6 duration-500 text-center">
-                <div
-                    class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
-                    <i class="mdi mdi-silverware"></i>
-                </div>
+                <div class="md:px-6 duration-500 text-center">
+                    <div
+                        class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
+                        <i class="mdi mdi-silverware"></i>
+                    </div>
 
                     <div class="content mt-7">
                         <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Chất lượng nhà hàng</a>
                         <p class="text-slate-400 mt-3"> Chất lượng nhà hàng đặt lên hàng đầu </p>
                     </div>
                 </div>
-            </div>
 
-            <div class="md:px-6 duration-500 text-center">
-                <div
-                    class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
-                    <i class="mdi mdi-moped-outline"></i>
-                </div>
+                <div class="md:px-6 duration-500 text-center">
+                    <div
+                        class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
+                        <i class="mdi mdi-moped-outline"></i>
+                    </div>
 
                     <div class="content mt-7">
                         <a href="#" class="title h5 text-lg font-medium hover:text-amber-500">Giao hàng tận nhà</a>
@@ -227,7 +177,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
                 <div class="lg:col-span-9 md:col-span-9">
                     <div id="grid" class="md:flex flex-wrap">
@@ -251,10 +200,7 @@
                             @endforeach
                         @endforeach
                     </div>
-                    @endforeach
-                    @endforeach
                 </div>
             </div>
         </div>
     </section>
-@endsection
