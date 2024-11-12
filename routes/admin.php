@@ -168,6 +168,6 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
         });
 
-        Route::get('/search', [SearchController::class, 'search'])->name('search');
+        Route::get('search', [SearchController::class, 'search'])->name('search');
     });
 });

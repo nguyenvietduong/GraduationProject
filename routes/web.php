@@ -39,17 +39,5 @@ Route::get('favortite/{menus}', [FavoriteController::class,  'favorite'])->name(
 Route::group(['middleware' => 'profile'], function () {
     Route::get('profile', [ProfilesController::class, 'profile'])->name('profile');
     Route::post('profile', [ProfilesController::class,'update_profile'])->name('profile');
-    
-
 });
-Route::get('notification', function () {
-    $dataNotification = [
-        'title' => 'Hello Tân',
-        'message' => 'Hay',
-        'type' => 'success',
-        'data' => 'Duong2004',
-        'created_at' => '24/10/2024 16:04:33',
-    ];
 
-    return event(new NotificationEvent($dataNotification));
-});
