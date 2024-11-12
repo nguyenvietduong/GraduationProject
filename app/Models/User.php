@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Favorite;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -100,5 +101,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Notification::class, 'notification_user')
                     ->withTimestamps();
-    }    
+    }
+    
+    public function favorites()
+{
+    return $this->belongsToMany(Menu::class, 'favorites');
+}
+
+
 }

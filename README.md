@@ -11,6 +11,7 @@ php artisan migrate
 php artisan db:seed --class=RoleSeeder
 php artisan db:seed --class=UserSeeder
 php artisan db:seed --class=RestaurantSeeder
+php artisan db:seed --class=TableSeeder
 php artisan db:seed --class=CategorySeeder
 php artisan db:seed --class=TableSeeder
 
