@@ -13,29 +13,15 @@
                 </div><!--end card-header-->
                 <div class="card-body pt-0">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <h6>{{ __('messages.promotion.system.vn') }} </h6>
+                        <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
                                     <input class="form-control mb-2" type="text"
-                                        value="{{ $promotionData->title['vn'] }}" name="title[vn]" readonly>
+                                        value="{{ $promotionData->title }}" name="title" readonly>
                                     <label
                                         class="mb-2">{{ __('messages.' . $object . '.fields.description') }} <span class="text-danger">*</span></label>
-                                    <textarea name="description[vn]" class="form-control" id="" cols="30" rows="10">{{ $promotionData->description['vn'] }}</textarea>
-                                </div><!-- end col -->
-                            </div><!-- end row -->
-                        </div>
-                        <div class="col-lg-6">
-                            <h6>{{ __('messages.promotion.system.en') }} </h6>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
-                                    <input class="form-control mb-2" type="text"
-                                        value="{{ $promotionData->title['en'] }}" name="title[en]" readonly>
-                                    <label
-                                        class="mb-2">{{ __('messages.' . $object . '.fields.description') }} <span class="text-danger">*</span></label>
-                                    <textarea name="description[en]" class="form-control" id="" cols="30" rows="10">{{ $promotionData->description['en'] }}</textarea>
+                                    <textarea name="description" class="form-control" id="" cols="30" rows="10">{{ $promotionData->description }}</textarea>
                                 </div><!-- end col -->
                             </div><!-- end row -->
                         </div>

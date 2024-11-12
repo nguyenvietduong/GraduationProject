@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-12">
                 @include('backend.component.card-component', [
-                    'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
+                    'title' => __('messages.system.table.title') . ' đơn hàng',
                     'totalRecords' => $totalRecords,
                     'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
                 ])

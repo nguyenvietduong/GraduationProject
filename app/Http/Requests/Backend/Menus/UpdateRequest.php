@@ -25,11 +25,10 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|array',
-            'name.*' => 'required|string',
-            'slug' => 'required|string|unique:menus,slug,'.$this->id,
+            'name' => 'required',
+            'slug' => 'required|string|unique:menus,slug,' . $this->id,
             'price' => 'required|numeric|between:0,99999999.99',
-            'description.*' => 'nullable',
+            'description' => 'nullable',
             'category_id' => 'required|integer|exists:categories,id',
             'image_url' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'status' => 'required|in:active,inactive'
@@ -43,15 +42,12 @@ class UpdateRequest extends FormRequest
      */
     public function attributes(): array
     {
-        if(app()->getLocale() !== "en"){
-            return [
-                'name' => 'tên món ăn',
-                'price' => 'giá',
-                'description' => 'mô tả',
-                'category_id' => 'danh mục',
-                'image_url' => 'ảnh',
-            ];
-        }
-        return [];
+        return [
+            'name' => 'tên món ăn',
+            'price' => 'giá',
+            'description' => 'mô tả',
+            'category_id' => 'danh mục',
+            'image_url' => 'ảnh',
+        ];
     }
 }

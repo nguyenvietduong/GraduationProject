@@ -5,24 +5,23 @@
     <div class="form-group">
         <div class="row">
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name_vi" class="form-label">{{ __('messages.' . $object . '.fields.name_vi') }} <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name_vi"
-                    name="name[vi]" value="{{ old('name.vi') }}" placeholder="">
-                @error('name.vi')
+                <label for="name" class="form-label">Tên món ăn <span class="text-danger">*</span></label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                    name="name" value="{{ old('name') }}" onkeyup="generateSlug('name', 'slug')" placeholder="">
+                @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name_en" class="form-label">{{ __('messages.' . $object . '.fields.name_en') }} <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('name.en') is-invalid @enderror" id="name_en"
-                    name="name[en]" value="{{ old('name.en') }}" placeholder=""
-                    onkeyup="generateSlug('name_en', 'slug')">
-                @error('name.en')
+            <div class="col-lg-6 col-6 mb-2 mb-lg-1">
+                <label for="slug" class="form-label">{{ __('messages.' . $object . '.fields.slug') }}  <span class="text-danger">*</span></label>
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
+                    name="slug" value="{{ old('slug') }}" onkeyup="generateSlug('name', 'slug')" placeholder="">
+                @error('slug')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="col-lg-12 col-12 col-sm-12 mb-2 ">
+            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
                 <label for="price" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }} <span class="text-danger">*</span></label>
                 <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
                     name="price" value="{{ old('price') }}" currency="VND" placeholder="" min="0">
@@ -32,22 +31,12 @@
             </div>
 
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="description_vi"
-                    class="form-label">{{ __('messages.' . $object . '.fields.description_vi') }}  <span class="text-danger">*</span></label>
-                <textarea name="description[vi]" id="description_vi" cols="30" rows=""
+                <label for="description"
+                    class="form-label">Mô tả  <span class="text-danger">*</span></label>
+                <textarea name="description" id="description_vi" cols="30" rows=""
                     class="form-control
-                 @error('description[vi]') is-invalid @enderror">{{ old('description.vi') }}</textarea>
-                @error('description[vi]')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="description_en"
-                    class="form-label">{{ __('messages.' . $object . '.fields.description_en') }} <span class="text-danger">*</span></label>
-                <textarea name="description[en]" id="description_en" cols="30" rows="2"
-                    class="form-control
-                 @error('description[en]') is-invalid @enderror">{{ old('description.en') }}</textarea>
-                @error('description[en]')
+                 @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                @error('description')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -57,7 +46,7 @@
                 <select name="category_id" id="category_id"
                     class="form-select form-select-lm  @error('category_id') is-invalid @enderror">
                     @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ renderDataByLang($category->name) }}</option>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
                 @error('category_id')
@@ -65,7 +54,7 @@
                 @enderror
             </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.status') }} <span class="text-danger">*</span></label>
+                <label for="status" class="form-label">{{ __('messages.' . $object . '.fields.status') }} <span class="text-danger">*</span></label>
                 <select name="status" id="status"
                     class="form-select form-select-lm  @error('status') is-invalid @enderror" id="status">
                     @php
@@ -82,16 +71,8 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-lg-6 col-6 mb-2 mb-lg-1">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.slug') }}  <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
-                    name="slug" value="{{ old('slug') }}" placeholder="">
-                @error('slug')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.image_url') }} <span class="text-danger">*</span></label>
+                <label for="image_url" class="form-label">{{ __('messages.' . $object . '.fields.image_url') }} <span class="text-danger">*</span></label>
                 <input type="file" name="image_url" id="image_url"
                     class="form-control @error('image_url') is-invalid @enderror">
                 @error('image_url')

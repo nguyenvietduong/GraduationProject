@@ -12,8 +12,8 @@
                 </li>
 
                 <!-- Nhà hàng -->
-                <li class="nav-item {{ set_active(['restaurant', 'admin']) }}">
-                    <a class="nav-link" href="{{ route('admin.restaurant') }}">
+                <li class="nav-item {{ set_active(['restaurants', 'admin']) }}">
+                    <a class="nav-link" href="{{ route('admin.restaurants') }}">
                         <i class="fas fa-store-alt menu-icon"></i>
                         <span>Nhà hàng</span>
                     </a>

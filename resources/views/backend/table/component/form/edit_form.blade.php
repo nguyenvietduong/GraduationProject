@@ -4,47 +4,22 @@
     @method('PUT')
     <div class="form-group">
         <div class="row">
-            <!-- Tên bàn EN -->
-            <div class="col-lg-6 col-12 mb-2">
-                <label for="name" class="form-label">{{ __('messages.table.fields.name_en') }} <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('name.en') is-invalid @enderror" id="name" name="name[en]"
-                       value="{{ $tableData->name['en'] }}" placeholder="{{ __('messages.table.fields.name_en') }}">
-
-                @error('name.en')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
             <!-- Tên bàn VI -->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="name" class="form-label">{{ __('messages.table.fields.name_vi') }} <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('name.vi') is-invalid @enderror" id="name" name="name[vi]"
-                       value="{{ $tableData->name['vi'] }}" placeholder="{{ __('messages.table.fields.name_vi') }}">
+                <label for="name" class="form-label">Tên bàn <span class="text-danger">*</span></label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                       value="{{ $tableData->name }}" placeholder="Tên bàn">
 
-                @error('name.vi')
+                @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-        </div>
-
-        <div class="row">
-            <!-- Mô tả EN -->
             <div class="col-lg-6 col-12 mb-2">
-                <label for="description" class="form-label">{{ __('messages.table.fields.description_en') }} <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('description.en') is-invalid @enderror" id="description"
-                       name="description[en]" value="{{ $tableData->description['vi'] }}" placeholder="{{ __('messages.table.fields.description_en') }}">
-                @error('description.en')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- Mô tả VI-->
-            <div class="col-lg-6 col-12 mb-2">
-                <label for="description" class="form-label">{{ __('messages.table.fields.description_vi') }} <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('description.vi') is-invalid @enderror" id="description"
-                       name="description[vi]" value="{{ $tableData->description['vi'] }}" placeholder="{{ __('messages.table.fields.description_vi') }}">
-                @error('description.vi')
+                <label for="description" class="form-label">Mô tả <span class="text-danger">*</span></label>
+                <input type="text" class="form-control @error('description') is-invalid @enderror" id="description"
+                       name="description" value="{{ $tableData->description }}" placeholder="Mô tả">
+                @error('description')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

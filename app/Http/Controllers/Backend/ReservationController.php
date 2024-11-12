@@ -53,9 +53,10 @@ class ReservationController extends Controller
 
         // Apply filters from the request
         $filters = [
-            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
-            'start_date' => $params['start_date'] ?? '',
-            'end_date' => $params['end_date'] ?? '',
+            'reservation_time' => $params['reservation_time'] ?? '', 
+            'name' => $params['name'] ?? '', 
+            'email' => $params['email'] ?? '', 
+            'phone' => $params['phone'] ?? '',
         ];
 
         // Get the per_page value

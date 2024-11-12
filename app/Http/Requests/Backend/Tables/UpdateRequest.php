@@ -24,12 +24,10 @@ class UpdateRequest extends FormRequest
     {
         $tableId = $this->route('id'); // Lấy ID của bàn từ route
         return [
-            'name.en' => 'required|string|max:255', // Mỗi tên bàn phải là một chuỗi
-            'name.vi' => 'required|string|max:255', // Mỗi tên bàn phải là một chuỗi
+            'name' => 'required|string|max:255', // Mỗi tên bàn phải là một chuỗi
             'capacity' => 'required|integer|min:1', // Số người tối đa phải là số nguyên dương
             'status' => 'required|in:available,occupied,reserved,out_of_service', // Trạng thái phải nằm trong danh sách cho phép
-            'description.en' => 'nullable|string|max:255', // Mỗi mô tả phải là một chuỗi, nếu có
-            'description.vi' => 'nullable|string|max:255', // Mỗi mô tả phải là một chuỗi, nếu có
+            'description' => 'nullable|string|max:255', // Mỗi mô tả phải là một chuỗi, nếu có
             'position' => 'nullable|integer', // Vị trí bàn phải là số
         ];
     }
@@ -58,21 +56,16 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.en.required' => __('validation.required', ['attribute' => __('attributes.name')]),
-            'name.en.string' => __('validation.string', ['attribute' => __('attributes.name')]),
-            'name.en.max' => __('validation.max', ['attribute' => __('attributes.name')]),
-            'name.vi.required' => __('validation.required', ['attribute' => __('attributes.name')]),
-            'name.vi.string' => __('validation.string', ['attribute' => __('attributes.name')]),
-            'name.vi.max' => __('validation.max', ['attribute' => __('attributes.name')]),
+            'name.required' => __('validation.required', ['attribute' => __('attributes.name')]),
+            'name.string' => __('validation.string', ['attribute' => __('attributes.name')]),
+            'name.max' => __('validation.max', ['attribute' => __('attributes.name')]),
             'capacity.required' => __('validation.required', ['attribute' => __('attributes.capacity')]),
             'capacity.integer' => __('validation.integer', ['attribute' => __('attributes.capacity')]),
             'capacity.min' => __('validation.min', ['attribute' => __('attributes.capacity')]),
             'status.required' => __('validation.required', ['attribute' => __('attributes.status')]),
             'status.in' => __('validation.in', ['attribute' => __('attributes.status')]),
-            'description.en.string' => __('validation.string', ['attribute' => __('attributes.description')]),
-            'description.en.max' => __('validation.max', ['attribute' => __('attributes.description')]),
-            'description.vi.string' => __('validation.string', ['attribute' => __('attributes.description')]),
-            'description.vi.max' => __('validation.max', ['attribute' => __('attributes.description')]),
+            'description.string' => __('validation.string', ['attribute' => __('attributes.description')]),
+            'description.max' => __('validation.max', ['attribute' => __('attributes.description')]),
             'position.required' => __('validation.required', ['attribute' => __('attributes.position')]),
             'position.regex' => __('validation.regex', ['attribute' => __('attributes.position')]).'A1,B2.... to H8.',
             'position.unique' => __('validation.unique', ['attribute' => __('attributes.position')]),

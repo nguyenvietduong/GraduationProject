@@ -181,13 +181,29 @@
                                 <select name="input-time" id="input-time"
                                     class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
                                     <option value="">{{ __('messages.reservation.fields.time') }}</option>
-                                    @for ($i = 8; $i < 24; $i += 0.5)
+                                    @php
+                                        $opening_hours = $restaurantDatas->opening_hours; // E.g., 7.0 (7 AM)
+                                        $closing_time = $restaurantDatas->closing_time; // E.g., 22.5 (10:30 PM)
+                                    @endphp
+
+                                    @for ($i = (float) $opening_hours; $i <= (float) $closing_time; $i += 0.5)
                                         @php
+                                            // Calculate hour and minute
                                             $displayHour = floor($i);
                                             $displayMinute = ($i - $displayHour) * 60;
-                                            $formattedTime = sprintf('%02d:%02d', $displayHour, $displayMinute);
+
+                                            // Format in 12-hour with AM/PM
+                                            $formattedTime = sprintf(
+                                                '%02d:%02d %s',
+                                                $displayHour % 12 ?: 12,
+                                                $displayMinute,
+                                                $displayHour < 12 ? 'AM' : 'PM',
+                                            );
+
+                                            // Create the time value in 24-hour format (HH:mm)
                                             $timeValue = sprintf('%02d:%02d', $displayHour, $displayMinute);
                                         @endphp
+
                                         <option value="{{ $timeValue }}" data-available="false">{{ $formattedTime }}
                                         </option>
                                     @endfor
@@ -320,9 +336,9 @@
                         success: function(response) {
                             if (response.success) {
                                 const fullyBookedTimes = response
-                                .fullyBookedTimes;
-                                const currentDate = new Date(); 
-                                const isToday = (formatDate(currentDate) ===date);
+                                    .fullyBookedTimes;
+                                const currentDate = new Date();
+                                const isToday = (formatDate(currentDate) === date);
 
                                 $('#input-time option').each(function() {
                                     const timeSlot = $(this).val();

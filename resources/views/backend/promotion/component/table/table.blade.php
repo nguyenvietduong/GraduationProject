@@ -30,10 +30,7 @@
                     </td>
                     <td class="ps-0">
                         <p class="d-inline-block align-middle mb-0">
-                            {{ $item->title['vn'] ?? __('messages.system.no_data_available') }}
-                        </p> <br>
-                        <p class="d-inline-block align-middle mb-0">
-                            {{ $item->title['en'] ?? __('messages.system.no_data_available') }}
+                            {{ $item->title ?? __('messages.system.no_data_available') }}
                         </p>
                     </td>
                     <td class="ps-0">

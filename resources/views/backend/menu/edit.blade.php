@@ -11,7 +11,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <h4 class="card-title">{{ __('messages.system.button.update') }}
-                                    {{ __('messages.' . $object . '.title') }} - {{ renderDataByLang($menuData->name) }}</h4>
+                                    {{ __('messages.' . $object . '.title') }} - {{ $menuData->name }}</h4>
                             </div>
                         </div>
                     </div>
