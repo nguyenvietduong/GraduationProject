@@ -5,7 +5,7 @@
         <div class="row">
 
             <div class="col-lg-6 col-12 mb-2 mb-lg-1">
-                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.name') }}</label>
+                <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                     name="name" value="{{ old('name') }}" onkeyup="generateSlug('name', 'slug')" placeholder="">
                 @error('name')
@@ -13,7 +13,7 @@
                 @enderror
             </div>
             <div class="col-lg-6 col-12 mb-2 mb-lg-1">
-                <label for="slug" class="form-label">{{ __('messages.' . $object . '.fields.name') }}</label>
+                <label for="slug" class="form-label">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="slug"
                     value="{{ old('slug') }}" placeholder="">
                 @error('name')

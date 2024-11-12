@@ -53,9 +53,10 @@ class ReservationController extends Controller
 
         // Apply filters from the request
         $filters = [
-            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
-            'start_date' => $params['start_date'] ?? '',
-            'end_date' => $params['end_date'] ?? '',
+            'reservation_time' => $params['reservation_time'] ?? '', 
+            'name' => $params['name'] ?? '', 
+            'email' => $params['email'] ?? '', 
+            'phone' => $params['phone'] ?? '',
         ];
 
         // Get the per_page value
@@ -97,6 +98,25 @@ class ReservationController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+        /**
+     * Show the form for editing a reservation.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
+    public function detail($id)
+    {
+        $reservation = $this->reservationService->getReservationDetail($id);
+        if ($reservation) {
+            return view(self::PATH_VIEW . __FUNCTION__, [
+                'data' => $reservation,
+                'object' => 'reservation',
+            ]);
+        }
+
+        abort(404);
     }
 
     /**

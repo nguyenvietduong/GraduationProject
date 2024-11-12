@@ -61,17 +61,18 @@ class NotificationController extends Controller
 
     public function search(NotificationListRequest $request)
     {
-        session()->forget('image_temp'); // Clear temporary image value
-
         // Validate the request data
         $request->validated();
 
         // Extract filters from the request, and use an empty string if 'keyword' is not provided
         $keyword = $request->input('keyword', '');
+        $status = $request->input('status', '');
+        $date = $request->input('date', '');
 
-        // Set filters based on the keyword only if it has a value
         $filters = [
-            'search' => $keyword, // Empty string will fetch all notifications
+            'search' => $keyword,
+            'status' => $status,
+            'date' => $date,
         ];
 
         // Fetch notifications based on the filters

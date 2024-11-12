@@ -26,7 +26,7 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ app()->getLocale() == 'vi' ? $item->name['vi'] : $item->name['en'] ?? __('messages.system.no_data_available') }}
+                    {{ $item->name ?? __('messages.system.no_data_available') }}
                 </p>
             </td>
             <td>

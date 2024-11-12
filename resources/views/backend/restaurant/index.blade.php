@@ -133,11 +133,7 @@
                                                 <li class="mt-2">
                                                     <i class="las iconoir-chat-bubble me-2 text-secondary fs-22 align-middle"></i>
                                                     <b>{{ __('messages.restaurant.fields.description') }}</b> : 
-                                                    @if ($currentLocale == 'vi')
-                                                        {{ $description['vi'] ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Việt -->
-                                                    @else
-                                                        {{ $description['en'] ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Anh -->
-                                                    @endif
+                                                    {{ $restaurantDatas->description ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Việt -->
                                                 </li>
                                                 
                                                 
@@ -171,7 +167,7 @@
                                             @csrf
                                             <div class="mb-3  col-12 ">
                                                 <label for="name" class="form-label">{{
-                                                    __('messages.restaurant.fields.name') }}</label>
+                                                    __('messages.restaurant.fields.name') }} <span class="text-danger">*</span></label>
                                                 <input type="text" onkeyup="generateSlug('name', 'slug')"
                                                     class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                                                     value="{{ $restaurantDatas->name }}"
@@ -184,7 +180,7 @@
                                             </div>
                                             <div class="mb-3  col-12 ">
                                                 <label for="slug" class="form-label">{{
-                                                    __('messages.restaurant.fields.slug') }}</label>
+                                                    __('messages.restaurant.fields.slug') }} <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
                                                     value="{{ $restaurantDatas->slug }}">
 
@@ -192,7 +188,7 @@
                                             </div>
                                             <div class="mb-3  col-12">
                                                 <label for="phone" class="form-label">{{
-                                                    __('messages.restaurant.fields.phone') }}</label>
+                                                    __('messages.restaurant.fields.phone') }} <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone"
                                                     value="{{ $restaurantDatas->phone }}"
                                                     placeholder="{{ __('messages.restaurant.fields.phone_placeholer') }}">
@@ -200,7 +196,7 @@
                                             </div>
                                             <div class="mb-3  col-12">
                                                 <label for="address" class="form-label">{{
-                                                    __('messages.restaurant.fields.address') }}</label>
+                                                    __('messages.restaurant.fields.address') }} <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address"
                                                     value="{{ $restaurantDatas->address }}"
                                                     placeholder="{{ __('messages.restaurant.fields.address_placeholer') }}">
@@ -208,7 +204,7 @@
                                             </div>
                                             <div class="mb-3  col-12">
                                                 <label for="opening_hours" class="form-label">{{
-                                                    __('messages.restaurant.fields.opening_hours') }}</label>
+                                                    __('messages.restaurant.fields.opening_hours') }} <span class="text-danger">*</span></label>
                                                 <input type="time" class="form-control @error('opening_hours') is-invalid @enderror" id="opening_hours"
                                                     name="opening_hours" value="{{ $restaurantDatas->opening_hours }}"
                                                     placeholder="{{ __('messages.restaurant.fields.opening_hours_placeholder') }}">
@@ -216,7 +212,7 @@
                                             </div>
                                             <div class="mb-3  col-12">
                                                 <label for="closing_time" class="form-label">{{
-                                                    __('messages.restaurant.fields.closing_time') }}</label>
+                                                    __('messages.restaurant.fields.closing_time') }} <span class="text-danger">*</span></label>
                                                 <input type="time" class="form-control @error('closing_time') is-invalid @enderror" id="closing_time"
                                                     name="closing_time" value="{{ $restaurantDatas->closing_time }}"
                                                     placeholder="{{ __('messages.restaurant.fields.closing_time_placeholder') }}">
@@ -224,7 +220,7 @@
                                             </div>
                                             <div class="mb-3  col-12">
                                                 <label for="google_map_link" class="form-label">{{
-                                                    __('messages.restaurant.fields.google_map_link') }}</label>
+                                                    __('messages.restaurant.fields.google_map_link') }} <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('google_map_link') is-invalid @enderror" id="google_map_link"
                                                     name="google_map_link"
                                                     value="{{ $restaurantDatas->google_map_link }}"
@@ -232,14 +228,14 @@
                                                     <div id="google_map_link_error" class="error-message text-danger"></div>
                                             </div>
                                             <div class="mb-3 col-12">
-                                                <label for="description_vn" class="form-label">{{ __('messages.restaurant.fields.description') }} (VI)</label>
+                                                <label for="description_vn" class="form-label">{{ __('messages.restaurant.fields.description') }} (VI) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('description.vi') is-invalid @enderror" id="description_vn" name="description[vi]" 
                                                 value="{{ json_decode($restaurantDatas->description)->vi ?? '' }}" required>
                                                 <div id="description_error" class="error-message text-danger">@error('description.vi') {{ $message }} @enderror</div>
                                             </div>
                                         
                                             <div class="mb-3 col-12">
-                                                <label for="description_en" class="form-label">{{ __('messages.restaurant.fields.description') }} (EN)</label>
+                                                <label for="description_en" class="form-label">{{ __('messages.restaurant.fields.description') }} (EN) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('description.en') is-invalid @enderror" id="description_en" name="description[en]" 
                                                 value="{{ json_decode($restaurantDatas->description)->en ?? '' }}" required>
                                                 <div id="description_error" class="error-message text-danger">@error('description.en') {{ $message }} @enderror</div>

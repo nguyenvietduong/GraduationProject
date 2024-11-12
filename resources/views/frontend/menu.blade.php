@@ -17,7 +17,7 @@ $title = 'Menu'
                             data-group="all">All</li>
                         @foreach ($categories as $category)
                         <li class="inline-block text-sm uppercase font-medium mb-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                            data-group="{{ $category->id }}">{{ $category->name[app()->getLocale()] ?? __('Unknown Name') }}</li>
+                            data-group="{{ $category->id }}">{{ $category->name ?? __('Unknown Name') }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -31,10 +31,10 @@ $title = 'Menu'
             @foreach ($category->menus as $menu)
             <div class="group lg:w-1/5 md:w-1/3 picture-item p-3 mt-6" data-groups='["{{ $category->id }}"]'>
                 <img src="{{ checkFile($menu->image_url) }}"
-                    class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]" alt="{{ $menu->name[app()->getLocale()] ?? 'No Name' }}">
+                    class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]" alt="{{ $menu->name ?? 'No Name' }}">
 
                 <div class="mt-4 text-center">
-                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name[app()->getLocale()] ?? __('Food Name') }}</a>
+                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name ?? __('Food Name') }}</a>
 
                     <h5 class="text-amber-500 font-medium mt-4">{{ $menu->price }} VND</h5>
                 </div>

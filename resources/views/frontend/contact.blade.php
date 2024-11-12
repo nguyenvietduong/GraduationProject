@@ -218,19 +218,34 @@
 
                                 <div class="col-span-12">
 
-                                    <label for="invoiceCode" class="block text-sm font-medium text-gray-700">Invoice Code :</label>
-                                    <input type="text" id="invoiceCode" name="invoiceCode"
+                                    <label for="invoiceCode" class="block text-sm font-medium text-gray-700">Họ tên đặt đơn <span style="color: red">*</span></label>
+                                    <input type="text" id="invoiceCode" name="name"
                                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        placeholder="Enter your Invoice Code">
+                                        placeholder="Vui lòng nhập họ tên đặt đơn">
+                                </div>
+
+                                <div class="col-span-12">
+
+                                    <label for="invoiceCode" class="block text-sm font-medium text-gray-700">Số điện thoại đặt đơn <span style="color: red">*</span></label>
+                                    <input type="text" id="invoiceCode" name="phone"
+                                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        placeholder="Vui lòng nhập số điện thoại đặt đơn">
+                                </div>
+
+                                <div class="col-span-12">
+
+                                    <label for="invoiceCode" class="block text-sm font-medium text-gray-700">Email đặt đơn <span style="color: red">*</span></label>
+                                    <input type="text" id="invoiceCode" name="email"
+                                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        placeholder="Vui lòng nhập email đặt đơn">
                                 </div>
 
                                 <div class="col-span-12">
                                     <label
-                                        for="comment">{{ __('messages.system.front_end.page.about_us.contact_us.form.comment') }}
-                                        :</label>
+                                        for="comment">{{ __('messages.system.front_end.page.about_us.contact_us.form.comment') }} <span style="color: red">*</span></label>
                                     <textarea name="comment" id="comment"
                                         class="w-full py-2 px-3 h-28 bg-white dark:bg-slate-900 dark:text-slate-200 rounded-md shadow-sm border border-gray-300 dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        placeholder="Enter your comment"></textarea>
+                                        placeholder="Vui lòng nhập bình luận của bạn"></textarea>
                                 </div>
 
                                 <div class="col-span-12">

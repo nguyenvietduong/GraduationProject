@@ -22,9 +22,4 @@ class Promotion extends Model
         'start_date',
         'end_date'
     ];
-
-    protected $casts = [
-        'title' => 'array', // hoặc 'json'
-        'description' => 'array',
-    ];
 }

@@ -62,7 +62,6 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Reservation does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Handle other errors if necessary
             throw new Exception('Unable to retrieve reservation details: ' . $e->getMessage());
         }
     }
@@ -76,37 +75,20 @@ class ReservationService extends BaseService implements ReservationServiceInterf
     public function createReservation(array $data)
     {
         try {
-            // Tạo thời gian đặt chỗ
+            // Kết hợp và kiểm tra thời gian đặt chỗ
             $reservation_time = \Carbon\Carbon::parse($data['date'] . ' ' . $data['input-time']);
             $data['reservation_time'] = $reservation_time;
-
-            // Kiểm tra bàn trống cho thời gian này
-            $availableTables = $this->tableRepository->checkAvailableTables($reservation_time, $data['guests']);
-            if ($availableTables->isEmpty()) {
-                throw new Exception('No tables are available for the selected time.');
-            }
-
-            // Duyệt qua danh sách bàn trống và kiểm tra trùng lặp
-            foreach ($availableTables as $table) {
-                // Kiểm tra nếu đã có đặt chỗ cùng bàn và thời gian này
-                $existingReservation = $this->reservationRepository->existingReservation($table->id, $data['reservation_time']);
-                // Nếu không trùng lặp, chọn bàn này
-                if (!$existingReservation) {
-                    $data['table_id'] = $table->id;
-                    $data['status'] = 'confirmed'; // Tự động xác nhận
-
-                    // Tạo đặt chỗ
-                    return $this->reservationRepository->createReservation($data);
-                }
-            }
-
-            // Nếu không tìm được bàn nào phù hợp, ném ngoại lệ
-            throw new Exception('No tables are available without conflicts for the selected time.');
+    
+            $data['status'] = 'confirmed'; // Tự động xác nhận trạng thái đặt chỗ
+    
+            // Tạo đặt chỗ và trả về kết quả
+            return $this->reservationRepository->createReservation($data);
+    
         } catch (Exception $e) {
             \Log::error('Unable to create reservation: ' . $e->getMessage());
             return false;
         }
-    }
+    }    
 
     /**
      * Update a reservation by its ID.

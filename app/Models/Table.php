@@ -17,11 +17,6 @@ class Table extends Model
         'position',
     ];
 
-    protected $casts = [
-        'name' => 'array',         // Tự động giải mã JSON thành mảng
-        'description' => 'array',  // Tự động giải mã JSON thành mảng
-    ];
-
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
