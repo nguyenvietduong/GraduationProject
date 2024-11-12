@@ -26,6 +26,8 @@ return [
             'choose_table' => 'Choose table',
             'choose_dish' => 'Choose dish',
             'change_dish' => 'Change dish',
+            'update_profile' => 'Change profile',   
+            'update_profiles' => 'Profile updated successfully',
             'confirm' => [
                 'title' => 'Are you sure?',
                 'text' => 'You won\'t be able to revert this!',
@@ -509,6 +511,7 @@ return [
             'email_placeholder' => 'Enter email',
             'phone' => 'Phone',
             'date' => 'Birthday',
+            'date_bd' => 'Enter birthday',
             'phone_placeholder' => 'Enter phone',
             'total_friends' => 'Total Friends',
             'address' => 'Address',
