@@ -169,7 +169,7 @@
                                     @foreach ($categories as $category)
                                         <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
                                             data-group="{{ $category->id }}">
-                                            {{ $category->name[app()->getLocale()] ?? __('Unknown Name') }}
+                                            {{ $category->name ?? __('Unknown Name') }}
                                         </li>
                                     @endforeach
                                 </ul>
@@ -186,7 +186,7 @@
                                     data-groups='["{{ $category->id }}"]'>
                                     <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
                                         <img src="{{ checkFile($menu->image_url) }}"
-                                            alt="{{ $menu->name[app()->getLocale()] ?? 'No Name' }}">
+                                            alt="{{ $menu->name ?? 'No Name' }}">
                                         <div
                                             class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
                                         </div>
@@ -194,7 +194,7 @@
                                         <div
                                             class="absolute -bottom-0 group-hover:bottom-6 start-6 end-6 text-center opacity-0 group-hover:opacity-100 duration-500">
                                             <a href="#"
-                                                class="text-lg h5 block text-white hover:text-amber-500 duration-500">{{ $menu->name[app()->getLocale()] ?? __('Food Name') }}</a>
+                                                class="text-lg h5 block text-white hover:text-amber-500 duration-500">{{ $menu->name ?? __('Food Name') }}</a>
                                             <h5 class="text-amber-500 font-medium">{{ $menu->price }} VND</h5>
                                         </div>
                                     </div>

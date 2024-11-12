@@ -133,11 +133,7 @@
                                                 <li class="mt-2">
                                                     <i class="las iconoir-chat-bubble me-2 text-secondary fs-22 align-middle"></i>
                                                     <b>{{ __('messages.restaurant.fields.description') }}</b> : 
-                                                    @if ($currentLocale == 'vi')
-                                                        {{ $description['vi'] ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Việt -->
-                                                    @else
-                                                        {{ $description['en'] ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Anh -->
-                                                    @endif
+                                                    {{ $restaurantDatas->description ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Việt -->
                                                 </li>
                                                 
                                                 

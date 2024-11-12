@@ -1,14 +1,5 @@
 <form action="{{ route(__('messages.' . $object . '.store.route')) }}" id="myForm" method="post">
     @csrf
-    {{-- @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif --}}
     <div class="row justify-content-center">
 
         <div class="row">
@@ -22,35 +13,18 @@
                 </div><!--end card-header-->
                 <div class="card-body pt-0">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <h6>{{ __('messages.promotion.system.vn') }}</h6>
+                        <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
-                                    <input class="form-control mb-2 @error('title.vn') is-invalid @enderror"
-                                        type="text" name="title[vn]" value="{{ old('title.vn') }}">
-                                    @error('title.vn')
+                                    <input class="form-control mb-2 @error('title') is-invalid @enderror"
+                                        type="text" name="title" value="{{ old('title') }}">
+                                    @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <label
                                         class="mb-2">{{ __('messages.' . $object . '.fields.description') }} <span class="text-danger">*</span></label>
-                                    <textarea name="description[vn]" class="form-control" id="" cols="30" rows="10">{{ old('description.vn') }}</textarea>
-                                </div><!-- end col -->
-                            </div><!-- end row -->
-                        </div>
-                        <div class="col-lg-6">
-                            <h6>{{ __('messages.promotion.system.en') }}</h6>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
-                                    <input class="form-control mb-2 @error('title.en') is-invalid @enderror"
-                                        type="text" name="title[en]" value="{{ old('title.en') }}">
-                                    @error('title.en')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <label
-                                        class="mb-2">{{ __('messages.' . $object . '.fields.description') }} <span class="text-danger">*</span></label>
-                                    <textarea name="description[en]" class="form-control" id="" cols="30" rows="10">{{ old('description.en') }}</textarea>
+                                    <textarea name="description" class="form-control" id="" cols="20" rows="10">{{ old('description') }}</textarea>
                                 </div><!-- end col -->
                             </div><!-- end row -->
                         </div>

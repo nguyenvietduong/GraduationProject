@@ -24,8 +24,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.en'  => 'required',
-            'name.vi'  => 'required',
+            'name'  => 'required',
             'slug'     => 'required|string|max:255|unique:categories',
             'status'   => 'required'
         ];
@@ -39,8 +38,7 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name.en'  => 'category name english', // This will replace 'name' in error messages
-            'name.vi'  => 'category name vietnamese', // This will replace 'name' in error messages
+            'name'  => 'category name ', // This will replace 'name' in error messages
             'slug'     => 'slug',
             'status'   => 'status'
         ];

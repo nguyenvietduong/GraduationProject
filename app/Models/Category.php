@@ -17,11 +17,7 @@ class Category extends Model
         'status'
     ];
 
-    protected $casts = [
-        'name' => 'array', 
-    ];
     // Quan hệ với menus
-
     public function menus(): HasMany
     {
         return $this->hasMany(Menu::class,'category_id','id');

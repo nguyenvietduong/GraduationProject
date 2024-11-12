@@ -7,11 +7,11 @@
                         <p class="text-muted mb-0">
                             ©
                             {{ date('Y') }}
-                            Rizz
+                            ĐỒ ÁN TỐT NGHIỆP
                             <span class="text-muted d-none d-sm-inline-block float-end">
-                                Crafted with
+                                TRƯỜNG
                                 <i class="iconoir-heart text-danger"></i>
-                                by Mannatthemes</span>
+                                FPT POLYTECHNIC</span>
                         </p>
                     </div>
                 </div>
