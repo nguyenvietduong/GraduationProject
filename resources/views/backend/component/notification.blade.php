@@ -52,13 +52,40 @@
     </style>
 
     <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0" id="notificationMenu">
-        <!-- Dropdown content will be dynamically populated here -->
-        <h5 class="dropdown-item-text m-0 py-2 d-flex justify-content-between align-items-center">
-            <span class="countNotification">Notifications</span>
+        <h5 class="dropdown-item-text m-0 py-2 d-flex justify-content-between align-items-center bg-success">
+            <span class="countNotification">Thông báo</span>
         </h5>
-        <input type="text" class="form-control" id="searchInput"
-            placeholder="{{ __('messages.system.button.search') }}">
-        <div class="ms-0" style="max-height:230px;" data-simplebar>
+        <div class="form-group px-2 pt-2 pb-2 bg-success-subtle">
+            <input type="text" class="form-control" id="searchInput"
+                placeholder="{{ __('messages.system.button.search') }}">
+
+            <input type="datetime-local" id="datetimeLocal" class="form-control my-2">
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="notificationStatus" id="allNotifications"
+                            value="all" checked>
+                        <label class="form-check-label" for="allNotifications">All</label>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="notificationStatus"
+                            id="unreadNotifications" value="unread">
+                        <label class="form-check-label" for="unreadNotifications">Chưa đọc</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="notificationStatus" id="readNotifications"
+                            value="read">
+                        <label class="form-check-label" for="readNotifications">Đã đọc</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ms-0" style="max-height:400px;" data-simplebar>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="allNotification" role="tabpanel" aria-labelledby="all-tab"
                     tabindex="0">
@@ -78,6 +105,7 @@
         const jsonData = JSON.parse(jsonStringMessage);
 
         const title = jsonStringTitle;
+        const reservationId = jsonData.id;
         const name = jsonData.name;
         const phone = jsonData.phone;
         const email = jsonData.email;
@@ -85,19 +113,20 @@
         const reservationTime = jsonData.reservation_time;
         const specialRequest = jsonData.special_request;
 
-        // Chuyển đổi chuỗi ngày giờ thành đối tượng Date
+        console.log(reservationTime);
+
         const date = new Date(reservationTime);
 
-        // Lấy các thành phần của ngày và giờ
-        const year = date.getFullYear();
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Thêm số 0 vào tháng nếu là tháng đơn
-        const day = ('0' + date.getDate()).slice(-2); // Thêm số 0 vào ngày nếu là ngày đơn
-        const hours = ('0' + date.getHours()).slice(-2); // Thêm số 0 vào giờ nếu là giờ đơn
-        const minutes = ('0' + date.getMinutes()).slice(-2); // Thêm số 0 vào phút nếu là phút đơn
-        const seconds = ('0' + date.getSeconds()).slice(-2); // Thêm số 0 vào giây nếu là giây đơn
+        const year = date.getUTCFullYear();
+        const month = ('0' + (date.getUTCMonth() + 1)).slice(-2); 
+        const day = ('0' + date.getUTCDate()).slice(-2); 
+        const hours = ('0' + date.getUTCHours()).slice(-2); 
+        const minutes = ('0' + date.getUTCMinutes()).slice(-2);
+        const seconds = ('0' + date.getUTCSeconds()).slice(-2); 
 
         // Xây dựng chuỗi ngày giờ theo định dạng yêu cầu
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        console.log(formattedDate);
 
         document.getElementById('messageModalLabel').innerText = `${title}`;
         document.getElementById('modalName').innerText = `Họ và Tên: ${name}`;
@@ -107,24 +136,21 @@
         document.getElementById('modalReservationTime').innerText = `Thời gian đặt: ${formattedDate}`;
         document.getElementById('modalSpecialRequest').innerText = `Yêu cầu đặc biệt: ${specialRequest}`;
         document.getElementById('reservation-detail').href = "{{ route('admin.reservation.detail', ':id') }}".replace(
-            ':id', notificationId);
+            ':id', reservationId);
 
-        // AJAX request to mark the notification as read
         $.ajax({
             url: `/notifications/${notificationId}/read`,
             type: 'POST',
             data: {
-                _token: '{{ csrf_token() }}' // Include CSRF token for security
+                _token: '{{ csrf_token() }}'
             },
             success: function(response) {
                 console.log(response);
 
                 if (response) {
-                    // Move the read notification to the bottom of the list
                     const notificationContainer = $('#allNotification');
-                    $(element).removeClass('bg-warning bg-opacity-50'); // Remove highlight class if present
+                    $(element).removeClass('bg-warning bg-opacity-50'); 
 
-                    // Append the notification to the end of the container
                     notificationContainer.append(element);
                     countNotificationNoRead();
                 }
@@ -134,29 +160,24 @@
             }
         });
     }
-</script>
 
-<script>
     function countNotificationNoRead() {
         $.ajax({
             url: '/count-new-notifications-endpoint',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
-                $('#countNotificationNoRead').html(data); // Update the notification count
+                $('#countNotificationNoRead').html(data);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('AJAX Error:', textStatus, errorThrown);
             }
         });
     }
-</script>
 
-<script>
     $(document).ready(function() {
         let notificationDropdownStatus = false;
 
-        // Function to calculate time since the notification was created
         function timeSince(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
             const intervals = [{
@@ -194,7 +215,6 @@
             return 'Just now';
         }
 
-        // Open dropdown and mark status as true when clicked
         $('#notificationDropdown').on('click', function(e) {
             e.stopPropagation();
             notificationDropdownStatus = true;
@@ -202,29 +222,40 @@
 
         let searchTimeout;
 
-        $('#searchInput').on('input', function() {
-            const searchQuery = $(this).val().trim();
+        function triggerSearch() {
+            const searchQuery = $('#searchInput').val().trim(); 
+            const notificationStatus = $('input[name="notificationStatus"]:checked')
+                .val(); 
+            const selectedDate = $('#datetimeLocal').val(); 
 
             clearTimeout(searchTimeout);
 
             searchTimeout = setTimeout(function() {
-                if (!searchQuery) {
-                    loadNotifications();
+                if (!searchQuery && !notificationStatus && !selectedDate) {
+                    loadNotifications(); 
                 } else {
-                    searchNotifications(searchQuery);
+                    searchNotifications(searchQuery, notificationStatus,
+                        selectedDate); 
                 }
             }, 2000);
-        });
+        }
 
-        function searchNotifications(query) {
+        $('#searchInput').on('input', triggerSearch);
+        $('input[name="notificationStatus"]').on('change', triggerSearch);
+        $('#datetimeLocal').on('change', triggerSearch); 
+
+        function searchNotifications(query, status, date) {
+            const url = `/notifications/search?keyword=${query}&status=${status || 'all'}&date=${date || ''}`;
+
             $.ajax({
-                url: `/notifications/search?keyword=${query}`,
+                url: url,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     if (data.notifications.length === 0) {
                         $('#allNotification').html(
-                            '<p class="text-center text-muted py-1 pt-3">No results found</p>');
+                            '<p class="text-center text-muted py-1 pt-3">No results found</p>'
+                        );
                     } else {
                         displayNotifications(data.notifications, data.total);
                     }
@@ -253,13 +284,25 @@
         function displayNotifications(notifications, count) {
             $('#allNotification').empty();
             $('.countNotification').html(
-                `Notifications (${count || 0})`
+                `Thông báo (${count || 0})`
             );
 
             if (Array.isArray(notifications)) {
                 notifications.forEach(notification => {
                     try {
                         const messageData = JSON.parse(notification.message);
+
+                        const reservationTime = messageData.reservation_time ?
+                            new Date(messageData.reservation_time).toLocaleString('vi-VN', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                            }) :
+                            'No data available';
+
                         const notificationItem = `<a href="#" onclick="handleDropdownClick(this)" class="dropdown-item py-3 ${notification.user_id == null ? 'bg-warning bg-opacity-50' : ''}" 
                             data-bs-toggle="modal" 
                             data-bs-target="#messageModalNotification" 
@@ -276,6 +319,8 @@
                                     <small class="text-muted mb-0">${messageData.name || 'No data available'}</small>
                                     <br>
                                     <small class="text-muted mb-0">${messageData.phone || 'No data available'}</small>
+                                    <br>
+                                    <small class="text-muted mb-0">${reservationTime || 'No data available'}</small>
                                 </div>
                             </div>
                         </a>`;

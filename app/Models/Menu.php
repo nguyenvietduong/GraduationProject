@@ -21,11 +21,6 @@ class Menu extends Model
         "status"
     ];
 
-    protected $casts = [
-        "name" => "array", 
-        "description" => "array", 
-    ];
-
     public function category(){
         return $this->belongsTo(Category::class);
     }

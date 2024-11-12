@@ -31,7 +31,7 @@ Route::post('reservation', [ReservationController::class, 'store'])->name('reser
 Route::get('menu', [HomeController::class, 'menu'])->name('menu');
 Route::get('team', [HomeController::class, 'team'])->name('team');
 Route::get('review', [ReviewController::class, 'index'])->name('contact');
-Route::post('review', [ReviewController::class, 'store'])->name('contact')->middleware('auth');
+Route::post('review', [ReviewController::class, 'store'])->name('contact');
 Route::get('blog', [BlogController::class, 'index'])->name('blog.list');
 Route::get('blog-detail/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
 Route::get('favortite/{menus}', [FavoriteController::class,  'favorite'])->name('favorite');

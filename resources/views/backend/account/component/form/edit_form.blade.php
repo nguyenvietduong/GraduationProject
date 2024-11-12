@@ -8,8 +8,7 @@
                 <div class="col-lg-12 align-self-center">
                     <div class="col-md-12 col-lg-12">
                         <div class="card">
-                            <label for="profile_picture" class="form-label">{{
-    __('messages.account.fields.profile_picture') }}</label>
+                            <label for="profile_picture" class="form-label">{{__('messages.account.fields.profile_picture') }}</label>
                             <div class="card-body pt-0">
                                 <div class="d-grid">
                                     <div class="row mb15">
@@ -39,7 +38,7 @@
                 </div>
             </div>
             <div class="col-lg-8 col-12 mb-2 mb-lg-1">
-                <label for="full_name" class="form-label">{{ __('messages.account.fields.full_name') }}</label>
+                <label for="full_name" class="form-label">{{ __('messages.account.fields.full_name') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('full_name') is-invalid @enderror" id="full_name"
                     name="full_name" value="{{ old('full_name', $data->full_name) }}"
                     placeholder="{{ __('messages.account.fields.name_placeholder') }}">
@@ -53,7 +52,7 @@
         <div class="row">
 
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2" for="email">{{ __('messages.account.fields.email') }}</label>
+                <label class="form-label mt-2" for="email">{{ __('messages.account.fields.email') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('email') is-invalid @enderror" name="email"
                     value="{{ old('email', $data->email) }}" id="email"
                     placeholder="{{ __('messages.account.fields.email_placeholder') }}">
@@ -63,7 +62,7 @@
             </div>
 
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2" for="phone">{{ __('messages.account.fields.phone') }}</label>
+                <label class="form-label mt-2" for="phone">{{ __('messages.account.fields.phone') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
                     value="{{ old('phone', $data->phone) }}" id="phone"
                     placeholder="{{ __('messages.account.fields.phone_placeholder') }}">
@@ -73,7 +72,7 @@
             </div>
 
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2">{{ __('messages.system.status') }}</label>
+                <label class="form-label mt-2">{{ __('messages.system.status') }} <span class="text-danger">*</span></label>
                 <select class="form-select form-select-lm @error('status') is-invalid @enderror" name="status"
                     id="status">
                     @foreach(__('messages.account.status') as $key => $value)
@@ -87,7 +86,7 @@
             </div>
 
             <div class="col-lg-3 col-12 mb-2 mb-lg-1">
-                <label class="form-label mt-2">{{ __('messages.account.fields.role') }}</label>
+                <label class="form-label mt-2">{{ __('messages.account.fields.role') }} <span class="text-danger">*</span></label>
                 <select class="form-select form-select-lm @error('role_id') is-invalid @enderror" name="role_id"
                     id="role_id">
                     @foreach($dataRole as $key => $value)

@@ -41,12 +41,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $search = strtolower($filters['search']); // Chuyển chuỗi tìm kiếm thành chữ thường
-                if (app()->getLocale() == 'vi') {
-                    $q->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.vi'))) LIKE ?", ['%' . $search . '%']);
-                } else {
-                    $q->WhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ['%' . $search . '%']);
-                }
+                $q->where('name', 'like', '%' . $filters['search'] . '%');
             });
         }
 

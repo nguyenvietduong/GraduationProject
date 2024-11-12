@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\ReservationController;
 use App\Http\Controllers\Backend\RestaurantController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\InvoiceController;
+use App\Http\Controllers\Backend\SearchController;
 
 Route::middleware(['auth', 'role:1, 2'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -161,10 +162,12 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         });
 
         Route::prefix('restaurant')->group(function () {
-            Route::get('index', [RestaurantController::class, 'index'])->name('admin.restaurant');
+            Route::get('index', [RestaurantController::class, 'index'])->name('admin.restaurants');
         });
         Route::prefix('invoice')->group(function () {
             Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
         });
+
+        Route::get('/search', [SearchController::class, 'search'])->name('search');
     });
 });

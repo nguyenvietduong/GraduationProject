@@ -22,14 +22,14 @@
 
         {{-- <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li> --}}
 
-        <li class="has-submenu parent-parent-menu-item">
+        {{-- <li class="has-submenu parent-parent-menu-item">
             <a href="javascript:void(0)"> {{ App::getLocale() === 'vi' ? "VI" : "EN" }} </a>
             <span class="menu-arrow"></span>
             <ul class="submenu">
                 <li><a href="#" class="sub-menu-item dropdown-item" data-language="en">{{ __('messages.system.lang.en') }}</a></li>
                 <li><a href="#" class="sub-menu-item dropdown-item" data-language="vi">{{ __('messages.system.lang.vi') }}</a></li>
             </ul>
-        </li>
+        </li> --}}
 
         @if (Auth::check())
         <li class="has-submenu parent-parent-menu-item active">
