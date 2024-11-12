@@ -94,12 +94,12 @@
         })
     }
 
-    PMD.fetchAvailableMenus = async (numberOfGuests = null) => {
+    PMD.fetchAvailableMenus = async (dataSearch = '') => {
         await $.ajax({
             url: '/get-available-menus',
             type: 'GET',
             data: {
-                guests: numberOfGuests
+                key: dataSearch
             },
             success: function (response) {
                 $('#availableMenu').empty()
@@ -187,6 +187,8 @@
                 // }
             }
 
+            // PMD.searchMenuItem()
+
             if (invoiceData && Array.isArray(invoiceData)) {
                 const invoiceDetail = invoiceData.find(item => item.reservation_id === reservationId)
                 if (invoiceDetail) {
@@ -225,7 +227,7 @@
                     })
 
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                        $('.searchMenu').val('')
+                        PMD.deleteSearchMenu(selectedMenus)
 
                         $(this).toggleClass('selected')
                         const menuId = $(this).data('menu-id')
@@ -241,6 +243,7 @@
                         PMD.renderSelectedMenus(selectedMenus)
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
+                    await PMD.searchMenuItem(selectedMenus)
                     PMD.quantityInput(selectedMenus)
                     PMD.checkButtonAddInvoice(selectedMenus, tableReservation, true)
                 } else {
@@ -272,7 +275,7 @@
                     })
 
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                        $('.searchMenu').val('')
+                        PMD.deleteSearchMenu(selectedMenus)
                         $(this).toggleClass('selected')
                         const menuId = $(this).data('menu-id')
                         const menuPrice = $(this).data('menu-price')
@@ -286,9 +289,12 @@
                         PMD.renderSelectedMenus(selectedMenus)
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
+                    PMD.searchMenuItem(selectedMenus)
                     PMD.quantityInput(selectedMenus)
                     PMD.checkButtonAddInvoice(selectedMenus, tableReservation)
                 }
+
+
             } else {
                 console.error('Dữ liệu hóa đơn không hợp lệ:', invoiceData)
                 return null
@@ -310,6 +316,14 @@
         $('.total-invoice').html(selectedMenus.totalAmount)
     }
     //End Total Amount
+
+
+
+    PMD.deleteSearchMenu = async (selectedMenus) => {
+        $('.searchMenu').val('')
+        await PMD.fetchAvailableMenus()
+        await PMD.renderSelectedMenuItem(selectedMenus)
+    }
 
 
 
@@ -379,15 +393,28 @@
 
 
 
-PMD.searchMenuItem = () => {
-    $(document).on('keyup', '.searchMenu', function(){
-        console.log(123123);
-    })
-}
+    PMD.searchMenuItem = async (selectedMenus) => {
+        let timeout = null;
+        $(document).on('keyup', '.searchMenu', async function () {
+            clearTimeout(timeout)
+            timeout = setTimeout(async () => {
+                let input = $(this).val()
+                await PMD.fetchAvailableMenus(input)
+                await PMD.renderSelectedMenuItem(selectedMenus)
+            }, 600);
+        });
+    }
+
+
+    PMD.renderSelectedMenuItem = async (selectedMenus) => {
+        await selectedMenus.invoice_item.forEach(item => {
+            $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
+        })
+    }
 
 
 
-//Check Table Selected
+    //Check Table Selected
     PMD.checkTableSelected = (tableId, reservationId) => {
         let selectedTableId = $('.table-info.selected').attr('data-table-id')
         if (tableId != selectedTableId) {
@@ -433,6 +460,7 @@ PMD.searchMenuItem = () => {
 
     //Start Render Selected Menu
     PMD.renderSelectedMenus = async (selectedMenus) => {
+
         $('#array-menu').empty()
         if (selectedMenus.invoice_item.length === 0) {
             PMD.checkRenderButtonAmount(false)
@@ -510,7 +538,7 @@ PMD.searchMenuItem = () => {
     }
     //End Json Server
 
-    
+
 
 
 
@@ -721,8 +749,8 @@ PMD.searchMenuItem = () => {
         PMD.fetchAvailableTables()
         PMD.showBsModal()
         PMD.guestReservation()
-        PMD.searchMenuItem()
-        PMD.selectedTable()
+        // PMD.searchMenuItem()
+        // PMD.selectedTable()
         TC.showBsModal()
     })
 })(jQuery)

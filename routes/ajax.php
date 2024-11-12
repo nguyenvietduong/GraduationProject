@@ -42,6 +42,7 @@ Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::cla
 
 Route::get('get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
 Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
+Route::get('get-data-search-menu', [UpdateStatusReservation::class, 'getDataSearchleMenus']);
 
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
@@ -95,4 +96,4 @@ Route::post('/remove-temp-image', function (Request $request) {
     return response()->json(['success' => false], 400);
 })->name('image.removeTemp');
 
-Route::get("/checkVoucher" , [AjaxPromotion::class , "getDetailVoucher"]) ;
+Route::get("/checkVoucher", [AjaxPromotion::class, "getDetailVoucher"]);

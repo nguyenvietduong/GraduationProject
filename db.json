@@ -3,7 +3,7 @@
     {
       "id": "1",
       "reservation_id": "1",
-      "totalAmount": 235000,
+      "totalAmount": 335000,
       "list_table": [
         {
           "id": 10,
@@ -56,6 +56,20 @@
           "quantity": 1,
           "price": 60000,
           "total": 60000
+        },
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 21,
+          "name": "Thịt kho tàu",
+          "quantity": 1,
+          "price": 70000,
+          "total": 70000
         }
       ]
     }
