@@ -70,19 +70,7 @@ class UpdateStatusReservation extends Controller
 
     public function getAvailableTables(Request $request)
     {
-        $guests = $request->input('guests');
-
-        // $currentTableId = Reservation::where('id', $reservationId)->value('table_id');
-
-        // Lọc các bàn có trạng thái 'available' và có sức chứa >= số người yêu cầu
-        // $availableTables = Table::where('status', 'available')
-        //     ->where('capacity', '>=', $guests) // Fixed this line
-        //     ->get(['id', 'name', 'capacity', 'description']);
-
-        // return response()->json(['tables' => $availableTables]);
-
-        $availableTables = Table::where('capacity', '>=', $guests) // Fixed this line
-            ->get(['id', 'name', 'capacity', 'status', 'description']);
+        $availableTables = Table::get(['id', 'name', 'capacity', 'status', 'description']);
 
         return response()->json(['tables' => $availableTables]);
     }
