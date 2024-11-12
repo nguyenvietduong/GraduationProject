@@ -26,6 +26,9 @@ return [
             'choose_table' => 'Chọn bàn',
             'choose_dish' => 'Chọn món',
             'change_dish' => 'Thay đổi món',
+            'update_profile' => 'Thay đổi hồ sơ',
+            'update_profiles' => 'Cập nhật thông tin thành công',
+
             'confirm' => [
                 'title' => 'Bạn có chắc chắn?',
                 'text' => 'Bạn sẽ không thể hoàn tác hành động này!',
