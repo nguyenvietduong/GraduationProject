@@ -8,7 +8,7 @@
                     <div class="col-md-12 col-lg-12">
                         <div class="card">
                             <label for="profile_picture"
-                                class="form-label">{{ __('messages.system.button.upload') }} <span class="text-danger">*</span></label>
+                                class="form-label">{{ __('messages.system.button.upload') }} </label>
                             <div class="card-body pt-0">
                                 <div class="d-grid">
                                     <div class="row mb15">
@@ -17,7 +17,7 @@
                                                 <input type="file" id="imageInput" name="image" accept="image/*"
                                                     hidden />
                                                 <label class="btn-upload btn btn-primary mt-3"
-                                                    for="imageInput">{{ __('messages.system.button.upload') }} <span class="text-danger">*</span></label>
+                                                    for="imageInput">{{ __('messages.system.button.upload') }} </label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-6">

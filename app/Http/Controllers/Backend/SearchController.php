@@ -9,6 +9,7 @@ use App\Models\Menu;
 use App\Models\Category;
 use App\Models\Table;
 use App\Models\Blog;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -19,41 +20,47 @@ class SearchController extends Controller
 
         // Initialize empty results
         $results = [
-            'reservations'  => [],
-            'users'         => [],
-            'menus'          => [],
-            'categories'      => [],
-            'tables'         => [],
-            'blogs'          => [],
+            'reservation'  => [],
+            'user'         => [],
+            'menu'          => [],
+            'category'      => [],
+            'table'         => [],
+            'blog'          => [],
+            'promotion'     => [],
         ];
 
         if ($searchTerm) {
             // Search across different models
-            $results['reservations'] = Reservation::where('name', 'like', "%$searchTerm%")
+            $results['reservation'] = Reservation::where('name', 'like', "%$searchTerm%")
                 ->orWhere('email', 'like', "%$searchTerm%")
                 ->orWhere('phone', 'like', "%$searchTerm%")
                 ->get();
 
-            $results['users'] = User::where('status', '!=', 'locked')
+            $results['user'] = User::where('status', '!=', 'locked')
                 ->where('full_name', 'like', "%$searchTerm%")
                 ->orWhere('email', 'like', "%$searchTerm%")
                 ->orWhere('phone', 'like', "%$searchTerm%")
                 ->get();
 
-            $results['menus'] = Menu::where("name", 'like', "%$searchTerm%")
+            $results['menu'] = Menu::where("name", 'like', "%$searchTerm%")
                 ->orWhere("description", 'like', "%$searchTerm%")
                 ->orWhere('price', 'like', "%$searchTerm%")
                 ->get();
 
-            $results['categories'] = Category::where("name", 'like', "%$searchTerm%")
+            $results['category'] = Category::where("name", 'like', "%$searchTerm%")
                 ->get();
 
-            $results['tables'] = Table::where("name", 'like', "%$searchTerm%")
+            $results['table'] = Table::where("name", 'like', "%$searchTerm%")
                 ->orWhere("description", 'like', "%$searchTerm%")
                 ->get();
 
-            $results['blogs'] = Blog::where("title", 'like', "%$searchTerm%")
+            $results['blog'] = Blog::where("title", 'like', "%$searchTerm%")
                 ->orWhere("content", 'like', "%$searchTerm%")
+                ->get();
+
+            $results['promotion'] = Promotion::where("title", 'like', "%$searchTerm%")
+                ->orWhere("description", 'like', "%$searchTerm%")
+                ->orWhere("code", 'like', "%$searchTerm%")
                 ->get();
         }
 
