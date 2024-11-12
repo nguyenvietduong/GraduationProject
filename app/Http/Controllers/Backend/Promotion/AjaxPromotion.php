@@ -22,4 +22,13 @@ class AjaxPromotion extends Controller
             'updateTime' => $currentDateTime
         ];
     }
+    public function getDetailVoucher(Request $request){
+        return  Promotion::where("code" , $request->get("code"))
+        ->where("start_date" ,'<=', Carbon::now())
+        ->where("end_date" ,'>', Carbon::now())
+        ->where("is_active" ,'=', 1)
+        ->where("total"  , '>' , 0 )
+        ->where("min_order_value"  , "<=" ,  $request->query("totalAmount"))
+        ->get();
+    }
 }

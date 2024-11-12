@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ReservationController;
 use App\Http\Controllers\Backend\RestaurantController;
 use App\Http\Controllers\Backend\ReviewController;
+use App\Http\Controllers\Backend\InvoiceController;
 
 Route::middleware(['auth', 'role:1, 2'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -141,9 +142,14 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::get('index', [ReservationController::class, 'index'])->name('admin.reservation.index');
             Route::get('create', [ReservationController::class, 'create'])->name('admin.reservation.create');
             Route::post('store', [ReservationController::class, 'store'])->name('admin.reservation.store');
+            Route::get('{id}/detail', [ReservationController::class, 'detail'])->where('id', '[0-9]+')->name('admin.reservation.detail');
             Route::get('{id}/edit', [ReservationController::class, 'edit'])->where('id', '[0-9]+')->name('admin.reservation.edit');
             Route::put('{id}/update', [ReservationController::class, 'update'])->where('id', '[0-9]+')->name('admin.reservation.update');
             Route::delete('{id}/destroy', [ReservationController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.reservation.destroy');
+        });
+        Route::prefix('invoice')->group(function () {
+            Route::post('store', [InvoiceController::class, 'store'])->name('admin.invoice.store');
+            Route::post('exportPDF', [InvoiceController::class, 'exportAndSavePDF'])->name('admin.invoice.exportPDF');
         });
 
         Route::prefix('chat')->group(function () {
@@ -156,6 +162,9 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
 
         Route::prefix('restaurant')->group(function () {
             Route::get('index', [RestaurantController::class, 'index'])->name('admin.restaurant');
+        });
+        Route::prefix('invoice')->group(function () {
+            Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
         });
     });
 });

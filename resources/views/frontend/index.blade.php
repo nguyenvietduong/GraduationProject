@@ -9,62 +9,68 @@
                 <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;"
                     data-background="/frontend/assets/images/bg/bg1.jpg">
                     <div class="absolute inset-0 bg-slate-900/60"></div>
-                    <div class="container relative">
-                        <div class="grid grid-cols-1">
-                            <h1
-                                class="font-semibold lg:leading-normal leading-normal text-4xl lg:text-6xl text-white mb-5">
-                                Taste The <br> Difference</h1>
-                            <p class="text-white/70 text-lg max-w-xl">My veggie-packed take on a deli-style pasta
-                                salad! I swap spiralized summer squash for half the noodles and a creamy tahini
-                                dressing.</p>
+                        <div class="container relative">
+                            <div class="grid grid-cols-1">
+                                <h1
+                                    class="font-semibold lg:leading-normal leading-normal text-4xl lg:text-6xl text-white mb-5">
+                                    Taste The <br> Difference</h1>
+                                <p class="text-white/70 text-lg max-w-xl">My veggie-packed take on a deli-style pasta
+                                    salad! I swap spiralized summer squash for half the noodles and a creamy tahini
+                                    dressing.</p>
 
-                            <div class="mt-8">
-                                <a href="menu-one.html"
-                                    class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">View
-                                    Our Menu</a>
+                                <div class="mt-8">
+                                    <a href="{{ route('menu') }}"
+                                        class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">View
+                                        Our Menu</a>
+                                </div>
                             </div>
+                            <!--end grid-->
                         </div>
-                        <!--end grid-->
                     </div>
-                    <!--end container-->
-                </div><!-- end slide-inner -->
-            </div> <!-- end swiper-slide -->
+                    <div class="mt-8">
+                        <a href="menu-one.html"
+                            class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">View
+                            Our Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="swiper-slide flex items-center overflow-hidden">
-                <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;"
-                    data-background="/frontend/assets/images/bg/bg2.jpg">
-                    <div class="absolute inset-0 bg-slate-900/60"></div>
-                    <div class="container relative">
-                        <div class="grid grid-cols-1">
-                            <h1
-                                class="font-semibold lg:leading-normal leading-normal text-4xl lg:text-6xl text-white mb-5">
-                                Taste The <br> Everyone</h1>
-                            <p class="text-white/70 text-lg max-w-xl">My veggie-packed take on a deli-style pasta
-                                salad! I swap spiralized summer squash for half the noodles and a creamy tahini
-                                dressing.</p>
+    <div class="swiper-slide flex items-center overflow-hidden">
+        <div class="slide-inner absolute end-0 top-0 w-full h-full slide-bg-image flex items-center bg-center;"
+            data-background="/frontend/assets/images/bg/bg2.jpg">
+            <div class="absolute inset-0 bg-slate-900/60"></div>
+                <div class="container relative">
+                    <div class="grid grid-cols-1">
+                        <h1 class="font-semibold lg:leading-normal leading-normal text-4xl lg:text-6xl text-white mb-5">
+                            Taste The <br> Everyone</h1>
+                        <p class="text-white/70 text-lg max-w-xl">My veggie-packed take on a deli-style pasta
+                            salad! I swap spiralized summer squash for half the noodles and a creamy tahini
+                            dressing.</p>
 
-                            <div class="mt-8">
-                                <a href="reservation.html"
-                                    class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">Book
-                                    A Table</a>
-                            </div>
+                        <div class="mt-8">
+                            <a href="{{ route('reservation') }}"
+                                class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center text-amber-500 hover:text-white bg-transparent hover:bg-amber-500 border border-amber-500">Book
+                                A Table</a>
                         </div>
-                        <!--end grid-->
                     </div>
-                    <!--end container-->
-                </div><!-- end slide-inner -->
-            </div> <!-- end swiper-slide -->
-        </div>
-        <!-- end swiper-wrapper -->
+                    <!--end grid-->
+                </div>
+            <!--end container-->
+        </div><!-- end slide-inner -->
+    </div> <!-- end swiper-slide -->
+    </div>
+    <!-- end swiper-wrapper -->
 
-        <!-- swipper controls -->
-        <!-- <div class="swiper-pagination"></div> -->
-        <div
-            class="swiper-button-next bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center">
-        </div>
-        <div
-            class="swiper-button-prev bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center">
-        </div>
+    <!-- swipper controls -->
+    <!-- <div class="swiper-pagination"></div> -->
+    <div
+        class="swiper-button-next bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center">
+    </div>
+    <div
+        class="swiper-button-prev bg-transparent size-[35px] leading-[35px] -mt-[30px] bg-none border border-solid border-white/50 text-white hover:bg-amber-500 hover:border-amber-500 rounded-full text-center">
+    </div>
     </div>
     <!--end container-->
 </section>
@@ -374,17 +380,17 @@
                                     $menu->name[app()->getLocale()] ?? __('Food Name') }}</a>
 
                                 <h5 class="text-amber-500 font-medium">{{ $menu->price }} VND
-                                    
+
                                 </h5>
                                 @if(auth()->check())
-                                    <div class="favorite-action text-xl text-center">
-                                        <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">
-                                            <i id="favorite-icon-{{ $menu->id }}"
-                                                class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
-                                        </a>
-                                    </div>
-                                    @endif 
-                                    @include('backend.ajax.favorite')
+                                <div class="favorite-action text-xl text-center">
+                                    <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">
+                                        <i id="favorite-icon-{{ $menu->id }}"
+                                            class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
+                                    </a>
+                                </div>
+                                @endif
+                                @include('backend.ajax.favorite')
 
 
                             </div>

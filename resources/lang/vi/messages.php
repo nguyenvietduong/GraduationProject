@@ -26,6 +26,9 @@ return [
             'choose_table' => 'Chọn bàn',
             'choose_dish' => 'Chọn món',
             'change_dish' => 'Thay đổi món',
+            'update_profile' => 'Thay đổi hồ sơ',
+            'update_profiles' => 'Cập nhật thông tin thành công',
+
             'confirm' => [
                 'title' => 'Bạn có chắc chắn?',
                 'text' => 'Bạn sẽ không thể hoàn tác hành động này!',
@@ -95,7 +98,7 @@ return [
                 'reservation' => [
                     'titleHeader' => 'Đặt bàn',
                     'title' => 'Đặt bàn',
-                    'messages' => 'Chúng tôi ưu tiên cung cấp các dịch vụ linh hoạt để đáp ứng nhu cầu của bạn'
+                    'messages' => 'Bàn tại nhà hàng chúng tôi phục vụ tối đa 6 khách. Nếu quý khách có nhu cầu đặt chỗ cho nhóm lớn hơn, vui lòng liên hệ để được hỗ trợ tốt nhất!'
                 ]
             ],
 

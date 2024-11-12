@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\NotificationEvent;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
@@ -35,6 +36,12 @@ Route::get('blog', [BlogController::class, 'index'])->name('blog.list');
 Route::get('blog-detail/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
 Route::get('favortite/{menus}', [FavoriteController::class,  'favorite'])->name('favorite');
 
+Route::group(['middleware' => 'profile'], function () {
+    Route::get('profile', [ProfilesController::class, 'profile'])->name('profile');
+    Route::post('profile', [ProfilesController::class,'update_profile'])->name('profile');
+    
+
+});
 Route::get('notification', function () {
     $dataNotification = [
         'title' => 'Hello Tân',

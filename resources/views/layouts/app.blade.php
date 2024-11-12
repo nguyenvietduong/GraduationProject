@@ -33,34 +33,24 @@
 </head>
 
 <body class="dark:bg-slate-900">
-<!-- Loader Start -->
-<!-- <div id="preloader">
-        <div id="status">
-            <div class="spinner">
-                <div class="double-bounce1"></div>
-                <div class="double-bounce2"></div>
+
+    <section
+        class="relative md:h-screen py-36 flex items-center bg-[url('../../assets/images/bg/bg1.jpg')] bg-center bg-no-repeat bg-cover">
+        <div class="container relative">
+            <div class="flex">
+                @yield('content')
             </div>
         </div>
-    </div> -->
-<!-- Loader End -->
+    </section>
 
-<section
-    class="relative md:h-screen py-36 flex items-center bg-[url('../../assets/images/bg/bg1.jpg')] bg-center bg-no-repeat bg-cover">
-    <div class="container relative">
-        <div class="flex">
-            @yield('content')
-        </div>
+    <div class="fixed bottom-3 end-3">
+        <a href="#" class="back-button size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-full">
+            <i data-feather="arrow-left" class="h-4 w-4"></i>
+        </a>
     </div>
-</section>
 
-<div class="fixed bottom-3 end-3">
-    <a href="#"
-       class="back-button size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-full"><i
-            data-feather="arrow-left" class="h-4 w-4"></i></a>
-</div>
-
-<!-- Switcher -->
-<div class="fixed top-1/4 -left-2 z-50">
+    <!-- Switcher -->
+    <div class="fixed top-1/4 -left-2 z-50">
         <span class="relative inline-block rotate-90">
             <input type="checkbox" class="checkbox opacity-0 absolute" id="chk">
             <label
@@ -71,34 +61,34 @@
                 <span class="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] w-7 h-7"></span>
             </label>
         </span>
-</div>
+    </div>
 
+    <!-- JAVASCRIPTS -->
+    <script src="/frontend/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="/frontend/assets/js/plugins.init.js"></script>
+    <script src="/frontend/assets/js/app.js"></script>
 
-<!-- JAVASCRIPTS -->
-<script src="/frontend/assets/libs/feather-icons/feather.min.js"></script>
-<script src="/frontend/assets/js/plugins.init.js"></script>
-<script src="/frontend/assets/js/app.js"></script>
-
-@if(session('error'))
+    @if(session('error'))
     <script>
         Swal.fire({
             icon: 'error',
-            title: "{{ __('messages.system.alert.error.title') }}",  // Chuyển đổi chuỗi dịch qua Blade
+            title: "{{ __('messages.system.alert.error.title') }}", // Chuyển đổi chuỗi dịch qua Blade
             text: "{{ session('error') }}",
         });
     </script>
-@endif
+    @endif
 
-@if(session('success'))
+    @if(session('success'))
     <script>
         Swal.fire({
             icon: 'success',
-            title: "{{ __('messages.system.alert.titleSuccess') }}",  // Chuyển đổi chuỗi dịch qua Blade
+            title: "{{ __('messages.system.alert.titleSuccess') }}", // Chuyển đổi chuỗi dịch qua Blade
             text: "{{ session('success') }}",
         });
     </script>
-@endif
+    @endif
 
-<!-- JAVASCRIPTS -->
+    <!-- JAVASCRIPTS -->
 </body>
+
 </html>

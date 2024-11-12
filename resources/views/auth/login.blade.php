@@ -3,7 +3,7 @@
 <div class="sm:w-[400px] w-full">
     <div class="relative overflow-hidden rounded-md shadow dark:shadow-gray-700 bg-white dark:bg-slate-950 p-6">
         <div class="text-center">
-            <a href="index.html">
+            <a href="{{ route('home') }}">
                 <img src="/frontend/assets/images/logo-dark.png" class="mx-auto block dark:hidden" alt="">
                 <img src="/frontend/assets/images/logo-light.png" class="mx-auto hidden dark:block" alt="">
             </a>

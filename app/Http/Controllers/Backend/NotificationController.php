@@ -61,8 +61,6 @@ class NotificationController extends Controller
 
     public function search(NotificationListRequest $request)
     {
-        session()->forget('image_temp'); // Clear temporary image value
-
         // Validate the request data
         $request->validated();
 

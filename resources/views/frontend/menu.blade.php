@@ -5,6 +5,20 @@
 $titleHeader = 'Out Menu',
 $title = 'Menu'
 ])
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    /* Trái tim mặc định có màu xám */
+.favorite-action .fa-heart {
+    color: red;
+    transition: color 0.3s ease;
+}
+
+/* Khi yêu thích thì đổi sang màu đỏ */
+.favorite-action .fa-heart.favorited {
+    color: red;
+}
+
+</style>
 <!-- End Hero -->
 <!-- Start -->
 <section class="relative md:py-24 py-16">
@@ -46,10 +60,11 @@ $title = 'Menu'
                 @if(auth()->check())
                 <div class="favorite-action text-xl text-center">
                     <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">
+                        <!-- Icon trái tim với màu đỏ -->
                         <i id="favorite-icon-{{ $menu->id }}"
                             class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
                     </a>
-                </div>
+                </div>                       
                 @endif 
             </div>
             <!--end col-->
