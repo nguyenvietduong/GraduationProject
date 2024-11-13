@@ -85,13 +85,13 @@
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div class="tab-pane p-3 active" id="table" role="tabpanel">
-                                            <p>Vui lòng chọn bàn:</p>
+                                            <p id="notiTable" class="text-danger text-uppercase mb-4"></p>
                                             <input type="hidden" id="reservationId">
-
+{{-- 
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">Số người</span>
                                                 <input type="number" class="form-control" id="guestsReservation">
-                                            </div>
+                                            </div> --}}
 
                                             <!-- Nơi để hiển thị thông tin các bàn có sẵn -->
                                             <div id="availableTables" class="row"></div>
@@ -102,16 +102,18 @@
                                                     <div class="card-header px-0">
                                                         <div class="row align-items-center">
                                                             <div class="col-lg-4">
-                                                                <p>Vui lòng chọn món ăn:</p>
                                                             </div><!--end col-->
                                                             <div class="col-lg-8">
                                                                 <div class="input-group">
-                                                                    <input type="" class="form-control searchMenu" placeholder="Tìm kiếm món ăn" aria-describedby="button-addon3">
+                                                                    <input type="" class="form-control searchMenu"
+                                                                        placeholder="Tìm kiếm món ăn"
+                                                                        aria-describedby="button-addon3">
                                                                 </div>
                                                             </div><!--end col-->
                                                         </div> <!--end row-->
                                                     </div><!--end card-header-->
-                                                    <div id="availableMenu" class="row"></div>
+                                                    <div id="availableMenu" class="row">
+                                                    </div>
                                                 </div> <!--end col-->
                                                 <div class="col-md-4 col-lg-4">
                                                     <div class="card">
@@ -151,7 +153,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="modal fade" id="pay" tabindex="-1" aria-labelledby="paylable" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
