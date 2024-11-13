@@ -149,6 +149,8 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{id}/destroy', [ReservationController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.reservation.destroy');
         });
         Route::prefix('invoice')->group(function () {
+            Route::get('index', [InvoiceController::class, 'index'])->name('admin.invoice.index');
+            Route::get('{id}/detail', [InvoiceController::class, 'detail'])->where('id', '[0-9]+')->name('admin.invoice.detail');
             Route::post('store', [InvoiceController::class, 'store'])->name('admin.invoice.store');
             Route::post('exportPDF', [InvoiceController::class, 'exportAndSavePDF'])->name('admin.invoice.exportPDF');
         });

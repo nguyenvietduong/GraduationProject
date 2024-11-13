@@ -9,7 +9,7 @@ return [
             'edit' => 'Chỉnh sửa',
             'update' => 'Cập nhật',
             'delete' => 'Xóa',
-            'details' => 'Chi tiết',
+            'detail' => 'Chi tiết',
             'viewCV' => 'Xem CV',
             'approve' => 'Duyệt',
             'reject' => 'Từ chối',
@@ -636,6 +636,35 @@ return [
         ],
         'destroy' => [
             'route' => 'admin.user.destroy',
+        ],
+    ],
+    'invoice' => [
+        'title' => 'Hóa đơn',
+        'status' => [
+            'unpaid' => 'Chưa thanh toán',
+            'paid' => 'Đã thanh toán',
+            'canceled' => 'Đã hủy',
+        ],
+        'payment_method' => [
+          'cash' => 'Tiền mặt',
+          'bank' => 'Chuyển khoản'  
+        ],
+        'fields' => [
+            'total_amount' => 'Tổng tiền',
+            'payment_method' => 'Phương thức thanh toán',
+            'status' => 'Trạng thái',
+
+            'menu' => 'Món ăn',
+            'quantity' => 'Số lượng',
+            'price' => 'Giá tiền',
+            'total' => 'Tổng tiền',
+        ],
+
+        'index' => [
+            'route' => 'admin.invoice.index',
+        ],
+        'detail' => [
+            'route' => 'admin.invoice.detail',
         ],
     ],
 

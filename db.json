@@ -503,6 +503,48 @@
           "total": 63000
         }
       ]
+    },
+    {
+      "id": "1",
+      "reservation_id": "1",
+      "totalAmount": 159000,
+      "invoice_item": [
+        {
+          "id": 1,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 2,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 10,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 22000,
+          "total": 22000
+        },
+        {
+          "id": 9,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 32000,
+          "total": 32000
+        },
+        {
+          "id": 11,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 55000,
+          "total": 55000
+        }
+      ]
     }
   ]
 }
