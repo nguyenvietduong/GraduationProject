@@ -356,6 +356,27 @@
           "total": 60000
         }
       ]
+    },
+    {
+      "id": "1",
+      "reservation_id": "1",
+      "totalAmount": 50000,
+      "invoice_item": [
+        {
+          "id": 1,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 2,
+          "name": "undefined",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        }
+      ]
     }
   ]
 }

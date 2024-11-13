@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Account\UserController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChatController;
+use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
@@ -23,9 +24,7 @@ use App\Http\Controllers\Backend\SearchController;
 Route::middleware(['auth', 'role:1, 2'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
-        Route::get('/index', function () {
-            return view('backend.dashboard.index');
-        })->name('admin.dashboard.index');
+        Route::get('/index', [DashboardController::class  , "index"])->name('admin.dashboard.index');
 
         // User Management
         Route::prefix('user')->group(function () {
