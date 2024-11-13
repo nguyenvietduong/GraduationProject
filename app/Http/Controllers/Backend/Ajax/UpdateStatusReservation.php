@@ -70,30 +70,27 @@ class UpdateStatusReservation extends Controller
 
     public function getAvailableTables(Request $request)
     {
-        $guests = $request->input('guests');
-
-        // $currentTableId = Reservation::where('id', $reservationId)->value('table_id');
-
-        // Lọc các bàn có trạng thái 'available' và có sức chứa >= số người yêu cầu
-        // $availableTables = Table::where('status', 'available')
-        //     ->where('capacity', '>=', $guests) // Fixed this line
-        //     ->get(['id', 'name', 'capacity', 'description']);
-
-        // return response()->json(['tables' => $availableTables]);
-
-        $availableTables = Table::where('capacity', '>=', $guests) // Fixed this line
-            ->get(['id', 'name', 'capacity', 'status', 'description']);
+        $availableTables = Table::get(['id', 'name', 'capacity', 'status', 'description']);
 
         return response()->json(['tables' => $availableTables]);
     }
 
     public function getAvailableMenus(Request $request)
     {
-        $guests = $request->input('guests');
+        $key = $request->all();
 
         // Retrieve all active menus
-        $availableMenus = Menu::where('status', 'active')->get();
+        $availableMenus = Menu::where('status', 'active')
+            ->where('name', 'LIKE', '%' . $key['key'] . '%')->get();
 
         return response()->json(['menus' => $availableMenus]);
     }
+
+    // public function getDataSearchleMenus(Request $request){
+    //     $key = $request->all();
+    //     // dd($key);
+
+    //     $data = Menu::where('name', 'LIKE', '%' . $key['input'] . '%')->get();
+    //     dd($data);
+    // }
 }

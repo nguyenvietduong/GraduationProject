@@ -94,12 +94,12 @@
         })
     }
 
-    PMD.fetchAvailableMenus = async (numberOfGuests = null) => {
+    PMD.fetchAvailableMenus = async (dataSearch = '') => {
         await $.ajax({
             url: '/get-available-menus',
             type: 'GET',
             data: {
-                guests: numberOfGuests
+                key: dataSearch
             },
             success: function (response) {
                 $('#availableMenu').empty()
@@ -125,9 +125,9 @@
         data.forEach(function (table) {
             (table.status == 'occupied') ? disable = 'disableTable' : disable = ''
             $('#availableTables').append(`
-            <div class="table-info col-3 mb-4 ${disable}" data-table-id="${table.id}" data-table-name="${table.name[language]}">
-                <p>${language === 'vi' ? 'Bàn' : 'Table'}: ${table.name[language]}</p>
-                <p>${language === 'vi' ? 'Số người tối đa' : 'Capacity'}: ${table.capacity}</p>
+            <div class="table-info col-3 mb-4 ${disable}" data-table-id="${table.id}" data-table-name="${table.name}">
+                <p>Bàn: ${table.name}</p>
+                <p>Số người tối đa: ${table.capacity}</p>
             </div>
         `)
         })
@@ -136,10 +136,10 @@
     PMD.renderListMenu = (data) => {
         data.forEach(function (menu) {
             $('#availableMenu').append(`
-                <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name[language]}" data-menu-price="${menu.price}">
+                <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
                     <img class="my-2" src="${menu.image}" alt="" width="60px" height="60px" style="border-radius: 50%object-fit: cover">
-                    <p>${menu.name[language]}</p>
-                    <p>${language === 'vi' ? 'Giá' : 'Price'}: ${menu.price}</p>
+                    <p>${menu.name}</p>
+                    <p>Giá: ${menu.price}</p>
                 </div>
             `)
         })
@@ -179,13 +179,15 @@
                 $('#reservationId').val(reservationId)
                 $('#guestsReservation').val(guestsReservation)
 
-                if ($.isNumeric(guestsReservation) && guestsReservation > 0) {
-                    await PMD.fetchAvailableTables(guestsReservation)
-                    $('.table-info[data-table-id="' + tableReservation + '"]').addClass('selected')
-                } else {
-                    PMD.fetchAvailableTables()
-                }
+                // if ($.isNumeric(guestsReservation) && guestsReservation > 0) {
+                //     await PMD.fetchAvailableTables(guestsReservation)
+                //     $('.table-info[data-table-id="' + tableReservation + '"]').addClass('selected')
+                // } else {
+                //     PMD.fetchAvailableTables()
+                // }
             }
+
+            // PMD.searchMenuItem()
 
             if (invoiceData && Array.isArray(invoiceData)) {
                 const invoiceDetail = invoiceData.find(item => item.reservation_id === reservationId)
@@ -194,17 +196,39 @@
                         id: invoiceDetail.id,
                         reservation_id: invoiceDetail.reservation_id,
                         totalAmount: invoiceDetail.totalAmount,
+                        list_table: invoiceDetail.list_table,
                         invoice_item: invoiceDetail.invoice_item
                     }
                     await PMD.fetchAvailableMenus()
 
                     PMD.renderSelectedMenus(selectedMenus)
                     conditionTemp = 2
+
+                    selectedMenus.list_table.forEach(item => {
+                        $('.table-info[data-table-id="' + item.id + '"]').addClass('selected')
+                    })
+
                     selectedMenus.invoice_item.forEach(item => {
                         $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
                     })
 
+                    $('#availableTables').off('click').on('click', '.table-info', function () {
+                        $(this).toggleClass('selected')
+                        const tableId = $(this).data('table-id')
+                        const tableName = $(this).data('table-name')
+
+                        if ($(this).hasClass('selected')) {
+                            selectedMenus.list_table.push({ id: tableId, name: tableName })
+                        } else {
+                            selectedMenus.list_table = selectedMenus.list_table.filter(menu => menu.id !== tableId)
+                        }
+                        // PMD.renderSelectedMenus(selectedMenus)
+                        // $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
+                    })
+
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
+                        PMD.deleteSearchMenu(selectedMenus)
+
                         $(this).toggleClass('selected')
                         const menuId = $(this).data('menu-id')
                         const menuPrice = $(this).data('menu-price')
@@ -219,6 +243,7 @@
                         PMD.renderSelectedMenus(selectedMenus)
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
+                    await PMD.searchMenuItem(selectedMenus)
                     PMD.quantityInput(selectedMenus)
                     PMD.checkButtonAddInvoice(selectedMenus, tableReservation, true)
                 } else {
@@ -226,6 +251,7 @@
                         id: reservationId,
                         reservation_id: reservationId,
                         totalAmount: 0,
+                        list_table: [],
                         invoice_item: []
                     }
                     PMD.fetchAvailableMenus()
@@ -233,7 +259,23 @@
                     PMD.renderSelectedMenus(selectedMenus)
                     $('#confirmSelection').hide()
 
+
+                    $('#availableTables').off('click').on('click', '.table-info', function () {
+                        $(this).toggleClass('selected')
+                        const tableId = $(this).data('table-id')
+                        const tableName = $(this).data('table-name')
+
+                        if ($(this).hasClass('selected')) {
+                            selectedMenus.list_table.push({ id: tableId, name: tableName })
+                        } else {
+                            selectedMenus.list_table = selectedMenus.list_table.filter(menu => menu.id !== tableId)
+                        }
+                        // PMD.renderSelectedMenus(selectedMenus)
+                        // $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
+                    })
+
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
+                        PMD.deleteSearchMenu(selectedMenus)
                         $(this).toggleClass('selected')
                         const menuId = $(this).data('menu-id')
                         const menuPrice = $(this).data('menu-price')
@@ -247,9 +289,12 @@
                         PMD.renderSelectedMenus(selectedMenus)
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
+                    PMD.searchMenuItem(selectedMenus)
                     PMD.quantityInput(selectedMenus)
                     PMD.checkButtonAddInvoice(selectedMenus, tableReservation)
                 }
+
+
             } else {
                 console.error('Dữ liệu hóa đơn không hợp lệ:', invoiceData)
                 return null
@@ -271,6 +316,14 @@
         $('.total-invoice').html(selectedMenus.totalAmount)
     }
     //End Total Amount
+
+
+
+    PMD.deleteSearchMenu = async (selectedMenus) => {
+        $('.searchMenu').val('')
+        await PMD.fetchAvailableMenus()
+        await PMD.renderSelectedMenuItem(selectedMenus)
+    }
 
 
 
@@ -340,6 +393,27 @@
 
 
 
+    PMD.searchMenuItem = async (selectedMenus) => {
+        let timeout = null;
+        $(document).on('keyup', '.searchMenu', async function () {
+            clearTimeout(timeout)
+            timeout = setTimeout(async () => {
+                let input = $(this).val()
+                await PMD.fetchAvailableMenus(input)
+                await PMD.renderSelectedMenuItem(selectedMenus)
+            }, 1000);
+        });
+    }
+
+
+    PMD.renderSelectedMenuItem = async (selectedMenus) => {
+        await selectedMenus.invoice_item.forEach(item => {
+            $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
+        })
+    }
+
+
+
     //Check Table Selected
     PMD.checkTableSelected = (tableId, reservationId) => {
         let selectedTableId = $('.table-info.selected').attr('data-table-id')
@@ -386,6 +460,7 @@
 
     //Start Render Selected Menu
     PMD.renderSelectedMenus = async (selectedMenus) => {
+
         $('#array-menu').empty()
         if (selectedMenus.invoice_item.length === 0) {
             PMD.checkRenderButtonAmount(false)
@@ -464,6 +539,9 @@
     //End Json Server
 
 
+
+
+
     // future payment
 
     TC.fetchInvoiceDetail = async (url) => {
@@ -521,7 +599,7 @@
         })
             .then(response => response.json())
             .then(data => executeExample('success'),
-                
+
             )
             .catch(error => console.error('Lỗi khi thêm:', error))
     }
@@ -646,7 +724,7 @@
                 }
                 $('#pay').modal('hide'),
 
-                TC.addInvoice(data)
+                    TC.addInvoice(data)
                 TC.exportAndSavePDF(data)
                 setTimeout(() => {
                     window.location.reload();
@@ -671,7 +749,8 @@
         PMD.fetchAvailableTables()
         PMD.showBsModal()
         PMD.guestReservation()
-        PMD.selectedTable()
-        TC.showBsModal();
+        // PMD.searchMenuItem()
+        // PMD.selectedTable()
+        TC.showBsModal()
     })
 })(jQuery)
