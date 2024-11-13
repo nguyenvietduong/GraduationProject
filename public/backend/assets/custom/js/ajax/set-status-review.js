@@ -8,6 +8,7 @@ $(document).ready(function () {
             _token: csrfToken,
             id: reviewId,
             status: selectedValue
+            
         };
 
         $.ajax({

@@ -27,24 +27,6 @@
 
         <!--Login button Start-->
         <ul class="buy-button list-none mb-0">
-            <li class="dropdown inline-block relative pe-1">
-                <button data-dropdown-toggle="dropdown" class="dropdown-toggle align-middle inline-flex search-dropdown"
-                    type="button">
-                    <i data-feather="search" class="size-5 dark-icon"></i>
-                    <i data-feather="search" class="size-5 white-icon text-white"></i>
-                </button>
-                <!-- Dropdown menu -->
-                <div class="dropdown-menu absolute overflow-hidden end-0 m-0 mt-5 z-10 md:w-52 w-48 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden"
-                    onclick="event.stopPropagation();">
-                    <div class="relative">
-                        <i data-feather="search" class="size-4 absolute top-[9px] end-3"></i>
-                        <input type="text"
-                            class="h-9 px-3 pe-10 w-full border-0 focus:ring-0 outline-none bg-white dark:bg-slate-900 shadow dark:shadow-gray-800"
-                            name="s" id="searchItem" placeholder="Search...">
-                    </div>
-                </div>
-            </li>
-
             <li class="dropdown inline-block relative ps-0.5">
                 <!-- Nút đặt bàn với sự kiện onclick để mở/đóng menu thả xuống -->
                 <button data-dropdown-toggle="dropdown"
@@ -52,7 +34,6 @@
                     type="button" onclick="reservationHistory(event)">
                     <i data-feather="calendar" class="h-4 w-4"></i>
                 </button>
-
                 <!-- Menu thả xuống -->
                 <div id="dropdownMenu"
                     class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-[400px] rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden">
@@ -77,10 +58,6 @@
             </li>
 
             <li class="inline-block ps-0.5">
-                <a href="javascript:void(0)"
-                    class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-amber-500 text-white">
-                    <i data-feather="heart" class="h-4 w-4"></i>
-                </a>
             </li>
         </ul>
         <!--Login button End-->
@@ -96,47 +73,29 @@
         /* Điều chỉnh theo ý muốn */
     }
 </style>
-
 <script>
     const reservationStatuses = @json(__('messages.reservation.status'));
-
     document.addEventListener("click", function(event) {
         const dropdown = document.getElementById("dropdownMenu");
         const reservationButton = event.target.closest("[data-dropdown-toggle='dropdown']");
     });
-
     function reservationHistory(event) {
         event.stopPropagation(); // Prevent click from closing the dropdown
         const dropdown = document.getElementById("dropdownMenu");
         dropdown.classList.toggle("hidden");
-
         if (!dropdown.classList.contains("hidden")) {
             displayReservations();
         }
     }
-
     function cancelReservation(reservationId, event) {
         event.stopPropagation();
         let confirmCancelReservation = confirm('Bạn có chắc chắn muốn hủy');
-
         if (confirmCancelReservation) {
             $.ajax({
                 url: `reservation/${reservationId}/canceled`, // Sử dụng backticks `...` thay cho dấu nháy đơn
                 type: 'GET',
                 success: function(response) {
-                    // Tìm hàng có reservationId tương ứng
-                    const row = document.querySelector(`tr[data-reservation-id="${reservationId}"]`);
-
-                    // Đổi màu hàng để biểu thị trạng thái đã hủy
-                    row.style.backgroundColor = 'cadetblue';
-
-                    // Cập nhật trạng thái thành "đã hủy"
-                    row.querySelector('.status').innerText = 'Đã hủy';
-
-                    // Ẩn nút "Hủy"
-                    row.querySelector('.cancel-button').classList.add('hidden');
-
-                    alert('Bạn đã hủy đặt bàn!');
+                    alert
                 },
                 error: function(error) {
                     console.error('Error canceling reservation:', error);
@@ -145,15 +104,12 @@
             });
         }
     }
-
     // Function to display reservations
     function displayReservations() {
         const reservationTableBody = document.getElementById("reservationTableBody");
         reservationTableBody.innerHTML = ""; // Clear previous rows
-
         // Lấy danh sách ID đơn hàng từ localStorage
         const reservationIds = JSON.parse(localStorage.getItem('myReservation')) || [];
-
         if (reservationIds.length === 0) {
             const emptyRow = document.createElement("tr");
             emptyRow.innerHTML = `
@@ -167,7 +123,6 @@
                     type: 'GET',
                     success: function(response) {
                         const reservation = response.data;
-
                         // Chuyển đổi thời gian thành định dạng mong muốn
                         const reservationDate = new Date(reservation.reservation_time);
                         const formattedTime = reservationDate.toLocaleString('vi-VN', {
@@ -178,15 +133,12 @@
                             month: '2-digit',
                             year: 'numeric'
                         });
-
                         // Kiểm tra trạng thái để áp dụng lớp CSS
-                        const rowClass = reservation.status === 'canceled' ?
-                            'background-color: cadetblue' : '';
-                        const buttonClass = reservation.status === 'canceled' ? 'hidden' : '';
-
+                        const rowClass = reservation.status === 'canceled' ? 'background-color: cadetblue' : '';
+                        const buttonClass = reservation.status != 'confirmed' ? 'hidden' : '';
                         // Tạo chuỗi HTML
                         const rowHTML = `
-                            <tr style="${rowClass}" data-reservation-id="${reservation.id}">
+                            <tr style="${rowClass}" style="">
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
                                     <ul>
                                         <li>${reservation.name}</li>
@@ -196,18 +148,21 @@
                                 </td>
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">${reservation.guests}</td>
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">${formattedTime}</td>
-                                <td class="border-b py-2 px-4 text-center status" style="font-size: 13px">
+                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
                                     ${reservationStatuses[reservation.status]}
                                 </td>
                                 <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
-                                    <button type="button" class="text-red-500 button hover:underline cancel-button ${buttonClass}" onclick="cancelReservation(${reservation.id}, event)">
+                                    <button type="button" class="text-red-500 button hover:underline ${buttonClass}" onclick="cancelReservation(${reservation.id}, event)">
                                         Hủy
                                     </button>
                                 </td>
                             </tr>
                         `;
-
-                        reservationTableBody.innerHTML += rowHTML
+                        if (reservation.status == 'confirmed') {
+                            reservationTableBody.innerHTML += rowHTML;
+                        } else {
+                            reservationTableBody.innerHTML += rowHTML;
+                        }
                     },
                     error: function(error) {
                         console.log("Error fetching reservation details:", error);

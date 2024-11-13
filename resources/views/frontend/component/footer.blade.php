@@ -28,7 +28,7 @@
                     <div class="grid grid-cols-1 mt-12">
                         <div class="text-center">
                             <img src="{{checkFile($restaurantDatas->image) }}" class="block mx-auto" alt="">
-                            <p class="max-w-xl mx-auto mt-6">{{ $description }}</p>
+                            <p class="max-w-xl mx-auto mt-6">{{ $restaurantDatas->description }}</p>
                         </div>
 
                         <ul class="list-none text-center mt-6">

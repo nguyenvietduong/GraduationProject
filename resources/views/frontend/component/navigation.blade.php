@@ -20,22 +20,11 @@
             </ul>
         </li>
 
-        {{-- <li><a href="{{ route('reservation') }}" class="sub-menu-item">Reservation</a></li> --}}
-
-        {{-- <li class="has-submenu parent-parent-menu-item">
-            <a href="javascript:void(0)"> {{ App::getLocale() === 'vi' ? "VI" : "EN" }} </a>
-            <span class="menu-arrow"></span>
-            <ul class="submenu">
-                <li><a href="#" class="sub-menu-item dropdown-item" data-language="en">{{ __('messages.system.lang.en') }}</a></li>
-                <li><a href="#" class="sub-menu-item dropdown-item" data-language="vi">{{ __('messages.system.lang.vi') }}</a></li>
-            </ul>
-        </li> --}}
-
         @if (Auth::check())
         <li class="has-submenu parent-parent-menu-item active">
             <a href="javascript:void(0)">{{ Auth::user()->full_name }}</a><span class="menu-arrow"></span>
             <ul class="submenu">
-                <li><a href="{{ route('team') }}" class="sub-menu-item">{{ __('messages.system.profile')
+                <li><a href="{{ route('profile') }}" class="sub-menu-item">{{ __('messages.system.profile')
                         }}</a></li>
                 @if(Auth::user()->role && Auth::user()->role->authorities == 'admin')
                 <li><a href="{{ route('admin.dashboard.index') }}" class="">{{ __('messages.system.adminPage') }}</a>
@@ -57,7 +46,10 @@
             <a href="{{ route('login') }}">{{ __('messages.system.login') }}</a>
         </li>
         @endif
+
+        
     </ul>
+    
     <!--end navigation menu-->
 </div>
 

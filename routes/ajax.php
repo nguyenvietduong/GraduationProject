@@ -16,17 +16,18 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusAccount;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReview;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 
-use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
+
 use App\Http\Controllers\Backend\Ajax\UpdatePositionTable;
 
-use App\Http\Controllers\Backend\ChatController;
-use App\Http\Controllers\Backend\NotificationController;
+
 
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
 use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
 
 use App\Http\Controllers\Backend\RestaurantController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ProfilesController;
 
 // Set System Ajax
 Route::post('admin/promotion/updateStatus', [AjaxPromotion::class, 'updateStatus'])->name('admin.promotion.updateStatus');
@@ -42,6 +43,7 @@ Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::cla
 
 Route::get('get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
 Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
+Route::get('get-data-search-menu', [UpdateStatusReservation::class, 'getDataSearchleMenus']);
 
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
@@ -67,6 +69,8 @@ Route::get('count-new-notifications-endpoint', [NotificationController::class, '
 
 Route::post('check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
 Route::get('checkTable', [BackendReservationController::class, 'checkTableFullyBookedTimes'])->name('checkTableFullyBookedTimes');
+
+Route::post('/favorite-toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
 
 // Xóa ảnh tạm thời trong session
 Route::post('/remove-temp-image', function (Request $request) {
@@ -95,4 +99,4 @@ Route::post('/remove-temp-image', function (Request $request) {
     return response()->json(['success' => false], 400);
 })->name('image.removeTemp');
 
-Route::get("/checkVoucher" , [AjaxPromotion::class , "getDetailVoucher"]) ;
+Route::get("/checkVoucher", [AjaxPromotion::class, "getDetailVoucher"]);
