@@ -73,18 +73,18 @@
                                 <div class="card-body pt-0">
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#home" role="tab"
-                                                aria-selected="true">Home</a>
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#table" role="tab"
+                                                aria-selected="true">Chọn bàn</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#profile" role="tab"
-                                                aria-selected="false">Profile</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#menu" role="tab"
+                                                aria-selected="false">Chọn món ăn</a>
                                         </li>
                                     </ul>
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div class="tab-pane p-3 active" id="home" role="tabpanel">
+                                        <div class="tab-pane p-3 active" id="table" role="tabpanel">
                                             <p>Vui lòng chọn bàn:</p>
                                             <input type="hidden" id="reservationId">
 
@@ -96,13 +96,18 @@
                                             <!-- Nơi để hiển thị thông tin các bàn có sẵn -->
                                             <div id="availableTables" class="row"></div>
                                         </div>
-                                        <div class="tab-pane p-3" id="profile" role="tabpanel">
+                                        <div class="tab-pane p-3" id="menu" role="tabpanel">
                                             <div class="row justify-content-center">
                                                 <div class="col-md-8 col-lg-8">
-                                                    <div class="card-header">
+                                                    <div class="card-header px-0">
                                                         <div class="row align-items-center">
-                                                            <div class="col">
+                                                            <div class="col-lg-4">
                                                                 <p>Vui lòng chọn món ăn:</p>
+                                                            </div><!--end col-->
+                                                            <div class="col-lg-8">
+                                                                <div class="input-group">
+                                                                    <input type="" class="form-control searchMenu" placeholder="Tìm kiếm món ăn" aria-describedby="button-addon3">
+                                                                </div>
                                                             </div><!--end col-->
                                                         </div> <!--end row-->
                                                     </div><!--end card-header-->
@@ -146,7 +151,8 @@
             </div>
         </div>
     </div>
-    <!-- Second Modal -->
+    
+
     <div class="modal fade" id="pay" tabindex="-1" aria-labelledby="paylable" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">

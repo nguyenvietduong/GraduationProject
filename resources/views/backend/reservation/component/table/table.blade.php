@@ -90,24 +90,25 @@
                         </select>
                     </td>
                     <td>
-                        @if ($data->table_id == null && $data->status == 'arrived')
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-reservation-id="{{ $data->id }}" data-guestsReservation="{{ $data->guests }}"
-                                data-bs-target="#exampleModal">
-                                {{ __('messages.system.button.choose_table') }}
-                            </button>
-                        @else
+                        @if ($data->table_id)
                             <ul>
                                 <li>{{ __('messages.table.fields.name') }}:
-                                    {{ $data->table->name[App::getLocale()] ?? __('messages.system.no_data_available') }}
+                                    {{ $data->table->name ?? __('messages.system.no_data_available') }}
                                 </li>
                                 <li>{{ __('messages.table.fields.description') }}:
-                                    {{ $data->table->description[App::getLocale()] ?? __('messages.system.no_data_available') }}
+                                    {{ $data->table->description ?? __('messages.system.no_data_available') }}
                                 </li>
                                 <li>{{ __('messages.table.fields.capacity') }}:
                                     {{ $data->table->capacity ?? __('messages.system.no_data_available') }}</li>
                             </ul>
+                        @else
+                            <ul>
+                                <li>
+                                    {{ __('messages.system.no_data_available') }}
+                                </li>
+                            </ul>
                         @endif
+
                     </td>
 
                     <!-- <td class="text-end">
