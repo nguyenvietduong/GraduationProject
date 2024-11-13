@@ -263,10 +263,6 @@
 
                         if ($(this).hasClass('selected')) {
                             selectedMenus.list_table.push({ id: tableId, name: tableName })
-                            selectedMenus.list_table_old.push({ oldTable })
-
-                            console.log(oldTable);
-
                         } else {
                             selectedMenus.list_table = selectedMenus.list_table.filter(table => table.id !== tableId)
                         }
@@ -391,7 +387,7 @@
                 PMD.checkTableSelected(item, guest)
                 PMD.addInvoice(item)
             }
-            $('#exampleModal').modal('hide')
+            // $('#exampleModal').modal('hide')
 
             localStorage.setItem('showSuccessMessage', 'true');
 
