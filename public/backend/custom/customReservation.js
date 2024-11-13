@@ -401,7 +401,7 @@
                 let input = $(this).val()
                 await PMD.fetchAvailableMenus(input)
                 await PMD.renderSelectedMenuItem(selectedMenus)
-            }, 600);
+            }, 1000);
         });
     }
 
