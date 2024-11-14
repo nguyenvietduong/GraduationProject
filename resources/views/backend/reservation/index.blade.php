@@ -249,6 +249,7 @@
     @push('script')
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
-        <script src="{{ asset('backend/custom/customReservation.js?v=9') }}"></script>
+        <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
     @endpush
 @endsection

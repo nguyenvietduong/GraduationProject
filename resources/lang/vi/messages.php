@@ -638,6 +638,14 @@ return [
             'route' => 'admin.user.destroy',
         ],
     ],
+    'reservation_details' => [
+        'fields' => [
+            'reservation_detail' => 'Chi tiết bàn khách sử dụng',
+
+            'table_id' => 'Bàn',
+            'guests_detail' => 'Số lượng khách',
+        ],
+    ],
     'invoice' => [
         'title' => 'Hóa đơn',
         'status' => [
@@ -646,10 +654,12 @@ return [
             'canceled' => 'Đã hủy',
         ],
         'payment_method' => [
-          'cash' => 'Tiền mặt',
-          'bank' => 'Chuyển khoản'  
+            'cash' => 'Tiền mặt',
+            'bank' => 'Chuyển khoản'
         ],
         'fields' => [
+            'invoice_detail' => 'Chi tiết món ăn',
+
             'total_amount' => 'Tổng tiền',
             'payment_method' => 'Phương thức thanh toán',
             'status' => 'Trạng thái',
@@ -675,4 +685,3 @@ return [
     'deleted' => 'Xóa thành công!',
     'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
 ];
-

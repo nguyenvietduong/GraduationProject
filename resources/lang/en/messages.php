@@ -632,6 +632,12 @@ return [
             'route' => 'admin.reservation.destroy',
         ],
     ],
+    'reservation_details' => [
+        'fields' => [
+            'table_id' => 'Table',
+            'guests_detail' => 'Guests',
+        ],
+    ],
     'invoice' => [
         'title' => 'Invoice',
         'status' => [

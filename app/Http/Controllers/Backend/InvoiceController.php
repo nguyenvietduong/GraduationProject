@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Storage;
 
 // Requests
 use App\Http\Requests\BackEnd\Invoices\ListRequest as InvoiceListRequest;
+use App\Interfaces\Repositories\ReservationRepositoryInterface;
+use App\Interfaces\Services\ReservationServiceInterface;
 
 class InvoiceController extends Controller
 {
@@ -26,6 +28,8 @@ class InvoiceController extends Controller
 
     protected $invoiceService;
     protected $invoiceRepository;
+    protected $reservationService;
+    protected $reservationRepository;
     // Base path for views
     const PATH_VIEW        = 'backend.invoice.';
     const PER_PAGE_DEFAULT = 5;
@@ -34,9 +38,13 @@ class InvoiceController extends Controller
     public function __construct(
         InvoiceServiceInterface $invoiceService,
         InvoiceRepositoryInterface $invoiceRepository,
+        ReservationServiceInterface $reservationService,
+        ReservationRepositoryInterface $reservationRepository,
     ) {
         $this->invoiceService    = $invoiceService;
         $this->invoiceRepository = $invoiceRepository;
+        $this->reservationService = $reservationService;
+        $this->reservationRepository = $reservationRepository;
     }
     /**
      * Display a listing of the resource.
@@ -70,10 +78,11 @@ class InvoiceController extends Controller
 
     public function detail($id)
     {
-        // dd($this->invoiceService->getInvoiceDetail($id)->invoiceItems);
+        // dd($this->reservationService->getReservationDetail($id)->reservationDetails);
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object'                => self::OBJECT,
             'invoiceDetail'         => $this->invoiceService->getInvoiceDetail($id)->invoiceItems,
+            'reservationDetail'     => $this->reservationService->getReservationDetail($id)->reservationDetails,
         ]);
     }
     /**

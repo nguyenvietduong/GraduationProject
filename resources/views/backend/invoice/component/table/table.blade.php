@@ -10,6 +10,9 @@
             <th>{{ __('messages.reservation.fields.guests') }}</th>
             <th>{{ __('messages.reservation.fields.reservation_time') }}</th>
             <th>{{ __('messages.system.status') }}</th>
+            <th>{{ __('messages.invoice.fields.payment_method') }}</th>
+            <th>{{ __('messages.invoice.fields.status') }}</th>
+            <th>{{ __('messages.invoice.fields.total_amount') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
             {{-- <th>{{ __('messages.reservation.fields.dish') }}</th> --}}
             <!-- <th class="text-center">{{ __('messages.system.table.fields.action') }}</th> -->
@@ -49,15 +52,42 @@
 
                         @foreach ($statuses as $key => $option)
                             @if ($data->status == $key)
-                            {{ $option }}
+                                <span class="badge bg-primary">{{ $option }}</span>
                             @endif
                         @endforeach
+                    </td>
+                    <td>
+                        @php
+                            $pay = request('pay') ?: old('pay');
+                            $pays = __('messages.invoice.payment_method');
+                        @endphp
+
+                        @foreach ($pays as $key => $option)
+                            @if ($data->invoice->payment_method == $key)
+                                <span class="badge bg-primary">{{ $option }}</span>
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @php
+                            $status_invoice = request('status_invoice') ?: old('status_invoice');
+                            $statuses_invoice = __('messages.invoice.status');
+                        @endphp
+
+                        @foreach ($statuses_invoice as $key => $option)
+                            @if ($data->invoice->status == $key)
+                                <span class="badge bg-primary">{{ $option }}</span>
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        {{ number_format($data->invoice->total_amount) ?? __('messages.system.no_data_available') }}
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
                             <a href="{{ route(__('messages.' . $object . '.detail.route'), $data->id) }}"
                                 class="me-2">
-                                <i class="fas fa-circle-info btn btn-success btn-sm"></i>
+                                <i class="fas fa-eye btn btn-success btn-sm"></i>
                             </a>
                         </div>
                     </td>
