@@ -494,16 +494,17 @@
                 $('#array-menu').append(`
                     <tr>
                         <td>${menu.name}</td>
-                        <td>
-                            <input type="number" class="quantity-input" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
+                        <td class="text-center">
+                            <input type="number" class="px-3 quantity-input form-control w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
                         </td>
-                        <td class="price-invoice-item-${menu.id}">${menu.total}</td>
+                        <td class="price-invoice-item-${menu.id} text-end">${menu.total}đ</td>
                     </tr>
                 `)
             })
             $('#array-menu').append(`
             <tr>
-                <td>Tổng hóa đơn: <span class="total-invoice">0</span></td>
+                
+                <td colspan="3" class="text-end px-2">Tổng hóa đơn: <span class="total-invoice">0</span>đ</td>
             </tr>
             `)
             PMD.totalAmount(selectedMenus)
