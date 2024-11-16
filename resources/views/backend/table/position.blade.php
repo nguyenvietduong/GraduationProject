@@ -37,7 +37,7 @@
                         <div class="card text-center text-{{ $color }}">
                             <div class="card-body">
                                 <i class="fa-solid fa-utensils fa-2xl p-3" style="font-size: 3.5vw"></i>
-                                <h4 class="card-title">{{renderDataByLang($item->name) ?? __('messages.system.no_data_available') }}</h4>
+                                <h4 class="card-title">{{$item->name ?? __('messages.system.no_data_available') }}</h4>
                                 <p>({{ __('messages.table.text.max_guests') }} {{ $item->capacity }})</p>
                                 <div class="status-container">
                                     @php
