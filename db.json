@@ -3,438 +3,58 @@
     {
       "id": "2",
       "reservation_id": "2",
-      "totalAmount": 100000,
+      "totalAmount": 180000,
       "list_table": [
         {
-          "id": 1,
-          "name": "Bàn 1"
+          "id": 9,
+          "name": "Bàn 9"
         },
         {
-          "id": 2,
-          "name": "Bàn 2"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 3,
-          "name": "Xôi mặn",
-          "quantity": 1,
-          "price": 25000,
-          "total": 25000
-        },
-        {
-          "id": 4,
-          "name": "Cháo thịt bằm",
-          "quantity": 1,
-          "price": 35000,
-          "total": 35000
+          "id": 10,
+          "name": "Bàn 10"
         },
         {
           "id": 5,
-          "name": "Phở gà",
-          "quantity": 1,
-          "price": 40000,
-          "total": 40000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
+          "name": "Bàn 5"
+        },
         {
-          "id": 3,
-          "name": "Bàn 3"
+          "id": 6,
+          "name": "Bàn 6"
+        },
+        {
+          "id": 7,
+          "name": "Bàn 7"
         }
       ],
       "list_table_old": [],
       "invoice_item": [
         {
-          "id": 12,
-          "name": "Cà ri gà",
+          "id": 1,
+          "name": "Bánh mì trứng",
           "quantity": 1,
-          "price": 60000,
-          "total": 60000
+          "price": 20000,
+          "total": 20000
         },
         {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
+          "id": 11,
+          "name": "Cơm tấm sườn",
           "quantity": 1,
-          "price": 45000,
-          "total": 45000
+          "price": 55000,
+          "total": 55000
         },
         {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
+          "id": 21,
+          "name": "Thịt kho tàu",
           "quantity": 1,
           "price": 70000,
           "total": 70000
         },
         {
-          "id": 7,
-          "name": "Bánh ướt",
+          "id": 32,
+          "name": "Trà sữa",
           "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 12,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
-        },
-        {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        },
-        {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
-          "quantity": 1,
-          "price": 70000,
-          "total": 70000
-        },
-        {
-          "id": 7,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 12,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
-        },
-        {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        },
-        {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
-          "quantity": 1,
-          "price": 70000,
-          "total": 70000
-        },
-        {
-          "id": 7,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 12,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
-        },
-        {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        },
-        {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
-          "quantity": 1,
-          "price": 70000,
-          "total": 70000
-        },
-        {
-          "id": 7,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 12,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
-        },
-        {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        },
-        {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
-          "quantity": 1,
-          "price": 70000,
-          "total": 70000
-        },
-        {
-          "id": 7,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 12,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
-        },
-        {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        },
-        {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
-          "quantity": 1,
-          "price": 70000,
-          "total": 70000
-        },
-        {
-          "id": 7,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 0,
-      "list_table": [],
-      "list_table_old": [],
-      "invoice_item": []
-    },
-    {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 253000,
-      "list_table": [
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        }
-      ],
-      "list_table_old": [],
-      "invoice_item": [
-        {
-          "id": 12,
-          "name": "Cà ri gà",
-          "quantity": 1,
-          "price": 60000,
-          "total": 60000
-        },
-        {
-          "id": 13,
-          "name": "Cơm chiên Dương Châu",
-          "quantity": 1,
-          "price": 45000,
-          "total": 45000
-        },
-        {
-          "id": 14,
-          "name": "Bún bò Huế",
-          "quantity": 1,
-          "price": 50000,
-          "total": 50000
-        },
-        {
-          "id": 15,
-          "name": "Mì xào hải sản",
-          "quantity": 1,
-          "price": 70000,
-          "total": 70000
-        },
-        {
-          "id": 7,
-          "name": "Bánh ướt",
-          "quantity": 1,
-          "price": 28000,
-          "total": 28000
+          "price": 35000,
+          "total": 35000
         }
       ]
     }

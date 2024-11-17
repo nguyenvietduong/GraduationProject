@@ -145,35 +145,6 @@
                     feedback.text("Mã giảm giá không hợp lệ").css("color", "red");
                 }
             });
-
-            // $("#btn_voucher").click(async (e) => {
-            //     let input_voucher = $("#input_voucher");
-            //     let feedback_voucher = $("#feedback_voucher");
-            //     voucher = await PMD.fetchVoucher(`/checkVoucher?code=${input_voucher.val()}&totalAmount=${invoiceDetail[0].totalAmount}`);
-            //     console.log(voucher);
-            //     if (voucher[0]) {
-            //         input_voucher.addClass("is-valid");
-            //         feedback_voucher.addClass("valid-feedback");
-            //         feedback_voucher.text("Mã giảm giá hợp lệ");
-
-
-            //         total_payment = (voucher[0].type == "fixed")
-            //             ? invoiceDetail[0].totalAmount - voucher[0].discount
-            //             : invoiceDetail[0].totalAmount - (((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
-            //                 >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount));
-
-
-            //         $("#total_payment").text(`${total_payment}`)
-            //         $("#voucher").text(`${(voucher[0].type == "fixed")
-            //             ? voucher[0].discount
-            //             : ((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
-            //                 >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount)}`)
-            //     } else {
-            //         input_voucher.addClass("is-invalid");
-            //         feedback_voucher.addClass("invalid-feedback");
-            //         feedback_voucher.text("Mã giảm giá không hợp lệ");
-            //     }
-            // })
             $(`#btn_paid_${reservationId}`).off('click').click((e) => {
                 let payment_method = $('input[name="payment_method"]:checked').val();
                 let data = {

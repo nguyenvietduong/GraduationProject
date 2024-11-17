@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\RestaurantController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\SearchController;
+use App\Http\Controllers\Backend\StatisticalController;
 
 Route::middleware(['auth', 'role:1, 2'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -167,6 +168,15 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         });
         Route::prefix('invoice')->group(function () {
             Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
+        });
+
+        Route::prefix('statistical')->group(function () {
+            Route::get('', [StatisticalController::class, 'index'])->name('admin.statistical.index');
+            Route::get('revenue-statistics', [StatisticalController::class, 'getRevenueStatistics']);
+            Route::get('top-clients', [StatisticalController::class, 'getPopularReservationTimes']);
+            Route::get('top-menus', [StatisticalController::class, 'getMenuItemsWithReservationCounts']);
+            Route::get('top-tables', [StatisticalController::class, 'getTableReservationStats']);
+
         });
 
         Route::get('search', [SearchController::class, 'search'])->name('search');
