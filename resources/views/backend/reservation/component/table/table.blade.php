@@ -89,7 +89,7 @@
                             @endforeach
                         </select>
                     </td>
-                    <td>
+                    <td style="height: 120px; overflow: hidden; display: block; overflow-y: auto">
                         @php
                             $reservationDetails = $data->reservationDetails;
                         @endphp
