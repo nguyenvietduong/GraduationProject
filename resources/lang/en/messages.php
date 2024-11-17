@@ -632,7 +632,41 @@ return [
             'route' => 'admin.reservation.destroy',
         ],
     ],
+    'reservation_details' => [
+        'fields' => [
+            'table_id' => 'Table',
+            'guests_detail' => 'Guests',
+        ],
+    ],
+    'invoice' => [
+        'title' => 'Invoice',
+        'status' => [
+            'unpaid' => 'Un paid',
+            'paid' => 'Paid',
+            'canceled' => 'Canceled',
+        ],
+        'payment_method' => [
+          'cash' => 'Cash',
+          'bank' => 'Bank'  
+        ],
+        'fields' => [
+            'total_amount' => 'Total amount',
+            'payment_method' => 'Payment method',
+            'status' => 'Status',
 
+            'menu' => 'Menu',
+            'quantity' => 'Quantity',
+            'price' => 'Price',
+            'total' => 'Total',
+        ],
+
+        'index' => [
+            'route' => 'admin.invoice.index',
+        ],
+        'detail' => [
+            'route' => 'admin.invoice.detail',
+        ],
+    ],
     'version' => '<b>Version</b> :version',
     'copyright' => '<strong>Copyright © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> All rights reserved.',
     'created' => 'Created successfully!',

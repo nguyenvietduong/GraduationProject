@@ -56,11 +56,8 @@
             <span class="countNotification">Thông báo</span>
         </h5>
         <div class="form-group px-2 pt-2 pb-2 bg-success-subtle">
-            <input type="text" class="form-control" id="searchInput"
+            <input type="text" class="form-control mb-2" id="searchInput"
                 placeholder="{{ __('messages.system.button.search') }}">
-
-            <input type="datetime-local" id="datetimeLocal" class="form-control my-2">
-
             <div class="row">
                 <div class="col-3">
                     <div class="form-check">
@@ -226,26 +223,23 @@
             const searchQuery = $('#searchInput').val().trim(); 
             const notificationStatus = $('input[name="notificationStatus"]:checked')
                 .val(); 
-            const selectedDate = $('#datetimeLocal').val(); 
 
             clearTimeout(searchTimeout);
 
             searchTimeout = setTimeout(function() {
-                if (!searchQuery && !notificationStatus && !selectedDate) {
+                if (!searchQuery && !notificationStatus) {
                     loadNotifications(); 
                 } else {
-                    searchNotifications(searchQuery, notificationStatus,
-                        selectedDate); 
+                    searchNotifications(searchQuery, notificationStatus); 
                 }
             }, 2000);
         }
 
         $('#searchInput').on('input', triggerSearch);
         $('input[name="notificationStatus"]').on('change', triggerSearch);
-        $('#datetimeLocal').on('change', triggerSearch); 
 
         function searchNotifications(query, status, date) {
-            const url = `/notifications/search?keyword=${query}&status=${status || 'all'}&date=${date || ''}`;
+            const url = `/notifications/search?keyword=${query}&status=${status || 'all'}`;
 
             $.ajax({
                 url: url,

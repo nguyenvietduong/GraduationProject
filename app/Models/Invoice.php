@@ -14,4 +14,8 @@ class Invoice extends Model
         'payment_method',
         'status',
     ];
+    public function invoiceItems()
+    {
+        return $this->hasMany(Invoice_item::class);
+    }
 }

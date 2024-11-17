@@ -70,21 +70,19 @@
                 </tr>
             @endforeach
             <tr>
-                <td colspan="4" style="text-align: right;"><strong>Tổng Tiền:</strong></td>
+                <td colspan="4" style="text-align: right;"><strong></strong></td>
                 <td><strong>{{ number_format($total_amount) }} VND</strong></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: right;"><strong>Giảm giá:</strong></td>
+                <td><strong>{{ number_format($voucher_discount) }} VND</strong></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: right;"><strong>Thành tiền:</strong></td>
+                <td><strong>{{ number_format($total_payment) }} VND</strong></td>
             </tr>
         </tbody>
     </table>
-
-    <!-- Tổng số tiền -->
-    <h3 style="text-align: right;">Giảm giá: {{ number_format($voucher_discount) }} VND</h3>
-    <h3 style="text-align: right;">Tổng số tiền: {{ number_format($total_payment) }} VND</h3>
-
-    <!-- Mã QR Code -->
-    <div class="qr-code">
-        <p>Quét mã QR để xem chi tiết hóa đơn hoặc thanh toán</p>
-        <img src="{{ asset('storage/qrcode_images/qrcode.jpg') }}" alt="QR Code" style="width: 150px;">
-    </div>
 
     <div class="footer">
         <p>Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi!</p>
