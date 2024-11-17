@@ -191,11 +191,9 @@ return [
         ],
         'fields' => [
             'name_vi' => 'Tên món ăn (Tiếng việt)',
-            'name_en' => 'Tên món ăn (Tiếng anh)',
             'slug' => 'Đường dẫn',
             'name' => "Tên món ăn",
             'description_vi' => 'Mô tả món ăn (Tiếng việt)',
-            'description_en' => 'Mô tả món ăn (Tiếng anh)',
             'price_vi' => 'Giá món ăn',
             "price" => "Giá",
             'status' => 'Trạng thái',

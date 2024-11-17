@@ -23,11 +23,12 @@ class AjaxPromotion extends Controller
         ];
     }
     public function getDetailVoucher(Request $request){
+        $count = Promotion::where("code", $request->get("code"))->count();
         return  Promotion::where("code" , $request->get("code"))
         ->where("start_date" ,'<=', Carbon::now())
         ->where("end_date" ,'>', Carbon::now())
         ->where("is_active" ,'=', 1)
-        ->where("total"  , '>' , 0 )
+        ->where("total"  , '>' , $count )
         ->where("min_order_value"  , "<=" ,  $request->query("totalAmount"))
         ->get();
     }

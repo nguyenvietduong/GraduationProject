@@ -48,10 +48,17 @@
                     </tr>
                 `)
             })
+            $('#list_menu_item').append(`
+                <tr>
+                    <td colspan="2">
+                        <span>Tổng hóa đơn  </span>
+                    </td>
+                    <td>${menuItems[0].totalAmount}</td>
+                </tr>
+            `)
         }
     }
     PMD.addInvoice = (data) => {
-
         fetch("http://graduationproject.test/admin/invoice/store", {
             method: 'POST',
             headers: {
@@ -102,7 +109,7 @@
             }
             let voucher_discount = 0;
             let code;
-
+            let list_tables = invoiceDetail[0].list_table;
             $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
 
             let total_amount = invoiceDetail[0].totalAmount;
@@ -120,6 +127,7 @@
                 let inputVoucher = $('#pay').find('.input-voucher').val();
                 let feedback = $('#pay').find('.feedback-voucher');
                 let voucher = await PMD.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
+
                 if (voucher[0]) {
                     code = voucher[0].code;
                     feedback.text("Mã giảm giá hợp lệ").css("color", "green");
@@ -135,12 +143,11 @@
                             voucher_discount = (total_amount * voucher[0].discount) / 100
                         }
                     }
-                    console.log(total_payment);
-
-                    $('#pay').find('.voucher-discount').text(voucher_discount);
+                    $('#pay').find('.voucher-discount').text(`Giảm giá : ${voucher_discount} VNĐ`);
+                    $('#pay').find('.voucher-discount').show();
                     $('#pay').find('.total-payment').text(total_payment);
                 } else {
-                    $('#pay').find('.voucher-discount').text('0');
+                    $('#pay').find('.voucher-discount').hide();
                     $('#pay').find('.total-payment').text(total_amount);
                     feedback.text("Mã giảm giá không hợp lệ").css("color", "red");
                 }
@@ -153,11 +160,13 @@
                     total_payment,
                     payment_method,
                     voucher_discount,
-                    code
+                    code,
+                    list_tables
                 }
+
                 $('#pay').modal('hide'),
 
-                    PMD.addInvoice(data)
+                PMD.addInvoice(data)
                 PMD.exportAndSavePDF(data)
                 setTimeout(() => {
                     window.location.reload();
@@ -169,7 +178,7 @@
             // Đặt lại các giá trị giảm giá
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');
-            $('#pay').find('.voucher-discount').text(0);  // Đặt lại giảm giá về 0
+            $('#pay').find('.voucher-discount').hide();  // Đặt lại giảm giá về 0
             $('#pay').find('.total-payment').text(totalAmount); // Đặt lại tổng thanh toán về tổng hóa đơn
         });
     }

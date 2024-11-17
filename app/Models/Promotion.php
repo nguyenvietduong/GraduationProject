@@ -22,4 +22,8 @@ class Promotion extends Model
         'start_date',
         'end_date'
     ];
+    public function promotionDetails()
+    {
+        return $this->hasMany(Promotion_user::class);
+    }
 }

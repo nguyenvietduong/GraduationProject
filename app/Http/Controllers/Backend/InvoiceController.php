@@ -12,6 +12,8 @@ use App\Models\Invoice_item;
 use App\Models\Promotion;
 use App\Models\Reservation;
 use App\Models\Restaurant;
+use App\Models\Table;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\BackEnd\Invoices\ListRequest as InvoiceListRequest;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
+use App\Models\PromotionUser;
 
 class InvoiceController extends Controller
 {
@@ -93,6 +96,17 @@ class InvoiceController extends Controller
         try {
             DB::transaction(function () use ($request) {
                 $reservation = Reservation::find($request->reservation_id);
+
+                $promotion = Promotion::where('code', $request->code)->first();
+                if ($promotion) {
+                    PromotionUser::insert([
+                        'promotion_id' => $promotion->id,
+                        'name' => $reservation->name,
+                        'email' => $reservation->email,
+                        'phone' => $reservation->phone,
+                    ]);
+                }
+
                 $reservation->update(['status' => 'completed']);
                 $dataInvoice = [
                     'reservation_id' => $request->reservation_id,
@@ -100,6 +114,7 @@ class InvoiceController extends Controller
                     'payment_method' => $request->payment_method,
                     'status' => 'paid',
                 ];
+                
                 $invoice = Invoice::create($dataInvoice);
                 foreach ($request->invoice_item as $data) {
                     Invoice_item::create([
@@ -108,6 +123,11 @@ class InvoiceController extends Controller
                         'quantity' => $data['quantity'],
                         'price' => $data['price'],
                         'total' => $data['total']
+                    ]);
+                }
+                foreach ($request->list_tables as $table) {
+                    Table::where('id' ,$table['id'])->update([
+                        'status' => "available",
                     ]);
                 }
             });
@@ -133,7 +153,7 @@ class InvoiceController extends Controller
 
         // Tên file PDF và đường dẫn lưu trữ
         $fileName = 'invoice_' . time() . '.pdf';
-        $filePath = 'public/invoices/' . $fileName;  // Sử dụng 'public/' để lưu trong thư mục storage/app/public
+        $filePath = 'invoices/' . $fileName;
 
         // Lưu file PDF vào storage
         Storage::put($filePath, $pdf->output());
