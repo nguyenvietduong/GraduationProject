@@ -121,6 +121,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ set_active(['invoice'], 'active', 'admin') }}"
+                        href="{{ route('admin.invoice.index') }}">
+                        <i class="fa fa-file-invoice menu-icon"></i>
+                        <span>Hóa đơn</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                 
                 <li class="nav-item checkPermissionMenu">
                     <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"

@@ -15,4 +15,12 @@ class Invoice_item extends Model
         'price',
         'total',
     ];
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+    public function menu()
+{
+    return $this->belongsTo(Menu::class, 'menu_id');
+}
 }
