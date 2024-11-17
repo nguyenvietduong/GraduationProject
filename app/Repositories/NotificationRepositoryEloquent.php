@@ -68,13 +68,6 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
             });
         }
 
-        if (!empty($filters['date'])) {
-            $query->where(function ($q) use ($filters) {
-                $q->whereRaw('JSON_EXTRACT(notifications.message, "$.reservation_time") LIKE ?', ['%' . $filters['date'] . '%']);
-            });
-        }
-        
-
         // Paginate results
         return $query->get();
     }
