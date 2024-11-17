@@ -660,7 +660,7 @@ return [
 
             'total_amount' => 'Tổng tiền',
             'payment_method' => 'Phương thức thanh toán',
-            'status' => 'Trạng thái',
+            'status' => 'Trạng thái thanh toán',
 
             'menu' => 'Món ăn',
             'quantity' => 'Số lượng',

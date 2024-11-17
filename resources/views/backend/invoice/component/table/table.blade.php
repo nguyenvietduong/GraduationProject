@@ -9,7 +9,7 @@
             <th>{{ __('messages.reservation.fields.reservation_information') }}</th>
             <th>{{ __('messages.reservation.fields.guests') }}</th>
             <th>{{ __('messages.reservation.fields.reservation_time') }}</th>
-            <th>{{ __('messages.system.status') }}</th>
+            {{-- <th>{{ __('messages.system.status') }}</th> --}}
             <th>{{ __('messages.invoice.fields.payment_method') }}</th>
             <th>{{ __('messages.invoice.fields.status') }}</th>
             <th>{{ __('messages.invoice.fields.total_amount') }}</th>
@@ -44,7 +44,7 @@
                         <div>{{ date('H:i:s', strtotime($data->reservation_time)) }}</div>
                         <div>{{ date('d/m/Y', strtotime($data->reservation_time)) }}</div>
                     </td>
-                    <td>
+                    {{-- <td>
                         @php
                             $status = request('status') ?: old('status');
                             $statuses = __('messages.reservation.status');
@@ -55,7 +55,7 @@
                                 <span class="badge bg-primary">{{ $option }}</span>
                             @endif
                         @endforeach
-                    </td>
+                    </td> --}}
                     <td>
                         @php
                             $pay = request('pay') ?: old('pay');

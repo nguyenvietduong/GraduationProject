@@ -90,17 +90,22 @@
                         </select>
                     </td>
                     <td>
-                        @if ($data->table_id)
-                            <ul>
-                                <li>{{ __('messages.table.fields.name') }}:
-                                    {{ $data->table->name ?? __('messages.system.no_data_available') }}
-                                </li>
-                                <li>{{ __('messages.table.fields.description') }}:
-                                    {{ $data->table->description ?? __('messages.system.no_data_available') }}
-                                </li>
-                                <li>{{ __('messages.table.fields.capacity') }}:
-                                    {{ $data->table->capacity ?? __('messages.system.no_data_available') }}</li>
-                            </ul>
+                        @php
+                            $reservationDetails = $data->reservationDetails;
+                        @endphp
+                        @if ($reservationDetails)
+                            @foreach ($reservationDetails as $reservationDetail)
+                                @php
+                                    $table = $reservationDetail->table;
+                                @endphp
+                                <ul>
+                                    <li>{{ __('messages.table.fields.name') }}:
+                                        {{ $table->name ?? __('messages.system.no_data_available') }}
+                                    </li>
+                                    <li>{{ __('messages.table.fields.capacity') }}:
+                                        {{ $table->capacity ?? __('messages.system.no_data_available') }}</li>
+                                </ul>
+                            @endforeach
                         @else
                             <ul>
                                 <li>

@@ -204,8 +204,8 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <h5>Tổng hóa đơn : <span class="total-amount">0</span> VNĐ</h5>
-                                    <h5>Giảm giá : <span class="voucher-discount">0</span> VNĐ</h5>
+                                    <h5 style="display: none"><span class="total-amount"></span></h5>
+                                    <h5 style="display: none" class="voucher-discount"></h5>
                                     <h5>Tổng thanh toán : <span class="total-payment">0</span> VNĐ</h5>
                                     <hr>
                                     <label>Nhập mã giảm giá</label>
@@ -244,7 +244,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer-1">
                 </div>
             </div>
         </div>

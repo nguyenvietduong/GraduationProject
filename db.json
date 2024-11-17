@@ -1,89 +1,76 @@
 {
   "invoice": [
     {
-      "id": "1",
-      "reservation_id": "1",
-      "totalAmount": 50000,
+      "id": "4",
+      "reservation_id": "4",
+      "totalAmount": 204000,
+      "list_table": [
+        {
+          "id": 2,
+          "name": "Bàn 2"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 1,
+          "name": "Bánh mì trứng",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        },
+        {
+          "id": 4,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        },
+        {
+          "id": 5,
+          "name": "Phở gà",
+          "quantity": 1,
+          "price": 40000,
+          "total": 40000
+        },
+        {
+          "id": 10,
+          "name": "Bánh mì chả cá",
+          "quantity": 1,
+          "price": 22000,
+          "total": 22000
+        },
+        {
+          "id": 9,
+          "name": "Cháo lòng",
+          "quantity": 1,
+          "price": 32000,
+          "total": 32000
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "reservation_id": "3",
+      "totalAmount": 250000,
       "list_table": [
         {
           "id": 1,
           "name": "Bàn 1"
-        },
-        {
-          "id": 2,
-          "name": "Bàn 2"
-        },
-        {
-          "id": 3,
-          "name": "Bàn 3"
-        },
-        {
-          "id": 4,
-          "name": "Bàn 4"
-        },
-        {
-          "id": 8,
-          "name": "Bàn 8"
-        },
-        {
-          "id": 6,
-          "name": "Bàn 6"
-        },
-        {
-          "id": 5,
-          "name": "Bàn 5"
-        },
-        {
-          "id": 7,
-          "name": "Bàn 7"
-        },
-        {
-          "id": 9,
-          "name": "Bàn 9"
-        },
-        {
-          "id": 10,
-          "name": "Bàn 10"
-        },
-        {
-          "id": 11,
-          "name": "Bàn 1"
-        },
-        {
-          "id": 12,
-          "name": "Bàn 2"
-        },
-        {
-          "id": 16,
-          "name": "Bàn 6"
-        },
-        {
-          "id": 15,
-          "name": "Bàn 5"
-        },
-        {
-          "id": 14,
-          "name": "Bàn 4"
-        },
-        {
-          "id": 13,
-          "name": "Bàn 3"
-        },
-        {
-          "id": 17,
-          "name": "Bàn 7"
-        },
-        {
-          "id": 18,
-          "name": "Bàn 8"
-        },
-        {
-          "id": 19,
-          "name": "Bàn 9"
-        },
-        {
-          "id": 20,
-          "name": "Bàn 10"
         }
       ],
       "list_table_old": [],
@@ -98,9 +85,30 @@
         {
           "id": 1,
           "name": "Bánh mì trứng",
-          "quantity": 1,
+          "quantity": 6,
           "price": 20000,
-          "total": 20000
+          "total": 120000
+        },
+        {
+          "id": 4,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        },
+        {
+          "id": 5,
+          "name": "Phở gà",
+          "quantity": 1,
+          "price": 40000,
+          "total": 40000
         }
       ]
     }

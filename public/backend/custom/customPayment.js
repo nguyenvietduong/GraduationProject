@@ -48,10 +48,17 @@
                     </tr>
                 `)
             })
+            $('#list_menu_item').append(`
+                <tr>
+                    <td colspan="2">
+                        <span>Tổng hóa đơn  </span>
+                    </td>
+                    <td>${menuItems[0].totalAmount}</td>
+                </tr>
+            `)
         }
     }
     PMD.addInvoice = (data) => {
-
         fetch("http://graduationproject.test/admin/invoice/store", {
             method: 'POST',
             headers: {
@@ -102,7 +109,7 @@
             }
             let voucher_discount = 0;
             let code;
-
+            let list_tables =invoiceDetail[0].list_table ;
             $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
 
             let total_amount = invoiceDetail[0].totalAmount;
@@ -135,45 +142,15 @@
                             voucher_discount = (total_amount * voucher[0].discount) / 100
                         }
                     }
-                    console.log(total_payment);
-
-                    $('#pay').find('.voucher-discount').text(voucher_discount);
+                    $('#pay').find('.voucher-discount').text(`Giảm giá : ${voucher_discount} VNĐ`);
+                    $('#pay').find('.voucher-discount').show();
                     $('#pay').find('.total-payment').text(total_payment);
                 } else {
-                    $('#pay').find('.voucher-discount').text('0');
+                    $('#pay').find('.voucher-discount').hide();
                     $('#pay').find('.total-payment').text(total_amount);
                     feedback.text("Mã giảm giá không hợp lệ").css("color", "red");
                 }
             });
-
-            // $("#btn_voucher").click(async (e) => {
-            //     let input_voucher = $("#input_voucher");
-            //     let feedback_voucher = $("#feedback_voucher");
-            //     voucher = await PMD.fetchVoucher(`/checkVoucher?code=${input_voucher.val()}&totalAmount=${invoiceDetail[0].totalAmount}`);
-            //     console.log(voucher);
-            //     if (voucher[0]) {
-            //         input_voucher.addClass("is-valid");
-            //         feedback_voucher.addClass("valid-feedback");
-            //         feedback_voucher.text("Mã giảm giá hợp lệ");
-
-
-            //         total_payment = (voucher[0].type == "fixed")
-            //             ? invoiceDetail[0].totalAmount - voucher[0].discount
-            //             : invoiceDetail[0].totalAmount - (((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
-            //                 >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount));
-
-
-            //         $("#total_payment").text(`${total_payment}`)
-            //         $("#voucher").text(`${(voucher[0].type == "fixed")
-            //             ? voucher[0].discount
-            //             : ((invoiceDetail[0].totalAmount / 100 * voucher[0].discount)
-            //                 >= voucher[0].max_discount) ? voucher[0].max_discount : (invoiceDetail[0].totalAmount / 100 * voucher[0].discount)}`)
-            //     } else {
-            //         input_voucher.addClass("is-invalid");
-            //         feedback_voucher.addClass("invalid-feedback");
-            //         feedback_voucher.text("Mã giảm giá không hợp lệ");
-            //     }
-            // })
             $(`#btn_paid_${reservationId}`).off('click').click((e) => {
                 let payment_method = $('input[name="payment_method"]:checked').val();
                 let data = {
@@ -182,7 +159,8 @@
                     total_payment,
                     payment_method,
                     voucher_discount,
-                    code
+                    code , 
+                    list_tables
                 }
                 $('#pay').modal('hide'),
 
@@ -198,7 +176,7 @@
             // Đặt lại các giá trị giảm giá
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');
-            $('#pay').find('.voucher-discount').text(0);  // Đặt lại giảm giá về 0
+            $('#pay').find('.voucher-discount').hide();  // Đặt lại giảm giá về 0
             $('#pay').find('.total-payment').text(totalAmount); // Đặt lại tổng thanh toán về tổng hóa đơn
         });
     }

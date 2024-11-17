@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\BackEnd\Invoices\ListRequest as InvoiceListRequest;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
+use App\Models\Table;
 
 class InvoiceController extends Controller
 {
@@ -108,6 +109,11 @@ class InvoiceController extends Controller
                         'quantity' => $data['quantity'],
                         'price' => $data['price'],
                         'total' => $data['total']
+                    ]);
+                }
+                foreach ($request->list_tables as $table) {
+                    Table::where('id' ,$table['id'])->update([
+                        'status' => "available",
                     ]);
                 }
             });
