@@ -18,10 +18,9 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 
 
 use App\Http\Controllers\Backend\Ajax\UpdatePositionTable;
-
-
-
+use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
 

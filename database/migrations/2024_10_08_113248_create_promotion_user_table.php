@@ -12,8 +12,11 @@ return new class extends Migration {
     {
         Schema::create('promotion_user', function (Blueprint $table) {
             $table->foreignId('promotion_id')->constrained('promotions')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-        });
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->unique(['promotion_id', 'name', 'email', 'phone'], 'promotion_user_unique');
+        });        
     }
 
     /**

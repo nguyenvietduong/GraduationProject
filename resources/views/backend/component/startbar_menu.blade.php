@@ -149,7 +149,15 @@
                     <a class="nav-link {{ set_active(['review'], 'active', 'admin') }}"
                         href="{{ route('admin.review.index') }}">
                         <i class="fa fa-comments menu-icon"></i>
-                        <span id="new-review-count">Đánh giá ({{ $newReviewCount }})</span> <!-- Thêm ID cho span -->
+                        <span id="new-review-count">Đánh giá ({{ $newReviewCount }})</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ set_active(['statistical'], 'active', 'admin') }}"
+                        href="{{ route('admin.statistical.index') }}">
+                        <i class="fa fa-chart-bar menu-icon"></i>
+                        <span id="new-review-count">Thống kê</span>                        
                     </a>
                 </li>
 

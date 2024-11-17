@@ -102,6 +102,7 @@
                 key: dataSearch
             },
             success: function (response) {
+                // return
                 $('#availableMenu').empty()
                 let data = response.menus
                 if (data && data.length > 0) {
@@ -134,15 +135,56 @@
     }
 
     PMD.renderListMenu = (data) => {
-        data.forEach(function (menu) {
-            $('#availableMenu').append(`
-                <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
-                    <img class="my-2" src="${menu.image}" alt="" width="60px" height="60px" style="border-radius: 50%object-fit: cover">
-                    <p>${menu.name}</p>
-                    <p>Giá: ${menu.price}</p>
-                </div>
-            `)
+        let active
+        let html
+
+
+        html = `
+        <div class="card-body pt-0">
+        <ul class="nav nav-tabs" role="tablist">`
+
+        data.forEach(function (cate) {
+
+            cate.slug == 'bua-sang' ? active = 'active' : active = ''
+
+            html += `  <li class="nav-item" role="presentation">
+                <a class="nav-link ${active}" data-bs-toggle="tab"
+                    href="#${cate.slug}" role="tab"
+                    aria-selected="true">${cate.name}</a>
+            </li>`
         })
+        html += '</ul>'
+
+        html += '<div class="tab-content">'
+        data.forEach(function (cate) {
+            cate.slug == 'bua-sang' ? active = 'active show' : active = ''
+            html += `
+            <div class="tab-pane p-3 ${active}" id="${cate.slug}" role="tabpanel">
+                <div class="row">
+                ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu => `
+                    <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
+                        <img class="my-2" src="${menu.image}" alt="" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <p>${menu.name}</p>
+                        <p>Giá: ${menu.price}</p>
+                    </div>
+                `).join('') : '<p>Không có menu nào</p>'}
+                </div>
+            </div>
+        `
+        })
+        html += '</div>'
+        html += '</div>'
+
+        $('#availableMenu').append(html)
+        // data.forEach(function (menu) {
+        //     $('#availableMenu').append(`
+        //         <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
+        //             <img class="my-2" src="${menu.image}" alt="" width="60px" height="60px" style="border-radius: 50%object-fit: cover">
+        //             <p>${menu.name}</p>
+        //             <p>Giá: ${menu.price}</p>
+        //         </div>
+        //     `)
+        // })
     }
 
     PMD.renderTdMenu = (accountId) => {
@@ -164,7 +206,13 @@
     }
     //End Render Data Table & Menus
 
-
+    PMD.renderNotiTable = (guest = null) => {
+        let html
+        let table = Math.ceil(guest / 6)
+        html = `Đơn hàng với ${guest} khác hàng. Nên chọn tối thiểu ${table} bàn.`
+        $('#notiTable').empty()
+        $('#notiTable').append(html)
+    }
 
     //Show Modal Data
     PMD.showBsModal = () => {
@@ -177,17 +225,8 @@
                 var tableReservation = button.attr('dataTableId')
                 var guestsReservation = button.attr('dataGuests')
                 $('#reservationId').val(reservationId)
-                $('#guestsReservation').val(guestsReservation)
-
-                // if ($.isNumeric(guestsReservation) && guestsReservation > 0) {
-                //     await PMD.fetchAvailableTables(guestsReservation)
-                //     $('.table-info[data-table-id="' + tableReservation + '"]').addClass('selected')
-                // } else {
-                //     PMD.fetchAvailableTables()
-                // }
+                PMD.renderNotiTable(guestsReservation)
             }
-
-            // PMD.searchMenuItem()
 
             if (invoiceData && Array.isArray(invoiceData)) {
                 const invoiceDetail = invoiceData.find(item => item.reservation_id === reservationId)
@@ -197,8 +236,13 @@
                         reservation_id: invoiceDetail.reservation_id,
                         totalAmount: invoiceDetail.totalAmount,
                         list_table: invoiceDetail.list_table,
+                        list_table_old: [],
                         invoice_item: invoiceDetail.invoice_item
                     }
+
+                    let oldTable = invoiceDetail.list_table
+                    console.log(oldTable);
+
                     await PMD.fetchAvailableMenus()
 
                     PMD.renderSelectedMenus(selectedMenus)
@@ -220,15 +264,11 @@
                         if ($(this).hasClass('selected')) {
                             selectedMenus.list_table.push({ id: tableId, name: tableName })
                         } else {
-                            selectedMenus.list_table = selectedMenus.list_table.filter(menu => menu.id !== tableId)
+                            selectedMenus.list_table = selectedMenus.list_table.filter(table => table.id !== tableId)
                         }
-                        // PMD.renderSelectedMenus(selectedMenus)
-                        // $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
 
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                        PMD.deleteSearchMenu(selectedMenus)
-
                         $(this).toggleClass('selected')
                         const menuId = $(this).data('menu-id')
                         const menuPrice = $(this).data('menu-price')
@@ -236,7 +276,6 @@
 
                         if ($(this).hasClass('selected')) {
                             selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
-                            console.log(selectedMenus.invoice_item)
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                         }
@@ -245,13 +284,14 @@
                     })
                     await PMD.searchMenuItem(selectedMenus)
                     PMD.quantityInput(selectedMenus)
-                    PMD.checkButtonAddInvoice(selectedMenus, tableReservation, true)
+                    PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
                 } else {
                     let selectedMenus = {
                         id: reservationId,
                         reservation_id: reservationId,
                         totalAmount: 0,
                         list_table: [],
+                        list_table_old: [],
                         invoice_item: []
                     }
                     PMD.fetchAvailableMenus()
@@ -270,12 +310,9 @@
                         } else {
                             selectedMenus.list_table = selectedMenus.list_table.filter(menu => menu.id !== tableId)
                         }
-                        // PMD.renderSelectedMenus(selectedMenus)
-                        // $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     })
 
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                        PMD.deleteSearchMenu(selectedMenus)
                         $(this).toggleClass('selected')
                         const menuId = $(this).data('menu-id')
                         const menuPrice = $(this).data('menu-price')
@@ -291,10 +328,8 @@
                     })
                     PMD.searchMenuItem(selectedMenus)
                     PMD.quantityInput(selectedMenus)
-                    PMD.checkButtonAddInvoice(selectedMenus, tableReservation)
+                    PMD.checkButtonAddInvoice(selectedMenus, guestsReservation)
                 }
-
-
             } else {
                 console.error('Dữ liệu hóa đơn không hợp lệ:', invoiceData)
                 return null
@@ -343,50 +378,23 @@
 
 
 
-    //Start Guest Reservation
-    PMD.guestReservation = () => {
-        $('#guestsReservation').on('input', function () {
-            const numberOfGuests = $(this).val()
-            clearTimeout($(this).data('typingTimer'))
-            $(this).data('typingTimer', setTimeout(function () {
-                if ($.isNumeric(numberOfGuests) && numberOfGuests > 0) {
-                    PMD.fetchAvailableTables(numberOfGuests)
-                } else {
-                    PMD.fetchAvailableTables()
-                    $('#availableTables').html('<p>Vui lòng nhập số người hợp lệ.</p>')
-                }
-            }, 500))
-        })
-    }
-    //End Guest Reservation
-
-
-
-    //Selected Table
-    PMD.selectedTable = () => {
-        $('#availableTables').on('click', '.table-info', function () {
-            $('.table-info').removeClass('selected')
-            $(this).addClass('selected')
-            var tableId = $(this).data('table-id')
-            var tableName = $(this).data('table-name')
-            return tableId, tableName
-        })
-    }
-    //End Selected Table
-
-
-
     //Button Add Invoice
-    PMD.checkButtonAddInvoice = (item, tableId, invoice = false) => {
+    PMD.checkButtonAddInvoice = (item, guest, invoice = false) => {
         $(document).on('click', '.btnSaveInvoice', function () {
-            PMD.checkTableSelected(tableId, item.reservation_id)
             if (invoice == true) {
                 PMD.updateInvoice(item)
             } else {
+                PMD.checkTableSelected(item, guest)
                 PMD.addInvoice(item)
             }
-            $('#exampleModal').modal('hide')
-            executeExample('success')
+            // $('#exampleModal').modal('hide')
+
+            localStorage.setItem('showSuccessMessage', 'true');
+
+            // Reload lại trang sau khi modal đóng
+            $('#exampleModal').on('hidden.bs.modal', function () {
+                window.location.reload();
+            });
         })
     }
     //End Button Add Invoice
@@ -415,27 +423,40 @@
 
 
     //Check Table Selected
-    PMD.checkTableSelected = (tableId, reservationId) => {
-        let selectedTableId = $('.table-info.selected').attr('data-table-id')
-        if (tableId != selectedTableId) {
-            let option = {
-                _token: _token,
-                reservation_id: reservationId,
-                table_id: selectedTableId
-            }
-            $.ajax({
-                url: '/admin/reservation/updateTableStatus',
-                type: 'POST',
-                data: option,
-                success: function (response) {
-                    console.log("Update Success!")
-                },
-                error: function (xhr, status, error) {
-                    console.log('Error:' + error)
-                }
-            })
+    PMD.checkTableSelected = (item, guest) => {
+        let selectedTableId = item.list_table
+        // let oldSelectedTable = item.list_table_old
+        let reservationId = item.reservation_id
+
+        // if (tableId != selectedTableId) {
+        let option = {
+            _token: _token,
+            reservation_id: reservationId,
+            table_id: selectedTableId,
+            guest: guest
+            // old_table_id: oldSelectedTable
         }
+        $.ajax({
+            url: '/admin/reservation/updateTableStatus',
+            type: 'POST',
+            data: option,
+            success: function (response) {
+                console.log("Update Success!")
+            },
+            error: function (xhr, status, error) {
+                console.log('Error:' + error)
+            }
+        })
+        // }
     }
+
+
+    PMD.resetSelectedTables = () => {
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            $('.table-info').removeClass('selected');
+        });
+    }
+
 
 
 
@@ -473,16 +494,17 @@
                 $('#array-menu').append(`
                     <tr>
                         <td>${menu.name}</td>
-                        <td>
-                            <input type="number" class="quantity-input" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
+                        <td class="text-center">
+                            <input type="number" class="px-3 quantity-input form-control w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
                         </td>
-                        <td class="price-invoice-item-${menu.id}">${menu.total}</td>
+                        <td class="price-invoice-item-${menu.id} text-end">${menu.total}đ</td>
                     </tr>
                 `)
             })
             $('#array-menu').append(`
             <tr>
-                <td>Tổng hóa đơn: <span class="total-invoice">0</span></td>
+                
+                <td colspan="3" class="text-end px-2">Tổng hóa đơn: <span class="total-invoice">0</span>đ</td>
             </tr>
             `)
             PMD.totalAmount(selectedMenus)
@@ -490,6 +512,13 @@
     }
     //End Render Selected Menu
 
+
+    PMD.showSuccessMessage = () => {
+        if (localStorage.getItem('showSuccessMessage') === 'true') {
+            executeExample('success');
+            localStorage.removeItem('showSuccessMessage'); // Xóa sau khi hiển thị
+        }
+    }
 
 
     //Json Server
@@ -540,13 +569,12 @@
 
     //End Show Modal Data
     $(document).ready(function () {
+        PMD.showSuccessMessage()
         PMD.fetchData()
         PMD.selectArrived()
         PMD.checkArrived()
         PMD.fetchAvailableTables()
         PMD.showBsModal()
-        PMD.guestReservation()
-        // PMD.searchMenuItem()
-        // PMD.selectedTable()
+        PMD.resetSelectedTables()
     })
 })(jQuery)
