@@ -90,17 +90,21 @@
                         </select>
                     </td>
                     <td>
-                        @if ($data->table_id)
-                            <ul>
-                                <li>{{ __('messages.table.fields.name') }}:
-                                    {{ $data->table->name ?? __('messages.system.no_data_available') }}
-                                </li>
-                                <li>{{ __('messages.table.fields.description') }}:
-                                    {{ $data->table->description ?? __('messages.system.no_data_available') }}
-                                </li>
-                                <li>{{ __('messages.table.fields.capacity') }}:
-                                    {{ $data->table->capacity ?? __('messages.system.no_data_available') }}</li>
-                            </ul>
+                        {{-- @dd($data->reservationDetails) --}}
+                        @if ($data->reservationDetails)
+                            {{-- @foreach ($data->reservationDetails as $item) --}}
+                                {{-- @dd($item) --}}
+                                <ul>
+                                    <li>{{ __('messages.table.fields.name') }}:
+                                        {{ $item->table->name ?? __('messages.system.no_data_available') }}
+                                    </li>
+                                    <li>{{ __('messages.table.fields.description') }}:
+                                        {{ $item->table->description ?? __('messages.system.no_data_available') }}
+                                    </li>
+                                    <li>{{ __('messages.table.fields.capacity') }}:
+                                        {{ $item->table->capacity ?? __('messages.system.no_data_available') }}</li>
+                                </ul>
+                            {{-- @endforeach --}}
                         @else
                             <ul>
                                 <li>

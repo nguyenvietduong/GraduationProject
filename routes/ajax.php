@@ -43,6 +43,7 @@ Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::cla
 Route::get('get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
 Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
 Route::get('get-data-search-menu', [UpdateStatusReservation::class, 'getDataSearchleMenus']);
+Route::post('create-new-reservation', [UpdateStatusReservation::class, 'createNewReservation']);
 
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');

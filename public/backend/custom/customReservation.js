@@ -52,21 +52,21 @@
 
     PMD.renderSelectArrived = async (accountId) => {
         // Chọn tất cả các phần tử select với lớp selectReservation và có data-account-id tương ứng
-        let reservation = $('.selectReservation[data-account-id="' + accountId + '"]');
+        let reservation = $('.selectReservation[data-account-id="' + accountId + '"]')
 
         // Xóa tất cả các option hiện có trong select
-        reservation.empty();
+        reservation.empty()
 
         // Tạo HTML cho option "Đã đến"
         let html = `
             <option value="arrived" selected>
                 Đã đến
             </option>
-        `;
+        `
 
         // Thêm option "Đã đến" vào select
-        reservation.append(html);
-    };
+        reservation.append(html)
+    }
     //End Check Arrived
 
 
@@ -101,7 +101,9 @@
             data: {
                 key: dataSearch
             },
+            dataType: 'json', // Đảm bảo rằng response phải là JSON
             success: function (response) {
+                console.log(21312)
                 // return
                 $('#availableMenu').empty()
                 let data = response.menus
@@ -111,7 +113,9 @@
                     $('#availableMenus').html(`<p>${language === 'vi' ? 'Không có món ăn nào phù hợp.' : 'No dishes match.'}</p>`)
                 }
             },
-            error: function () {
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText)
+                console.error(`Status: ${status}, Error: ${error}`)
                 $('#availableMenus').html(`<p>${language === 'vi' ? 'Có lỗi xảy ra khi lấy thông tin món ăn.' : 'An error occurred while retrieving dish information.'}</p>`)
             }
         })
@@ -163,7 +167,7 @@
                 <div class="row">
                 ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu => `
                     <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
-                        <img class="my-2" src="${menu.image}" alt="" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <img class="my-2" src="${menu.image}" alt="" style="width: 60px height: 60px border-radius: 50% object-fit: cover">
                         <p>${menu.name}</p>
                         <p>Giá: ${menu.price}</p>
                     </div>
@@ -241,7 +245,7 @@
                     }
 
                     let oldTable = invoiceDetail.list_table
-                    console.log(oldTable);
+                    console.log(oldTable)
 
                     await PMD.fetchAvailableMenus()
 
@@ -348,7 +352,8 @@
             tempTotal += item.total
         })
         selectedMenus.totalAmount = tempTotal
-        $('.total-invoice').html(selectedMenus.totalAmount)
+        let totalAmountFormat = PMD.formatCurrency(selectedMenus.totalAmount)
+        $('.total-invoice').html(totalAmountFormat)
     }
     //End Total Amount
 
@@ -387,14 +392,14 @@
                 PMD.checkTableSelected(item, guest)
                 PMD.addInvoice(item)
             }
-            // $('#exampleModal').modal('hide')
+            $('#exampleModal').modal('hide')
 
-            localStorage.setItem('showSuccessMessage', 'true');
+            localStorage.setItem('showSuccessMessage', 'true')
 
             // Reload lại trang sau khi modal đóng
             $('#exampleModal').on('hidden.bs.modal', function () {
-                window.location.reload();
-            });
+                window.location.reload()
+            })
         })
     }
     //End Button Add Invoice
@@ -402,15 +407,15 @@
 
 
     PMD.searchMenuItem = async (selectedMenus) => {
-        let timeout = null;
+        let timeout = null
         $(document).on('keyup', '.searchMenu', async function () {
             clearTimeout(timeout)
             timeout = setTimeout(async () => {
                 let input = $(this).val()
                 await PMD.fetchAvailableMenus(input)
                 await PMD.renderSelectedMenuItem(selectedMenus)
-            }, 1000);
-        });
+            }, 1000)
+        })
     }
 
 
@@ -453,8 +458,8 @@
 
     PMD.resetSelectedTables = () => {
         $('#exampleModal').on('hidden.bs.modal', function () {
-            $('.table-info').removeClass('selected');
-        });
+            $('.table-info').removeClass('selected')
+        })
     }
 
 
@@ -464,14 +469,56 @@
     PMD.quantityInput = (selectedMenus) => {
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id')
-            const newQuantity = parseInt($(this).val(), 10) || 1
+            const newQuantity = parseInt($(this).val(), 10) || 1 // Nếu không có giá trị, mặc định là 1
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
             const newPrice = newQuantity * menu.price
+
             if (menu) {
                 menu.quantity = newQuantity
                 menu.total = newPrice
-                $('.price-invoice-item-' + menu.id).html(menu.total)
-                PMD.totalAmount(selectedMenus)
+                let totalFormat = PMD.formatCurrency(menu.total)
+                $('.price-invoice-item-' + menu.id).html(totalFormat)
+                PMD.totalAmount(selectedMenus) // Tính lại tổng số tiền
+            }
+        })
+
+        // Xử lý khi nhấn nút giảm số lượng
+        $('#array-menu').on('click', '.decrease-btn', function () {
+            const menuId = $(this).data('menu-id')
+            const input = $(`.quantity-input[data-menu-id="${menuId}"]`)
+            const currentValue = parseInt(input.val(), 10)
+            const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
+
+            if (menu && currentValue > 1) {
+                const newQuantity = currentValue - 1
+                const newPrice = newQuantity * menu.price
+                menu.quantity = newQuantity
+                menu.total = newPrice
+                input.val(newQuantity) // Cập nhật lại số lượng trong ô input
+                let totalFormat = PMD.formatCurrency(menu.total)
+                $('.price-invoice-item-' + menu.id).html(totalFormat)
+                PMD.totalAmount(selectedMenus) // Tính lại tổng số tiền
+            }
+        })
+
+        // Xử lý khi nhấn nút tăng số lượng
+        $('#array-menu').on('click', '.increase-btn', function () {
+            const menuId = $(this).data('menu-id')
+            console.log(menuId);
+            const input = $(`.quantity-input[data-menu-id="${menuId}"]`)
+            console.log(input.val());
+            const currentValue = parseInt(input.val(), 10)
+            const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
+
+            if (menu) {
+                const newQuantity = currentValue + 1
+                const newPrice = newQuantity * menu.price
+                menu.quantity = newQuantity
+                menu.total = newPrice
+                input.val(newQuantity) // Cập nhật lại số lượng trong ô input
+                let totalFormat = PMD.formatCurrency(menu.total)
+                $('.price-invoice-item-' + menu.id).html(totalFormat)
+                PMD.totalAmount(selectedMenus) // Tính lại tổng số tiền
             }
         })
     }
@@ -491,19 +538,23 @@
             PMD.checkRenderButtonAmount()
             conditionTemp = 2
             await selectedMenus.invoice_item.forEach(menu => {
+                let total = PMD.formatCurrency(menu.total)
                 $('#array-menu').append(`
                     <tr>
                         <td>${menu.name}</td>
                         <td class="text-center">
-                            <input type="number" class="px-3 quantity-input form-control w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
+                                <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
+                                <button class="btn btn-success btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
+                            </div>
                         </td>
-                        <td class="price-invoice-item-${menu.id} text-end">${menu.total}đ</td>
+                        <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
                     </tr>
                 `)
             })
             $('#array-menu').append(`
             <tr>
-                
                 <td colspan="3" class="text-end px-2">Tổng hóa đơn: <span class="total-invoice">0</span>đ</td>
             </tr>
             `)
@@ -515,8 +566,8 @@
 
     PMD.showSuccessMessage = () => {
         if (localStorage.getItem('showSuccessMessage') === 'true') {
-            executeExample('success');
-            localStorage.removeItem('showSuccessMessage'); // Xóa sau khi hiển thị
+            executeExample('success')
+            localStorage.removeItem('showSuccessMessage') // Xóa sau khi hiển thị
         }
     }
 
@@ -567,6 +618,50 @@
     }
     //End Json Server
 
+
+
+    //Create New Reservation
+    PMD.createReservationNew = () => {
+        $(document).on('click', '.btnCreateReservation', function (e) {
+            e.preventDefault()
+            let _this = $(this)
+
+            let name = $('input[name="name"]').val()
+            let email = $('input[name="email"]').val()
+            let phone = $('input[name="phone"]').val()
+            let guest = $('input[name="guest"]').val()
+            let message = $('textarea[name="message"]').val()
+
+            let data = {
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'guests': guest,
+                'special_request': message
+            }
+
+            $.ajax({
+                url: '/create-new-reservation',
+                type: 'POST',
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': _token
+                },
+                success: async function (response) {
+                    executeExample('success')
+                },
+                error: function (xhr, status, error) {
+                    executeExample('error')
+                }
+            })
+
+        })
+    }
+
+    PMD.formatCurrency = (number) => {
+        return number.toLocaleString();
+    }
+
     //End Show Modal Data
     $(document).ready(function () {
         PMD.showSuccessMessage()
@@ -574,6 +669,7 @@
         PMD.selectArrived()
         PMD.checkArrived()
         PMD.fetchAvailableTables()
+        PMD.createReservationNew()
         PMD.showBsModal()
         PMD.resetSelectedTables()
     })

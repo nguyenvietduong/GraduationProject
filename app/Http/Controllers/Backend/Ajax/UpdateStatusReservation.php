@@ -83,6 +83,7 @@ class UpdateStatusReservation extends Controller
     public function getAvailableMenus(Request $request)
     {
         $key = $request->all();
+        // dd($key);
         $search = $key['key'];
 
         $categories = Category::with([
@@ -101,11 +102,29 @@ class UpdateStatusReservation extends Controller
         return response()->json(['menus' => $categories]);
     }
 
-    // public function getDataSearchleMenus(Request $request){
-    //     $key = $request->all();
-    //     // dd($key);
+    public function createNewReservation(Request $request)
+    {
+        $data = $request->all();
 
-    //     $data = Menu::where('name', 'LIKE', '%' . $key['input'] . '%')->get();
-    //     dd($data);
-    // }
+        $data['reservation_time'] = Carbon::now()->timestamp;
+        $data['created_at'] = Carbon::now()->timestamp;
+        $data['updated_at'] = Carbon::now()->timestamp;
+
+        $data['status'] = 'arrived';
+
+
+        $reservation = Reservation::create($data);
+
+        if ($reservation) {
+            return response()->json([
+                'flag' => true,
+                'message' => 'Tạo đơn mới thành công!',
+            ]);
+        } else {
+            return response()->json([
+                'flag' => false,
+                'message' => 'Tạo đơn mới thất bại!',
+            ]);
+        }
+    }
 }

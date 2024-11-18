@@ -3,6 +3,7 @@
     var PMD = {}
     var invoices
     let urlData = 'http://localhost:3000/invoice'
+    let webUrl = 'http://127.0.0.1:8000'
     let conditionTemp = 1
     var _token = $('meta[name="csrf-token"]').attr('content')
 
@@ -52,7 +53,7 @@
     }
     PMD.addInvoice = (data) => {
 
-        fetch("http://graduationproject.test/admin/invoice/store", {
+        fetch(webUrl + "/admin/invoice/store", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +68,7 @@
     }
 
     PMD.exportAndSavePDF = (data) => {
-        fetch("http://graduationproject.test/admin/invoice/exportPDF", {
+        fetch(webUrl + "/admin/invoice/exportPDF", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
