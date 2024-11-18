@@ -13,6 +13,7 @@
                     @php
                         $invoiceDetail = $data->invoice->invoiceItems;
                         $reservationDetail = $data->reservationDetails;
+                        $guest = $data->guests;
                     @endphp
                     @if (isset($invoiceDetail) && is_object($invoiceDetail) && $invoiceDetail->isNotEmpty())
                         @foreach ($invoiceDetail as $key => $data)
@@ -37,7 +38,7 @@
                         <p class="text-center">Không có dữ liệu</p>
                     @endif
                 </div>
-                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }}</h4>
+                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - <strong>Số khách:</strong> {{ $guest ?? 'Không có dữ liệu' }}</h4>
                 <div class="row">
                     @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
                         @foreach ($reservationDetail as $key => $data)
@@ -47,9 +48,6 @@
                                         <h5 class="card-title mb-0">
                                             Bàn: {{ $data->table->name ?? 'Không có dữ liệu' }} - Số người: {{ $data->table->capacity ?? 'Không có dữ liệu' }}
                                         </h5>
-                                    </div>
-                                    <div class="card-body border">
-                                        <p><strong>Số khách:</strong> {{ $data->guests_detail ?? 'Không có dữ liệu' }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -6,6 +6,10 @@
     let conditionTemp = 1
     var _token = $('meta[name="csrf-token"]').attr('content')
 
+    const formatNumber = (amount) => {
+        return new Intl.NumberFormat('vi-VN').format(amount) + ' đ';
+    };
+
     PMD.fetchInvoiceDetail = async (url) => {
         try {
             const response = await fetch(url)
@@ -44,7 +48,7 @@
                         <td>
                             <span>${menu.quantity}</span>
                         </td>
-                        <td class="price-invoice-item-${menu.id}">${menu.total}</td>
+                        <td class="price-invoice-item-${menu.id}">${formatNumber(menu.total)}</td>
                     </tr>
                 `)
             })
@@ -53,13 +57,13 @@
                     <td colspan="2">
                         <span>Tổng hóa đơn  </span>
                     </td>
-                    <td>${menuItems[0].totalAmount}</td>
+                    <td>${formatNumber(menuItems[0].totalAmount)}</td>
                 </tr>
             `)
         }
     }
     PMD.addInvoice = (data) => {
-        fetch("http://graduationproject.test/admin/invoice/store", {
+        fetch("/admin/invoice/store", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -74,7 +78,7 @@
     }
 
     PMD.exportAndSavePDF = (data) => {
-        fetch("http://graduationproject.test/admin/invoice/exportPDF", {
+        fetch("/admin/invoice/exportPDF", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -89,8 +93,6 @@
                 } else {
                     alert('Lỗi khi tạo và lưu hóa đơn.');
                 }
-                console.log(data);
-
             })
             .catch(error => console.error('Lỗi khi thêm:', error));
     }
@@ -104,7 +106,6 @@
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
                 invoiceDetail = await PMD.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
-                console.log(invoiceDetail);
                 PMD.renderMenuItem(invoiceDetail);
             }
             let voucher_discount = 0;
@@ -114,8 +115,8 @@
 
             let total_amount = invoiceDetail[0].totalAmount;
             let total_payment = invoiceDetail[0].totalAmount;
-            $('#pay').find('.total-amount').text(total_amount)
-            $('#pay').find('.total-payment').text(total_payment)
+            $('#pay').find('.total-amount').text(formatNumber(total_amount))
+            $('#pay').find('.total-payment').text(formatNumber(total_payment))
             $('input[name="payment_method"]').on('change', function () {
                 if ($(this).val() === 'bank') {
                     $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
@@ -127,7 +128,6 @@
                 let inputVoucher = $('#pay').find('.input-voucher').val();
                 let feedback = $('#pay').find('.feedback-voucher');
                 let voucher = await PMD.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
-                console.log(voucher);
                 
                 if (voucher[0]) {
                     code = voucher[0].code;
@@ -144,12 +144,12 @@
                             voucher_discount = (total_amount * voucher[0].discount) / 100
                         }
                     }
-                    $('#pay').find('.voucher-discount').text(`Giảm giá : ${voucher_discount} VNĐ`);
+                    $('#pay').find('.voucher-discount').text(`Giảm giá : ${formatNumber(voucher_discount)}`);
                     $('#pay').find('.voucher-discount').show();
-                    $('#pay').find('.total-payment').text(total_payment);
+                    $('#pay').find('.total-payment').text(formatNumber(total_payment));
                 } else {
                     $('#pay').find('.voucher-discount').hide();
-                    $('#pay').find('.total-payment').text(total_amount);
+                    $('#pay').find('.total-payment').text(formatNumber(total_amount));
                     feedback.text("Mã giảm giá không hợp lệ").css("color", "red");
                 }
             });

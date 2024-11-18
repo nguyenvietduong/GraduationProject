@@ -204,9 +204,9 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <h5 style="display: none"><span class="total-amount"></span></h5>
+                                    <h5 style="display: none"><span class="total-amount">0</span></h5>
                                     <h5 style="display: none" class="voucher-discount"></h5>
-                                    <h5>Tổng thanh toán : <span class="total-payment">0</span> VNĐ</h5>
+                                    <h5>Tổng thanh toán : <span class="total-payment">0</span></h5>
                                     <hr>
                                     <label>Nhập mã giảm giá</label>
                                     <div class="row mt-3">
@@ -253,6 +253,6 @@
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js?v=11') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
     @endpush
 @endsection

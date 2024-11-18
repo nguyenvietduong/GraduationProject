@@ -9,6 +9,7 @@ class PromotionUser extends Model
 {
     use HasFactory;
     protected $table = 'promotion_user';  
+    public $timestamps = false;
     protected $fillable = ['promotion_id', 'name', 'email', 'phone'];
     public function promotion()
     {

@@ -24,6 +24,7 @@ use App\Http\Requests\BackEnd\Invoices\ListRequest as InvoiceListRequest;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
 use App\Models\PromotionUser;
+use Illuminate\Support\Facades\File;
 
 class InvoiceController extends Controller
 {
@@ -99,7 +100,7 @@ class InvoiceController extends Controller
 
                 $promotion = Promotion::where('code', $request->code)->first();
                 if ($promotion) {
-                    PromotionUser::insert([
+                    PromotionUser::created([
                         'promotion_id' => $promotion->id,
                         'name' => $reservation->name,
                         'email' => $reservation->email,
@@ -114,7 +115,7 @@ class InvoiceController extends Controller
                     'payment_method' => $request->payment_method,
                     'status' => 'paid',
                 ];
-                
+
                 $invoice = Invoice::create($dataInvoice);
                 foreach ($request->invoice_item as $data) {
                     Invoice_item::create([
@@ -126,9 +127,29 @@ class InvoiceController extends Controller
                     ]);
                 }
                 foreach ($request->list_tables as $table) {
-                    Table::where('id' ,$table['id'])->update([
+                    Table::where('id', $table['id'])->update([
                         'status' => "available",
                     ]);
+                }
+
+                $jsonFile = base_path('db.json');
+
+                $jsonData = File::get($jsonFile);
+                $invoiceJson = json_decode($jsonData, true); // Chuyển dữ liệu thành mảng
+
+                // Tìm index của bản ghi có id cần xóa
+
+                if (isset($invoiceJson['invoice'])) {
+                    // Tìm và xóa phần tử trong mảng 'invoice' có reservation_id khớp
+                    $invoiceJson['invoice'] = array_filter($invoiceJson['invoice'], function ($invoice) use ($request) {
+                        return $invoice['reservation_id'] != $request->reservation_id;
+                    });
+
+                    // Đảm bảo mảng không có các phần tử rỗng sau khi filter
+                    $invoiceJson['invoice'] = array_values($invoiceJson['invoice']);
+
+                    // Lưu lại dữ liệu vào file db.json
+                    File::put($jsonFile, json_encode($invoiceJson, JSON_PRETTY_PRINT));
                 }
             });
             return response()->json(['success' => 'Thêm mới thành công']);
