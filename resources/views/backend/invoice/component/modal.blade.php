@@ -31,7 +31,7 @@
                                     <div class="card-header bg-primary text-white">
                                         <h5 class="card-title mb-0">
                                             {{ $data->menu->name ?? 'Không có dữ liệu' }}
-                                            - {{ number_format($data->total ?? 0, 0, ',', '.') }}
+                                            - {{ number_format($data->total ?? 0, 0, ',', '.') }} VND
                                         </h5>
                                     </div>
                                     <div class="card-body border">

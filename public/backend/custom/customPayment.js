@@ -113,7 +113,7 @@
             let list_tables = invoiceDetail[0].list_table;
             $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
 
-            let total_amount = invoiceDetail[0].totalAmount;
+            var total_amount = invoiceDetail[0].totalAmount;
             let total_payment = invoiceDetail[0].totalAmount;
             $('#pay').find('.total-amount').text(formatNumber(total_amount))
             $('#pay').find('.total-payment').text(formatNumber(total_payment))
@@ -180,7 +180,6 @@
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');
             $('#pay').find('.voucher-discount').hide();  // Đặt lại giảm giá về 0
-            $('#pay').find('.total-payment').text(totalAmount); // Đặt lại tổng thanh toán về tổng hóa đơn
         });
     }
 

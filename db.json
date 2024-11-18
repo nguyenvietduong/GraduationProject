@@ -1,3 +1,36 @@
 {
-    "invoice": []
+  "invoice": [
+    {
+      "id": "10",
+      "reservation_id": "10",
+      "totalAmount": 115000,
+      "list_table": [
+        {
+          "id": 1,
+          "name": "Bàn 1"
+        },
+        {
+          "id": 2,
+          "name": "Bàn 2"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 11,
+          "name": "Cơm tấm sườn",
+          "quantity": 1,
+          "price": 55000,
+          "total": 55000
+        },
+        {
+          "id": 12,
+          "name": "Cà ri gà",
+          "quantity": 1,
+          "price": 60000,
+          "total": 60000
+        }
+      ]
+    }
+  ]
 }

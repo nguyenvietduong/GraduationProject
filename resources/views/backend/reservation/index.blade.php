@@ -210,6 +210,11 @@
                                     <label>Nhập mã giảm giá</label>
                                     <div class="row mt-3">
                                         <div class="col-6">
+                                            <style>
+                                                .input-voucher {
+                                                    text-transform: uppercase; /* Chuyển đổi văn bản nhập vào thành chữ hoa */
+                                                }
+                                            </style>
                                             <input type="text" class="form-control input-voucher"
                                                 placeholder="Nhập mã giảm giá" value="">
                                             <span class="feedback-voucher"></span>
@@ -252,6 +257,6 @@
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js?v=104') }}"></script>
     @endpush
 @endsection
