@@ -85,13 +85,19 @@
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route(__('messages.' . $object . '.detail.route'), $data->id) }}"
+                            {{-- <a href="{{ route(__('messages.' . $object . '.detail.route'), $data->id) }}"
                                 class="me-2">
                                 <i class="fas fa-eye btn btn-success btn-sm"></i>
-                            </a>
+                            </a> --}}
+                            <button type="button" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal"
+                                data-bs-target="#bd-example-modal-xl-{{ $data->id }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
                     </td>
                 </tr>
+                
+                @include('backend.invoice.component.modal')
             @endforeach
         @else
             <tr>
