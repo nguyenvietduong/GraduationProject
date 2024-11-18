@@ -59,7 +59,9 @@
             </tr>
         </thead>
         <tbody>
-            {{ $total_amount=0 }}
+            @php
+                $total_amount=0
+            @endphp
             @foreach ($invoice_item as $key => $item)
                 {{ $total_amount += $item['price'] }}
                 <tr>

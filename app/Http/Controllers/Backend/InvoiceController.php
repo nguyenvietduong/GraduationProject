@@ -98,15 +98,7 @@ class InvoiceController extends Controller
             DB::transaction(function () use ($request) {
                 $reservation = Reservation::find($request->reservation_id);
 
-                $promotion = Promotion::where('code', $request->code)->first();
-                if ($promotion) {
-                    PromotionUser::created([
-                        'promotion_id' => $promotion->id,
-                        'name' => $reservation->name,
-                        'email' => $reservation->email,
-                        'phone' => $reservation->phone,
-                    ]);
-                }
+                
 
                 $reservation->update(['status' => 'completed']);
                 $dataInvoice = [
@@ -117,6 +109,13 @@ class InvoiceController extends Controller
                 ];
 
                 $invoice = Invoice::create($dataInvoice);
+                $promotion = Promotion::where('code', $request->code)->first();
+                if ($promotion) {
+                    PromotionUser::create([
+                        'promotion_id' => $promotion->id,
+                        'invoice_id' => $invoice->id,
+                    ]);
+                }
                 foreach ($request->invoice_item as $data) {
                     Invoice_item::create([
                         'invoice_id' => $invoice->id,

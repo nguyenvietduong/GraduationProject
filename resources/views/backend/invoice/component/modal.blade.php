@@ -8,15 +8,24 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!--end modal-header-->
             <div class="modal-body">
-                <h4 class="m-3">{{ __('messages.invoice.fields.invoice_detail') }}</h4>
                 <div class="row">
                     @php
                         $invoiceDetail = $data->invoice->invoiceItems;
+                        $promotionDetail = $data->invoice->promotionDetail;
                         $reservationDetail = $data->reservationDetails;
                         $guest = $data->guests;
+                        if (isset($promotionDetail)) {
+                            $promotion = $promotionDetail->promotion;
+                        }
+                        $total_amount = 0;
+                        $voucher_discount = 0;
                     @endphp
+                    <h4 class="m-3">{{ __('messages.invoice.fields.invoice_detail') }}</h4>
                     @if (isset($invoiceDetail) && is_object($invoiceDetail) && $invoiceDetail->isNotEmpty())
                         @foreach ($invoiceDetail as $key => $data)
+                            @php
+                                $total_amount += $data->total;
+                            @endphp
                             <div class="col-md-3 mb-2">
                                 <div class="card">
                                     <div class="card-header bg-primary text-white">
@@ -34,11 +43,15 @@
                                 </div>
                             </div>
                         @endforeach
+                        <h5 class="mx-3">Tổng hóa đơn: {{ number_format($total_amount ?? 0, 0, ',', '.') }} VND
+                        </h5>
                     @else
                         <p class="text-center">Không có dữ liệu</p>
                     @endif
                 </div>
-                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - <strong>Số khách:</strong> {{ $guest ?? 'Không có dữ liệu' }}</h4>
+                <hr>
+                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - <strong>Số
+                        khách:</strong> {{ $guest ?? 'Không có dữ liệu' }}</h4>
                 <div class="row">
                     @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
                         @foreach ($reservationDetail as $key => $data)
@@ -46,7 +59,8 @@
                                 <div class="card">
                                     <div class="card-header bg-primary text-white">
                                         <h5 class="card-title mb-0">
-                                            Bàn: {{ $data->table->name ?? 'Không có dữ liệu' }} - Số người: {{ $data->table->capacity ?? 'Không có dữ liệu' }}
+                                            Bàn: {{ $data->table->name ?? 'Không có dữ liệu' }} - Tối đa:
+                                            {{ $data->table->capacity ?? 'Không có dữ liệu' }}
                                         </h5>
                                     </div>
                                 </div>
@@ -58,6 +72,49 @@
                         </div>
                     @endif
                 </div>
+                @php
+                    if (isset($promotion)) {
+                        if ($promotion->type == 'fixed') {
+                            $voucher_discount = $promotion->discount;
+                        } else {
+                            if (($total_amount * $promotion->discount) / 100 > $promotion->max_discount) {
+                                $voucher_discount = $promotion->max_discount;
+                            } else {
+                                $voucher_discount = (total_amount * $promotion->discount) / 100;
+                            }
+                        }
+                    }
+                @endphp
+                <hr>
+                <h4 class="m-3 ">{{ __('messages.promotion.fields.isUsed') }}</h4>
+                <div class="row">
+                    @if (isset($promotionDetail) && is_object($promotionDetail))
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="card-title mb-0">
+                                        Mã giảm giá: {{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}
+                                    </h5>
+                                </div>
+                                <div class="card-body border">
+                                    <p><strong>Tên mã :</strong>
+                                        {{ $promotionDetail->promotion->title ?? 'Không có dữ liệu' }}</p>
+                                    <p><strong>Mô tả :</strong>
+                                        {{ $promotionDetail->promotion->description ?? 'Không có dữ liệu' }}</p>
+                                    <p><strong>Giảm giá :</strong>
+                                        {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} VND</p>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="col-12">
+                            <p class="m-3">{{ __('messages.system.no_data_available') }}</p>
+                        </div>
+                    @endif
+                </div>
+                <hr>
+                <h4 class="m-3">Tổng tiền: {{ number_format($total_amount - $voucher_discount ?? 0, 0, ',', '.') }}
+                    VND</h4>
             </div><!--end modal-body-->
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Close</button>

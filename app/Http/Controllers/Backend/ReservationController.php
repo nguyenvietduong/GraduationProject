@@ -62,9 +62,11 @@ class ReservationController extends Controller
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
 
+        // $tableDetail = 
+
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->reservationRepository->count(), // Total records for display
+            'totalRecords' => $this->reservationRepository->where('status', 'arrived')->count(), // Total records for display
             'datas' => $this->reservationService->getAllReservations($filters, $perPage, self::OBJECT), // Paginated reservation list for the view
         ]);
     }

@@ -687,7 +687,7 @@ $(document).ready(function () {
         }
     }
 
-    $('#export_btn').click(function (e) {
+    $('#export_btn_revenue').click(function (e) {
         e.preventDefault();
         exportPDF();
     });

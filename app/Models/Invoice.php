@@ -18,4 +18,8 @@ class Invoice extends Model
     {
         return $this->hasMany(Invoice_item::class);
     }
+    public function promotionDetail()
+    {
+        return $this->hasOne(PromotionUser::class);
+    }
 }

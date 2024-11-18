@@ -400,7 +400,8 @@ return [
             'startDate' => 'Ngày bắt đầu',
             'endDate' => 'Ngày kết thúc',
             'total' => 'Số lượng',
-            'isActive' => 'Trạng thái'
+            'isActive' => 'Trạng thái',
+            'isUsed' => 'Mã giảm giá đã sử dụng',
         ],
         'system' => [
             'random' => 'ngẫu nhiên',

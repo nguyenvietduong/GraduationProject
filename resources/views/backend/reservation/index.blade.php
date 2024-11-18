@@ -37,10 +37,9 @@
     <div class="container-xxl">
         <div class="row">
             <div class="col-12">
-                @include('backend.component.card-component', [
+                @include('backend.reservation.component.filter.card', [
                     'title' => __('messages.system.table.title') . ' đơn hàng',
                     'totalRecords' => $totalRecords,
-                    'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
                 ])
 
                 <div class="card-body pt-0">
@@ -101,11 +100,11 @@
                                                     </div><!--end col-->
                                                     <div class="col-lg-4">
                                                     </div><!--end col-->
-                                                    
+
                                                 </div> <!--end row-->
                                                 <div class="col-md-8 col-lg-8">
                                                     <div class="card-header px-0">
-                                                        
+
                                                     </div><!--end card-header-->
                                                     <div id="availableMenu" class="row">
                                                     </div>
