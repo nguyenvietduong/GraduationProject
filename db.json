@@ -127,6 +127,41 @@
           "total": 30000
         }
       ]
+    },
+    {
+      "id": "7",
+      "reservation_id": "7",
+      "totalAmount": 90000,
+      "list_table": [
+        {
+          "id": 1,
+          "name": "Bàn 1"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        },
+        {
+          "id": 4,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        }
+      ]
     }
   ]
 }

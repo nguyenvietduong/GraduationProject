@@ -127,7 +127,8 @@
                 let inputVoucher = $('#pay').find('.input-voucher').val();
                 let feedback = $('#pay').find('.feedback-voucher');
                 let voucher = await PMD.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
-
+                console.log(voucher);
+                
                 if (voucher[0]) {
                     code = voucher[0].code;
                     feedback.text("Mã giảm giá hợp lệ").css("color", "green");
