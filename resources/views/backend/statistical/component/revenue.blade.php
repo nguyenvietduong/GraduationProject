@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary export_btn">PDF</button>
+                    <button type="button" id="export_btn_revenue" class="btn btn-primary export_btn">PDF</button>
                 </div>
             </div>
             <div class="card-body" style="position: relative;">
