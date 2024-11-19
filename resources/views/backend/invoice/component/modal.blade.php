@@ -19,17 +19,6 @@
                         }
                         $total_amount = 0;
                         $voucher_discount = 0;
-                        if (isset($promotion)) {
-                            if ($promotion->type == 'fixed') {
-                                $voucher_discount = $promotion->discount;
-                            } else {
-                                if (($total_amount * $promotion->discount) / 100 > $promotion->max_discount) {
-                                    $voucher_discount = $promotion->max_discount;
-                                } else {
-                                    $voucher_discount = ($total_amount * $promotion->discount) / 100;
-                                }
-                            }
-                        }
                     @endphp
                     <div class="card">
                         <div class="card-header">
@@ -65,19 +54,38 @@
                                                         <td>{{ number_format($data->price ?? 0, 0, ',', '.') }} đ</td>
                                                     </tr>
                                                 @endforeach
+                                                @php
+                                                    if (isset($promotion)) {
+                                                        if ($promotion->type == 'fixed') {
+                                                            $voucher_discount = $promotion->discount;
+                                                        } else {
+                                                            if (
+                                                                ($total_amount * $promotion->discount) / 100 >
+                                                                $promotion->max_discount
+                                                            ) {
+                                                                $voucher_discount = $promotion->max_discount;
+                                                            } else {
+                                                                $voucher_discount =
+                                                                    ($total_amount * $promotion->discount) / 100;
+                                                            }
+                                                        }
+                                                    }
+                                                @endphp
                                                 @if (isset($promotion))
                                                     <tr>
                                                         <td colspan="3">
-                                                            Mã giảm giá đã sử dụng: <span style="text-transform: uppercase;">{{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
+                                                            Mã giảm giá đã sử dụng: <span
+                                                                style="text-transform: uppercase;">{{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
                                                         </td>
                                                         <td>
-                                                            {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ
+                                                            - {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ
                                                         </td>
                                                     </tr>
                                                 @endif
                                                 <tr>
                                                     <td colspan="3">Tổng hóa đơn</td>
-                                                    <td>{{ number_format($total_amount-$voucher_discount ?? 0, 0, ',', '.') }} đ</td>
+                                                    <td>{{ number_format($total_amount - $voucher_discount ?? 0, 0, ',', '.') }}
+                                                        đ</td>
                                                 </tr>
                                             </tbody>
                                         </table>
