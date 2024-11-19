@@ -20,9 +20,7 @@
     <tbody>
         @if (isset($invoiceDatas) && is_object($invoiceDatas) && $invoiceDatas->isNotEmpty())
             @foreach ($invoiceDatas as $data)
-                <tr class="{{ $data->status == 'pending' ? 'bg-warning bg-opacity-50' : '' }} tdReservation-{{ $data->id }}"
-                    data-reservation="{{ $data->id }}" data-table="{{ $data->table_id }}"
-                    data-guest="{{ $data->guests }}">
+                <tr>
                     <td style="width: 16px;">
                         <div class="form-check">
                         </div>
@@ -62,7 +60,7 @@
                         @endphp
 
                         @foreach ($pays as $key => $option)
-                            @if ($data->invoice->payment_method == $key)
+                            @if (isset($data->invoice->payment_method) && $data->invoice->payment_method == $key)
                                 <span class="badge bg-primary">{{ $option }}</span>
                             @endif
                         @endforeach
@@ -74,7 +72,7 @@
                         @endphp
 
                         @foreach ($statuses_invoice as $key => $option)
-                            @if ($data->invoice->status == $key)
+                            @if (isset($data->invoice->status) && $data->invoice->status == $key)
                                 <span class="badge bg-primary">{{ $option }}</span>
                             @endif
                         @endforeach
