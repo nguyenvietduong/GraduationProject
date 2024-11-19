@@ -157,8 +157,6 @@ class InvoiceController extends Controller
     }
     public function exportAndSavePDF(Request $request)
     {
-        // Lấy dữ liệu từ request
-        $data = $request->all();
         $invoice_item = $request->invoice_item;
         $total_payment = $request->total_payment;
         $voucher_discount = $request->voucher_discount;
@@ -171,19 +169,12 @@ class InvoiceController extends Controller
         // Tạo file PDF từ view với dữ liệu truyền vào
         $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('res', 'reservation', 'invoice_item', 'total_payment', 'code', 'voucher_discount'));
 
-        // Tên file PDF và đường dẫn lưu trữ
-        $fileName = 'invoice_' . time() . '.pdf';
-        $filePath = 'invoices/' . $fileName;
-
-        // Lưu file PDF vào storage
-        Storage::put($filePath, $pdf->output());
-
-        // Trả về URL của file PDF đã lưu
-        $fileUrl = Storage::url($filePath);
+        $pdfContent = $pdf->output();
 
         return response()->json([
             'success' => true,
-            'file_url' => $fileUrl  // URL để tải hoặc xem file PDF
+            'fileName' => 'invoice_' . $request->reservation_id . '.pdf',
+            'pdfContent' => base64_encode($pdfContent),
         ]);
     }
 }
