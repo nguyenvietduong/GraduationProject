@@ -86,7 +86,7 @@
                     @if (isset($promotionDetail) && is_object($promotionDetail))
                         <div class="col-md-3 mb-3">
                             <div class="card">
-                                <div class=" border">
+                                <div class="card-body border">
                                     <h5 class="card-title mb-0">
                                         Mã giảm giá: {{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}
                                     </h5>
