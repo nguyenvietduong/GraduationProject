@@ -51,7 +51,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID món</th>
+                <th>STT</th>
                 <th>Tên món</th>
                 <th>Số lượng</th>
                 <th>Đơn giá (VND)</th>
@@ -68,21 +68,21 @@
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $item['name'] }}</td>
                     <td>{{ $item['quantity'] }}</td>
-                    <td>{{ number_format($item['price']) }}</td>
-                    <td>{{ number_format($item['total']) }}</td>
+                    <td>{{ number_format($item['price']) }} đ</td>
+                    <td>{{ number_format($item['total']) }} đ</td>
                 </tr>
             @endforeach
             <tr>
                 <td colspan="4" style="text-align: right;"><strong>Tổng hóa đơn</strong></td>
-                <td><strong>{{ number_format($total_amount) }}</strong></td>
+                <td><strong>{{ number_format($total_amount) }} đ</strong></td>
             </tr>
             <tr>
                 <td colspan="4" style="text-align: right;"><strong>Giảm giá:</strong></td>
-                <td><strong>{{ number_format($voucher_discount) }}</strong></td>
+                <td><strong>{{ number_format($voucher_discount) }} đ</strong></td>
             </tr>
             <tr>
                 <td colspan="4" style="text-align: right;"><strong>Thành tiền:</strong></td>
-                <td><strong>{{ number_format($total_payment) }}</strong></td>
+                <td><strong>{{ number_format($total_payment) }} đ</strong></td>
             </tr>
         </tbody>
     </table>

@@ -1,6 +1,6 @@
 (function ($) {
     "use strict"
-    var PMD = {}
+    var CUONG = {}
     var invoices
     let urlData = 'http://localhost:3000/invoice'
     let conditionTemp = 1
@@ -10,7 +10,7 @@
         return new Intl.NumberFormat('vi-VN').format(amount) + ' đ';
     };
 
-    PMD.fetchInvoiceDetail = async (url) => {
+    CUONG.fetchInvoiceDetail = async (url) => {
         try {
             const response = await fetch(url)
             if (!response.ok) {
@@ -23,7 +23,7 @@
         }
     }
 
-    PMD.fetchVoucher = async (url) => {
+    CUONG.fetchVoucher = async (url) => {
         try {
             const response = await fetch(url)
             if (!response.ok) {
@@ -36,7 +36,7 @@
         }
     }
 
-    PMD.renderMenuItem = async (menuItems) => {
+    CUONG.renderMenuItem = async (menuItems) => {
         $('#list_menu_item').empty()
         if (menuItems[0].invoice_item.length === 0) {
             $('#list_menu_item').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
@@ -62,7 +62,7 @@
             `)
         }
     }
-    PMD.addInvoice = (data) => {
+    CUONG.addInvoice = (data) => {
         fetch("/admin/invoice/store", {
             method: 'POST',
             headers: {
@@ -77,7 +77,7 @@
             .catch(error => console.error('Lỗi khi thêm:', error))
     }
 
-    PMD.exportAndSavePDF = (data) => {
+    CUONG.exportAndSavePDF = (data) => {
         fetch("/admin/invoice/exportPDF", {
             method: 'POST',
             headers: {
@@ -88,8 +88,20 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Mở URL của file PDF đã lưu trong tab mới
-                    window.open(data.file_url, '_blank');
+                    const pdfContent = data.pdfContent;
+                    const fileName = data.fileName; 
+
+                    const binary = atob(pdfContent);
+                    const array = new Uint8Array(binary.length);
+                    for (let i = 0; i < binary.length; i++) {
+                        array[i] = binary.charCodeAt(i);
+                    }
+
+                    const blob = new Blob([array], { type: 'application/pdf' });
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = fileName;
+                    link.click();
                 } else {
                     alert('Lỗi khi tạo và lưu hóa đơn.');
                 }
@@ -97,7 +109,7 @@
             .catch(error => console.error('Lỗi khi thêm:', error));
     }
     //Show Modal Data
-    PMD.showBsModal = () => {
+    CUONG.showBsModal = () => {
         $('#pay').on('show.bs.modal', async function (event) {
             var button = $(event.relatedTarget)
             let reservationId;
@@ -105,8 +117,8 @@
 
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
-                invoiceDetail = await PMD.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
-                PMD.renderMenuItem(invoiceDetail);
+                invoiceDetail = await CUONG.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
+                CUONG.renderMenuItem(invoiceDetail);
             }
             let voucher_discount = 0;
             let code;
@@ -127,8 +139,8 @@
             $('#pay').find('.btn-apply-voucher').off('click').on('click', async function () {
                 let inputVoucher = $('#pay').find('.input-voucher').val();
                 let feedback = $('#pay').find('.feedback-voucher');
-                let voucher = await PMD.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
-                
+                let voucher = await CUONG.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
+
                 if (voucher[0]) {
                     code = voucher[0].code;
                     feedback.text("Mã giảm giá hợp lệ").css("color", "green");
@@ -167,8 +179,8 @@
 
                 $('#pay').modal('hide'),
 
-                PMD.addInvoice(data)
-                PMD.exportAndSavePDF(data)
+                CUONG.addInvoice(data)
+                CUONG.exportAndSavePDF(data)
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000)
@@ -185,6 +197,6 @@
 
     //End Show Modal Data
     $(document).ready(function () {
-        PMD.showBsModal()
+        CUONG.showBsModal()
     })
 })(jQuery)
