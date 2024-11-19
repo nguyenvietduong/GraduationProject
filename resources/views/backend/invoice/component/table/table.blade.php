@@ -9,13 +9,12 @@
             <th>{{ __('messages.reservation.fields.reservation_information') }}</th>
             <th>{{ __('messages.reservation.fields.guests') }}</th>
             <th>{{ __('messages.reservation.fields.reservation_time') }}</th>
-            <th>{{ __('messages.system.status') }}</th>
+            {{-- <th>{{ __('messages.system.status') }}</th> --}}
             <th>{{ __('messages.invoice.fields.payment_method') }}</th>
             <th>{{ __('messages.invoice.fields.status') }}</th>
             <th>{{ __('messages.invoice.fields.total_amount') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
             {{-- <th>{{ __('messages.reservation.fields.dish') }}</th> --}}
-            <!-- <th class="text-center">{{ __('messages.system.table.fields.action') }}</th> -->
         </tr>
     </thead>
     <tbody>
@@ -44,7 +43,7 @@
                         <div>{{ date('H:i:s', strtotime($data->reservation_time)) }}</div>
                         <div>{{ date('d/m/Y', strtotime($data->reservation_time)) }}</div>
                     </td>
-                    <td>
+                    {{-- <td>
                         @php
                             $status = request('status') ?: old('status');
                             $statuses = __('messages.reservation.status');
@@ -55,7 +54,7 @@
                                 <span class="badge bg-primary">{{ $option }}</span>
                             @endif
                         @endforeach
-                    </td>
+                    </td> --}}
                     <td>
                         @php
                             $pay = request('pay') ?: old('pay');
@@ -81,15 +80,20 @@
                         @endforeach
                     </td>
                     <td>
-                        {{ number_format($data->invoice->total_amount) ?? __('messages.system.no_data_available') }}
+                        {{ number_format($data->invoice->total_amount) . ' đ' ?? __('messages.system.no_data_available') }}
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route(__('messages.' . $object . '.detail.route'), $data->id) }}"
+                            {{-- <a href="{{ route(__('messages.' . $object . '.detail.route'), $data->id) }}"
                                 class="me-2">
                                 <i class="fas fa-eye btn btn-success btn-sm"></i>
-                            </a>
+                            </a> --}}
+                            <button type="button" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal"
+                                data-bs-target="#bd-example-modal-xl-{{ $data->id }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
+                        @include('backend.invoice.component.modal')
                     </td>
                 </tr>
             @endforeach

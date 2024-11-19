@@ -63,6 +63,9 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
         if(!empty($filters['status'])){
             $query->where('status', $filters['status']);
         }
+        if(!empty($filters['category'])){
+            $query->where('category_id', $filters['category']);
+        }
         // Order by created date (newest first)
         $query->orderBy('id', 'desc');
         // Paginate results

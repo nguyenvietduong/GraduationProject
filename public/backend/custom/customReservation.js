@@ -140,8 +140,7 @@
 
     PMD.renderListMenu = (data) => {
         let active
-        let html
-
+        let html       
 
         html = `
         <div class="card-body pt-0">
@@ -158,7 +157,7 @@
             </li>`
         })
         html += '</ul>'
-
+        
         html += '<div class="tab-content">'
         data.forEach(function (cate) {
             cate.slug == 'bua-sang' ? active = 'active show' : active = ''
@@ -167,7 +166,7 @@
                 <div class="row">
                 ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu => `
                     <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
-                        <img class="my-2" src="${menu.image}" alt="" style="width: 60px height: 60px border-radius: 50% object-fit: cover">
+                        <img class="my-2" src="/storage/${menu.image_url}" alt="" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
                         <p>${menu.name}</p>
                         <p>Giá: ${menu.price}</p>
                     </div>

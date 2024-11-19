@@ -203,13 +203,18 @@
                                     </div> <!--end row-->
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
-                                    <h5>Tổng hóa đơn : <span class="total-amount">0</span> VNĐ</h5>
-                                    <h5>Giảm giá : <span class="voucher-discount">0</span> VNĐ</h5>
-                                    <h5>Tổng thanh toán : <span class="total-payment">0</span> VNĐ</h5>
+                                    <h5 style="display: none"><span class="total-amount">0</span></h5>
+                                    <h5 style="display: none" class="voucher-discount"></h5>
+                                    <h5>Tổng thanh toán : <span class="total-payment">0</span></h5>
                                     <hr>
                                     <label>Nhập mã giảm giá</label>
                                     <div class="row mt-3">
                                         <div class="col-6">
+                                            <style>
+                                                .input-voucher {
+                                                    text-transform: uppercase; /* Chuyển đổi văn bản nhập vào thành chữ hoa */
+                                                }
+                                            </style>
                                             <input type="text" class="form-control input-voucher"
                                                 placeholder="Nhập mã giảm giá" value="">
                                             <span class="feedback-voucher"></span>
@@ -243,7 +248,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer-1">
                 </div>
             </div>
         </div>
@@ -252,6 +257,6 @@
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js?v=104') }}"></script>
     @endpush
 @endsection

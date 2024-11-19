@@ -12,6 +12,8 @@ use App\Models\Invoice_item;
 use App\Models\Promotion;
 use App\Models\Reservation;
 use App\Models\Restaurant;
+use App\Models\Table;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\BackEnd\Invoices\ListRequest as InvoiceListRequest;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
+use App\Models\PromotionUser;
+use Illuminate\Support\Facades\File;
 
 class InvoiceController extends Controller
 {
@@ -93,6 +97,9 @@ class InvoiceController extends Controller
         try {
             DB::transaction(function () use ($request) {
                 $reservation = Reservation::find($request->reservation_id);
+
+                
+
                 $reservation->update(['status' => 'completed']);
                 $dataInvoice = [
                     'reservation_id' => $request->reservation_id,
@@ -100,7 +107,15 @@ class InvoiceController extends Controller
                     'payment_method' => $request->payment_method,
                     'status' => 'paid',
                 ];
+
                 $invoice = Invoice::create($dataInvoice);
+                $promotion = Promotion::where('code', $request->code)->first();
+                if ($promotion) {
+                    PromotionUser::create([
+                        'promotion_id' => $promotion->id,
+                        'invoice_id' => $invoice->id,
+                    ]);
+                }
                 foreach ($request->invoice_item as $data) {
                     Invoice_item::create([
                         'invoice_id' => $invoice->id,
@@ -109,6 +124,31 @@ class InvoiceController extends Controller
                         'price' => $data['price'],
                         'total' => $data['total']
                     ]);
+                }
+                foreach ($request->list_tables as $table) {
+                    Table::where('id', $table['id'])->update([
+                        'status' => "available",
+                    ]);
+                }
+
+                $jsonFile = base_path('db.json');
+
+                $jsonData = File::get($jsonFile);
+                $invoiceJson = json_decode($jsonData, true); // Chuyển dữ liệu thành mảng
+
+                // Tìm index của bản ghi có id cần xóa
+
+                if (isset($invoiceJson['invoice'])) {
+                    // Tìm và xóa phần tử trong mảng 'invoice' có reservation_id khớp
+                    $invoiceJson['invoice'] = array_filter($invoiceJson['invoice'], function ($invoice) use ($request) {
+                        return $invoice['reservation_id'] != $request->reservation_id;
+                    });
+
+                    // Đảm bảo mảng không có các phần tử rỗng sau khi filter
+                    $invoiceJson['invoice'] = array_values($invoiceJson['invoice']);
+
+                    // Lưu lại dữ liệu vào file db.json
+                    File::put($jsonFile, json_encode($invoiceJson, JSON_PRETTY_PRINT));
                 }
             });
             return response()->json(['success' => 'Thêm mới thành công']);
@@ -133,7 +173,7 @@ class InvoiceController extends Controller
 
         // Tên file PDF và đường dẫn lưu trữ
         $fileName = 'invoice_' . time() . '.pdf';
-        $filePath = 'public/invoices/' . $fileName;  // Sử dụng 'public/' để lưu trong thư mục storage/app/public
+        $filePath = 'invoices/' . $fileName;
 
         // Lưu file PDF vào storage
         Storage::put($filePath, $pdf->output());

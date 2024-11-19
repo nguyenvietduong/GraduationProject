@@ -89,22 +89,23 @@
                             @endforeach
                         </select>
                     </td>
-                    <td>
-                        {{-- @dd($data->reservationDetails) --}}
-                        @if ($data->reservationDetails)
-                            {{-- @foreach ($data->reservationDetails as $item) --}}
-                                {{-- @dd($item) --}}
+                    <td style="height: 120px; overflow: hidden; display: block; overflow-y: auto">
+                        @php
+                            $reservationDetails = $data->reservationDetails;
+                        @endphp
+                        @if ($reservationDetails)
+                            @foreach ($reservationDetails as $reservationDetail)
+                                @php
+                                    $table = $reservationDetail->table;
+                                @endphp
                                 <ul>
                                     <li>{{ __('messages.table.fields.name') }}:
-                                        {{ $item->table->name ?? __('messages.system.no_data_available') }}
-                                    </li>
-                                    <li>{{ __('messages.table.fields.description') }}:
-                                        {{ $item->table->description ?? __('messages.system.no_data_available') }}
+                                        {{ $table->name ?? __('messages.system.no_data_available') }}
                                     </li>
                                     <li>{{ __('messages.table.fields.capacity') }}:
-                                        {{ $item->table->capacity ?? __('messages.system.no_data_available') }}</li>
+                                        {{ $table->capacity ?? __('messages.system.no_data_available') }}</li>
                                 </ul>
-                            {{-- @endforeach --}}
+                            @endforeach
                         @else
                             <ul>
                                 <li>
