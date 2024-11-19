@@ -31,6 +31,41 @@
           "total": 60000
         }
       ]
+    },
+    {
+      "id": "4",
+      "reservation_id": "4",
+      "totalAmount": 75000,
+      "list_table": [
+        {
+          "id": 2,
+          "name": "Bàn 2"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 1,
+          "name": "Bánh mì trứng",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        }
+      ]
     }
   ]
 }

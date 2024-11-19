@@ -81,7 +81,7 @@
                         @endforeach
                     </td>
                     <td>
-                        {{ number_format($data->invoice->total_amount)." đ" ?? __('messages.system.no_data_available') }}
+                        {{ number_format($data->invoice->total_amount) . ' đ' ?? __('messages.system.no_data_available') }}
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
@@ -94,10 +94,9 @@
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        @include('backend.invoice.component.modal')
                     </td>
                 </tr>
-                
-                @include('backend.invoice.component.modal')
             @endforeach
         @else
             <tr>

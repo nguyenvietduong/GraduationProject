@@ -20,33 +20,54 @@
                         $total_amount = 0;
                         $voucher_discount = 0;
                     @endphp
-                    <h4 class="m-3">{{ __('messages.invoice.fields.invoice_detail') }}</h4>
-                    @if (isset($invoiceDetail) && is_object($invoiceDetail) && $invoiceDetail->isNotEmpty())
-                        @foreach ($invoiceDetail as $key => $data)
-                            @php
-                                $total_amount += $data->total;
-                            @endphp
-                            <div class="col-md-3">
-                                <div class="card">
-                                    <div class="card-body border">
-                                        <h5 class="mb-0">
-                                            {{ $data->menu->name ?? 'Không có dữ liệu' }}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="card-title">{{ __('messages.invoice.fields.invoice_detail') }}</h4>
+                                </div><!--end col-->
+                            </div> <!--end row-->
+                        </div><!--end card-header-->
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @if (isset($invoiceDetail) && is_object($invoiceDetail) && $invoiceDetail->isNotEmpty())
+                                        <table class="w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Quan</th>
+                                                    <th>Pri</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach ($invoiceDetail as $key => $data)
+                                                    @php
+                                                        $total_amount += $data->total;
+                                                    @endphp
+                                                    <tr>
+                                                        <td> {{ $data->menu->name ?? 'Không có dữ liệu' }}</td>
+                                                        <td>{{ number_format($data->price ?? 0, 0, ',', '.') }} đ</td>
+                                                        <td> {{ $data->quantity ?? 0 }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <h5 class="mt-3">Tổng hóa đơn:
+                                            {{ number_format($total_amount ?? 0, 0, ',', '.') }} đ
                                         </h5>
-                                        <p class="mb-0">Giá tiền:
-                                            {{ number_format($data->price ?? 0, 0, ',', '.') }} đ (SL: {{ $data->quantity ?? 0 }}) </p>
-                                    </div>
+                                    @else
+                                        <p class="text-center">Không có dữ liệu</p>
+                                    @endif
                                 </div>
                             </div>
-                        @endforeach
-                        <h5 class="mx-3">Tổng hóa đơn: {{ number_format($total_amount ?? 0, 0, ',', '.') }} đ
-                        </h5>
-                    @else
-                        <p class="text-center">Không có dữ liệu</p>
-                    @endif
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - Số
-                        khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
+                    khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
                 <div class="row">
                     @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
                         @foreach ($reservationDetail as $key => $data)
