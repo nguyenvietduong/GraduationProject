@@ -15,7 +15,6 @@
             <th>{{ __('messages.invoice.fields.total_amount') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
             {{-- <th>{{ __('messages.reservation.fields.dish') }}</th> --}}
-            <!-- <th class="text-center">{{ __('messages.system.table.fields.action') }}</th> -->
         </tr>
     </thead>
     <tbody>

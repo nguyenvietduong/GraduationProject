@@ -19,6 +19,17 @@
                         }
                         $total_amount = 0;
                         $voucher_discount = 0;
+                        if (isset($promotion)) {
+                            if ($promotion->type == 'fixed') {
+                                $voucher_discount = $promotion->discount;
+                            } else {
+                                if (($total_amount * $promotion->discount) / 100 > $promotion->max_discount) {
+                                    $voucher_discount = $promotion->max_discount;
+                                } else {
+                                    $voucher_discount = ($total_amount * $promotion->discount) / 100;
+                                }
+                            }
+                        }
                     @endphp
                     <div class="card">
                         <div class="card-header">
@@ -32,12 +43,13 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     @if (isset($invoiceDetail) && is_object($invoiceDetail) && $invoiceDetail->isNotEmpty())
-                                        <table class="w-100">
-                                            <thead>
+                                        <table class="table " border="1">
+                                            <thead class="table-light">
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Quan</th>
-                                                    <th>Pri</th>
+                                                    <th>#</th>
+                                                    <th>Tên</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Giá</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -47,16 +59,28 @@
                                                         $total_amount += $data->total;
                                                     @endphp
                                                     <tr>
+                                                        <td>{{ $key + 1 }}</td>
                                                         <td> {{ $data->menu->name ?? 'Không có dữ liệu' }}</td>
-                                                        <td>{{ number_format($data->price ?? 0, 0, ',', '.') }} đ</td>
                                                         <td> {{ $data->quantity ?? 0 }}</td>
+                                                        <td>{{ number_format($data->price ?? 0, 0, ',', '.') }} đ</td>
                                                     </tr>
                                                 @endforeach
+                                                @if (isset($promotion))
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            Mã giảm giá đã sử dụng: <span style="text-transform: uppercase;">{{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
+                                                        </td>
+                                                        <td>
+                                                            {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td colspan="3">Tổng hóa đơn</td>
+                                                    <td>{{ number_format($total_amount-$voucher_discount ?? 0, 0, ',', '.') }} đ</td>
+                                                </tr>
                                             </tbody>
                                         </table>
-                                        <h5 class="mt-3">Tổng hóa đơn:
-                                            {{ number_format($total_amount ?? 0, 0, ',', '.') }} đ
-                                        </h5>
                                     @else
                                         <p class="text-center">Không có dữ liệu</p>
                                     @endif
@@ -66,69 +90,48 @@
                     </div>
                 </div>
                 <hr>
-                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - Số
-                    khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
-                <div class="row">
-                    @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
-                        @foreach ($reservationDetail as $key => $data)
-                            <div class="col-md-3 mb-3">
-                                <div class="card">
-                                    <div class="card-body border">
-                                        <h5 class="mb-0">
-                                            Bàn: {{ $data->table->name ?? 'Không có dữ liệu' }} - Tối đa:
-                                            {{ $data->table->capacity ?? 'Không có dữ liệu' }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="col-12 text-center">
-                            <p>{{ __('messages.system.no_data_available') }}</p>
-                        </div>
-                    @endif
-                </div>
-                @php
-                    if (isset($promotion)) {
-                        if ($promotion->type == 'fixed') {
-                            $voucher_discount = $promotion->discount;
-                        } else {
-                            if (($total_amount * $promotion->discount) / 100 > $promotion->max_discount) {
-                                $voucher_discount = $promotion->max_discount;
-                            } else {
-                                $voucher_discount = (total_amount * $promotion->discount) / 100;
-                            }
-                        }
-                    }
-                @endphp
-                <hr>
-                <h4 class="m-3 ">{{ __('messages.promotion.fields.isUsed') }}</h4>
-                <div class="row">
-                    @if (isset($promotionDetail) && is_object($promotionDetail))
-                        <div class="col-md-3 mb-3">
-                            <div class="card">
-                                <div class="card-body border">
-                                    <h5 class="card-title mb-0">
-                                        Mã giảm giá: {{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}
-                                    </h5>
-                                    <p class="mb-0">Tên mã :
-                                        {{ $promotionDetail->promotion->title ?? 'Không có dữ liệu' }}</p>
-                                    <p class="mb-0">Mô tả :
-                                        {{ $promotionDetail->promotion->description ?? 'Không có dữ liệu' }}</p>
-                                    <p class="mb-0">Giảm giá :
-                                        {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ</p>
-                                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4 class="card-title">
+                                    {{ __('messages.reservation_details.fields.reservation_detail') }} - Số
+                                    khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
+                            </div><!--end col-->
+                        </div> <!--end row-->
+                    </div><!--end card-header-->
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
+                                    <table class="table" border="1">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Bàn</th>
+                                                <th>Tối đa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($reservationDetail as $key => $data)
+                                                @php
+                                                    $total_amount += $data->total;
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td> {{ $data->table->name ?? 'Không có dữ liệu' }}</td>
+                                                    <td> {{ $data->table->capacity ?? 'Không có dữ liệu' }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p class="text-center">Không có dữ liệu</p>
+                                @endif
                             </div>
                         </div>
-                    @else
-                        <div class="col-12">
-                            <p class="m-3">{{ __('messages.system.no_data_available') }}</p>
-                        </div>
-                    @endif
+                    </div>
                 </div>
-                <hr>
-                <h4 class="m-3">Tổng tiền: {{ number_format($total_amount - $voucher_discount ?? 0, 0, ',', '.') }}
-                    đ</h4>
             </div><!--end modal-body-->
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Close</button>
