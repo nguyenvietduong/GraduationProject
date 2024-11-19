@@ -81,7 +81,7 @@
                         @endforeach
                     </td>
                     <td>
-                        {{ number_format($data->invoice->total_amount) ?? __('messages.system.no_data_available') }}
+                        {{ number_format($data->invoice->total_amount)." đ" ?? __('messages.system.no_data_available') }}
                     </td>
                     <td>
                         <div class="d-flex align-items-center">

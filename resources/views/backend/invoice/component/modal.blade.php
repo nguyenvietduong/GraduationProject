@@ -28,37 +28,32 @@
                             @endphp
                             <div class="col-md-3 mb-2">
                                 <div class="card">
-                                    <div class="card-header bg-primary text-white">
-                                        <h5 class="card-title mb-0">
-                                            {{ $data->menu->name ?? 'Không có dữ liệu' }}
-                                            - {{ number_format($data->total ?? 0, 0, ',', '.') }} VND
-                                        </h5>
-                                    </div>
                                     <div class="card-body border">
-                                        <p><strong>Số lượng:</strong> {{ $data->quantity ?? 0 }}</p>
-                                        <p><strong>Giá tiền:</strong>
-                                            {{ number_format($data->price ?? 0, 0, ',', '.') }} VND</p>
-
+                                        <h5 class="mb-0">
+                                            {{ $data->menu->name ?? 'Không có dữ liệu' }}
+                                        </h5>
+                                        <p class="mb-0">Giá tiền:
+                                            {{ number_format($data->price ?? 0, 0, ',', '.') }} đ (SL: {{ $data->quantity ?? 0 }}) </p>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-                        <h5 class="mx-3">Tổng hóa đơn: {{ number_format($total_amount ?? 0, 0, ',', '.') }} VND
+                        <h5 class="mx-3">Tổng hóa đơn: {{ number_format($total_amount ?? 0, 0, ',', '.') }} đ
                         </h5>
                     @else
                         <p class="text-center">Không có dữ liệu</p>
                     @endif
                 </div>
                 <hr>
-                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - <strong>Số
-                        khách:</strong> {{ $guest ?? 'Không có dữ liệu' }}</h4>
+                <h4 class="m-3 ">{{ __('messages.reservation_details.fields.reservation_detail') }} - Số
+                        khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
                 <div class="row">
                     @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
                         @foreach ($reservationDetail as $key => $data)
                             <div class="col-md-3 mb-3">
                                 <div class="card">
-                                    <div class="card-header bg-primary text-white">
-                                        <h5 class="card-title mb-0">
+                                    <div class="card-body border">
+                                        <h5 class="mb-0">
                                             Bàn: {{ $data->table->name ?? 'Không có dữ liệu' }} - Tối đa:
                                             {{ $data->table->capacity ?? 'Không có dữ liệu' }}
                                         </h5>
@@ -91,18 +86,16 @@
                     @if (isset($promotionDetail) && is_object($promotionDetail))
                         <div class="col-md-3 mb-3">
                             <div class="card">
-                                <div class="card-header bg-primary text-white">
+                                <div class=" border">
                                     <h5 class="card-title mb-0">
                                         Mã giảm giá: {{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}
                                     </h5>
-                                </div>
-                                <div class="card-body border">
-                                    <p><strong>Tên mã :</strong>
+                                    <p class="mb-0">Tên mã :
                                         {{ $promotionDetail->promotion->title ?? 'Không có dữ liệu' }}</p>
-                                    <p><strong>Mô tả :</strong>
+                                    <p class="mb-0">Mô tả :
                                         {{ $promotionDetail->promotion->description ?? 'Không có dữ liệu' }}</p>
-                                    <p><strong>Giảm giá :</strong>
-                                        {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} VND</p>
+                                    <p class="mb-0">Giảm giá :
+                                        {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ</p>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +107,7 @@
                 </div>
                 <hr>
                 <h4 class="m-3">Tổng tiền: {{ number_format($total_amount - $voucher_discount ?? 0, 0, ',', '.') }}
-                    VND</h4>
+                    đ</h4>
             </div><!--end modal-body-->
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Close</button>
