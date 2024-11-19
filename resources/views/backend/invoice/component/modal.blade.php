@@ -26,7 +26,7 @@
                             @php
                                 $total_amount += $data->total;
                             @endphp
-                            <div class="col-md-3 mb-2">
+                            <div class="col-md-3">
                                 <div class="card">
                                     <div class="card-body border">
                                         <h5 class="mb-0">
