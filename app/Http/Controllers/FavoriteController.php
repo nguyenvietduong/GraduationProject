@@ -46,7 +46,25 @@ class FavoriteController extends Controller
        }
    }
 
- 
+
+   public function favorite_list()
+{
+    // Lấy người dùng đang đăng nhập
+    $user = auth()->user();
+
+    // Kiểm tra nếu người dùng chưa đăng nhập
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xem danh sách yêu thích.');
+    }
+
+    // Lấy danh sách sản phẩm yêu thích
+    $favorites = $user->favorites()->get();
+
+    // Trả về view với dữ liệu
+    return view('frontend.faverite', compact('favorites'));
+}
+
+
 
 
    

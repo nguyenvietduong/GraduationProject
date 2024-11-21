@@ -100,13 +100,11 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->belongsToMany(Notification::class, 'notification_user')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
-    
+
     public function favorites()
-{
-    return $this->belongsToMany(Menu::class, 'favorites');
-}
-
-
+    {
+        return $this->belongsToMany(Menu::class, 'favorites');
+    }
 }
