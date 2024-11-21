@@ -30,7 +30,6 @@ Route::get('', [HomeController::class, 'index'])->name('home');
 Route::get('reservation', [ReservationController::class, 'create'])->name('reservation');
 Route::post('reservation', [ReservationController::class, 'store'])->name('reservation');
 Route::get('menu', [HomeController::class, 'menu'])->name('menu');
-Route::get('team', [HomeController::class, 'team'])->name('team');
 Route::get('review', [ReviewController::class, 'index'])->name('contact');
 Route::post('review', [ReviewController::class, 'store'])->name('contact');
 Route::get('blog', [BlogController::class, 'index'])->name('blog.list');

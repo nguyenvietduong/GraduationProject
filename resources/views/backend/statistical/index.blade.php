@@ -39,10 +39,12 @@
             </div> <!--end col-->
         </div><!--end row-->
     </div><!-- container -->
+    <div id="custom-tooltip" style="display: none;"></div>
 @endsection
 
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="{{ asset('backend/assets/custom/js/statistical/statistical.js') }}"></script>
+    <script src="{{ asset('backend/assets/custom/js/statistical/exportPDF.js') }}"></script>
 @endpush

@@ -26,7 +26,7 @@
         <!-- End Mobile Toggle -->
 
         <!--Login button Start-->
-        <ul class="buy-button list-none mb-0">
+        {{-- <ul class="buy-button list-none mb-0">
             <li class="dropdown inline-block relative ps-0.5">
                 <!-- Nút đặt bàn với sự kiện onclick để mở/đóng menu thả xuống -->
                 <button data-dropdown-toggle="dropdown"
@@ -59,7 +59,7 @@
 
             <li class="inline-block ps-0.5">
             </li>
-        </ul>
+        </ul> --}}
         <!--Login button End-->
 
         @include('frontend.component.navigation')
@@ -67,13 +67,13 @@
     </div>
     <!--end container-->
 </nav>
-<style>
+{{-- <style>
     #dropdownMenu {
         width: 800px;
         /* Điều chỉnh theo ý muốn */
     }
-</style>
-<script>
+</style> --}}
+{{-- <script>
     const reservationStatuses = @json(__('messages.reservation.status'));
     document.addEventListener("click", function(event) {
         const dropdown = document.getElementById("dropdownMenu");
@@ -171,4 +171,4 @@
             });
         }
     }
-</script>
+</script> --}}

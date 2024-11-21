@@ -15,6 +15,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 use App\Services\ImageService;
+use Illuminate\Support\Facades\DB;
 
 class StatisticalController extends Controller
 {
@@ -45,103 +46,162 @@ class StatisticalController extends Controller
     // Đơn hàng
     public function getRevenueStatistics(Request $request)
     {
-        // Retrieve start and end dates from the request, defaulting to 2020 if not provided
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
-        $type = $request->input('type', 'year');
-
-        // If no start or end date is provided, default to January 1, 2020, until the current date
-        if (!$startDate && !$endDate) {
-            $startDate = Carbon::parse('2020-01-01')->startOfDay();
-            $endDate = Carbon::now()->endOfDay();
-        } else {
-            $startDate = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::parse('2020-01-01')->startOfDay();
-            $endDate = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfDay();
-        }
-
-        // Calculate revenue based on the specified type
+        $day = $request->input('day');
+        $month = $request->input('month');
+        $year = $request->input('year');
         $result = [];
 
-        if ($type === 'year') {
-            $result = $this->calculateYearlyRevenue($startDate, $endDate);
-        } elseif ($type === 'month') {
-            $result = $this->calculateMonthlyRevenue($startDate, $endDate);
-        } elseif ($type === 'day') {
-            $result = $this->calculateDailyRevenue($startDate, $endDate);
+        // Xử lý logic dựa trên các tham số được gửi lên
+        if (!$year && !$month && !$day) {
+            $day = Carbon::now()->day;
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+
+            $result = $this->calculateRevenue($day, $month, $year);
+        } elseif ($year && !$month && !$day) {
+            if ($year != 'all') {
+                $result = $this->calculateYearly($year);
+            } else {
+                $result = $this->calculateYearlyRevenue();
+            }
+        } elseif (!$year && $month && !$day) {
+            $month = $month;
+            $year = Carbon::now()->year;
+            $result = $this->calculateRevenue($day, $month, $year);
+        } elseif ($year && $month && !$day) {
+            $month = $month;
+            $year = $year;
+            $result = $this->calculateRevenue($day, $month, $year);
+        } elseif (!$year && !$month && $day) {
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+            $result = $this->calculateRevenue($day, $month, $year);
+        } elseif (!$year && $month && $day) {
+            $month = $month;
+            $year = Carbon::now()->year;
+            $result = $this->calculateRevenue($day, $month, $year);
+        } elseif ($year && !$month && $day) {
+            $month = Carbon::now()->month;
+            $year = $year;
+            $result = $this->calculateRevenue($day, $month, $year);
+        } else if ($year && $month && $day) {
+            $result = $this->calculateRevenue($day, $month, $year);
         }
 
         return response()->json(['revenue_statistics' => $result]);
     }
 
-    private function calculateYearlyRevenue($startDate, $endDate)
+    // Thêm một phương thức mới để tính doanh thu cho nhiều năm từ 2020 đến năm hiện tại
+    private function calculateYearly($year)
     {
+        // Get the revenue data for the specified year, grouped by month
         $revenueData = Invoice::where('status', 'paid')
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereYear('created_at', $year) // Filter by the specified year
+            ->selectRaw('MONTH(created_at) as month, SUM(total_amount) as total_revenue')
+            ->groupBy('month') // Group by month
+            ->orderBy('month') // Ensure months are ordered
+            ->pluck('total_revenue', 'month') // Get the total revenue by month
+            ->toArray();
+
+        // Initialize an array for all 12 months, ensuring no months are missing
+        $result = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $result['Tháng ' . $month] = $revenueData[$month] ?? 0; // If no data for the month, return 0
+        }
+
+        return $result;
+    }
+
+    private function calculateYearlyRevenue()
+    {
+        // Define start and end years
+        $startDate = 2020;
+        $endDate = Carbon::now()->year;
+
+        // Query the revenue data based on the selected years
+        $revenueData = Invoice::where('status', 'paid')
+            ->whereBetween('created_at', [Carbon::createFromDate($startDate, 1, 1), Carbon::createFromDate($endDate, 12, 31)])
             ->selectRaw('YEAR(created_at) as year, SUM(total_amount) as total_revenue')
             ->groupBy('year')
             ->orderBy('year')
             ->pluck('total_revenue', 'year')
             ->toArray();
 
-        // Tạo các năm trong khoảng thời gian
-        $years = CarbonPeriod::create($startDate, '1 year', $endDate);
+        // Create a range of years from 2020 to the current year
+        $years = range($startDate, $endDate);
 
+        // Prepare the result
         $result = [];
         foreach ($years as $year) {
-            $yearKey = $year->year;
-            $result[$yearKey] = $revenueData[$yearKey] ?? 0; // Nếu không có dữ liệu, trả về 0
+            $result['Năm ' . $year] = $revenueData[$year] ?? 0; // If no data, set revenue to 0
         }
 
         return $result;
     }
 
-    private function calculateMonthlyRevenue($startDate, $endDate)
+    private function calculateRevenue($day = null, $month = null, $year = null)
     {
-        $revenueData = Invoice::where('status', 'paid')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(total_amount) as total_revenue')
-            ->groupBy('year', 'month')
-            ->orderBy('year')
-            ->orderBy('month')
-            ->get()
-            ->mapWithKeys(function ($item) {
-                $key = "{$item->year}-{$item->month}";
-                return [$key => $item->total_revenue];
-            })
-            ->toArray();
+        $revenueData = [];
 
-        // Tạo các tháng trong khoảng thời gian
-        $months = CarbonPeriod::create($startDate, '1 month', $endDate);
+        if (!$day && $month && $year) {
+            // Get start and end of the month
+            $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+            $endOfMonth = $startOfMonth->copy()->endOfMonth();
 
-        $result = [];
-        foreach ($months as $month) {
-            $key = $month->format('Y-n'); // Ví dụ: "2023-1"
-            $result[$key] = $revenueData[$key] ?? 0; // Nếu không có dữ liệu, trả về 0
+            // Initialize an array for all days in the month with revenue = 0
+            $defaultRevenueData = [];
+            for ($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay()) {
+                $defaultRevenueData[$date->toDateString()] = 0;
+            }
+
+            // Fetch revenues grouped by day
+            $invoices = DB::table('invoices')
+                ->selectRaw('DATE(created_at) as day, SUM(total_amount) as total_revenue')
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->groupBy('day')
+                ->orderBy('day')
+                ->get();
+
+            // Map database results to the revenue data
+            foreach ($invoices as $revenue) {
+                $defaultRevenueData[$revenue->day] = $revenue->total_revenue;
+            }
+
+            // Return the final result for the entire month
+            return $defaultRevenueData;
+        } else if ($day && $month && $year) {
+            // Specific day: Calculate hourly revenue between 7:00 AM and 10:00 PM
+            $specificDate = Carbon::create($year, $month, $day)->startOfDay();
+            $startHour = 7;
+            $endHour = 22;
+
+            // Initialize an array for the specified hours with revenue = 0
+            $defaultRevenueData = [];
+            for ($hour = $startHour; $hour <= $endHour; $hour++) {
+                $hourKey = $specificDate->copy()->addHours($hour)->format('H:00');
+                $defaultRevenueData[$hourKey] = 0;
+            }
+
+            // Fetch revenue grouped by hour for the given day
+            $invoices = DB::table('invoices')
+                ->selectRaw('HOUR(created_at) as hour, SUM(total_amount) as total_revenue')
+                ->whereDate('created_at', $specificDate)
+                ->whereBetween(DB::raw('HOUR(created_at)'), [$startHour, $endHour])
+                ->groupBy('hour')
+                ->orderBy('hour')
+                ->get();
+
+            // Map database results to the revenue data
+            foreach ($invoices as $revenue) {
+                $hourKey = str_pad($revenue->hour, 2, '0', STR_PAD_LEFT) . ':00'; // Format hour as "HH:00"
+                $defaultRevenueData[$hourKey] = $revenue->total_revenue;
+            }
+
+            // Convert the revenue data to a one-dimensional array format
+            $revenueData = $defaultRevenueData;
         }
 
-        return $result;
-    }
-
-    private function calculateDailyRevenue($startDate, $endDate)
-    {
-        $revenueData = Invoice::where('status', 'paid')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('DATE(created_at) as date, SUM(total_amount) as total_revenue')
-            ->groupBy('date')
-            ->orderBy('date')
-            ->pluck('total_revenue', 'date')
-            ->toArray();
-
-        // Tạo các ngày trong khoảng thời gian
-        $days = CarbonPeriod::create($startDate, '1 day', $endDate);
-
-        $result = [];
-        foreach ($days as $day) {
-            $key = $day->toDateString(); // Ví dụ: "2023-01-01"
-            $result[$key] = $revenueData[$key] ?? 0; // Nếu không có dữ liệu, trả về 0
-        }
-
-        return $result;
+        return $revenueData;
     }
 
     // Khách hàng 

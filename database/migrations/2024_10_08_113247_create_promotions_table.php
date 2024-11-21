@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('code')->nullable();
             $table->enum('type', ['percentage', 'fixed']);
             $table->integer('total')->default(1); // Số lần được dùng
-            $table->string('min_order_value')->nullable(); // Để default thành JSON
-            $table->string('max_discount')->nullable(); // Để max_discount là JSON
+            $table->string('min_order_value')->nullable();
+            $table->string('max_discount')->nullable();
             $table->string('discount');
             $table->dateTime('start_date');
             $table->dateTime('end_date');

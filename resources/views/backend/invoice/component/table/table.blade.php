@@ -62,8 +62,10 @@
                         @endphp
 
                         @foreach ($pays as $key => $option)
-                            @if ($data->invoice->payment_method == $key)
-                                <span class="badge bg-primary">{{ $option }}</span>
+                            @if ($data->invoice)
+                                @if ($data->invoice->payment_method == $key)
+                                    <span class="badge bg-primary">{{ $option }}</span>
+                                @endif
                             @endif
                         @endforeach
                     </td>

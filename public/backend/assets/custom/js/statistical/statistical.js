@@ -38,50 +38,58 @@ $(document).ready(function () {
         }
     }
 
-    // Biều đồ đặt bàn
+    // Biều đồ doanh thu
     function fetchRevenueData() {
         var revenueChart;
-        let startDateTimeout;
-        let endDateTimeout;
+        let dayOld = $('#day').val();
+        let monthOld = $('#month').val();
+        let yearOld = $('#year').val();
 
-        $('input[name="type"]').change(function () {
-            var selectedValue = $('input[name="type"]:checked').val();
-            handleSelection(selectedValue);
+        $('#day, #month, #year').on('change', function () {
+            let day = $('#day').val();
+            let month = $('#month').val();
+            let year = $('#year').val();
+
+            // First check if the year has changed
+            if (yearOld !== year) {
+                if (year === 'all') {
+                    // If year is 'all', reset day and month values to empty
+                    if (day || month) {
+                        $('#day').val('');  // Clear day
+                        $('#month').val('');  // Clear month
+                    }
+                } else if (year !== 'all' && (day === '' || month === '')) {
+                    $('#day').val(dayOld);  // Reset day to the previous value
+                    $('#month').val(monthOld);  // Reset month to the previous value
+                }
+            }
+
+            // Then check if day or month values have changed
+            if (dayOld !== day || monthOld !== month) {
+                if (year === 'all') {
+                    $('#year').val(''); // Clear the year
+                }
+            }
+
+            // Update old values after handling the changes
+            dayOld = $('#day').val();
+            monthOld = $('#month').val();
+            yearOld = $('#year').val();
+
+            handleSelection();
         });
 
-        $('#start_date').on('change', function () {
-            const selectedDate = $(this).val();
+        function handleSelection() {
+            const day = $('#day').val();
+            const month = $('#month').val();
+            const year = $('#year').val();
 
-            clearTimeout(startDateTimeout);
-
-            startDateTimeout = setTimeout(() => {
-                handleSelection();
-            }, 2000);
-        });
-
-        $('#end_date').on('change', function () {
-            const selectedDate = $(this).val();
-
-            clearTimeout(endDateTimeout);
-
-            endDateTimeout = setTimeout(() => {
-                handleSelection();
-            }, 2000);
-        });
-
-        var initialSelectedValue = $('input[name="type"]:checked').val();
-        handleSelection(initialSelectedValue);
-
-        function handleSelection(selectedValue = null) {
-            var startDate = $('#start_date').val();
-            var endDate = $('#end_date').val();
-            selectedValue = $('input[name="type"]:checked').val();
-
-            fetchDataAndRenderChart(startDate, endDate, selectedValue);
+            fetchDataAndRenderChart(day, month, year);
         }
 
-        function fetchDataAndRenderChart(startDate, endDate, type) {
-            // Show the loading spinner and hide the canvas and message
+        fetchDataAndRenderChart(day, month, year);
+
+        function fetchDataAndRenderChart(day, month, year) {
             $('.loading-spinner').show();
             $('#revenueChart').hide();
             $('.no-data-message').hide();
@@ -89,113 +97,117 @@ $(document).ready(function () {
             $.ajax({
                 url: '/admin/statistical/revenue-statistics',
                 method: 'GET',
-                data: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    type: type
-                },
+                data: { day, month, year },
                 success: function (response) {
-                    // Hide the loading spinner
                     $('.loading-spinner').hide();
 
-                    var periods = [];
-                    var revenues = [];
+                    const periods = [];
+                    const revenues = [];
 
-                    const currencyFormatter = new Intl.NumberFormat('vi-VN', {
-                        style: 'currency',
-                        currency: 'VND'
-                    });
-
-                    const title = 'Doanh thu theo ' + (type === 'year' ? 'Năm ' : type ===
-                        'month' ?
-                        'Tháng ' : 'Ngày ') + (startDate ? 'Thời gian bắt đầu: ' +
-                            startDate +
-                            ' ' : ' ') + (startDate ? 'Thời gian kết thúc: ' + endDate : ' ');
-
-                    if (type === 'year') {
-                        $.each(response.revenue_statistics, function (year, revenue) {
-                            periods.push("Năm " + year);
-                            revenues.push(Number(revenue));
-                        });
-                    } else if (type === 'month') {
-                        $.each(response.revenue_statistics, function (key, revenue) {
-                            periods.push("Tháng " + key);
-                            revenues.push(Number(revenue));
-                        });
-                    } else if (type === 'day') {
-                        $.each(response.revenue_statistics, function (date, revenue) {
-                            periods.push(date);
-                            revenues.push(Number(revenue));
-                        });
+                    // Iterate through the revenue_statistics object
+                    for (let month in response.revenue_statistics) {
+                        if (response.revenue_statistics.hasOwnProperty(month)) {
+                            periods.push(month); // Add month to periods array
+                            revenues.push(response.revenue_statistics[month]); // Add corresponding revenue to revenues array
+                        }
                     }
 
-                    // If there's no data, show no-data message and hide canvas
+                    // Check if there is no data
                     if (periods.length === 0 || revenues.length === 0) {
                         $('.no-data-message').show();
-                        $('#revenueChart').hide();
-                    } else {
-                        $('.no-data-message').hide();
-                        $('#revenueChart').show();
+                        return;
                     }
+
+                    $('#revenueChart').show();
 
                     if (revenueChart) {
-                        revenueChart.destroy();
+                        revenueChart.destroy(); // Destroy the previous chart if exists
                     }
 
-                    var ctx = document.getElementById('revenueChart').getContext('2d');
+                    const ctx = document.getElementById('revenueChart').getContext('2d');
+                    let labelRevenueChart = '';
+                    let titleText = '';
+                    if (day == '' && month == '' && year != '') {
+                        if (year != 'all') {
+                            labelRevenueChart = 'theo tháng của năm ' + year;
+                            titleText = '(Tháng)';
+                        } else {
+                            labelRevenueChart = 'theo năm';
+                            titleText = '(Năm)';
+                        }
+                    } else if (day == '' && month != '' && year != '') {
+                        labelRevenueChart = 'theo ngày của tháng ' + month + ' năm ' + year;
+                        titleText = '(Ngày)';
+                    } else if (day == '' && month != '' && year == '') {
+                        labelRevenueChart = 'theo ngày của tháng ' + month + ' năm ' + new Date().getFullYear();
+                        titleText = '(Ngày)';
+                    } else if (day != '' && month != '' && year == '') {
+                        labelRevenueChart = 'theo giờ của ngày ' + day + ' tháng ' + month + ' năm ' + new Date().getFullYear();
+                        titleText = '(Giờ)';
+                    } else if (day != '' && month == '' && year == '') {
+                        const currentDate = new Date();
+                        const currentMonth = currentDate.getMonth() + 1; 
+                        const currentYear = currentDate.getFullYear();  
+                    
+                        labelRevenueChart = 'theo giờ của ngày ' + day + ' tháng ' + currentMonth + ' năm ' + currentYear;
+                        titleText = '(Giờ)';
+                    } else {
+                        const currentDate = new Date();
+                        const currentDay = currentDate.getDate() + 1; 
+                        const currentMonth = currentDate.getMonth() + 1; 
+                        const currentYear = currentDate.getFullYear();  
+                    
+                        labelRevenueChart = 'theo giờ của ngày ' + currentDay + ' tháng ' + currentMonth + ' năm ' + currentYear;
+                        titleText = '(Giờ)';
+                    }
+
+                    // Ensure type is 'line'
                     revenueChart = new Chart(ctx, {
-                        type: 'bar',
+                        type: 'line', // Ensure line chart
                         data: {
-                            labels: periods,
+                            labels: periods, // Set periods as labels (e.g., days, months, or years)
                             datasets: [{
-                                label: title,
-                                data: revenues,
-                                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
+                                label: 'Doanh thu ' + labelRevenueChart,
+                                data: revenues, // Revenue data
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+                                borderColor: 'rgba(75, 192, 192, 1)', // Line color
+                                borderWidth: 2,
+                                tension: 0.4, // Smooth curves
+                                fill: true, // Fill the area under the line
+                                pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Points on the line
+                                pointBorderColor: 'rgba(75, 192, 192, 1)',
+                                pointRadius: 5, // Size of points
+                                pointHoverRadius: 7 // Hover size of points
                             }]
                         },
                         options: {
                             responsive: true,
                             plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Biểu đồ thống kê doanh thu',
-                                    font: {
-                                        size: 16
-                                    },
-                                },
+                                legend: { position: 'top' },
                                 tooltip: {
                                     callbacks: {
                                         label: function (tooltipItem) {
-                                            return 'Doanh thu : ' +
-                                                currencyFormatter
-                                                    .format(tooltipItem.raw);
+                                            return `Doanh thu: ${new Intl.NumberFormat('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND'
+                                            }).format(tooltipItem.raw)}`;
                                         }
                                     }
                                 }
                             },
                             scales: {
                                 x: {
-                                    title: {
-                                        display: true,
-                                        text: (type === 'day' ? 'Ngày' : type ===
-                                            'month' ?
-                                            'Tháng' : 'Năm')
-                                    }
+                                    title: { display: true, text: 'Thời gian ' + titleText }
                                 },
                                 y: {
-                                    title: {
-                                        display: true,
-                                        text: 'Doanh thu (VND)'
-                                    },
+                                    title: { display: true, text: 'Doanh thu (VND)' },
                                     ticks: {
                                         beginAtZero: true,
                                         callback: function (value) {
-                                            return currencyFormatter.format(value);
+                                            return new Intl.NumberFormat('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND'
+                                            }).format(value);
                                         }
                                     }
                                 }
@@ -203,14 +215,13 @@ $(document).ready(function () {
                         }
                     });
                 },
-                error: function (xhr, status, error) {
-                    console.log(error);
-                    $('#revenue-result').html('<p>Không thể lấy được dữ liệu.</p>');
+                error: function () {
                     $('.loading-spinner').hide();
+                    $('.no-data-message').show();
                 }
             });
         }
-    }
+    };
 
     // Biều đồ khách hàng
     function fetchClientData() {
@@ -611,101 +622,4 @@ $(document).ready(function () {
     }
 
     // END VẼ BIỂU ĐỒ
-
-    // ------------------------------------
-
-    // Xuất PDF
-    function exportPDF() {
-        const {
-            jsPDF
-        } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const canvas = document.getElementById('revenueChart');
-
-        if (canvas) {
-            const imgData = canvas.toDataURL('image/png');
-
-            pdf.addImage(imgData, 'PNG', 10, 10, 180, 90);
-            pdf.save("revenue.pdf");
-        } else {
-            console.error("Canvas không tìm thấy");
-        }
-    }
-
-    function exportPDFClient() {
-        const {
-            jsPDF
-        } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const canvas = document.getElementById('clientChart');
-
-        if (canvas) {
-            const imgData = canvas.toDataURL('image/png');
-
-            pdf.addImage(imgData, 'PNG', 10, 10, 180, 90);
-            pdf.save("cleint.pdf");
-        } else {
-            console.error("Canvas không tìm thấy");
-        }
-    }
-
-    function exportPDFMenu() {
-        const {
-            jsPDF
-        } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const canvas = document.getElementById('menuChart');
-
-        if (canvas) {
-            const imgData = canvas.toDataURL('image/png');
-
-            pdf.addImage(imgData, 'PNG', 10, 10, 180, 90);
-            pdf.save("menu.pdf");
-        } else {
-            console.error("Canvas không tìm thấy");
-        }
-    }
-
-    function exportPDFTable() {
-        const {
-            jsPDF
-        } = window.jspdf;
-        const pdf = new jsPDF();
-
-        const canvas = document.getElementById('tableChart');
-
-        if (canvas) {
-            const imgData = canvas.toDataURL('image/png');
-
-            pdf.addImage(imgData, 'PNG', 10, 10, 180, 90);
-            pdf.save("table.pdf");
-        } else {
-            console.error("Canvas không tìm thấy");
-        }
-    }
-
-    $('#export_btn_revenue').click(function (e) {
-        e.preventDefault();
-        exportPDF();
-    });
-
-    $('#export_btn_client').click(function (e) {
-        e.preventDefault();
-        exportPDFClient();
-    });
-
-    $('#export_btn_menu').click(function (e) {
-        e.preventDefault();
-        exportPDFMenu();
-    });
-
-    $('#export_btn_table').click(function (e) {
-        e.preventDefault();
-        exportPDFTable();
-    });
-
-    // END XUẤT PDF
 });
