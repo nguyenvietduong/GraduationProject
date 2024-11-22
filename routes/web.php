@@ -35,6 +35,8 @@ Route::post('review', [ReviewController::class, 'store'])->name('contact');
 Route::get('blog', [BlogController::class, 'index'])->name('blog.list');
 Route::get('blog-detail/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
 Route::get('favortite/{menus}', [FavoriteController::class,  'favorite'])->name('favorite');
+Route::get('favortite', [FavoriteController::class,  'favorite_list'])->name('favorite.list');
+
 
 Route::group(['middleware' => 'profile'], function () {
     Route::get('profile', [ProfilesController::class, 'profile'])->name('profile');
