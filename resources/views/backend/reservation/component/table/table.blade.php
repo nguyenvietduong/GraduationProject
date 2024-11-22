@@ -5,10 +5,11 @@
                 <div class="form-check mb-0 ms-n1">
                 </div>
             </th>
-            <th>#</th>
+            {{-- <th>#</th> --}}
+            <th>Mã ĐH</th>
             <th>{{ __('messages.reservation.fields.reservation_information') }}</th>
             <th>{{ __('messages.reservation.fields.guests') }}</th>
-            <th>{{ __('messages.reservation.fields.reservation_time') }}</th>
+            <th>Thời gian đặt</th>
             <th>{{ __('messages.system.status') }}</th>
             <th>{{ __('messages.reservation.fields.table') }}</th>
             {{-- <th>{{ __('messages.reservation.fields.dish') }}</th> --}}
@@ -25,7 +26,8 @@
                         <div class="form-check">
                         </div>
                     </td>
-                    <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
+                    {{-- <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td> --}}
+                    <td>{{ $data->code ?? __('messages.system.no_data_available') }}</td>
                     <td>
                         <ul>
                             <li>{{ __('messages.reservation.fields.full_name') }}:
@@ -89,25 +91,31 @@
                             @endforeach
                         </select>
                     </td>
-                    <td>
-                        @if ($data->table_id == null && $data->status == 'arrived')
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-reservation-id="{{ $data->id }}" data-guestsReservation="{{ $data->guests }}"
-                                data-bs-target="#exampleModal">
-                                {{ __('messages.system.button.choose_table') }}
-                            </button>
+                    <td style="height: 120px; overflow: hidden; display: block; overflow-y: auto">
+                        @php
+                            $reservationDetails = $data->reservationDetails;
+                        @endphp
+                        @if ($reservationDetails)
+                            @foreach ($reservationDetails as $reservationDetail)
+                                @php
+                                    $table = $reservationDetail->table;
+                                @endphp
+                                <ul>
+                                    <li>{{ __('messages.table.fields.name') }}:
+                                        {{ $table->name ?? __('messages.system.no_data_available') }}
+                                    </li>
+                                    <li>{{ __('messages.table.fields.capacity') }}:
+                                        {{ $table->capacity ?? __('messages.system.no_data_available') }}</li>
+                                </ul>
+                            @endforeach
                         @else
                             <ul>
-                                <li>{{ __('messages.table.fields.name') }}:
-                                    {{ $data->table->name[App::getLocale()] ?? __('messages.system.no_data_available') }}
+                                <li>
+                                    {{ __('messages.system.no_data_available') }}
                                 </li>
-                                <li>{{ __('messages.table.fields.description') }}:
-                                    {{ $data->table->description[App::getLocale()] ?? __('messages.system.no_data_available') }}
-                                </li>
-                                <li>{{ __('messages.table.fields.capacity') }}:
-                                    {{ $data->table->capacity ?? __('messages.system.no_data_available') }}</li>
                             </ul>
                         @endif
+
                     </td>
 
                     <!-- <td class="text-end">

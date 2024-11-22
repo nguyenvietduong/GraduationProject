@@ -25,14 +25,14 @@
                 <label for="price" class="form-label">{{ __('messages.' . $object . '.fields.price_vi') }} <span class="text-danger">*</span></label>
                 <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
                     name="price" value="{{ old('price') }}" currency="VND" placeholder="" min="0">
-                @error('price.vi')
+                @error('price')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
                 <label for="description"
-                    class="form-label">Mô tả  <span class="text-danger">*</span></label>
+                    class="form-label">Mô tả  </label>
                 <textarea name="description" id="description_vi" cols="30" rows=""
                     class="form-control
                  @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
@@ -85,7 +85,7 @@
         <!--end row-->
     </div>
     <!--end form-group-->
-    <div class="d-flex justify-content-end mt-3">
+    <div class="d-flex justify-content-end mt-3">   
         <button type="button" class="btn btn-primary me-2"
             onclick="executeExample('handleDismiss', 'myForm')">{{ __('messages.system.button.create') }}</button>
         <a href="{{ route(__('messages.' . $object . '.index.route')) }}"> <button type="button"

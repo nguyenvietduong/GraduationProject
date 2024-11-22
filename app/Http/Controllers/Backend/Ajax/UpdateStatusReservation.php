@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backend\Ajax;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ReservationCancellationMail;
+use App\Models\Category;
 use App\Models\Reservation;
+use App\Models\ReservationDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Mail\ReservationConfirmed;
 use App\Models\Menu;
@@ -45,55 +48,83 @@ class UpdateStatusReservation extends Controller
     public function updateTableStatus(Request $request)
     {
         // dd(123123);
-        $data = $request->all();
-        $reservation = Reservation::find($data['reservation_id']);
+        $tables = $request->input('table_id'); // Nhận mảng từ request
+        $reservationId = $request->input('reservation_id');
+        $guest = $request->input('guest');
 
-        if (!$reservation) {
-            dd("Reservation with ID {$data['reservation_id']} not found.");
+        // Kiểm tra nếu mảng bàn không rỗng
+        if (!empty($tables)) {
+            foreach ($tables as $table) {
+                // Cập nhật trạng thái của từng bàn thành "selected"
+                Table::where('id', $table['id'])->update(['status' => 'occupied']);
+
+                ReservationDetail::create([
+                    'reservation_id' => $reservationId,
+                    'table_id' => $table['id'],
+                    'guests_detail' => $guest,
+                    'created_at' => Carbon::now()->timestamp,
+                ]);
+            }
         }
 
-        $table = Table::find($data['table_id']);
-
-        if (!$table) {
-            dd("Table with ID {$data['table_id']} not found.");
-        }
 
 
-        $reservation->table_id = $request['table_id'];
-        $table->status = 'occupied';
-
-        $reservation->save();
-        $table->save();
 
         return response()->json(['message' => 'Status updated successfully']);
     }
 
     public function getAvailableTables(Request $request)
     {
-        $guests = $request->input('guests');
-
-        // $currentTableId = Reservation::where('id', $reservationId)->value('table_id');
-
-        // Lọc các bàn có trạng thái 'available' và có sức chứa >= số người yêu cầu
-        // $availableTables = Table::where('status', 'available')
-        //     ->where('capacity', '>=', $guests) // Fixed this line
-        //     ->get(['id', 'name', 'capacity', 'description']);
-
-        // return response()->json(['tables' => $availableTables]);
-
-        $availableTables = Table::where('capacity', '>=', $guests) // Fixed this line
-            ->get(['id', 'name', 'capacity', 'status', 'description']);
+        $availableTables = Table::get(['id', 'name', 'capacity', 'status', 'description']);
 
         return response()->json(['tables' => $availableTables]);
     }
 
     public function getAvailableMenus(Request $request)
     {
-        $guests = $request->input('guests');
+        $key = $request->all();
+        // dd($key);
+        $search = $key['key'];
+
+        $categories = Category::with([
+            'menus' => function ($query) use ($search) {
+                if ($search) {
+                    $query->where('name', 'LIKE', "%{$search}%");
+                }
+            }
+        ])->get();
+        // dd($categories);
 
         // Retrieve all active menus
-        $availableMenus = Menu::where('status', 'active')->get();
+        // $availableMenus = Menu::where('status', 'active')
+        //     ->where('name', 'LIKE', '%' . $key['key'] . '%')->get();
 
-        return response()->json(['menus' => $availableMenus]);
+        return response()->json(['menus' => $categories]);
+    }
+
+    public function createNewReservation(Request $request)
+    {
+        $data = $request->all();
+
+        $data['reservation_time'] = Carbon::now()->timestamp;
+        $data['created_at'] = Carbon::now()->timestamp;
+        $data['updated_at'] = Carbon::now()->timestamp;
+
+        $data['status'] = 'arrived';
+
+
+        $reservation = Reservation::create($data);
+
+        if ($reservation) {
+            return response()->json([
+                'flag' => true,
+                'message' => 'Tạo đơn mới thành công!',
+            ]);
+        } else {
+            return response()->json([
+                'flag' => false,
+                'message' => 'Tạo đơn mới thất bại!',
+            ]);
+        }
     }
 }

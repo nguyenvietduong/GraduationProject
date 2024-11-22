@@ -88,7 +88,7 @@ class ReservationController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => App::getLocale() == 'vi' ? self::successfulReservation['vi'] : self::successfulReservation['en'],
-                'data' => $reservationNew // Optionally include reservation data
+                'data' => $reservationNew
             ], 201); // Created
         } catch (\Exception $e) {
             \Log::error('Reservation store error: ' . $e->getMessage());

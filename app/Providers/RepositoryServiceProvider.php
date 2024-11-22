@@ -26,6 +26,7 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Interfaces\Repositories\ReviewRepositoryInterface::class => \App\Repositories\ReviewRepositoryEloquent::class,
             \App\Interfaces\Repositories\RestaurantRepositoryInterface::class => \App\Repositories\RestaurantRepositoryEloquent::class,
             \App\Interfaces\Repositories\MenuRepositoryInterface::class => \App\Repositories\MenuRepositoryEloquent::class,
+            \App\Interfaces\Repositories\InvoiceRepositoryInterface::class => \App\Repositories\InvoiceRepositoryEloquent::class,
 
             // FRONTEND
             \App\Interfaces\Repositories\ReservationRepositoryInterface::class => \App\Repositories\ReservationRepositoryEloquent::class,

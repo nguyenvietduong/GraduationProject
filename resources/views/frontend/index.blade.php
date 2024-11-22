@@ -155,7 +155,7 @@
         </div>
     </section>
 
-    <section class="relative pt-6 md:pb-24 pb-16 bg-gray-50 dark:bg-slate-800">
+    {{-- <section class="relative pt-6 md:pb-24 pb-16 bg-gray-50 dark:bg-slate-800">
         <div class="container relative">
             <div class="grid md:grid-cols-12">
                 <div class="lg:col-span-3 md:col-span-3 p-3">
@@ -164,7 +164,7 @@
                             <div class="filters-group">
                                 <ul class="mb-0 list-none container-filter-border-bottom filter-options">
                                     <li class="text-sm uppercase font-medium cursor-pointer relative border-b border-transparent text-slate-400 duration-500 active"
-                                        data-group="all">{{ __('All') }}</li>
+                                        data-group="all">Tất cả</li>
 
                                     @foreach ($categories as $category)
                                         <li class="text-sm uppercase font-medium mt-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
@@ -203,4 +203,4 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}

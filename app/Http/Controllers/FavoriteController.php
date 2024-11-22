@@ -47,7 +47,7 @@ class FavoriteController extends Controller
    }
 
 
-   public function favorite_list()
+   public function favorite_list(Request $request)
 {
     // Lấy người dùng đang đăng nhập
     $user = auth()->user();
@@ -55,6 +55,17 @@ class FavoriteController extends Controller
     // Kiểm tra nếu người dùng chưa đăng nhập
     if (!$user) {
         return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xem danh sách yêu thích.');
+    }
+
+    // Kiểm tra nếu có yêu cầu hủy yêu thích
+    if ($request->has('remove_favorite')) {
+        $menuId = $request->input('remove_favorite');
+
+        // Xóa sản phẩm khỏi danh sách yêu thích
+        $user->favorites()->detach($menuId);
+
+        // Thông báo thành công
+        return redirect()->route('favorite.list')->with('success', 'Đã xóa khỏi danh sách yêu thích.');
     }
 
     // Lấy danh sách sản phẩm yêu thích

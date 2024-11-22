@@ -17,7 +17,7 @@
             @php
                 isset($permission) ? ($msAuto = '') : ($msAuto = 'ms-auto');
             @endphp
-            @if ($createRoute != null)
+            @if (isset($createRoute))
             <div class="col-auto {{ $msAuto }} mt-1">
                 <a href="{{ $createRoute }}">
                     <button type="button" class="btn btn-primary w-100">

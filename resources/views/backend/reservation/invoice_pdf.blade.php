@@ -45,12 +45,13 @@
     <h3>Thông tin khách hàng</h3>
     <p>Tên khách hàng: {{ $reservation->name }}</p>
     <p>Số điện thoại: {{ $reservation->phone }}</p>
+    <p>Thời gian đặt chỗ: {{ $reservation->reservation_time  }}</p>
     <!-- Chi tiết hóa đơn -->
     <h3>Chi tiết hóa đơn</h3>
     <table>
         <thead>
             <tr>
-                <th>ID món</th>
+                <th>STT</th>
                 <th>Tên món</th>
                 <th>Số lượng</th>
                 <th>Đơn giá (VND)</th>
@@ -58,33 +59,33 @@
             </tr>
         </thead>
         <tbody>
-            {{ $total_amount=0 }}
+            @php
+                $total_amount=0
+            @endphp
             @foreach ($invoice_item as $key => $item)
                 {{ $total_amount += $item['price'] }}
                 <tr>
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $item['name'] }}</td>
                     <td>{{ $item['quantity'] }}</td>
-                    <td>{{ number_format($item['price']) }}</td>
-                    <td>{{ number_format($item['total']) }}</td>
+                    <td>{{ number_format($item['price']) }} đ</td>
+                    <td>{{ number_format($item['total']) }} đ</td>
                 </tr>
             @endforeach
             <tr>
-                <td colspan="4" style="text-align: right;"><strong>Tổng Tiền:</strong></td>
-                <td><strong>{{ number_format($total_amount) }} VND</strong></td>
+                <td colspan="4" style="text-align: right;"><strong>Tổng hóa đơn</strong></td>
+                <td><strong>{{ number_format($total_amount) }} đ</strong></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: right;"><strong>Giảm giá:</strong></td>
+                <td><strong>{{ number_format($voucher_discount) }} đ</strong></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: right;"><strong>Thành tiền:</strong></td>
+                <td><strong>{{ number_format($total_payment) }} đ</strong></td>
             </tr>
         </tbody>
     </table>
-
-    <!-- Tổng số tiền -->
-    <h3 style="text-align: right;">Giảm giá: {{ number_format($voucher_discount) }} VND</h3>
-    <h3 style="text-align: right;">Tổng số tiền: {{ number_format($total_payment) }} VND</h3>
-
-    <!-- Mã QR Code -->
-    <div class="qr-code">
-        <p>Quét mã QR để xem chi tiết hóa đơn hoặc thanh toán</p>
-        <img src="{{ asset('storage/qrcode_images/qrcode.jpg') }}" alt="QR Code" style="width: 150px;">
-    </div>
 
     <div class="footer">
         <p>Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi!</p>

@@ -9,7 +9,7 @@ return [
             'edit' => 'Chỉnh sửa',
             'update' => 'Cập nhật',
             'delete' => 'Xóa',
-            'details' => 'Chi tiết',
+            'detail' => 'Chi tiết',
             'viewCV' => 'Xem CV',
             'approve' => 'Duyệt',
             'reject' => 'Từ chối',
@@ -191,11 +191,9 @@ return [
         ],
         'fields' => [
             'name_vi' => 'Tên món ăn (Tiếng việt)',
-            'name_en' => 'Tên món ăn (Tiếng anh)',
             'slug' => 'Đường dẫn',
             'name' => "Tên món ăn",
             'description_vi' => 'Mô tả món ăn (Tiếng việt)',
-            'description_en' => 'Mô tả món ăn (Tiếng anh)',
             'price_vi' => 'Giá món ăn',
             "price" => "Giá",
             'status' => 'Trạng thái',
@@ -402,7 +400,8 @@ return [
             'startDate' => 'Ngày bắt đầu',
             'endDate' => 'Ngày kết thúc',
             'total' => 'Số lượng',
-            'isActive' => 'Trạng thái'
+            'isActive' => 'Trạng thái',
+            'isUsed' => 'Mã giảm giá đã sử dụng',
         ],
         'system' => [
             'random' => 'ngẫu nhiên',
@@ -638,6 +637,45 @@ return [
             'route' => 'admin.user.destroy',
         ],
     ],
+    'reservation_details' => [
+        'fields' => [
+            'reservation_detail' => 'Chi tiết bàn khách sử dụng',
+
+            'table_id' => 'Bàn',
+            'guests_detail' => 'Số lượng khách',
+        ],
+    ],
+    'invoice' => [
+        'title' => 'Hóa đơn',
+        'status' => [
+            'unpaid' => 'Chưa thanh toán',
+            'paid' => 'Đã thanh toán',
+            'canceled' => 'Đã hủy',
+        ],
+        'payment_method' => [
+            'cash' => 'Tiền mặt',
+            'bank' => 'Chuyển khoản'
+        ],
+        'fields' => [
+            'invoice_detail' => 'Chi tiết món ăn',
+
+            'total_amount' => 'Tổng tiền',
+            'payment_method' => 'Phương thức thanh toán',
+            'status' => 'Trạng thái thanh toán',
+
+            'menu' => 'Món ăn',
+            'quantity' => 'Số lượng',
+            'price' => 'Giá tiền',
+            'total' => 'Tổng tiền',
+        ],
+
+        'index' => [
+            'route' => 'admin.invoice.index',
+        ],
+        'detail' => [
+            'route' => 'admin.invoice.detail',
+        ],
+    ],
 
     'version' => '<b>Phiên bản</b> :version',
     'copyright' => '<strong>Bản quyền © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> Tất cả các quyền được bảo lưu.',
@@ -646,4 +684,3 @@ return [
     'deleted' => 'Xóa thành công!',
     'confirmDelete' => 'Bạn có chắc chắn muốn xóa mục này không?',
 ];
-

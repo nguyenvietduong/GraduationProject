@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Account\UserController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChatController;
+use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
@@ -19,13 +20,12 @@ use App\Http\Controllers\Backend\RestaurantController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\SearchController;
+use App\Http\Controllers\Backend\StatisticalController;
 
 Route::middleware(['auth', 'role:1, 2'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
-        Route::get('/index', function () {
-            return view('backend.dashboard.index');
-        })->name('admin.dashboard.index');
+        Route::get('/index', [DashboardController::class  , "index"])->name('admin.dashboard.index');
 
         // User Management
         Route::prefix('user')->group(function () {
@@ -149,6 +149,8 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
             Route::delete('{id}/destroy', [ReservationController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.reservation.destroy');
         });
         Route::prefix('invoice')->group(function () {
+            Route::get('index', [InvoiceController::class, 'index'])->name('admin.invoice.index');
+            Route::get('{id}/detail', [InvoiceController::class, 'detail'])->where('id', '[0-9]+')->name('admin.invoice.detail');
             Route::post('store', [InvoiceController::class, 'store'])->name('admin.invoice.store');
             Route::post('exportPDF', [InvoiceController::class, 'exportAndSavePDF'])->name('admin.invoice.exportPDF');
         });
@@ -166,6 +168,15 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         });
         Route::prefix('invoice')->group(function () {
             Route::get('testPDF', [InvoiceController::class, 'generatePDF'])->name('admin.restaurant');
+        });
+
+        Route::prefix('statistical')->group(function () {
+            Route::get('', [StatisticalController::class, 'index'])->name('admin.statistical.index');
+            Route::get('revenue-statistics', [StatisticalController::class, 'getRevenueStatistics']);
+            Route::get('top-clients', [StatisticalController::class, 'getPopularReservationTimes']);
+            Route::get('top-menus', [StatisticalController::class, 'getMenuItemsWithReservationCounts']);
+            Route::get('top-tables', [StatisticalController::class, 'getTableReservationStats']);
+
         });
 
         Route::get('search', [SearchController::class, 'search'])->name('search');

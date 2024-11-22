@@ -32,7 +32,6 @@ class StoreRequest extends FormRequest
             'name' => 'required',
             'slug' => 'required|string|unique:menus',
             'price' => 'required|numeric|between:0,99999999.99',
-            'description' => 'required',
             'category_id' => 'required|integer|exists:categories,id',
             'image_url' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
             'status' => 'required|in:active,inactive'
