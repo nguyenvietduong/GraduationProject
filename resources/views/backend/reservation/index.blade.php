@@ -122,7 +122,7 @@
                                                         <div class="card-body pt-0">
                                                             <div class="row align-items-center">
                                                                 <div class="col">
-                                                                    <p>Món đã chọn:</p>
+                                                                    <h5 class="">Món đã chọn:</h5>
                                                                     <input type="hidden" name="" id="idTable_">
                                                                 </div><!--end col-->
                                                             </div>
@@ -132,7 +132,7 @@
                                                                     <tr>
                                                                         <th>Tên món</th>
                                                                         <th class="text-center">Số lượng</th>
-                                                                        <th class="text-end">Đơn giá</th>
+                                                                        <th class="text-end">Thành tiền</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="array-menu"></tbody>
@@ -148,7 +148,7 @@
                         </div> <!--end col-->
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer modal-footer-reservation">
                 </div>
             </div>
         </div>
@@ -212,7 +212,8 @@
                                         <div class="col-6">
                                             <style>
                                                 .input-voucher {
-                                                    text-transform: uppercase; /* Chuyển đổi văn bản nhập vào thành chữ hoa */
+                                                    text-transform: uppercase;
+                                                    /* Chuyển đổi văn bản nhập vào thành chữ hoa */
                                                 }
                                             </style>
                                             <input type="text" class="form-control input-voucher"

@@ -1,3 +1,73 @@
 {
-    "invoice": []
+  "invoice": [
+    {
+      "id": "1",
+      "reservation_id": "1",
+      "reservation_code": "KMJVXJ",
+      "totalAmount": 60000,
+      "list_table": [
+        {
+          "id": 1,
+          "name": "Bàn 1"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 4,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "reservation_id": "4",
+      "reservation_code": "RVUVI10L6",
+      "totalAmount": 90000,
+      "list_table": [
+        {
+          "id": 3,
+          "name": "Bàn 3"
+        },
+        {
+          "id": 2,
+          "name": "Bàn 2"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 4,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        }
+      ]
+    }
+  ]
 }
