@@ -8,6 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\FavoriteController;
 use App\Models\Category;
+use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,6 +29,12 @@ Route::get('/', function () {
 });
 
 Route::get('', [HomeController::class, 'index'])->name('home');
+Route::get('reservation/list', function () {
+    $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
+        ->with('reservationDetails')->with('invoice')->get();
+
+    return view('frontend.list', compact('listReservation'));
+})->name('reservation.list');
 Route::get('reservation', [ReservationController::class, 'create'])->name('reservation');
 Route::post('reservation', [ReservationController::class, 'store'])->name('reservation');
 Route::get('menu', [HomeController::class, 'menu'])->name('menu');
