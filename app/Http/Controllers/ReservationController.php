@@ -154,7 +154,6 @@ class ReservationController extends Controller
     {
         $updated = Reservation::where('id', $reservationId)->update(['status' => 'canceled']);
     
-        // Kiểm tra xem bản ghi có được cập nhật thành công hay không
         if ($updated) {
             return response()->json([
                 'success' => true,
