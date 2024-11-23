@@ -25,6 +25,7 @@
             <ul class="submenu">
                 <li><a href="{{ route('profile') }}" class="sub-menu-item">{{ __('messages.system.profile') }}</a></li>
                 <li><a href="{{ route('favorite.list') }}" class="sub-menu-item"> Trang yêu thích </a></li>
+                <li><a href="{{ route('reservation.list') }}" class="sub-menu-item"> Dánh sách đơn hàng </a></li>
                 @if(Auth::user()->role && Auth::user()->role->authorities == 'admin')
                 <li><a href="{{ route('admin.dashboard.index') }}" class="">{{ __('messages.system.adminPage') }}</a>
                 </li>
