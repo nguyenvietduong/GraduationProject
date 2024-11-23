@@ -140,7 +140,7 @@
 
     PMD.renderListMenu = (data) => {
         let active
-        let html       
+        let html
 
         html = `
         <div class="card-body pt-0">
@@ -157,7 +157,7 @@
             </li>`
         })
         html += '</ul>'
-        
+
         html += '<div class="tab-content">'
         data.forEach(function (cate) {
             cate.slug == 'bua-sang' ? active = 'active show' : active = ''
@@ -168,7 +168,7 @@
                     <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
                         <img class="my-2" src="/storage/${menu.image_url}" alt="" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
                         <p>${menu.name}</p>
-                        <p>Giá: ${menu.price}</p>
+                        <p>Giá: ${PMD.formatCurrency(menu.price)}đ</p>
                     </div>
                 `).join('') : '<p>Không có menu nào</p>'}
                 </div>
@@ -195,10 +195,11 @@
         let reservationId = reservation.attr('data-reservation')
         let tableId = reservation.attr('data-table')
         let dataGuest = reservation.attr('data-guest')
+        let dataCode = reservation.attr('data-reservation-code')
         let html = `
         <td>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
-            dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" data-bs-target="#exampleModal">
+            dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" dataReservationCode="${dataCode}" data-bs-target="#exampleModal">
             Đặt món
             </button>
             <button class="btn btn-warning" data-bs-toggle="modal" 
@@ -209,9 +210,14 @@
     }
     //End Render Data Table & Menus
 
+    PMD.sumTableMin = (guest = null) => {
+        let tableMin = Math.ceil(guest / 6)
+        return tableMin
+    }
+
     PMD.renderNotiTable = (guest = null) => {
         let html
-        let table = Math.ceil(guest / 6)
+        let table = PMD.sumTableMin(guest)
         html = `Đơn hàng với ${guest} khác hàng. Nên chọn tối thiểu ${table} bàn.`
         $('#notiTable').empty()
         $('#notiTable').append(html)
@@ -227,6 +233,7 @@
                 var reservationId = button.attr('dataReservationId')
                 var tableReservation = button.attr('dataTableId')
                 var guestsReservation = button.attr('dataGuests')
+                var reservationCode = button.attr('dataReservationCode')
                 $('#reservationId').val(reservationId)
                 PMD.renderNotiTable(guestsReservation)
             }
@@ -237,14 +244,14 @@
                     let selectedMenus = {
                         id: invoiceDetail.id,
                         reservation_id: invoiceDetail.reservation_id,
+                        reservation_code: invoiceDetail.reservation_code,
                         totalAmount: invoiceDetail.totalAmount,
                         list_table: invoiceDetail.list_table,
                         list_table_old: [],
                         invoice_item: invoiceDetail.invoice_item
                     }
 
-                    let oldTable = invoiceDetail.list_table
-                    console.log(oldTable)
+                    $('.table-info').addClass('cursor-not-allowed')
 
                     await PMD.fetchAvailableMenus()
 
@@ -259,17 +266,6 @@
                         $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
                     })
 
-                    $('#availableTables').off('click').on('click', '.table-info', function () {
-                        $(this).toggleClass('selected')
-                        const tableId = $(this).data('table-id')
-                        const tableName = $(this).data('table-name')
-
-                        if ($(this).hasClass('selected')) {
-                            selectedMenus.list_table.push({ id: tableId, name: tableName })
-                        } else {
-                            selectedMenus.list_table = selectedMenus.list_table.filter(table => table.id !== tableId)
-                        }
-                    })
 
                     $('#availableMenu').off('click').on('click', '.menu-info', function () {
                         $(this).toggleClass('selected')
@@ -292,6 +288,7 @@
                     let selectedMenus = {
                         id: reservationId,
                         reservation_id: reservationId,
+                        reservation_code: reservationCode,
                         totalAmount: 0,
                         list_table: [],
                         list_table_old: [],
@@ -304,6 +301,16 @@
 
 
                     $('#availableTables').off('click').on('click', '.table-info', function () {
+                        let validationTable = PMD.sumTableMin(guestsReservation)
+
+                        if (!$(this).hasClass('selected')) {
+                            // Kiểm tra nếu đã chọn đủ số lượng bàn
+                            if (selectedMenus.list_table.length >= validationTable) {
+                                alert(`Bạn chỉ được chọn tối đa ${validationTable} bàn.`);
+                                return;
+                            }
+                        }
+
                         $(this).toggleClass('selected')
                         const tableId = $(this).data('table-id')
                         const tableName = $(this).data('table-name')
@@ -370,12 +377,17 @@
     PMD.checkRenderButtonAmount = (condition = true, invoice = false) => {
         if (condition == true) {
             if (conditionTemp == 1) {
-                let html = `<button class="btn btn-primary btnSaveInvoice">Lưu hóa đơn</button>`
-                $('.modal-footer').append(html)
+                // <tr>
+                //     <td colspan="3" class="text-end px-2">Tổng hóa đơn: <span class="total-invoice">0</span>đ</td>
+                // </tr>
+                let html = `
+                <strong class="mx-3">Tổng hóa đơn: <span class="total-invoice">0</span>đ</strong>
+                <button class="btn btn-primary btnSaveInvoice">Lưu hóa đơn</button>`
+                $('.modal-footer-reservation').append(html)
             }
         }
         if (condition == false) {
-            $('.modal-footer').empty()
+            $('.modal-footer-reservation').empty()
         }
     }
     //End Render Button Amount
@@ -466,61 +478,70 @@
 
     //Quantity Input
     PMD.quantityInput = (selectedMenus) => {
+        // Xử lý khi thay đổi số lượng qua input
         $('#array-menu').on('input', '.quantity-input', function () {
-            const menuId = $(this).data('menu-id')
-            const newQuantity = parseInt($(this).val(), 10) || 1 // Nếu không có giá trị, mặc định là 1
-            const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
-            const newPrice = newQuantity * menu.price
+            const menuId = $(this).data('menu-id');
+            const newQuantity = parseInt($(this).val(), 10) || 1; // Nếu không có giá trị, mặc định là 1
+            const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
 
             if (menu) {
-                menu.quantity = newQuantity
-                menu.total = newPrice
-                let totalFormat = PMD.formatCurrency(menu.total)
-                $('.price-invoice-item-' + menu.id).html(totalFormat)
-                PMD.totalAmount(selectedMenus) // Tính lại tổng số tiền
+                if (newQuantity > 100) {
+                    alert('Không được chọn quá 100 món cho mỗi loại!');
+                    $(this).val(100); // Đặt giá trị tối đa là 100
+                    menu.quantity = 100;
+                } else {
+                    menu.quantity = newQuantity;
+                }
+
+                menu.total = menu.quantity * menu.price;
+                let totalFormat = PMD.formatCurrency(menu.total);
+                $('.price-invoice-item-' + menu.id).html(totalFormat);
+                PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
             }
-        })
+        });
 
         // Xử lý khi nhấn nút giảm số lượng
         $('#array-menu').on('click', '.decrease-btn', function () {
-            const menuId = $(this).data('menu-id')
-            const input = $(`.quantity-input[data-menu-id="${menuId}"]`)
-            const currentValue = parseInt(input.val(), 10)
-            const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
+            const menuId = $(this).data('menu-id');
+            const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
+            const currentValue = parseInt(input.val(), 10);
+            const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
 
             if (menu && currentValue > 1) {
-                const newQuantity = currentValue - 1
-                const newPrice = newQuantity * menu.price
-                menu.quantity = newQuantity
-                menu.total = newPrice
-                input.val(newQuantity) // Cập nhật lại số lượng trong ô input
-                let totalFormat = PMD.formatCurrency(menu.total)
-                $('.price-invoice-item-' + menu.id).html(totalFormat)
-                PMD.totalAmount(selectedMenus) // Tính lại tổng số tiền
+                const newQuantity = currentValue - 1;
+                menu.quantity = newQuantity;
+                menu.total = newQuantity * menu.price;
+                input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+                let totalFormat = PMD.formatCurrency(menu.total);
+                $('.price-invoice-item-' + menu.id).html(totalFormat);
+                PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
             }
-        })
+        });
 
         // Xử lý khi nhấn nút tăng số lượng
         $('#array-menu').on('click', '.increase-btn', function () {
-            const menuId = $(this).data('menu-id')
-            console.log(menuId);
-            const input = $(`.quantity-input[data-menu-id="${menuId}"]`)
-            console.log(input.val());
-            const currentValue = parseInt(input.val(), 10)
-            const menu = selectedMenus.invoice_item.find(item => item.id === menuId)
+            const menuId = $(this).data('menu-id');
+            const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
+            const currentValue = parseInt(input.val(), 10);
+            const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
 
             if (menu) {
-                const newQuantity = currentValue + 1
-                const newPrice = newQuantity * menu.price
-                menu.quantity = newQuantity
-                menu.total = newPrice
-                input.val(newQuantity) // Cập nhật lại số lượng trong ô input
-                let totalFormat = PMD.formatCurrency(menu.total)
-                $('.price-invoice-item-' + menu.id).html(totalFormat)
-                PMD.totalAmount(selectedMenus) // Tính lại tổng số tiền
+                if (currentValue >= 100) {
+                    alert('Không được chọn quá 100 món cho mỗi loại!');
+                    return; // Không tăng thêm số lượng
+                }
+
+                const newQuantity = currentValue + 1;
+                menu.quantity = newQuantity;
+                menu.total = newQuantity * menu.price;
+                input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+                let totalFormat = PMD.formatCurrency(menu.total);
+                $('.price-invoice-item-' + menu.id).html(totalFormat);
+                PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
             }
-        })
-    }
+        });
+    };
+
     //End Quantity Input
 
 
@@ -552,11 +573,6 @@
                     </tr>
                 `)
             })
-            $('#array-menu').append(`
-            <tr>
-                <td colspan="3" class="text-end px-2">Tổng hóa đơn: <span class="total-invoice">0</span>đ</td>
-            </tr>
-            `)
             PMD.totalAmount(selectedMenus)
         }
     }
@@ -618,6 +634,17 @@
     //End Json Server
 
 
+    PMD.randomCodeReservation = () => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+
+        for (let i = 0; i < 9; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            code += characters[randomIndex];
+        }
+        return code;
+    }
+
 
     //Create New Reservation
     PMD.createReservationNew = () => {
@@ -630,8 +657,10 @@
             let phone = $('input[name="phone"]').val()
             let guest = $('input[name="guest"]').val()
             let message = $('textarea[name="message"]').val()
+            let code = PMD.randomCodeReservation()
 
             let data = {
+                'code': code,
                 'name': name,
                 'email': email,
                 'phone': phone,

@@ -21,7 +21,7 @@
             @foreach ($datas as $data)
                 <tr class="{{ $data->status == 'pending' ? 'bg-warning bg-opacity-50' : '' }} tdReservation-{{ $data->id }}"
                     data-reservation="{{ $data->id }}" data-table="{{ $data->table_id }}"
-                    data-guest="{{ $data->guests }}">
+                    data-guest="{{ $data->guests }}" data-reservation-code="{{ $data->code }}">
                     <td style="width: 16px;">
                         <div class="form-check">
                         </div>
@@ -91,29 +91,20 @@
                             @endforeach
                         </select>
                     </td>
-                    <td style="height: 120px; overflow: hidden; display: block; overflow-y: auto">
+                    <td style="">
                         @php
                             $reservationDetails = $data->reservationDetails;
+                            // dd($reservationDetails)
                         @endphp
-                        @if ($reservationDetails)
+                        @if (isset($reservationDetails) && count($reservationDetails))
                             @foreach ($reservationDetails as $reservationDetail)
                                 @php
                                     $table = $reservationDetail->table;
                                 @endphp
-                                <ul>
-                                    <li>{{ __('messages.table.fields.name') }}:
-                                        {{ $table->name ?? __('messages.system.no_data_available') }}
-                                    </li>
-                                    <li>{{ __('messages.table.fields.capacity') }}:
-                                        {{ $table->capacity ?? __('messages.system.no_data_available') }}</li>
-                                </ul>
+                                <p>{{ $table->name ?? __('messages.system.no_data_available') }}</p>
                             @endforeach
                         @else
-                            <ul>
-                                <li>
-                                    {{ __('messages.system.no_data_available') }}
-                                </li>
-                            </ul>
+                            <p>{{ __('messages.system.no_data_available') }}</p>
                         @endif
 
                     </td>
