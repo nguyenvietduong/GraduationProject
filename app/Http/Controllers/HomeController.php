@@ -38,9 +38,10 @@ class HomeController extends Controller
 
     public function menu()
     {
+        $bestSeller = Menu::getBestSellers(1)->first();
         $categories = Category::with('menus')->get();
 
-        return view('frontend.menu', compact('categories'));
+        return view('frontend.menu', compact('categories', 'bestSeller'));
 
     }
 
