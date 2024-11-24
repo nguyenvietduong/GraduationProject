@@ -4,7 +4,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-lg-12 col-12 mb-2 mb-lg-1">
-                <label for="name" class="form-label">{{ __('messages.'. $object .'.fields.name') }}</label>
+                <label for="name" class="form-label">{{ __('messages.'. $object .'.fields.name') }} <span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $roleData->name ?? '') }}" onkeyup="generateSlug('name', 'slug')" placeholder="">
                 @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>

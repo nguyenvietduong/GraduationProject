@@ -11,8 +11,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-auto">
-                            <h4 class="card-title">{{ __('messages.system.button.update') }} {{ __('messages.account.' .
-                                $object . '.title') }} - {{ $data->email }}</h4>
+                            <h4 class="card-title">Chi tiết đơn hàng</h4>
                         </div>
                     </div>
                 </div>
@@ -22,9 +21,7 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <div class="row g-0 h-100">
-                            <div class="col-lg-12 border-end">
-                                @include('backend.account.component.form.edit_form')
-                            </div>
+                            @include('backend.' . $object . '.component.form.detail')
                         </div>
                     </div>
                 </div>
@@ -32,16 +29,5 @@
         </div>
     </div>
     @push('script')
-    <script src="/backend/assets/custom/js/show_image.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
-    <script defer>
-        $(document).ready(function() {
-            // Initialize Select2 with responsive width
-            $('#role_id, #status').select2({
-                width: '100%' // Ensure Select2 occupies full width
-            });
-        });
-
-    </script>
     @endpush
     @endsection

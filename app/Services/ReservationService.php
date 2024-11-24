@@ -9,6 +9,8 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ReservationService extends BaseService implements ReservationServiceInterface
 {
@@ -62,7 +64,6 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Reservation does not exist with ID: ' . $id);
         } catch (Exception $e) {
-            // Handle other errors if necessary
             throw new Exception('Unable to retrieve reservation details: ' . $e->getMessage());
         }
     }
@@ -76,32 +77,25 @@ class ReservationService extends BaseService implements ReservationServiceInterf
     public function createReservation(array $data)
     {
         try {
-            // Tạo thời gian đặt chỗ
             $reservation_time = \Carbon\Carbon::parse($data['date'] . ' ' . $data['input-time']);
             $data['reservation_time'] = $reservation_time;
 
-            // Kiểm tra bàn trống cho thời gian này
-            $availableTables = $this->tableRepository->checkAvailableTables($reservation_time, $data['guests']);
-            if ($availableTables->isEmpty()) {
-                throw new Exception('No tables are available for the selected time.');
-            }
+            $data['status'] = 'confirmed';
 
-            // Duyệt qua danh sách bàn trống và kiểm tra trùng lặp
-            foreach ($availableTables as $table) {
-                // Kiểm tra nếu đã có đặt chỗ cùng bàn và thời gian này
-                $existingReservation = $this->reservationRepository->existingReservation($table->id, $data['reservation_time']);
-                // Nếu không trùng lặp, chọn bàn này
-                if (!$existingReservation) {
-                    $data['table_id'] = $table->id;
-                    $data['status'] = 'confirmed'; // Tự động xác nhận
+            // Tạo mã ngẫu nhiên bao gồm chữ in hoa và số
+            do {
+                $codeRandum = strtoupper(Str::random(9));
+            } while (Reservation::where('code', $codeRandum)->exists());
 
-                    // Tạo đặt chỗ
-                    return $this->reservationRepository->createReservation($data);
-                }
-            }
+            // Gán mã vào dữ liệu
+            $data['code'] = $codeRandum;
 
-            // Nếu không tìm được bàn nào phù hợp, ném ngoại lệ
-            throw new Exception('No tables are available without conflicts for the selected time.');
+            if (Auth::check()) {
+                $data['user_id'] = Auth::user()->id;
+            };
+
+            // Tạo đặt chỗ và trả về kết quả
+            return $this->reservationRepository->createReservation($data);
         } catch (Exception $e) {
             \Log::error('Unable to create reservation: ' . $e->getMessage());
             return false;

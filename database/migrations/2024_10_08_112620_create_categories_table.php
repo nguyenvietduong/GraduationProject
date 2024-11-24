@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
-            $table->json('slug');
+            $table->string('name');
+            $table->string('slug');
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
             $table->softDeletes();

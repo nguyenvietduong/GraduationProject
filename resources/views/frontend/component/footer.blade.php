@@ -28,7 +28,7 @@
                     <div class="grid grid-cols-1 mt-12">
                         <div class="text-center">
                             <img src="{{checkFile($restaurantDatas->image) }}" class="block mx-auto" alt="">
-                            <p class="max-w-xl mx-auto mt-6">{{ renderDataByLang($description) }}</p>
+                            <p class="max-w-xl mx-auto mt-6">{{ $restaurantDatas->description }}</p>
                         </div>
 
                         <ul class="list-none text-center mt-6">
@@ -77,8 +77,8 @@
                 <p class="mb-0">©
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> Veganfry. Design with <i class="mdi mdi-heart text-red-600"></i> by <a
-                        href="https://shreethemes.in/" target="_blank" class="text-reset">Shreethemes</a>.
+                    </script> ĐỒ ÁN TỐT NGHIỆP <i class="mdi mdi-heart text-red-600"></i> TRƯỜNG <a
+                        href="https://shreethemes.in/" target="_blank" class="text-reset">FPT POLYTECHNIC</a>.
                 </p>
             </div>
             <!--end grid-->

@@ -8,7 +8,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <h4 class="card-title">{{ __('messages.system.button.update') }}
-                                    {{ __('messages.' . $object . '.title') }} - {{ app()->getLocale() == 'vi' ? $categoryData->name['vi'] : $categoryData->name['en'] }}</h4>
+                                    {{ __('messages.' . $object . '.title') }} - {{ $categoryData->name }}</h4>
                             </div>
                         </div>
                     </div>

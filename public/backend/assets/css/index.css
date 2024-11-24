@@ -6,3 +6,22 @@
     pointer-events: none;
     opacity: 0.6;
 }
+
+/* .tab-pane {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+} */
+.menu-info {
+    flex: 0 1 calc(20% - 10px); /* Đặt chiều rộng cho mỗi phần tử, đảm bảo vừa 5 phần tử trên 1 dòng */
+    box-sizing: border-box;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed !important;
+}
+
+.footer-left {
+    text-align: left; /* Căn chữ bên trái */
+    flex-grow: 1;    /* Đẩy nội dung khác về phía bên phải */
+}

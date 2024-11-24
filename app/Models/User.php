@@ -66,9 +66,9 @@ class User extends Authenticatable
     }
 
     // App\Models\User.php
-    public function invoices()
+    public function reservation()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Reservation::class);
     }
 
     public function sentMessages(): HasMany
@@ -99,6 +99,11 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->belongsToMany(Notification::class, 'notification_user')
-                    ->withTimestamps();
-    }    
+            ->withTimestamps();
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Menu::class, 'favorites');
+    }
 }

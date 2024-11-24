@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
@@ -16,6 +17,8 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
+        'code',
         'name',
         'email',
         'phone',
@@ -23,8 +26,6 @@ class Reservation extends Model
         'guests',
         'special_request',
         'status',
-        'reserved_until',
-        'table_id'
     ];
 
     /**
@@ -36,6 +37,12 @@ class Reservation extends Model
         'reservation_time' => 'datetime',
     ];
 
+    // Thiết lập quan hệ với ReservationDetail
+    public function reservationDetails()
+    {
+        return $this->hasMany(ReservationDetail::class);
+    }
+
     /**
      * Define a relationship to the Invoice model.
      */
@@ -44,8 +51,8 @@ class Reservation extends Model
         return $this->hasOne(Invoice::class);
     }
 
-    public function table()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Table::class);
+        return $this->belongsTo(User::class);
     }
 }

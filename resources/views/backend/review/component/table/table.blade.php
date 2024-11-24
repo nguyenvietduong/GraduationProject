@@ -23,12 +23,19 @@
             </td>
             <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
             <td class="ps-0">
-                <img src="{{ checkFile($data->image) }}" alt width="50">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ $data->user->full_name ?? __('messages.system.no_data_available') }}
+                    Ma don hang <span class="badge text-bg-success">{{ $data->invoice->reservation->code ?? __('messages.system.no_data_available') }}</span>
+                    <br>
+                    Thong Tin nguoi dat
+                    <ul>
+                        <li>{{ $data->invoice->reservation->user->full_name ?? __('messages.system.no_data_available') }}</li>
+                        <li>{{ $data->invoice->reservation->user->phone ?? __('messages.system.no_data_available') }}</li>
+                        <li>{{ $data->invoice->reservation->user->email ?? __('messages.system.no_data_available') }}</li>
+                    </ul>
+
                 </p>
             </td>
-            <td>{{ $data->rating ?? __('messages.system.no_data_available') }}</td>
+            <td>{{ $data->rating ?? __('messages.system.no_data_available') }}★</td>
             <td>{{ $data->comment ?? __('messages.system.no_data_available') }}</td>
             <td>
                 @php

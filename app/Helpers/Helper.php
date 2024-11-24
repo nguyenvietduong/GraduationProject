@@ -13,10 +13,14 @@ if (!function_exists('set_active')) {
      * @param string $defaultClass The class to return if there is no match.
      * @return string
      */
-    function set_active($routes, $activeClass = 'active', $layout = 'admin')
+    function set_active($routes, $activeClass = 'active', $layout = 'admin', $segmentIndex = '')
     {
         // Determine the segment index based on layout
-        $segmentIndex = ($layout === 'admin') ? 2 : 1;
+        if ($segmentIndex == '') {
+            $segmentIndex = ($layout === 'admin') ? 2 : 1;
+        } else {
+            $segmentIndex = $segmentIndex;
+        }
         $segment = request()->segment($segmentIndex); // Get the segment based on layout
 
         // Check if the current segment matches any of the routes
@@ -289,7 +293,7 @@ if (!function_exists('formatDate')) {
 //         if ($amount == null || $amount == '') {
 //             return '';
 //         }
-        
+
 //         return Carbon::parse($amount)->format('Y-m-d H:i:s');
 //     }
 // }
@@ -298,19 +302,5 @@ if (!function_exists('formatDiscount')) {
     function formatDiscount($value)
     {
         return str_replace('.', replace: '', subject: $value);
-    }
-}
-if (!function_exists('renderDataByLang')) {
-    /**
-     * Format an amount in VND to a string with commas and currency symbol.
-     *
-     * @param float $amount The amount in VND.
-     * @return string The formatted amount as a string.
-     */
-    function renderDataByLang($dataItem , $option = "") {
-        if($option == "price"){
-            return app()->getLocale() == "en" ? $dataItem["en"] . " $":$dataItem["vi"] ." VND";  
-        }
-        return app()->getLocale() == "en" ? $dataItem["en"]:$dataItem["vi"];
     }
 }

@@ -37,28 +37,32 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
     public function getAllReservations(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
-
+        $query->where('status', '!=', ['completed', 'pending']);
+    
         // Apply search filters
-        if (!empty($filters['search'])) {
-            $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
-            });
+        if (!empty($filters['name'])) {
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
-
-        if (!empty($filters['start_date'])) {
-            $query->whereDate('created_at', '>=', $filters['start_date']);
+    
+        if (!empty($filters['email'])) {
+            $query->where('email', $filters['email']);
         }
-
-        if (!empty($filters['end_date'])) {
-            $query->whereDate('created_at', '<=', $filters['end_date']);
+    
+        if (!empty($filters['phone'])) {
+            $query->where('phone', $filters['phone']);
         }
-
+    
+        if (!empty($filters['reservation_time'])) {
+            // Adjust to match full datetime if needed
+            $query->where('reservation_time', '=', $filters['reservation_time']);
+        }
+    
         // Sort by creation date (latest first)
         $query->orderBy('id', 'desc');
-
+    
         // Paginate results
         return $query->paginate($perPage);
-    }
+    }    
 
     /**
      * Get Reservation detail by ID.

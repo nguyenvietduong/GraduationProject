@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Frontend\Reviews;
 
+use App\Models\Reservation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class StoreRequest extends FormRequest
 {
@@ -25,20 +25,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'invoice_id' => 'required',
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:1000',
-            'invoiceCode' => [
-                'required',
-                'string',
-                function ($attribute, $value, $fail) {
-                    $user = Auth::user();
-                    $invoiceExists = $user->invoices()->where('id', $value)->exists();
-    
-                    if (!$invoiceExists) {
-                        $fail(__('messages.system.invoice_error'));
-                    }
-                }
-            ],
         ];
-    }    
+    }
 }

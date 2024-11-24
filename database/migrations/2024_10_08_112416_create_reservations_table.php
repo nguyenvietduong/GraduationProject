@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('table_id')->nullable()->constrained('tables')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('code')->unique();
             $table->string('name');
             $table->string('email');
             $table->string('phone');
@@ -23,9 +24,6 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            // Adding indexes for optimization
-            $table->unique(['table_id', 'reservation_time'], 'unique_user_table_reservation');
-            // $table->index(['user_id', 'table_id']);
             $table->index('reservation_time');
             $table->index('status');
         });

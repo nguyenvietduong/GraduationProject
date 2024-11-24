@@ -65,12 +65,13 @@ class MenuController extends Controller
             'start_price'   =>    $params['start_price'] ?? 0,
             'end_price'     =>    $params['end_price'] ?? 0,
             'status'        =>    $params['status'] ?? '',
+            'category'        =>    $params['category'] ?? '',
         ];
-
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
+            'categories' => $this->categoryRepository->getAllCategories(),
             'menuTotalRecords' => $this->menuRepository->count(), // Total records for display
             'menuDatas' => $this->menuService->getAllMenus($filters, $perPage, self::OBJECT), // Paginated menu list for the view
         ]);

@@ -38,6 +38,12 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
     {
         $query = $this->model->query();
 
+        if (!empty($filters['search'])) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['search'] . '%');
+            });
+        }
+
         if (!empty($filters['start_date'])) {
             $query->whereDate('created_at', '>=', $filters['start_date']);
         }
@@ -56,6 +62,9 @@ class MenuRepositoryEloquent extends BaseRepository implements MenuRepositoryInt
 
         if(!empty($filters['status'])){
             $query->where('status', $filters['status']);
+        }
+        if(!empty($filters['category'])){
+            $query->where('category_id', $filters['category']);
         }
         // Order by created date (newest first)
         $query->orderBy('id', 'desc');

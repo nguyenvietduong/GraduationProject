@@ -121,26 +121,36 @@ class TableRepositoryEloquent extends BaseRepository implements TableRepositoryI
         $query->orderBy('position', 'asc');
         return $query->get();
     }
+
     public function checkAvailableTables($reservationTime, $guests)
     {
-        // Tính toán số lượng bàn cho phép đặt online
-        $totalTables = $this->model->count();
-        $onlineReservableTablesCount = ceil($totalTables * (3 / 3));
-
-        // Tính toán khoảng thời gian cho phép đặt (trước và sau 2 giờ so với thời gian đặt mong muốn)
-        $twoHoursBefore = \Carbon\Carbon::parse($reservationTime)->subHours(2);
-        $twoHoursAfter = \Carbon\Carbon::parse($reservationTime)->addHours(2);
-
-        // Lấy danh sách các bàn trống, sắp xếp ưu tiên bàn có sức chứa gần nhất và giới hạn theo số lượng cho phép
-        return $this->model->where('status', 'available') // Chỉ lấy những bàn có trạng thái "available"
-            ->where('capacity', '>=', $guests)
-            ->whereDoesntHave('reservations', function ($query) use ($twoHoursBefore, $twoHoursAfter) {
-                $query->where('reservation_time', '>=', $twoHoursBefore) // Kiểm tra các đặt chỗ bắt đầu sau hai giờ trước thời gian mong muốn
-                    ->where('reservation_time', '<=', $twoHoursAfter) // Và kết thúc trước hai giờ sau thời gian đặt mong muốn
-                    ->whereIn('status', ['confirmed', 'completed']); // Sử dụng whereIn để kiểm tra nhiều giá trị
-            })
-            ->orderByRaw('capacity - ? ASC', [$guests]) // Sắp xếp theo độ chênh lệch giữa sức chứa và số khách
-            ->take($onlineReservableTablesCount)
-            ->get();
-    }
+        try {
+            $seatsPerTable = 6;
+            $requiredTables = ceil($guests / $seatsPerTable);
+     
+            $twoHoursBefore = \Carbon\Carbon::parse($reservationTime)->subHours(2);
+            $twoHoursAfter = \Carbon\Carbon::parse($reservationTime)->addHours(2);
+     
+            // Sửa lại truy vấn nếu không còn cột table_id
+            $availableTables = $this->model->where('status', 'available')
+                ->whereDoesntHave('reservations', function ($query) use ($twoHoursBefore, $twoHoursAfter) {
+                    // Sửa đổi phần này nếu bạn không còn sử dụng `table_id` trong bảng `reservations`
+                    $query->where('reservation_time', '>=', $twoHoursBefore)
+                        ->where('reservation_time', '<=', $twoHoursAfter)
+                        ->whereIn('status', ['confirmed', 'completed']);
+                })
+                ->get();
+     
+            $availableTablesCount = $availableTables->count();
+     
+            if ($availableTablesCount >= $requiredTables) {
+                return true;
+            }
+     
+            return false;
+        } catch (Exception $e) {
+            \Log::error('Error checking available tables: ' . $e->getMessage());
+            return false;
+        }
+    }      
 }

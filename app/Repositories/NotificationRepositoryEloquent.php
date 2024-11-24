@@ -47,10 +47,24 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
             ->orderByRaw('CASE WHEN notification_user.user_id IS NULL THEN 0 ELSE 1 END ASC') // Unread first
             ->orderBy('notifications.created_at', 'desc'); // Then by date created
 
+        // Apply status filter for read/unread
+        if (!empty($filters['status'])) {
+            if ($filters['status'] == 'read') {
+                // Filter only read notifications (i.e., has an entry in notification_user)
+                $query->whereNotNull('notification_user.user_id');
+            } elseif ($filters['status'] == 'unread') {
+                // Filter only unread notifications (i.e., no entry in notification_user)
+                $query->whereNull('notification_user.user_id');
+            }
+        }
+
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('title', 'like', '%' . $filters['search'] . '%');
+                $q->where('title', 'like', '%' . $filters['search'] . '%')
+                    ->orWhereRaw('JSON_EXTRACT(notifications.message, "$.name") LIKE ?', ['%' . $filters['search'] . '%'])
+                    ->orWhereRaw('JSON_EXTRACT(notifications.message, "$.email") LIKE ?', ['%' . $filters['search'] . '%'])
+                    ->orWhereRaw('JSON_EXTRACT(notifications.message, "$.phone") LIKE ?', ['%' . $filters['search'] . '%']);
             });
         }
 

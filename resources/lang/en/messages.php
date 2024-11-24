@@ -26,6 +26,8 @@ return [
             'choose_table' => 'Choose table',
             'choose_dish' => 'Choose dish',
             'change_dish' => 'Change dish',
+            'update_profile' => 'Change profile',   
+            'update_profiles' => 'Profile updated successfully',
             'confirm' => [
                 'title' => 'Are you sure?',
                 'text' => 'You won\'t be able to revert this!',
@@ -93,7 +95,7 @@ return [
                 'reservation' => [
                     'titleHeader' => 'Reserve A Table',
                     'title' => 'Reserve A Table',
-                    'messages' => 'Our tables accommodate up to 9 guests. For larger group reservations, please contact us for the best possible assistance!'
+                    'messages' => 'Our tables accommodate up to 6 guests. For larger group reservations, please contact us for the best possible assistance!'
                 ]
             ],
         ],
@@ -509,6 +511,7 @@ return [
             'email_placeholder' => 'Enter email',
             'phone' => 'Phone',
             'date' => 'Birthday',
+            'date_bd' => 'Enter birthday',
             'phone_placeholder' => 'Enter phone',
             'total_friends' => 'Total Friends',
             'address' => 'Address',
@@ -629,7 +632,41 @@ return [
             'route' => 'admin.reservation.destroy',
         ],
     ],
+    'reservation_details' => [
+        'fields' => [
+            'table_id' => 'Table',
+            'guests_detail' => 'Guests',
+        ],
+    ],
+    'invoice' => [
+        'title' => 'Invoice',
+        'status' => [
+            'unpaid' => 'Un paid',
+            'paid' => 'Paid',
+            'canceled' => 'Canceled',
+        ],
+        'payment_method' => [
+          'cash' => 'Cash',
+          'bank' => 'Bank'  
+        ],
+        'fields' => [
+            'total_amount' => 'Total amount',
+            'payment_method' => 'Payment method',
+            'status' => 'Status',
 
+            'menu' => 'Menu',
+            'quantity' => 'Quantity',
+            'price' => 'Price',
+            'total' => 'Total',
+        ],
+
+        'index' => [
+            'route' => 'admin.invoice.index',
+        ],
+        'detail' => [
+            'route' => 'admin.invoice.detail',
+        ],
+    ],
     'version' => '<b>Version</b> :version',
     'copyright' => '<strong>Copyright © :year <a href=":link" title=":name" target="_blank">:name</a>.</strong> All rights reserved.',
     'created' => 'Created successfully!',
