@@ -14,12 +14,24 @@ class Invoice extends Model
         'payment_method',
         'status',
     ];
+    
     public function invoiceItems()
     {
         return $this->hasMany(Invoice_item::class);
     }
+
     public function promotionDetail()
     {
         return $this->hasOne(PromotionUser::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
     }
 }
