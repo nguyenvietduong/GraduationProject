@@ -61,14 +61,10 @@ class ReviewController extends Controller
         $data = $request->validated();
 
         try {
-            $data['user_id'] = Auth::id();
-
             // Create a new review
             $review = $this->reviewService->createReview($data);
-
             event(new ReviewEvent($review));
-
-            return redirect()->back()->with('success', __('messages.system.alert.success'));
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
             // Log when an error occurs
             Log::error('Error in review creation', ['error' => $e->getMessage()]);

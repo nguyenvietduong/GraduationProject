@@ -1,39 +1,96 @@
 {
-    "invoice": [
+  "invoice": [
+    {
+      "id": "4",
+      "reservation_id": "4",
+      "totalAmount": 75000,
+      "list_table": [
         {
-            "id": "4",
-            "reservation_id": "4",
-            "totalAmount": 75000,
-            "list_table": [
-                {
-                    "id": 2,
-                    "name": "B\u00e0n 2"
-                }
-            ],
-            "list_table_old": [],
-            "invoice_item": [
-                {
-                    "id": 1,
-                    "name": "B\u00e1nh m\u00ec tr\u1ee9ng",
-                    "quantity": 1,
-                    "price": 20000,
-                    "total": 20000
-                },
-                {
-                    "id": 2,
-                    "name": "B\u00e1nh cu\u1ed1n",
-                    "quantity": 1,
-                    "price": 30000,
-                    "total": 30000
-                },
-                {
-                    "id": 3,
-                    "name": "X\u00f4i m\u1eb7n",
-                    "quantity": 1,
-                    "price": 25000,
-                    "total": 25000
-                }
-            ]
+          "id": 2,
+          "name": "Bàn 2"
         }
-    ]
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 1,
+          "name": "Bánh mì trứng",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "reservation_id": "1",
+      "reservation_code": "P71OFXJZE",
+      "totalAmount": 180000,
+      "list_table": [
+        {
+          "id": 1,
+          "name": "Bàn 1"
+        }
+      ],
+      "list_table_old": [],
+      "invoice_item": [
+        {
+          "id": 1,
+          "name": "Bánh mì trứng",
+          "quantity": 1,
+          "price": 20000,
+          "total": 20000
+        },
+        {
+          "id": 2,
+          "name": "Bánh cuốn",
+          "quantity": 1,
+          "price": 30000,
+          "total": 30000
+        },
+        {
+          "id": 3,
+          "name": "Xôi mặn",
+          "quantity": 1,
+          "price": 25000,
+          "total": 25000
+        },
+        {
+          "id": 4,
+          "name": "Cháo thịt bằm",
+          "quantity": 1,
+          "price": 35000,
+          "total": 35000
+        },
+        {
+          "id": 9,
+          "name": "Cháo lòng",
+          "quantity": 1,
+          "price": 32000,
+          "total": 32000
+        },
+        {
+          "id": 8,
+          "name": "Miến gà",
+          "quantity": 1,
+          "price": 38000,
+          "total": 38000
+        }
+      ]
+    }
+  ]
 }
