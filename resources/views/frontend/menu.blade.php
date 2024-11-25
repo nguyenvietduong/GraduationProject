@@ -50,19 +50,32 @@ $title = 'Món ăn'
                     class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]" alt="{{ $menu->name ?? '' }}">
 
                 <div class="mt-4 text-center">
-                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name ?? '' }}</a>
+                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">
+                        {{ $menu->name ?? '' }}
+                    </a>
+
 
                     <h5 class="text-amber-500 font-medium mt-4">{{ number_format($menu->price ?? 0, 0, ',', '.') }} đ</h5>
+
+                    <h5 class="text-amber-500 font-medium mt-2">
+                        {{ $menu->price }} Đ 
+                        @if(isset($bestSeller) && $menu->id === $bestSeller->id)
+                            <span class="text-sm font-semibold text-red-500 ml-2" style="color: red">(Best Seller)</span>
+                        @endif
+                    </h5>
+
                 </div>
-                @if(auth()->check())
-                <div class="favorite-action text-xl text-center">
+                <div class="favorite-action text-xl text-center mt-2">
                     <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">
                         <!-- Icon trái tim với màu đỏ -->
-                        <i id="favorite-icon-{{ $menu->id }}"
-                            class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
+                        <span class="font-semibold text-red-500 ml-2" style="color: red">{{ $menu->favoritedBy->count() }}</span>
+                        @if(auth()->check())
+                            <i id="favorite-icon-{{ $menu->id }}" class="{{ $menu->favorited ? 'text-red-500 fa-solid fa-heart' : 'text-gray-500 fa-regular fa-heart' }}"></i>
+                        @else
+                            <i id="favorite-icon" class="text-red-500 fa-solid fa-heart"></i>
+                        @endif 
                     </a>
                 </div>                       
-                @endif 
             </div>
             <!--end col-->
             @endforeach

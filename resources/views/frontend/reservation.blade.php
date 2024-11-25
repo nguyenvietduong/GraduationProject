@@ -95,6 +95,13 @@
             background-color: #f0f0f0;
             /* Màu nền nhạt cho các tùy chọn hết bàn */
         }
+
+        .disabled {
+            opacity: 0.5;
+            /* Làm mờ */
+            pointer-events: none;
+            /* Không thể tương tác */
+        }
     </style>
 
     <!-- Start -->
@@ -109,7 +116,8 @@
                         <p class="text-slate-400 para-desc">{{ __('messages.system.front_end.page.reservation.messages') }}
                         </p>
                     </div>
-                    <form id="reservationForm" action="{{ route('reservation') }}" method="post">
+                    <form id="reservationForm" action="{{ route('reservation') }}" method="post"
+                        style="background-color: rgb(212, 211, 210);padding: 20px;border-radius: 10px">
                         @csrf <!-- Don't forget to include the CSRF token -->
                         <div class="grid md:grid-cols-2 gap-4 mt-6">
                             <!-- Các trường nhập liệu như cũ -->
@@ -152,8 +160,9 @@
                             <div>
                                 <label class="">{{ __('messages.reservation.fields.guests') }} <span
                                         style="color: red">*</span></label>
-                                <input type="number" min="0" autocomplete="off" id="guests" name="guests"
-                                    class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror"
+                                <input type="number" min="0" max="100" autocomplete="off" id="guests"
+                                    name="guests"
+                                    class="out-of-range:border-red-500 mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror"
                                     required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}"
                                     value="{{ old('guests') }}">
                                 @error('guests')
@@ -179,7 +188,7 @@
                                 <label>{{ __('messages.reservation.fields.time') }} <span
                                         style="color: red">*</span></label>
                                 <select name="input-time" id="input-time"
-                                    class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
+                                    class="mt-2 disabled w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
                                     <option value="">{{ __('messages.reservation.fields.time') }}</option>
                                     @php
                                         $opening_hours = $restaurantDatas->opening_hours; // E.g., 7.0 (7 AM)
@@ -279,14 +288,11 @@
                                 $('#responseMessage').html('');
                             }, 2000);
                         } else {
-                            // Xử lý khi có lỗi (nếu có)
-                            alert('Error: ' + response.message);
+                            console.log('Error: ' + response.message);
                         }
                     },
                     error: function(xhr) {
                         console.log(xhr);
-                        // Xử lý khi có lỗi server
-                        alert('An error occurred. Please try again.');
                     }
                 });
             });
@@ -312,6 +318,13 @@
                 checkAvailability(this.value);
                 // Reset giờ khi thay đổi ngày
                 inputTime.value = '';
+
+                const selectedDate = this.value;
+                if (selectedDate) {
+                    $('#input-time').removeClass('disabled');
+                } else {
+                    $('#input-time').addClass('disabled');
+                }
             });
 
             // Lắng nghe sự kiện thay đổi giờ
