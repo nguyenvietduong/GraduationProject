@@ -16,6 +16,8 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
+        'code',
         'name',
         'email',
         'phone',

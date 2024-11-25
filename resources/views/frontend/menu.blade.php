@@ -2,8 +2,8 @@
 @section('contentUser')
 <!-- Start Hero -->
 @include('frontend.component.breadcrumb',[
-$titleHeader = 'Out Menu',
-$title = 'Menu'
+$titleHeader = 'Danh sách món ăn',
+$title = 'Món ăn'
 ])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
@@ -28,10 +28,10 @@ $title = 'Menu'
                 <div class="filters-group">
                     <ul class="mb-0 list-none container-filter-border-bottom filter-options space-x-3">
                         <li class="inline-block text-sm uppercase font-medium mb-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500 active"
-                            data-group="all">All</li>
+                            data-group="all">Tất cả</li>
                         @foreach ($categories as $category)
                         <li class="inline-block text-sm uppercase font-medium mb-3 cursor-pointer relative border-b border-transparent text-slate-400 duration-500"
-                            data-group="{{ $category->id }}">{{ $category->name ?? __('Unknown Name') }}</li>
+                            data-group="{{ $category->id }}">{{ $category->name ?? '' }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -47,12 +47,12 @@ $title = 'Menu'
             @foreach ($category->menus as $menu)
             <div class="group lg:w-1/5 md:w-1/3 picture-item p-3 mt-6" data-groups='["{{ $category->id }}"]'>
                 <img src="{{ checkFile($menu->image_url) }}"
-                    class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]" alt="{{ $menu->name ?? 'No Name' }}">
+                    class="rounded-full size-32 mx-auto group-hover:animate-[spin_10s_linear_infinite]" alt="{{ $menu->name ?? '' }}">
 
                 <div class="mt-4 text-center">
-                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name ?? __('Food Name') }}</a>
+                    <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name ?? '' }}</a>
 
-                    <h5 class="text-amber-500 font-medium mt-4">{{ $menu->price }} VND</h5>
+                    <h5 class="text-amber-500 font-medium mt-4">{{ number_format($menu->price, 0, ',', '.') }} đ</h5>
                 </div>
                 @if(auth()->check())
                 <div class="favorite-action text-xl text-center">

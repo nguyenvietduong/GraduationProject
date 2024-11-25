@@ -83,6 +83,20 @@ class TableSeeder extends Seeder
                 'description' => 'Khu vực VIP',
                 'position' => 9,
             ],
+            [
+                'name' => 'Bàn 11',
+                'capacity' => 6,
+                'status' => 'available',
+                'description' => 'Khu vực VIP',
+                'position' => 10,
+            ],
+            [
+                'name' => 'Bàn 12',
+                'capacity' => 6,
+                'status' => 'available',
+                'description' => 'Khu vực VIP',
+                'position' => 11,
+            ],
         ];
 
         DB::table('tables')->insert($tables);

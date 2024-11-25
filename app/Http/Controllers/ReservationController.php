@@ -88,7 +88,7 @@ class ReservationController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => App::getLocale() == 'vi' ? self::successfulReservation['vi'] : self::successfulReservation['en'],
-                'data' => $reservationNew // Optionally include reservation data
+                'data' => $reservationNew
             ], 201); // Created
         } catch (\Exception $e) {
             \Log::error('Reservation store error: ' . $e->getMessage());
@@ -154,7 +154,6 @@ class ReservationController extends Controller
     {
         $updated = Reservation::where('id', $reservationId)->update(['status' => 'canceled']);
     
-        // Kiểm tra xem bản ghi có được cập nhật thành công hay không
         if ($updated) {
             return response()->json([
                 'success' => true,

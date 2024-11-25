@@ -8,14 +8,14 @@
                         <form action="#" method="post" id="revenue-form">
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab">
-                                    <a class="nav-link a-tab py-2 active" id="revenue" data-bs-toggle="tab" href="#step1"
-                                        checked>Thống
-                                        kê doanh thu</a>
+                                    <a class="nav-link a-tab py-2" id="menu">Thống
+                                        kê món
+                                        ăn</a>
                                 </div>
                             </nav>
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane active" id="step1">
-                                    @include('backend.statistical.component.revenue')
+                            <div class="tab-content" id="">
+                                <div class="">
+                                    @include('backend.statistical.component.menu')
                                 </div>
                             </div>
                         </form><!--end form-->
@@ -38,6 +38,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="{{ asset('backend/assets/custom/js/statistical/statistical.js') }}"></script>
+    <script src="{{ asset('backend/assets/custom/js/statistical/menu.js') }}"></script>
     <script src="{{ asset('backend/assets/custom/js/statistical/exportPDF.js') }}"></script>
 @endpush

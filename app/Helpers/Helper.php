@@ -13,10 +13,14 @@ if (!function_exists('set_active')) {
      * @param string $defaultClass The class to return if there is no match.
      * @return string
      */
-    function set_active($routes, $activeClass = 'active', $layout = 'admin')
+    function set_active($routes, $activeClass = 'active', $layout = 'admin', $segmentIndex = '')
     {
         // Determine the segment index based on layout
-        $segmentIndex = ($layout === 'admin') ? 2 : 1;
+        if ($segmentIndex == '') {
+            $segmentIndex = ($layout === 'admin') ? 2 : 1;
+        } else {
+            $segmentIndex = $segmentIndex;
+        }
         $segment = request()->segment($segmentIndex); // Get the segment based on layout
 
         // Check if the current segment matches any of the routes
@@ -289,7 +293,7 @@ if (!function_exists('formatDate')) {
 //         if ($amount == null || $amount == '') {
 //             return '';
 //         }
-        
+
 //         return Carbon::parse($amount)->format('Y-m-d H:i:s');
 //     }
 // }
@@ -300,4 +304,3 @@ if (!function_exists('formatDiscount')) {
         return str_replace('.', replace: '', subject: $value);
     }
 }
-

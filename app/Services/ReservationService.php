@@ -9,6 +9,8 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ReservationService extends BaseService implements ReservationServiceInterface
 {
@@ -75,20 +77,30 @@ class ReservationService extends BaseService implements ReservationServiceInterf
     public function createReservation(array $data)
     {
         try {
-            // Kết hợp và kiểm tra thời gian đặt chỗ
             $reservation_time = \Carbon\Carbon::parse($data['date'] . ' ' . $data['input-time']);
             $data['reservation_time'] = $reservation_time;
-    
-            $data['status'] = 'confirmed'; // Tự động xác nhận trạng thái đặt chỗ
-    
+
+            $data['status'] = 'confirmed';
+
+            // Tạo mã ngẫu nhiên bao gồm chữ in hoa và số
+            do {
+                $codeRandum = strtoupper(Str::random(9));
+            } while (Reservation::where('code', $codeRandum)->exists());
+
+            // Gán mã vào dữ liệu
+            $data['code'] = $codeRandum;
+
+            if (Auth::check()) {
+                $data['user_id'] = Auth::user()->id;
+            };
+
             // Tạo đặt chỗ và trả về kết quả
             return $this->reservationRepository->createReservation($data);
-    
         } catch (Exception $e) {
             \Log::error('Unable to create reservation: ' . $e->getMessage());
             return false;
         }
-    }    
+    }
 
     /**
      * Update a reservation by its ID.

@@ -154,12 +154,35 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ set_active(['statistical'], 'active', 'admin') }}"
-                        href="{{ route('admin.statistical.index') }}">
+                    <a class="nav-link {{ set_active(['statistical'], 'active', 'admin', 2) }}"
+                        href="#sidebarStatistical" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarStatistical">
                         <i class="fa fa-chart-bar menu-icon"></i>
-                        <span id="new-review-count">Thống kê</span>                        
+                        <span>Thống kê</span>
                     </a>
-                </li>
+                    <div class="collapse {{ set_active(['statistical'], 'show', 'admin', 2) }}" id="sidebarStatistical">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['revenue'], 'active', 'admin', 3) }}" href="{{ route('admin.statistical.index') }}">
+                                    <i class="fa fa-dollar-sign menu-icon"></i>
+                                    <span>Doanh thu</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['client'], 'active', 'admin', 3) }}" href="{{ route('admin.statistical.client') }}">
+                                    <i class="fa fa-user menu-icon"></i>
+                                    <span>Khách hàng</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin', 3) }}" href="{{ route('admin.statistical.menu') }}">
+                                    <i class="fa fa-utensils menu-icon"></i>
+                                    <span>Món ăn</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>                
 
                 <!-- Hệ thống -->
                 <li class="nav-item">

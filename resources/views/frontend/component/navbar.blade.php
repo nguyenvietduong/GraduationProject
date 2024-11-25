@@ -26,7 +26,8 @@
         <!-- End Mobile Toggle -->
 
         <!--Login button Start-->
-        <ul class="buy-button list-none mb-0">
+        
+        {{-- <ul class="buy-button list-none mb-0">
             <li class="dropdown inline-block relative ps-0.5">
                 <!-- Nút đặt bàn với sự kiện onclick để mở/đóng menu thả xuống -->
                 <button data-dropdown-toggle="dropdown"
@@ -59,7 +60,7 @@
 
             <li class="inline-block ps-0.5">
             </li>
-        </ul>
+        </ul> --}}
         <!--Login button End-->
 
         @include('frontend.component.navigation')
@@ -67,108 +68,3 @@
     </div>
     <!--end container-->
 </nav>
-<style>
-    #dropdownMenu {
-        width: 800px;
-        /* Điều chỉnh theo ý muốn */
-    }
-</style>
-<script>
-    const reservationStatuses = @json(__('messages.reservation.status'));
-    document.addEventListener("click", function(event) {
-        const dropdown = document.getElementById("dropdownMenu");
-        const reservationButton = event.target.closest("[data-dropdown-toggle='dropdown']");
-    });
-    function reservationHistory(event) {
-        event.stopPropagation(); // Prevent click from closing the dropdown
-        const dropdown = document.getElementById("dropdownMenu");
-        dropdown.classList.toggle("hidden");
-        if (!dropdown.classList.contains("hidden")) {
-            displayReservations();
-        }
-    }
-    function cancelReservation(reservationId, event) {
-        event.stopPropagation();
-        let confirmCancelReservation = confirm('Bạn có chắc chắn muốn hủy');
-        if (confirmCancelReservation) {
-            $.ajax({
-                url: `reservation/${reservationId}/canceled`, // Sử dụng backticks `...` thay cho dấu nháy đơn
-                type: 'GET',
-                success: function(response) {
-                    alert
-                },
-                error: function(error) {
-                    console.error('Error canceling reservation:', error);
-                    // Xử lý lỗi
-                }
-            });
-        }
-    }
-    // Function to display reservations
-    function displayReservations() {
-        const reservationTableBody = document.getElementById("reservationTableBody");
-        reservationTableBody.innerHTML = ""; // Clear previous rows
-        // Lấy danh sách ID đơn hàng từ localStorage
-        const reservationIds = JSON.parse(localStorage.getItem('myReservation')) || [];
-        if (reservationIds.length === 0) {
-            const emptyRow = document.createElement("tr");
-            emptyRow.innerHTML = `
-            <td colspan="5" class="text-center py-2 text-gray-500">Không có đơn đặt hàng</td>
-        `;
-            reservationTableBody.appendChild(emptyRow);
-        } else {
-            reservationIds.forEach(reservationId => {
-                $.ajax({
-                    url: `reservation/${reservationId}/detail`,
-                    type: 'GET',
-                    success: function(response) {
-                        const reservation = response.data;
-                        // Chuyển đổi thời gian thành định dạng mong muốn
-                        const reservationDate = new Date(reservation.reservation_time);
-                        const formattedTime = reservationDate.toLocaleString('vi-VN', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit',
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        });
-                        // Kiểm tra trạng thái để áp dụng lớp CSS
-                        const rowClass = reservation.status === 'canceled' ? 'background-color: cadetblue' : '';
-                        const buttonClass = reservation.status != 'confirmed' ? 'hidden' : '';
-                        // Tạo chuỗi HTML
-                        const rowHTML = `
-                            <tr style="${rowClass}" style="">
-                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
-                                    <ul>
-                                        <li>${reservation.name}</li>
-                                        <li>${reservation.email}</li>
-                                        <li>${reservation.phone}</li>
-                                    </ul>
-                                </td>
-                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">${reservation.guests}</td>
-                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">${formattedTime}</td>
-                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
-                                    ${reservationStatuses[reservation.status]}
-                                </td>
-                                <td class="border-b py-2 px-4 text-center" style="font-size: 13px">
-                                    <button type="button" class="text-red-500 button hover:underline ${buttonClass}" onclick="cancelReservation(${reservation.id}, event)">
-                                        Hủy
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                        if (reservation.status == 'confirmed') {
-                            reservationTableBody.innerHTML += rowHTML;
-                        } else {
-                            reservationTableBody.innerHTML += rowHTML;
-                        }
-                    },
-                    error: function(error) {
-                        console.log("Error fetching reservation details:", error);
-                    }
-                });
-            });
-        }
-    }
-</script>

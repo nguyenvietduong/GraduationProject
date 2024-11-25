@@ -42,6 +42,7 @@
         @if (App::getLocale() == 'vi')
         <h1>Xác Nhận Đặt Bàn</h1>
         <p>Chào {{ $reservation->name }}, đặt bàn lúc <strong>{{ $reservation->reservation_time }}</strong> của quý khách đã được xác nhận.</p>
+        <p>Mã đơn hàng: <strong style="color: red">{{ $reservation->code }}</strong></p>
         <p>Rất mong được phục vụ quý khách!</p>
         <p>Trân trọng,<br>Đội ngũ Nhà Hàng</p>
         @else
