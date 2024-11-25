@@ -52,7 +52,7 @@ $title = 'Món ăn'
                 <div class="mt-4 text-center">
                     <a href="#" class="text-lg h7 block hover:text-amber-500 duration-500">{{ $menu->name ?? '' }}</a>
 
-                    <h5 class="text-amber-500 font-medium mt-4">{{ $menu->price }} VND</h5>
+                    <h5 class="text-amber-500 font-medium mt-4">{{ number_format($menu->price ?? 0, 0, ',', '.') }} đ</h5>
                 </div>
                 @if(auth()->check())
                 <div class="favorite-action text-xl text-center">
