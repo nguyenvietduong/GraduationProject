@@ -164,6 +164,7 @@
                             <th>Ghi chú</th>
                             <th>Trạng thái đơn hàng</th>
                             <th></th>
+                            <th>Xem chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -184,6 +185,14 @@
                                 <td>
                                     <!-- Nội dung cho cột cuối (tuỳ chọn) -->
                                 </td>
+                                @if ($value->status == 'completed')
+                                    <td class="text-center">
+                                        <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                            onclick="toggleModal('{{ $value->id }}')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

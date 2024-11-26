@@ -2,7 +2,7 @@
 @section('contentUser')
 <!-- Start Hero -->
 @include('frontend.component.breadcrumb',[
-$titleHeader = 'Profile',
+$titleHeader = '',
 $title = 'Profile'
 ])
 <style>
