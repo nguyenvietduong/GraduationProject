@@ -28,14 +28,6 @@
 @endsection
 
 @push('script')
-    <script>
-        $(document).ready(function() {
-            $('.a-tab').on('click', function () {
-                const selectedTabId = $(this).attr('id');
-                handleStatistics(selectedTabId);
-            });    
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="{{ asset('backend/assets/custom/js/statistical/menu.js') }}"></script>

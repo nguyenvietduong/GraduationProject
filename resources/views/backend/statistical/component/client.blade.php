@@ -4,7 +4,7 @@
             <div class="row mt-2">
                 <div class="col-md-3 d-flex align-items-center">
                     <label for="day" class="form-label me-2 mb-0">Ngày</label>
-                    <input type="number" name="day" id="day" class="form-control">
+                    <input type="number" name="day" id="day" class="form-control" min="1" max="31">
                 </div>
                 <div class="col-md-3 d-flex align-items-center">
                     <label for="month" class="form-label me-2 mb-0">Tháng</label>
@@ -35,12 +35,12 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" id="export_btn_revenue" class="btn btn-primary">Xuất PDF</button>
+                    <button type="button" id="export_btn_client" class="btn btn-primary">Xuất PDF</button>
                 </div>
             </div>
             <div class="card-body" style="position: relative;">
                 @include('backend.statistical.component.loading')
-                <canvas id="revenueChart" dir="ltr" width="400" height="150"></canvas>
+                <canvas id="customerChart" dir="ltr" width="400" height="150"></canvas>
                 <p class="no-data-message" style="display: none; text-align: center; padding-top: 130px;">Không thể lấy
                     được dữ liệu</p>
             </div>

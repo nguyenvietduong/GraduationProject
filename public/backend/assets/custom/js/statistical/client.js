@@ -1,10 +1,12 @@
 $(document).ready(function () {
+    // VẼ BIỂU ĐỒ
+
     let customerChart = null;
 
-    fetchCustomerData('customer');  // Updated for customer data
+    fetchRevenueData('revenue');  
 
-    // Thống kê số lượng khách hàng
-    function fetchCustomerData() {
+    // Biều đồ doanh thu
+    function fetchRevenueData() {
         let dayOld = $('#day').val();
         let monthOld = $('#month').val();
         let yearOld = $('#year').val();
@@ -59,24 +61,25 @@ $(document).ready(function () {
             $('.no-data-message').hide();
 
             $.ajax({
-                url: '/admin/statistical/top-clients',  // Ensure this endpoint provides customer data
+                url: '/admin/statistical/top-clients',
                 method: 'GET',
                 data: { day, month, year },
                 success: function (response) {
                     $('.loading-spinner').hide();
-
+                    
                     const periods = [];
-                    const customerCounts = [];
+                    const revenues = [];
 
-                    // Assuming the correct response structure is 'response.user_statistics'
-                    for (let period in response.user_statistics) {
-                        if (response.user_statistics.hasOwnProperty(period)) {
-                            periods.push(period);
-                            customerCounts.push(response.user_statistics[period]);
+                    // Iterate through the customer_statistics object
+                    for (let month in response.customer_statistics) {
+                        if (response.customer_statistics.hasOwnProperty(month)) {
+                            periods.push(month); // Add month to periods array
+                            revenues.push(response.customer_statistics[month]); // Add corresponding revenue to revenues array
                         }
                     }
 
-                    if (periods.length === 0 || customerCounts.length === 0) {
+                    // Check if there is no data
+                    if (periods.length === 0 || revenues.length === 0) {
                         $('.no-data-message').show();
                         return;
                     }
@@ -88,40 +91,59 @@ $(document).ready(function () {
                     }
 
                     const ctx = document.getElementById('customerChart').getContext('2d');
-                    let labelCustomerChart = '';
+                    let labelRevenueChart = '';
                     let titleText = '';
+                    if (day == '' && month == '' && year != '') {
+                        if (year != 'all') {
+                            labelRevenueChart = 'theo tháng của năm ' + year;
+                            titleText = '(Tháng)';
+                        } else {
+                            labelRevenueChart = 'theo năm';
+                            titleText = '(Năm)';
+                        }
+                    } else if (day == '' && month != '' && year != '') {
+                        labelRevenueChart = 'theo ngày của tháng ' + month + ' năm ' + year;
+                        titleText = '(Ngày)';
+                    } else if (day == '' && month != '' && year == '') {
+                        labelRevenueChart = 'theo ngày của tháng ' + month + ' năm ' + new Date().getFullYear();
+                        titleText = '(Ngày)';
+                    } else if (day != '' && month != '' && year == '') {
+                        labelRevenueChart = 'theo giờ của ngày ' + day + ' tháng ' + month + ' năm ' + new Date().getFullYear();
+                        titleText = '(Giờ)';
+                    } else if (day != '' && month == '' && year == '') {
+                        const currentDate = new Date();
+                        const currentMonth = currentDate.getMonth() + 1;
+                        const currentYear = currentDate.getFullYear();
 
-                    // Update labels and titles for customer tracking
-                    if (day) {
-                        labelCustomerChart = 'Ngày';
-                        titleText = 'Ngày';
-                    } else if (month) {
-                        labelCustomerChart = 'Tháng';
-                        titleText = 'Tháng';
-                    } else if (year) {
-                        labelCustomerChart = 'Năm';
-                        titleText = 'Năm';
-                    } else {
-                        labelCustomerChart = 'Thời gian';
-                        titleText = 'Thời gian';
+                        labelRevenueChart = 'theo giờ của ngày ' + day + ' tháng ' + currentMonth + ' năm ' + currentYear;
+                        titleText = '(Giờ)';
+                    } else if (day == '' && month == '' && year == ''){
+                        const currentDate = new Date();
+                        const currentDay = currentDate.getDate();
+                        const currentMonth = currentDate.getMonth() + 1;
+                        const currentYear = currentDate.getFullYear();
+
+                        labelRevenueChart = 'theo giờ của ngày ' + currentDay + ' tháng ' + currentMonth + ' năm ' + currentYear;
+                        titleText = '(Giờ)';
                     }
 
+                    // Ensure type is 'line'
                     customerChart = new Chart(ctx, {
-                        type: 'line',
+                        type: 'line', // Ensure line chart
                         data: {
-                            labels: periods,
+                            labels: periods, // Set periods as labels (e.g., days, months, or years)
                             datasets: [{
-                                label: 'Số lượng khách hàng ' + labelCustomerChart,
-                                data: customerCounts,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
+                                label: 'Số lượng khách ' + labelRevenueChart,
+                                data: revenues, // Revenue data
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+                                borderColor: 'rgba(75, 192, 192, 1)', // Line color
                                 borderWidth: 2,
-                                tension: 0.4,
-                                fill: true,
-                                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                                tension: 0.4, // Smooth curves
+                                fill: true, // Fill the area under the line
+                                pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Points on the line
                                 pointBorderColor: 'rgba(75, 192, 192, 1)',
-                                pointRadius: 5,
-                                pointHoverRadius: 7
+                                pointRadius: 5, // Size of points
+                                pointHoverRadius: 7 // Hover size of points
                             }]
                         },
                         options: {
@@ -131,7 +153,7 @@ $(document).ready(function () {
                                 tooltip: {
                                     callbacks: {
                                         label: function (tooltipItem) {
-                                            return `Số lượng khách hàng: ${tooltipItem.raw}`;
+                                            return `Số lượng khách: ${tooltipItem.raw} người`;
                                         }
                                     }
                                 }
@@ -141,10 +163,7 @@ $(document).ready(function () {
                                     title: { display: true, text: 'Thời gian ' + titleText }
                                 },
                                 y: {
-                                    title: { display: true, text: 'Số lượng khách hàng' },
-                                    ticks: {
-                                        beginAtZero: true,
-                                    }
+                                    title: { display: true, text: 'Số lượng khách (Người)' },
                                 }
                             }
                         }

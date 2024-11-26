@@ -117,9 +117,9 @@ $(document).ready(function () {
 
                         labelRevenueChart = 'theo giờ của ngày ' + day + ' tháng ' + currentMonth + ' năm ' + currentYear;
                         titleText = '(Giờ)';
-                    } else {
+                    } else if (day == '' && month == '' && year == ''){
                         const currentDate = new Date();
-                        const currentDay = currentDate.getDate() + 1;
+                        const currentDay = currentDate.getDate();
                         const currentMonth = currentDate.getMonth() + 1;
                         const currentYear = currentDate.getFullYear();
 

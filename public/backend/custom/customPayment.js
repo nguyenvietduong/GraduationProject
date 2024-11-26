@@ -88,9 +88,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const pdfContent = data.pdfContent;
-                    const fileName = data.fileName; 
-
+                    const pdfContent = data.pdfContent; // Nội dung PDF dạng Base64
                     const binary = atob(pdfContent);
                     const array = new Uint8Array(binary.length);
                     for (let i = 0; i < binary.length; i++) {
@@ -98,10 +96,10 @@
                     }
 
                     const blob = new Blob([array], { type: 'application/pdf' });
-                    const link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = fileName;
-                    link.click();
+
+                    // Mở PDF trong một tab mới
+                    const pdfURL = URL.createObjectURL(blob);
+                    window.open(pdfURL, '_blank');
                 } else {
                     alert('Lỗi khi tạo và lưu hóa đơn.');
                 }
@@ -179,7 +177,7 @@
 
                 $('#pay').modal('hide'),
 
-                CUONG.addInvoice(data)
+                    CUONG.addInvoice(data)
                 CUONG.exportAndSavePDF(data)
                 setTimeout(() => {
                     window.location.reload();
