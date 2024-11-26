@@ -133,7 +133,7 @@
                                                 <li class="mt-2">
                                                     <i class="las iconoir-chat-bubble me-2 text-secondary fs-22 align-middle"></i>
                                                     <b>{{ __('messages.restaurant.fields.description') }}</b> : 
-                                                    {{ $restaurantDatas->description ?? 'No data available' }} <!-- Hiển thị mô tả tiếng Việt -->
+                                                    {{ $restaurantDatas->description ?? 'No data available' }}
                                                 </li>
                                                 
                                                 
@@ -228,17 +228,10 @@
                                                     <div id="google_map_link_error" class="error-message text-danger"></div>
                                             </div>
                                             <div class="mb-3 col-12">
-                                                <label for="description_vn" class="form-label">{{ __('messages.restaurant.fields.description') }} (VI) <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('description.vi') is-invalid @enderror" id="description_vn" name="description[vi]" 
-                                                value="{{ json_decode($restaurantDatas->description)->vi ?? '' }}" required>
+                                                <label for="description" class="form-label">{{ __('messages.restaurant.fields.description') }} <span lass="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" 
+                                                value="{{ ($restaurantDatas->description) }}" required>
                                                 <div id="description_error" class="error-message text-danger">@error('description.vi') {{ $message }} @enderror</div>
-                                            </div>
-                                        
-                                            <div class="mb-3 col-12">
-                                                <label for="description_en" class="form-label">{{ __('messages.restaurant.fields.description') }} (EN) <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('description.en') is-invalid @enderror" id="description_en" name="description[en]" 
-                                                value="{{ json_decode($restaurantDatas->description)->en ?? '' }}" required>
-                                                <div id="description_error" class="error-message text-danger">@error('description.en') {{ $message }} @enderror</div>
                                             </div>
 
                                             {{-- <button type="submit" class="btn btn-primary">Update Restaurant</button> --}}
