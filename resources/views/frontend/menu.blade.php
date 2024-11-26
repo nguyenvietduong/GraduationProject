@@ -54,12 +54,17 @@ $title = 'Món ăn'
                         {{ $menu->name ?? '' }}
                     </a>
 
+
+                    <h5 class="text-amber-500 font-medium mt-4">{{ number_format($menu->price ?? 0, 0, ',', '.') }} đ</h5>
+
                     <h5 class="text-amber-500 font-medium mt-2">
                         {{ $menu->price }} Đ 
                         @if(isset($bestSeller) && $menu->id === $bestSeller->id)
                             <span class="text-sm font-semibold text-red-500 ml-2" style="color: red">(Best Seller)</span>
                         @endif
                     </h5>
+
+                    <h5 class="text-amber-500 font-medium mt-4">{{ number_format($menu->price, 0, ',', '.') }} đ</h5>
                 </div>
                 <div class="favorite-action text-xl text-center mt-2">
                     <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">

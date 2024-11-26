@@ -44,7 +44,7 @@ $title = 'Danh sách yêu thích'
                         <div class="p-4">
                             <h5 class="text-lg font-semibold text-gray-800">{{ $menu->name }}</h5>
                             <p class="text-gray-600 mt-2 line-clamp-3">{{ $menu->description }}</p>
-                            <p class="text-gray-900 font-bold mt-4">Giá: {{ number_format($menu->price, 0, ',', '.') }} VND</p>
+                            <p class="text-gray-900 font-bold mt-4">Giá: {{ number_format($menu->price, 0, ',', '.') }} đ</p>
                             <!-- Nút hủy yêu thích -->
                             <form method="GET" action="{{ route('favorite.list') }}" class="mt-4">
                                 <input type="hidden" name="remove_favorite" value="{{ $menu->id }}">

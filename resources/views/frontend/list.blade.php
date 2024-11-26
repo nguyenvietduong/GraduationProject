@@ -162,8 +162,8 @@
                             <th>Thời gian đặt</th>
                             <th>Số người</th>
                             <th>Ghi chú</th>
-                            <th>Trạng thái</th>
-                            <th></th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th>Xem chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>

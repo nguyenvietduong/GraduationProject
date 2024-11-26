@@ -36,7 +36,7 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ $item->price ?? __('messages.system.no_data_available') }} VND
+                    {{  number_format($item->price, 0, ',', '.')." đ" ?? __('messages.system.no_data_available') }}
                 </p>
             </td>
             <td class="ps-0">
