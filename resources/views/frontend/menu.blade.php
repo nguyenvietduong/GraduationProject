@@ -64,6 +64,7 @@ $title = 'Món ăn'
                         @endif
                     </h5>
 
+                    <h5 class="text-amber-500 font-medium mt-4">{{ number_format($menu->price, 0, ',', '.') }} đ</h5>
                 </div>
                 <div class="favorite-action text-xl text-center mt-2">
                     <a href="javascript:void(0);" class="favorite-btn" data-menu-id="{{ $menu->id }}">

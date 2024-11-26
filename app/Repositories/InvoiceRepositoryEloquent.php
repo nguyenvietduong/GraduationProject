@@ -39,6 +39,7 @@ class InvoiceRepositoryEloquent extends BaseRepository implements InvoiceReposit
     public function getAllInvoices(array $filters = [], $perPage = 10)
     {
         $query = Reservation::query();
+        $query->where('status', 'completed');
 
         // Apply search filters
         if (!empty($filters['search'])) {
@@ -58,7 +59,6 @@ class InvoiceRepositoryEloquent extends BaseRepository implements InvoiceReposit
         if (!empty($filters['end_date'])) {
             $query->whereDate('created_at', '<=', $filters['end_date']);
         }
-        $query->where('status', 'completed');
         // Order by created date (newest first)
         $query->orderBy('id', 'desc');
         // Paginate results
