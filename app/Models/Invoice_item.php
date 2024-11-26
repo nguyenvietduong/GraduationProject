@@ -19,8 +19,9 @@ class Invoice_item extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
+    
     public function menu()
-{
-    return $this->belongsTo(Menu::class, 'menu_id');
-}
+    {
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
 }

@@ -15,7 +15,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('frontend/assets/images/favicon.ico') }}">
 
 <!-- Additional Styles -->
 <link rel="stylesheet" href="{{ asset('backend/assets/libs/jsvectormap/css/jsvectormap.min.css') }}">

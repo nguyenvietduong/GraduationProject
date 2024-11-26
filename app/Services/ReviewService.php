@@ -71,7 +71,7 @@ class ReviewService extends BaseService implements ReviewServiceInterface
     {
         try {
             // Create the review
-            $data['guard_name'] = 'web';
+            $data['status'] = 'active';
 
             return $this->reviewRepository->createReview($data);
         } catch (Exception $e) {
@@ -91,8 +91,6 @@ class ReviewService extends BaseService implements ReviewServiceInterface
     public function updateReview(int $id, array $data)
     {
         try {
-            $data['guard_name'] = 'web';
-
             return $this->reviewRepository->updateReview($id, $data);
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Review does not exist with ID: ' . $id);

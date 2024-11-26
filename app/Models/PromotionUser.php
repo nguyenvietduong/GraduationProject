@@ -11,6 +11,7 @@ class PromotionUser extends Model
     protected $table = 'promotion_user';  
     public $timestamps = false;
     protected $fillable = ['promotion_id', 'invoice_id'];
+    
     public function promotion()
     {
         return $this->belongsTo(Promotion::class, 'promotion_id');

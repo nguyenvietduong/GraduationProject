@@ -132,18 +132,13 @@ class RestaurantController extends Controller
             'opening_hours' => 'required|string',
             'closing_time' => 'required|string',
             'google_map_link' => 'required|string',
-            'description.vi' => 'required|string',  
-            'description.en' => 'required|string',  
+            'description' => 'required|string',  
+             
         ]);
 
-        // Xử lý mô tả dưới dạng JSON
-        $description = json_encode([
-            'vi' => $validatedData['description']['vi'],
-            'en' => $validatedData['description']['en'] ?? '', // Nếu không nhập tiếng Anh, lưu chuỗi rỗng
-        ]);
+        
 
-        // Cập nhật thông tin nhà hàng
-        $validatedData['description'] = $description;
+        
         $this->restaurantService->updateRestaurant($id, $validatedData);
 
         return response()->json(['message' => 'Restaurant updated successfully'], 200);
