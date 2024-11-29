@@ -70,6 +70,7 @@ class AjaxPromotion extends Controller
             ->where("start_date", '<=', Carbon::now())
             ->where("end_date", '>', Carbon::now())
             ->where("is_active", '=', 1)
+            ->take(3)
             ->get();
     }
     public function getAllVoucher(Request $request)
@@ -77,7 +78,7 @@ class AjaxPromotion extends Controller
         return  Promotion::where("start_date", '<=', Carbon::now())
             ->where("end_date", '>', Carbon::now())
             ->where("is_active", '=', 1)
-            ->take(5)
+            ->take(3)
             ->get();
     }
 }

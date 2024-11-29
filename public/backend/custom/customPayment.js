@@ -81,10 +81,11 @@
         } else {
             await voucherItems.forEach(voucher => {
                 $('#render_voucher').append(`
-                    <div class="col-3 d-flex gap-1 border rounded py-1">
+                    <div class="col-4 d-flex gap-1 border rounded py-1">
                         <input type="radio" name="use_voucher" id="${voucher.id}">
                         <div class="div">
                             <p class="m-0">${voucher.title}</p>
+                            <small>Mô tả: ${voucher.description}</small>
                         </div>
                     </div>
                 `)
@@ -98,10 +99,11 @@
         } else {
             await allVoucher.forEach(voucher => {
                 $('#render_voucher').append(`
-                    <div class="col-3 d-flex gap-1 border rounded py-1">
+                    <div class="col-4 d-flex gap-1 border rounded py-1">
                         <input type="radio" name="use_voucher" id="${voucher.id}">
                         <div class="div">
                             <p class="m-0">${voucher.title}</p>
+                            <small>Mô tả: ${voucher.description}</small>
                         </div>
                     </div>
                 `)
@@ -203,10 +205,12 @@
                     const selectedVoucherId = this.id;
                     let checkVoucher = await CUONG.fetchVoucher(`/checkVoucher?id=${selectedVoucherId}&totalAmount=${total_amount}`);
                     let dataVoucher = checkVoucher['data'];
-                    console.log(checkVoucher);
 
                     if (!dataVoucher) {
                         feedback.text(`${checkVoucher.message}`).css("color", "red");
+                        code = "";
+                        voucher_discount = 0;
+                        total_payment = total_amount;
                         $('#pay').find('.voucher-discount').hide();
                         $('#pay').find('.total-payment').text(formatNumber(total_amount));
                     } else {
@@ -254,6 +258,7 @@
         })
         $('#pay').on('hidden.bs.modal', function () {
             // Đặt lại các giá trị giảm giá
+            code = "";
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');
             $('#pay').find('.voucher-discount').hide();  // Đặt lại giảm giá về 0
