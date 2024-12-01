@@ -163,6 +163,7 @@
                             <th>Số người</th>
                             <th>Ghi chú</th>
                             <th>Trạng thái đơn hàng</th>
+                            <th></th>
                             <th>Xem chi tiết</th>
                         </tr>
                     </thead>
@@ -180,6 +181,9 @@
                                             {{ $statusValue }}
                                         @endif
                                     @endforeach
+                                </td>
+                                <td>
+                                    <!-- Nội dung cho cột cuối (tuỳ chọn) -->
                                 </td>
                                 @if ($value->status == 'completed')
                                     <td class="text-center">

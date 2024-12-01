@@ -75,8 +75,8 @@
                                                 @if (isset($promotion))
                                                     <tr>
                                                         <td colspan="3">
-                                                            Mã giảm giá đã sử dụng: <span
-                                                                style="text-transform: uppercase;">{{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
+                                                            Mã giảm giá: <span
+                                                                style="text-transform: uppercase;">{{ $promotionDetail->promotion->title ?? 'Không có dữ liệu' }} - {{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
                                                         </td>
                                                         <td>
                                                             - {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ
