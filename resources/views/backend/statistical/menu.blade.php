@@ -10,7 +10,7 @@
                                 <div class="nav nav-tabs" id="nav-tab">
                                     <a class="nav-link a-tab py-2" id="menu">Thống
                                         kê món
-                                        ăn</a>
+                                        ăn đã đặt</a>
                                 </div>
                             </nav>
                             <div class="tab-content" id="">

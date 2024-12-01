@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-12 col-md mb-2">
             <input type="text" class="form-control" id="name" placeholder="Họ tên ..." name="name"
                 value="{{ request('name') ?: old('name') }}">
@@ -23,9 +23,9 @@
             <input type="text" class="form-control" id="email" placeholder="Email ..." name="email"
                 value="{{ request('email') ?: old('email') }}">
         </div>
-        
+
         <div class="col-12 col-md mb-2">
-            <input type="text" class="form-control" id="phone" placeholder="Phone..." name="phone"
+            <input type="text" class="form-control" id="phone" placeholder="Số điện thoại..." name="phone"
                 value="{{ request('phone') ?: old('phone') }}">
         </div>
     </div>
