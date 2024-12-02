@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\Menu;
+use App\Models\Table;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,6 +17,9 @@ class DashboardController extends Controller
     public function index(Request $request){
         $countUser =  User::count();
         $countFood =  Menu::count();
+        $countCategory =  Category::count();
+        $countTable =  Table::count();
+        $countBlog =  Blog::count();
         $totalMonth = Invoice::whereYear('created_at', Carbon::now()->year)
         ->whereMonth('created_at', Carbon::now()->month)->sum('total_amount');
         $totalYear = Invoice::whereYear('created_at', Carbon::now()->year)->sum('total_amount');
@@ -53,6 +59,9 @@ class DashboardController extends Controller
         }
         $data["countUser"] = $countUser;
         $data["countFood"] = $countFood;
+        $data["countCategory"] = $countCategory;
+        $data["countBlog"] = $countBlog;
+        $data["countTable"] = $countTable;
         $data["totalMonth"] = $totalMonth;
         $data["totalYear"] = $totalYear;
         $data["totalToday"] = $totalToday;

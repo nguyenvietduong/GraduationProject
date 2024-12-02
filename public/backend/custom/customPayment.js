@@ -35,6 +35,18 @@
             console.error('Lỗi:', error)
         }
     }
+    CUONG.fetchAllVoucher = async (url) => {
+        try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Mạng lỗi hoặc file không tồn tại.')
+            }
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Lỗi:', error)
+        }
+    }
 
     CUONG.renderMenuItem = async (menuItems) => {
         $('#list_menu_item').empty()
@@ -60,6 +72,42 @@
                     <td><b>${formatNumber(menuItems[0].totalAmount)}</b></td>
                 </tr>
             `)
+        }
+    }
+    CUONG.renderVoucherItem = async (voucherItems) => {
+        $('#render_voucher').empty()
+        if (voucherItems.length == 0) {
+            $('#render_voucher').append('')
+        } else {
+            await voucherItems.forEach(voucher => {
+                $('#render_voucher').append(`
+                    <div class="col-4 d-flex gap-1 border rounded py-1">
+                        <input type="radio" name="use_voucher" id="${voucher.id}">
+                        <div class="div">
+                            <p class="m-0">${voucher.title}</p>
+                            <small>Mô tả: ${voucher.description}</small>
+                        </div>
+                    </div>
+                `)
+            })
+        }
+    }
+    CUONG.renderAllVoucher = async (allVoucher) => {
+        $('#render_voucher').empty()
+        if (allVoucher.length == 0) {
+            $('#render_voucher').append('')
+        } else {
+            await allVoucher.forEach(voucher => {
+                $('#render_voucher').append(`
+                    <div class="col-4 d-flex gap-1 border rounded py-1">
+                        <input type="radio" name="use_voucher" id="${voucher.id}">
+                        <div class="div">
+                            <p class="m-0">${voucher.title}</p>
+                            <small>Mô tả: ${voucher.description}</small>
+                        </div>
+                    </div>
+                `)
+            })
         }
     }
     CUONG.addInvoice = (data) => {
@@ -88,7 +136,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const pdfContent = data.pdfContent; // Nội dung PDF dạng Base64
+                    const pdfContent = data.pdfContent;
+                    const fileName = data.fileName;
+
                     const binary = atob(pdfContent);
                     const array = new Uint8Array(binary.length);
                     for (let i = 0; i < binary.length; i++) {
@@ -134,33 +184,54 @@
                     $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
                 }
             });
-            $('#pay').find('.btn-apply-voucher').off('click').on('click', async function () {
-                let inputVoucher = $('#pay').find('.input-voucher').val();
-                let feedback = $('#pay').find('.feedback-voucher');
-                let voucher = await CUONG.fetchVoucher(`/checkVoucher?code=${inputVoucher}&totalAmount=${total_amount}`);
+            let allVoucher = await CUONG.fetchVoucher(`/getAllVoucher`);
+            CUONG.renderAllVoucher(allVoucher);
+            let feedback = $('#pay').find('.feedback-voucher');
 
-                if (voucher[0]) {
-                    code = voucher[0].code;
-                    feedback.text("Mã giảm giá hợp lệ").css("color", "green");
-                    if (voucher[0].type == 'fixed') {
-                        total_payment = total_amount - voucher[0].discount
-                        voucher_discount = voucher[0].discount
-                    } else {
-                        if (total_amount * voucher[0].discount / 100 > voucher[0].max_discount) {
-                            total_payment = total_amount - voucher[0].max_discount
-                            voucher_discount = voucher[0].max_discount
-                        } else {
-                            total_payment = total_amount - (total_amount * voucher[0].discount) / 100
-                            voucher_discount = (total_amount * voucher[0].discount) / 100
-                        }
-                    }
-                    $('#pay').find('.voucher-discount').text(`Giảm giá : ${formatNumber(voucher_discount)}`);
-                    $('#pay').find('.voucher-discount').show();
-                    $('#pay').find('.total-payment').text(formatNumber(total_payment));
+            $('#pay').on('click', '.btn-apply-voucher', async function () {
+                let inputVoucher = $('#pay').find('.input-voucher').val();
+                let voucher = await CUONG.fetchVoucher(`/searchVoucher?code=${inputVoucher}`);
+                console.log(voucher);
+                
+                if (voucher.length == 0) {
+                    feedback.text(`Không tồn tại mã giảm giá`).css("color", "red");
                 } else {
-                    $('#pay').find('.voucher-discount').hide();
-                    $('#pay').find('.total-payment').text(formatNumber(total_amount));
-                    feedback.text("Mã giảm giá không hợp lệ").css("color", "red");
+                    CUONG.renderVoucherItem(voucher);
+                    feedback.text(``);
+                }
+            });
+            $('#pay').on('change', 'input[name="use_voucher"]', async function () {
+                if (this.checked) {
+                    const selectedVoucherId = this.id;
+                    let checkVoucher = await CUONG.fetchVoucher(`/checkVoucher?id=${selectedVoucherId}&totalAmount=${total_amount}`);
+                    let dataVoucher = checkVoucher['data'];
+
+                    if (!dataVoucher) {
+                        feedback.text(`${checkVoucher.message}`).css("color", "red");
+                        code = "";
+                        voucher_discount = 0;
+                        total_payment = total_amount;
+                        $('#pay').find('.voucher-discount').hide();
+                        $('#pay').find('.total-payment').text(formatNumber(total_amount));
+                    } else {
+                        code = dataVoucher.code;
+                        feedback.text(`${checkVoucher.message}`).css("color", "green");
+                        if (dataVoucher.type == 'fixed') {
+                            total_payment = total_amount - dataVoucher.discount
+                            voucher_discount = dataVoucher.discount
+                        } else {
+                            if (total_amount * dataVoucher.discount / 100 > dataVoucher.max_discount) {
+                                total_payment = total_amount - dataVoucher.max_discount
+                                voucher_discount = dataVoucher.max_discount
+                            } else {
+                                total_payment = total_amount - (total_amount * dataVoucher.discount) / 100
+                                voucher_discount = (total_amount * dataVoucher.discount) / 100
+                            }
+                        }
+                        $('#pay').find('.voucher-discount').text(`Giảm giá : ${formatNumber(voucher_discount)}`);
+                        $('#pay').find('.voucher-discount').show();
+                        $('#pay').find('.total-payment').text(formatNumber(total_payment));
+                    }
                 }
             });
             $(`#btn_paid_${reservationId}`).off('click').click((e) => {
@@ -187,6 +258,7 @@
         })
         $('#pay').on('hidden.bs.modal', function () {
             // Đặt lại các giá trị giảm giá
+            code = "";
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');
             $('#pay').find('.voucher-discount').hide();  // Đặt lại giảm giá về 0
