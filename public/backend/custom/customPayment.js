@@ -65,11 +65,11 @@
                 `)
             })
             $('#list_menu_item').append(`
-                <tr>
+                <tr style="background-color: burlywood">
                     <td colspan="2">
-                        <span>Tổng hóa đơn  </span>
+                        <b>Tổng hóa đơn</b>
                     </td>
-                    <td>${formatNumber(menuItems[0].totalAmount)}</td>
+                    <td><b>${formatNumber(menuItems[0].totalAmount)}</b></td>
                 </tr>
             `)
         }

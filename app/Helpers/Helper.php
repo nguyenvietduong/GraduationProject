@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('set_active')) {
     /**
@@ -304,3 +305,16 @@ if (!function_exists('formatDiscount')) {
         return str_replace('.', replace: '', subject: $value);
     }
 }
+
+if (!function_exists('checkBladeAdmin')) {
+    function checkBladeAdmin()
+    {
+        if (Auth::check() && Auth::user()->role_id == 1) {
+            return '';
+        } else if (Auth::check() && Auth::user()->role_id == 2) {
+            return 'none';
+        }
+    }
+}
+
+

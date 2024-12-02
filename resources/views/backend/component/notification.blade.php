@@ -91,6 +91,7 @@
             </div>
         </div>
         <a href="" class="dropdown-item text-center text-dark fs-13"></a>
+        aaa
     </div>
 </li>
 
@@ -115,11 +116,11 @@
         const date = new Date(reservationTime);
 
         const year = date.getUTCFullYear();
-        const month = ('0' + (date.getUTCMonth() + 1)).slice(-2); 
-        const day = ('0' + date.getUTCDate()).slice(-2); 
-        const hours = ('0' + date.getUTCHours()).slice(-2); 
+        const month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+        const day = ('0' + date.getUTCDate()).slice(-2);
+        const hours = ('0' + date.getUTCHours()).slice(-2);
         const minutes = ('0' + date.getUTCMinutes()).slice(-2);
-        const seconds = ('0' + date.getUTCSeconds()).slice(-2); 
+        const seconds = ('0' + date.getUTCSeconds()).slice(-2);
 
         // Xây dựng chuỗi ngày giờ theo định dạng yêu cầu
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
@@ -146,7 +147,7 @@
 
                 if (response) {
                     const notificationContainer = $('#allNotification');
-                    $(element).removeClass('bg-warning bg-opacity-50'); 
+                    $(element).removeClass('bg-warning bg-opacity-50');
 
                     notificationContainer.append(element);
                     countNotificationNoRead();
@@ -220,17 +221,17 @@
         let searchTimeout;
 
         function triggerSearch() {
-            const searchQuery = $('#searchInput').val().trim(); 
+            const searchQuery = $('#searchInput').val().trim();
             const notificationStatus = $('input[name="notificationStatus"]:checked')
-                .val(); 
+                .val();
 
             clearTimeout(searchTimeout);
 
             searchTimeout = setTimeout(function() {
                 if (!searchQuery && !notificationStatus) {
-                    loadNotifications(); 
+                    loadNotifications();
                 } else {
-                    searchNotifications(searchQuery, notificationStatus); 
+                    searchNotifications(searchQuery, notificationStatus);
                 }
             }, 2000);
         }
@@ -297,11 +298,11 @@
                             }) :
                             'No data available';
 
-                        const notificationItem = `<a href="#" onclick="handleDropdownClick(this)" class="dropdown-item py-3 ${notification.user_id == null ? 'bg-warning bg-opacity-50' : ''}" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#messageModalNotification" 
-                            data-id="${notification.id}" 
-                            data-title="${notification.title}" 
+                        const notificationItem = `<a href="#" onclick="handleDropdownClick(this)" class="dropdown-item py-3 ${notification.user_id == null ? 'bg-warning bg-opacity-50' : ''}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#messageModalNotification"
+                            data-id="${notification.id}"
+                            data-title="${notification.title}"
                             data-message-full='${notification.message}'>
                             <small class="float-end text-muted ps-2" data-created-at="${notification.created_at}">${timeSince(notification.created_at)}</small>
                             <div class="d-flex align-items-center">

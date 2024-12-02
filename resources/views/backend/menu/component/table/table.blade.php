@@ -3,7 +3,6 @@
         <tr>
             <th style="width: 16px;">
                 <div class="form-check mb-0 ms-n1">
-                    <input type="checkbox" class="form-check-input" name="select-all" id="select-all">
                 </div>
             </th>
             <th class="ps-0">#</th>
@@ -21,10 +20,6 @@
         @foreach ($menuDatas as $item)
         <tr class="{{$item->status == "active" ? "" : "bg_status"}}">
             <td style="width: 16px;">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" value="{{ $item->id }}" name="check"
-                        id="customCheck{{ $item->id }}">
-                </div>
             </td>
             <td class="ps-0">
                 {{ $item->id ?? __('messages.system.no_data_available') }}
@@ -41,7 +36,7 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    
+
                     {{ $item->category->name ?? __('messages.system.no_data_available') }}
                 </p>
             </td>

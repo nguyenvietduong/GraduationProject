@@ -198,11 +198,11 @@
         let dataCode = reservation.attr('data-reservation-code')
         let html = `
         <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
             dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" dataReservationCode="${dataCode}" data-bs-target="#exampleModal">
             Đặt món
             </button>
-            <button class="btn btn-warning" data-bs-toggle="modal" 
+            <button class="btn btn-warning" data-bs-toggle="modal"
             dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
@@ -218,7 +218,7 @@
     PMD.renderNotiTable = (guest = null) => {
         let html
         let table = PMD.sumTableMin(guest)
-        html = `Đơn hàng với ${guest} khác hàng. Nên chọn tối thiểu ${table} bàn.`
+        html = `Đơn hàng với ${guest} khách hàng. Nên chọn tối thiểu ${table} bàn.`
         $('#notiTable').empty()
         $('#notiTable').append(html)
     }
@@ -306,7 +306,7 @@
                         if (!$(this).hasClass('selected')) {
                             // Kiểm tra nếu đã chọn đủ số lượng bàn
                             if (selectedMenus.list_table.length >= validationTable) {
-                                alert(`Bạn chỉ được chọn tối đa ${validationTable} bàn.`);
+                                alert(`Bạn chỉ được chọn tối thiểu ${validationTable} bàn.`);
                                 return;
                             }
                         }

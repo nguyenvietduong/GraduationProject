@@ -19,7 +19,7 @@
             @endphp
             @if (isset($createRoute))
             <div class="col-auto {{ $msAuto }} mt-1">
-                <a href="{{ $createRoute }}">
+                <a href="{{ $createRoute }}" style="display: {{ checkBladeAdmin() }}">
                     <button type="button" class="btn btn-primary w-100">
                         <i class="fa-solid fa-plus me-1"></i>
                         {{ __('messages.system.button.addNew') }}
