@@ -27,6 +27,24 @@
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
                             <div class="col-9">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Danh mục</p>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
+                            </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
+                                    <i class="fa-solid fa-list" style="color: rgb(32, 59, 182)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
+                            <div class="col-9">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Món ăn</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
                             </div>
@@ -44,85 +62,32 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                            <div class="col">
-                                <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu tháng</p>
-                                <h5 class="mt-2 mb-0 fw-bold" ">{{ number_format($data['totalMonth'], 0, '.', '.') }} VNĐ</h3>
-                              </div>
-                              <div class="col-3 align-self-center">
-                                <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                  <i class="fa-regular fa-money-bill-1" style="color: green"></i>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                                <div class="col">
-                                    <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu Năm </p>
-                                    <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['totalYear'], 0, '.', '.') }} VNĐ</h5>
-                              </div>
-                              <div class="col-3 align-self-center">
-                                <div class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                  <i class="fa-regular fa-money-bill-1" style="color: green"></i>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                                <div class="col-9">
-                                    <p class="text-dark mb-0 fw-semibold fs-14">Số người đang sử dụng</p>
-                                    <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countUser'] / 1000, 3, '.', '') }}</h5>
-                                </div>
-                                <div class="col-3 align-self-center">
-                                    <div
-                                        class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                        <i class="fa-solid fa-user" style="color: green"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                                <div class="col-9">
-                                    <p class="text-dark mb-0 fw-semibold fs-14">Món ăn</p>
-                                    <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
-                                </div>
-                                <div class="col-3 align-self-center">
-                                    <div
-                                        class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                        <i class="fa-solid fa-bowl-food" style="color: coral"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                                <div class="col">
-                                    <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu tháng</p>
-                                    <h5 class="mt-2 mb-0 fw-bold" ">{{ number_format($data['totalMonth'], 0, '.', '.') }}
-                                    VNĐ</h3>
+                            <div class="col-9">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Blog</p>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
                             </div>
                             <div class="col-3 align-self-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                    <i class="fa-regular fa-money-bill-1" style="color: green"></i>
+                                    <i class="fa-solid fa-newspaper" style="color: rgb(29, 29, 29)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
+                            <div class="col-9">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Bàn</p>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
+                            </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
+                                    <i class="fa-solid fa-chair" style="color: rgb(193, 27, 27)"></i>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +112,43 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
+                            <div class="col">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu tháng</p>
+                                <h5 class="mt-2 mb-0 fw-bold" ">{{ number_format($data['totalMonth'], 0, '.', '.') }} VNĐ</h3>
+                                          </div>
+                                          <div class=" col-3 align-self-center">
+                                    <div
+                                        class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
+                                        <i class="fa-regular fa-money-bill-1" style="color: green"></i>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
+                            <div class="col">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu hôm nay</p>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['totalToday'], 0, '.', '.') }} VNĐ</h5>
+                            </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
+                                    <i class="fa-regular fa-money-bill-1" style="color: green"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <!--end row-->
         <?php
@@ -166,30 +168,7 @@
         ];
         $years = [2020, 2021, 2022, 2023, 2024];
         ?>
-        {{-- start filter --}}
-        <div class="row justify-content-center">
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu hôm nay</p>
-                                <h4 class="mt-2 mb-0 fw-bold" style="color: green">
-                                    {{ number_format($data['totalToday'], 0, '.', '.') }} VNĐ</h4>
-                            </div>
-                            <div class="col-3 align-self-center">
-                                <div
-                                    class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
-                                    <i class="fa-regular fa-money-bill-1" style="color: green"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- end filter --}}
+        
         <!--end row-->
         {{-- start chart --}}
         <div class="row card">
