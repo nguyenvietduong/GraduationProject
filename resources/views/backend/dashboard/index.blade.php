@@ -28,7 +28,7 @@
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
                             <div class="col-9">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Danh mục</p>
-                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countCategory'], 0, '.', '.') }}</h5>
                             </div>
                             <div class="col-3 align-self-center">
                                 <div
@@ -64,7 +64,7 @@
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
                             <div class="col-9">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Blog</p>
-                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countBlog'], 0, '.', '.') }}</h5>
                             </div>
                             <div class="col-3 align-self-center">
                                 <div
@@ -82,7 +82,7 @@
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
                             <div class="col-9">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Bàn</p>
-                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countTable'], 0, '.', '.') }}</h5>
                             </div>
                             <div class="col-3 align-self-center">
                                 <div
@@ -238,15 +238,15 @@
                 datasets: [{
                     label: "Đơn hàng",
                     borderColor: "#1d7af3",
-                    pointBorderColor: "#FFF",
-                    pointBackgroundColor: "#1d7af3",
+                    pointBorderColor: "#1d7af3",
+                    pointBackgroundColor: "#FFF",
                     pointBorderWidth: 2,
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 1,
                     pointRadius: 4,
                     backgroundColor: "transparent",
                     fill: true,
-                    borderWidth: 2,
+                    borderWidth: 1,
                     data: [
                         ...dataChart.map(item => {
                             return item.order
@@ -260,6 +260,7 @@
                 legend: {
                     position: "top",
                     labels: {
+                        usePointStyle: true,
                         padding: 10,
                         fontColor: "#1d7af3",
                     },
@@ -281,6 +282,7 @@
                         bottom: 15
                     },
                 },
+                
             },
         });
         var myBarChart = new Chart(barChart, {
