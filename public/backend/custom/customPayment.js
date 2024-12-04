@@ -258,7 +258,6 @@
         })
         $('#pay').on('hidden.bs.modal', function () {
             // Đặt lại các giá trị giảm giá
-            code = "";
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');
             $('#pay').find('.voucher-discount').hide();  // Đặt lại giảm giá về 0
