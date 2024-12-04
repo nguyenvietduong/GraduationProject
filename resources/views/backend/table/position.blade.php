@@ -19,86 +19,93 @@
             </div>
         </div>
 
-        <div class="row tables" id="sortableTable">
+        <div class="row " >
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-4 col-4 ">
-                        <div class="card text-center text-warning ">
+                        <div class="card text-center text-primary ">
                             <div class="card-body">
                                 <i class="fa-solid fa-cash-register fa-2xl p-3" style="font-size: 3vw"></i>
                                 <h4 class="card-title">Quầy thu ngân</h4>
-                                <div class="status-container">
 
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-3 offset-md-5">
-                        <div class="card text-center text-danger ">
+                        <div class="card text-center text-primary ">
                             <div class="card-body">
-                                <i class="fa-solid fa-restroom fa-2xl p-3" style="font-size: 3vw"></i>
-                                <h4 class="card-title">Nhà vệ sinh</h4>
-                                <div class="status-container">
+                                <i class="fa-solid fa-door-open fa-2xl p-3" style="font-size: 3vw"></i>
+                                <h4 class="card-title">Cửa ra vào</h4>
 
-                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            @if (isset($tables) && is_object($tables) && $tables->isNotEmpty())
-                @foreach ($tables as $key => $item)
-                    @php
-                        if ($item->status == 'available') {
-                            $color = 'success';
-                        } elseif ($item->status == 'occupied') {
-                            $color = 'danger';
-                        } elseif ($item->status == 'reserved') {
-                            $color = 'warning';
-                        } elseif ($item->status == 'out_of_service') {
-                            $color = 'secondary';
-                        }
-                    @endphp
-                    <div id="{{ $item->id }}"
-                        class="col-md-2 {{ $key % 3 == 0 ? 'offset-md-2' : 'offset-md-1' }} col-4 table_position "
-                        style="cursor: pointer;">
-                        <div class="card text-center text-{{ $color }} ">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ $item->name ?? __('messages.system.no_data_available') }}</h4>
-                                
-                                <div class="status-container">
-                                    @php
-                                        $status = request('status') ?: old('status');
-                                        $statuses = __('messages.table.status');
-                                    @endphp
-                                    @foreach ($statuses as $key => $option)
-                                        @if ($key == $item->status)
-                                            <span class="badge bg-{{ $color }}">{{ $option }}</span>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6 col-6 offset-md-3">
-                            <div class="card text-center text-warning ">
-                                <div class="card-body">
-                                    <i class="fa-solid fa-door-open fa-2xl p-3" style="font-size: 3vw"></i>
-                                    <h4 class="card-title">Cửa ra vào</h4>
-                                    <div class="status-container">
-    
+            <div class="col-md-8 offset-2">
+                <div class="row tables" id="sortableTable">
+                    @if (isset($tables) && is_object($tables) && $tables->isNotEmpty())
+                        @foreach ($tables as $key => $item)
+                            @php
+                                if ($item->status == 'available') {
+                                    $color = 'success';
+                                } elseif ($item->status == 'occupied') {
+                                    $color = 'danger';
+                                } elseif ($item->status == 'reserved') {
+                                    $color = 'warning';
+                                } elseif ($item->status == 'out_of_service') {
+                                    $color = 'secondary';
+                                }
+                            @endphp
+                            <div id="{{ $item->id }}" class="col-md-4 col-4 table_position " style="cursor: pointer;">
+                                <div class="card text-center text-{{ $color }} ">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ $item->name ?? __('messages.system.no_data_available') }}
+                                        </h4>
+
+                                        <div class="status-container">
+                                            @php
+                                                $status = request('status') ?: old('status');
+                                                $statuses = __('messages.table.status');
+                                            @endphp
+                                            @foreach ($statuses as $key => $option)
+                                                @if ($key == $item->status)
+                                                    <span class="badge bg-{{ $color }}">{{ $option }}</span>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <span colspan="9" class="text-center">{{ __('messages.system.no_data_available') }}</span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4 col-4 ">
+                        <div class="card text-center text-danger ">
+                            <div class="card-body">
+                                <i class="fa-solid fa-restroom fa-2xl p-3" style="font-size: 3vw"></i>
+                                <h4 class="card-title">Nhà vệ sinh</h4>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-4 col-4 offset-md-4">
+                        <div class="card text-center text-warning ">
+                            <div class="card-body">
+                                <i class="fa-solid fa-kitchen-set fa-2xl p-3" style="font-size: 3vw"></i>
+                                <h4 class="card-title">Bếp</h4>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            @else
-                <span colspan="9" class="text-center">{{ __('messages.system.no_data_available') }}</span>
-            @endif
+            </div>
         </div>
         <script>
             $(function() {
