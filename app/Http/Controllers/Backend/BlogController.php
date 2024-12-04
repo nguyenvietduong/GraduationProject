@@ -108,6 +108,10 @@ class BlogController extends Controller
             // Create a new blog
             $this->blogService->createBlog($data);
 
+            if (session('image_blog_temp') != null) {
+                session()->forget('image_blog_temp');        
+            }
+
             return redirect()->back()->with('success', 'Blog created successfully');
         } catch (\Exception $e) {
 

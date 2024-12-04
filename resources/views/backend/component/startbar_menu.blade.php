@@ -185,7 +185,7 @@
                 </li>                
 
                 <!-- Hệ thống -->
-                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
+                <li class="nav-item">
                     <a class="nav-link"
                         href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarSystemManagement">

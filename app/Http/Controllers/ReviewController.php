@@ -11,9 +11,6 @@ use App\Traits\HandleExceptionTrait;
 
 // Requests
 use App\Http\Requests\Frontend\Reviews\StoreRequest as ReviewStoreRequest;
-use App\Jobs\SendNotificationJob;
-use App\Models\Notification;
-use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -62,9 +59,9 @@ class ReviewController extends Controller
 
         try {
             // Create a new review
-            $review = $this->reviewService->createReview($data);
-            event(new ReviewEvent($review));
-            return response()->json(['success' => true]);
+            $this->reviewService->createReview($data);
+            
+            return redirect()->back()->with('success', 'Đánh giá thành công!!');
         } catch (\Exception $e) {
             // Log when an error occurs
             Log::error('Error in review creation', ['error' => $e->getMessage()]);

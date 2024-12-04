@@ -177,7 +177,7 @@
                     <form method="GET" class="row align-items-center">
                         <div class="col-5">
                             <select name="month" id="monthSelect" class="form-select">
-                                <option value="">---chọn tháng---</option>
+                                <option value="">---Chọn tháng---</option>
                                 @foreach ($months as $key => $value)
                                     <option value="{{ $key }}" @selected($key == request('month'))>{{ $value }}
                                     </option>
@@ -186,7 +186,7 @@
                         </div>
                         <div class="col-5">
                             <select name="year" id="yearSelect" class="form-select">
-                                <option value="">--chọn năm ---</option>
+                                <option value="">--Chọn năm ---</option>
                                 @foreach ($years as $year)
                                     <option value="{{ $year }}" @selected($year == request('year'))>{{ $year }}
                                     </option>

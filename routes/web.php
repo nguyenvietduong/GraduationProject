@@ -35,6 +35,7 @@ Route::middleware(['auth'])->get('history/reservation/list', function () {
 
     return view('frontend.list', compact('listReservation'));
 })->name('reservation.list');
+Route::post('history/reservation/list', [ReviewController::class, 'store']);
 Route::get('reservation', [ReservationController::class, 'create'])->name('reservation');
 Route::post('reservation', [ReservationController::class, 'store'])->name('reservation');
 Route::get('menu', [HomeController::class, 'menu'])->name('menu');

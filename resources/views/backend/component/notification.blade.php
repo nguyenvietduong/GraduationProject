@@ -91,7 +91,9 @@
             </div>
         </div>
         <a href="" class="dropdown-item text-center text-dark fs-13"></a>
-        aaa
+        <div class="text-center p-1">
+            <button id="btn-seed-all" class="btn btn-success" style="width: 100%;">Xem hết</button>
+        </div>
     </div>
 </li>
 
@@ -110,8 +112,6 @@
         const guest = jsonData.guests;
         const reservationTime = jsonData.reservation_time;
         const specialRequest = jsonData.special_request;
-
-        console.log(reservationTime);
 
         const date = new Date(reservationTime);
 
@@ -217,6 +217,26 @@
             e.stopPropagation();
             notificationDropdownStatus = true;
         });
+
+
+        $('#btn-seed-all').on('click', function(e) {
+            e.stopPropagation();
+            notificationSeedAll();
+        });
+
+        function notificationSeedAll() {
+            $.ajax({
+                url: '/seed-all',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                }
+            });
+        }
 
         let searchTimeout;
 

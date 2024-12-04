@@ -22,7 +22,7 @@ use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\SearchController;
 use App\Http\Controllers\Backend\StatisticalController;
 
-Route::middleware(['auth', 'role:1, 2'])->group(function () {
+Route::middleware(['auth', 'role:1, 2, 3'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
         Route::get('/index', [DashboardController::class  , "index"])->name('admin.dashboard.index');

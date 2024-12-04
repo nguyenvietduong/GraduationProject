@@ -66,6 +66,7 @@ Route::get('notifications/index', [NotificationController::class, 'index'])->nam
 Route::get('notifications/search', [NotificationController::class, 'search'])->name('notification.search');
 Route::post('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::get('count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
+Route::get('seed-all', [NotificationController::class, 'seedAll']);
 
 Route::post('check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
 Route::get('checkTable', [BackendReservationController::class, 'checkTableFullyBookedTimes'])->name('checkTableFullyBookedTimes');
