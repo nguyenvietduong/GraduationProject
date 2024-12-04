@@ -6,7 +6,7 @@
                 </div>
             </th>
             {{-- <th>#</th> --}}
-            <th>Mã ĐH</th>
+            <th>Mã đơn hàng</th>
             <th>{{ __('messages.reservation.fields.reservation_information') }}</th>
             <th>{{ __('messages.reservation.fields.guests') }}</th>
             <th>Thời gian đặt</th>
@@ -104,7 +104,7 @@
                                 <p>{{ $table->name ?? __('messages.system.no_data_available') }}</p>
                             @endforeach
                         @else
-                            <p>{{ __('messages.system.no_data_available') }}</p>
+                            <p>Chưa chọn</p>
                         @endif
 
                     </td>

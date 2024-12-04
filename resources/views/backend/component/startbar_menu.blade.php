@@ -12,7 +12,7 @@
                 </li>
 
                 <!-- Nhà hàng -->
-                <li class="nav-item {{ set_active(['restaurants', 'admin']) }}">
+                <li class="nav-item {{ set_active(['restaurants', 'admin']) }}" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link" href="{{ route('admin.restaurants') }}">
                         <i class="fas fa-store-alt menu-icon"></i>
                         <span>Nhà hàng</span>
@@ -28,7 +28,7 @@
                 </li>
 
                 {{-- Quản lý Tài khoản --}}
-                <li class="nav-item">
+                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'active', 'admin') }}"
                         href="#sidebarAccountManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarAccountManagement">
@@ -36,7 +36,7 @@
                         <span>Tài khoản</span>
                     </a>
                     <div class="collapse {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'show', 'admin') }}"
-                        id="sidebarAccountManagement">
+                        id="sidebarAccountManagement" >
                         <ul class="nav flex-column">
                             <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['user'], 'active', 'admin') }}"
@@ -78,7 +78,7 @@
                 </li>
 
                 <!-- Hệ thống -->
-                <li class="nav-item">
+                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}"
                         href="#sidebarFoodManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarFoodManagement">
@@ -127,9 +127,9 @@
                         <span>Hóa đơn</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                 
-                <li class="nav-item checkPermissionMenu">
+                <li class="nav-item checkPermissionMenu" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"
                         href="{{ route('admin.blog.index') }}">
                         <i class="fa fa-newspaper menu-icon"></i>
@@ -137,7 +137,7 @@
                     </a>
                 </li>
                 {{-- Khuyến mãi --}}
-                <li class="nav-item checkPermissionMenu">
+                <li class="nav-item checkPermissionMenu" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['promotion', 'admin']) }}"
                         href="{{ route('admin.promotion.index') }}">
                         <i class="fa fa-tachometer menu-icon"></i>
@@ -145,7 +145,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['review'], 'active', 'admin') }}"
                         href="{{ route('admin.review.index') }}">
                         <i class="fa fa-comments menu-icon"></i>
@@ -153,7 +153,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['statistical'], 'active', 'admin', 2) }}"
                         href="#sidebarStatistical" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarStatistical">
@@ -185,7 +185,7 @@
                 </li>                
 
                 <!-- Hệ thống -->
-                <li class="nav-item">
+                <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link"
                         href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarSystemManagement">
