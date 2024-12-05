@@ -52,7 +52,7 @@ Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'update
 Route::post('admin/table/updatePositions', [UpdatePositionTable::class, 'updatePositions'])->name('admin.table.updatePositions');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 Route::get('reservation/{id}/detail', [ReservationController::class, 'detail'])->where('id', '[0-9]+');
-Route::get('reservation/{reservationId}/canceled', [ReservationController::class, 'canceled']);
+Route::get('reservation/{id}/canceled', [ReservationController::class, 'canceled'])->name('reservation.canceled');
 
 Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
 

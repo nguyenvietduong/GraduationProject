@@ -22,10 +22,10 @@
             @csrf
             <div class="grid grid-cols-1">
                 <div class="mb-4">
-                    <label class="font-medium" for="LoginEmail">Email / Số điện thoại <span style="color: red">*</span></label>
-                    <input id="LoginEmail" type="text" name="login" value="{{ old('login') }}"
+                    <label class="font-medium" for="LoginEmail">Email <span style="color: red">*</span></label>
+                    <input id="LoginEmail" type="text" name="email" value="{{ old('email') }}"
                         class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('login') is-invalid @enderror"
-                        placeholder="ten@example.com / 03******" required>
+                        placeholder="ten@example.com" required>
                 </div>
 
                 <div class="mb-4">
