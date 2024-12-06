@@ -109,7 +109,7 @@
 
                     </td>
 
-                    <td class="text-end">
+                    {{-- <td class="text-end">
                         <div class="d-flex align-items-center">
                             <a href="{{ route(__('messages.' . $object . '.edit.route'), $data->id) }}" class="me-2">
                                 <button class=" btn btn-primary">Đặt món</button>
@@ -120,7 +120,7 @@
                                 Thanh toán
                             </button>
                         </div>
-                    </td>
+                    </td> --}}
                 </tr>
             @endforeach
         @else

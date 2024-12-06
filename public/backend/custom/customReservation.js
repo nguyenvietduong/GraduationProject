@@ -8,6 +8,51 @@
     var _token = $('meta[name="csrf-token"]').attr('content')
 
 
+    PMD.getInvoiceDataDetail = async (reservationId) => {
+        await $.ajax({
+            url: '/get-invoice-item-data',
+            type: 'GET',
+            data: {
+                reservation_id: reservationId
+            },
+            success: function (response) {
+
+            },
+            error: function (error, xhr) {
+                console.error(error);
+            }
+        })
+    }
+
+
+    PMD.updateInvoiceDataDetail = (item, guest) => {
+        let data = {
+            _token: _token,
+            reservation_id : item.reservationId,
+            reservation_code: item.reservation_code,
+            total_amount : item.totalAmount,
+            list_table: item.list_table,
+            invoice_item: item.invoice_item,
+        }
+
+        $.ajax({
+            url: '/update-invoice-detail',
+            type: 'POST',
+            data: data,
+            success: async function (response) {
+                if (response.data.status === 'arrived') {
+                    await PMD.renderTdMenu(accountId)
+                    await PMD.renderSelectArrived(accountId)
+                    // $('#exampleModal').modal('show')
+                }
+                executeExample('success')
+            },
+            error: function (xhr, status, error) {
+                executeExample('error')
+            }
+        })
+    }
+
 
     //Check Arrived
     PMD.selectArrived = async () => {
@@ -60,7 +105,7 @@
         // Tạo HTML cho option "Đã đến"
         let html = `
             <option value="arrived" selected>
-                Đã đến
+                Đã đến cửa hàng
             </option>
         `
 
@@ -179,23 +224,11 @@
         html += '</div>'
 
         $('#availableMenu').append(html)
-        // data.forEach(function (menu) {
-        //     $('#availableMenu').append(`
-        //         <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
-        //             <img class="my-2" src="${menu.image}" alt="" width="60px" height="60px" style="border-radius: 50%object-fit: cover">
-        //             <p>${menu.name}</p>
-        //             <p>Giá: ${menu.price}</p>
-        //         </div>
-        //     `)
-        // })
     }
 
     PMD.renderTdMenu = (accountId) => {
-        // let invoiceData = PMD.fetchData()
         let reservation = $('.tdReservation-' + accountId)
         let reservationId = reservation.attr('data-reservation')
-        // let invoiceDetail = invoiceData.find(item => item.reservation_id == reservationId)
-        // console.log(123123);
         let tableId = reservation.attr('data-table')
         let dataGuest = reservation.attr('data-guest')
         let dataCode = reservation.attr('data-reservation-code')
@@ -209,12 +242,6 @@
             dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
-        // if (invoiceDetail.length > 0) {
-        //     html += `
-        //     <button class="btn btn-warning" data-bs-toggle="modal"
-        //     dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
-        //     `
-        // }
         return reservation.append(html)
     }
     //End Render Data Table & Menus
@@ -236,7 +263,7 @@
     PMD.showBsModal = () => {
         $('#exampleModal').on('show.bs.modal', async function (event) {
             await $('#exampleModal .nav-tabs li:first-child a').tab('show')
-            let invoiceData = await PMD.fetchData()
+            let invoiceData = []
             var button = $(event.relatedTarget)
             if (button.length) {
                 var reservationId = button.attr('dataReservationId')
@@ -245,110 +272,109 @@
                 var reservationCode = button.attr('dataReservationCode')
                 $('#reservationId').val(reservationId)
                 PMD.renderNotiTable(guestsReservation)
+                // PMD.getInvoiceDataDetail(reservationId)
             }
 
             if (invoiceData && Array.isArray(invoiceData)) {
                 const invoiceDetail = invoiceData.find(item => item.reservation_id === reservationId)
-                if (invoiceDetail) {
-                    let selectedMenus = {
-                        id: invoiceDetail.id,
-                        reservation_id: invoiceDetail.reservation_id,
-                        reservation_code: invoiceDetail.reservation_code,
-                        totalAmount: invoiceDetail.totalAmount,
-                        list_table: invoiceDetail.list_table,
-                        list_table_old: [],
-                        invoice_item: invoiceDetail.invoice_item
-                    }
+                // if (invoiceDetail) {
+                //     let selectedMenus = {
+                //         id: invoiceDetail.id,
+                //         reservation_id: invoiceDetail.reservation_id,
+                //         reservation_code: invoiceDetail.reservation_code,
+                //         totalAmount: invoiceDetail.totalAmount,
+                //         list_table: invoiceDetail.list_table,
+                //         list_table_old: [],
+                //         invoice_item: invoiceDetail.invoice_item
+                //     }
 
-                    $('.table-info').addClass('cursor-not-allowed')
+                //     $('.table-info').addClass('cursor-not-allowed')
 
-                    await PMD.fetchAvailableMenus()
+                //     await PMD.fetchAvailableMenus()
 
-                    PMD.renderSelectedMenus(selectedMenus)
-                    conditionTemp = 2
+                //     PMD.renderSelectedMenus(selectedMenus)
+                //     conditionTemp = 2
 
-                    selectedMenus.list_table.forEach(item => {
-                        $('.table-info[data-table-id="' + item.id + '"]').addClass('selected')
-                    })
+                //     selectedMenus.list_table.forEach(item => {
+                //         $('.table-info[data-table-id="' + item.id + '"]').addClass('selected')
+                //     })
 
-                    selectedMenus.invoice_item.forEach(item => {
-                        $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
-                    })
-
-
-                    $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                        $(this).toggleClass('selected')
-                        const menuId = $(this).data('menu-id')
-                        const menuPrice = $(this).data('menu-price')
-                        const menuName = $(this).data('menu-name')
-
-                        if ($(this).hasClass('selected')) {
-                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
-                        } else {
-                            selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
-                        }
-                        PMD.renderSelectedMenus(selectedMenus)
-                        $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
-                    })
-                    await PMD.searchMenuItem(selectedMenus)
-                    PMD.quantityInput(selectedMenus)
-                    PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
-                } else {
-                    let selectedMenus = {
-                        id: reservationId,
-                        reservation_id: reservationId,
-                        reservation_code: reservationCode,
-                        totalAmount: 0,
-                        list_table: [],
-                        list_table_old: [],
-                        invoice_item: []
-                    }
-                    PMD.fetchAvailableMenus()
-                    selectedMenus.invoice_item = []
-                    PMD.renderSelectedMenus(selectedMenus)
-                    $('#confirmSelection').hide()
+                //     selectedMenus.invoice_item.forEach(item => {
+                //         $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
+                //     })
 
 
-                    $('#availableTables').off('click').on('click', '.table-info', function () {
-                        let validationTable = PMD.sumTableMin(guestsReservation)
+                //     $('#availableMenu').off('click').on('click', '.menu-info', function () {
+                //         $(this).toggleClass('selected')
+                //         const menuId = $(this).data('menu-id')
+                //         const menuPrice = $(this).data('menu-price')
+                //         const menuName = $(this).data('menu-name')
 
-                        if (!$(this).hasClass('selected')) {
-                            // Kiểm tra nếu đã chọn đủ số lượng bàn
-                            if (selectedMenus.list_table.length >= validationTable) {
-                                alert(`Bạn chỉ được chọn tối thiểu ${validationTable} bàn.`);
-                                return;
-                            }
-                        }
-
-                        $(this).toggleClass('selected')
-                        const tableId = $(this).data('table-id')
-                        const tableName = $(this).data('table-name')
-
-                        if ($(this).hasClass('selected')) {
-                            selectedMenus.list_table.push({ id: tableId, name: tableName })
-                        } else {
-                            selectedMenus.list_table = selectedMenus.list_table.filter(menu => menu.id !== tableId)
-                        }
-                    })
-
-                    $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                        $(this).toggleClass('selected')
-                        const menuId = $(this).data('menu-id')
-                        const menuPrice = $(this).data('menu-price')
-                        const menuName = $(this).data('menu-name')
-
-                        if ($(this).hasClass('selected')) {
-                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
-                        } else {
-                            selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
-                        }
-                        PMD.renderSelectedMenus(selectedMenus)
-                        $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
-                    })
-                    PMD.searchMenuItem(selectedMenus)
-                    PMD.quantityInput(selectedMenus)
-                    PMD.checkButtonAddInvoice(selectedMenus, guestsReservation)
+                //         if ($(this).hasClass('selected')) {
+                //             selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
+                //         } else {
+                //             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
+                //         }
+                //         PMD.renderSelectedMenus(selectedMenus)
+                //         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
+                //     })
+                //     await PMD.searchMenuItem(selectedMenus)
+                //     PMD.quantityInput(selectedMenus)
+                //     PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
+                // } else {
+                let selectedMenus = {
+                    reservation_id: reservationId,
+                    reservation_code: reservationCode,
+                    totalAmount: 0,
+                    list_table: [],
+                    invoice_item: []
                 }
+                PMD.fetchAvailableMenus()
+                selectedMenus.invoice_item = []
+                PMD.renderSelectedMenus(selectedMenus)
+                $('#confirmSelection').hide()
+
+
+                $('#availableTables').off('click').on('click', '.table-info', function () {
+                    let validationTable = PMD.sumTableMin(guestsReservation)
+
+                    if (!$(this).hasClass('selected')) {
+                        // Kiểm tra nếu đã chọn đủ số lượng bàn
+                        if (selectedMenus.list_table.length >= validationTable) {
+                            alert(`Bạn chỉ được chọn tối đa ${validationTable} bàn.`);
+                            return;
+                        }
+                    }
+
+                    $(this).toggleClass('selected')
+                    const tableId = $(this).data('table-id')
+                    const tableName = $(this).data('table-name')
+
+                    if ($(this).hasClass('selected')) {
+                        selectedMenus.list_table.push({ id: tableId, name: tableName })
+                    } else {
+                        selectedMenus.list_table = selectedMenus.list_table.filter(menu => menu.id !== tableId)
+                    }
+                })
+
+                $('#availableMenu').off('click').on('click', '.menu-info', function () {
+                    $(this).toggleClass('selected')
+                    const menuId = $(this).data('menu-id')
+                    const menuPrice = $(this).data('menu-price')
+                    const menuName = $(this).data('menu-name')
+
+                    if ($(this).hasClass('selected')) {
+                        selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
+                    } else {
+                        selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
+                    }
+                    PMD.renderSelectedMenus(selectedMenus)
+                    $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
+                })
+                PMD.searchMenuItem(selectedMenus)
+                PMD.quantityInput(selectedMenus)
+                PMD.checkButtonAddInvoice(selectedMenus, guestsReservation)
+                // }
             } else {
                 console.error('Dữ liệu hóa đơn không hợp lệ:', invoiceData)
                 return null
@@ -406,20 +432,23 @@
     //Button Add Invoice
     PMD.checkButtonAddInvoice = (item, guest, invoice = false) => {
         $(document).on('click', '.btnSaveInvoice', function () {
+            console.log(46654556);
             if (invoice == true) {
-                PMD.updateInvoice(item)
+                // PMD.updateInvoice(item)
             } else {
-                PMD.checkTableSelected(item, guest)
-                PMD.addInvoice(item)
+                console.log(item);
+                PMD.updateInvoiceDataDetail(item, guest)
+                // PMD.checkTableSelected(item, guest)
+                // PMD.addInvoice(item)
             }
-            $('#exampleModal').modal('hide')
+            // $('#exampleModal').modal('hide')
 
-            localStorage.setItem('showSuccessMessage', 'true')
+            // localStorage.setItem('showSuccessMessage', 'true')
 
             // Reload lại trang sau khi modal đóng
-            $('#exampleModal').on('hidden.bs.modal', function () {
-                window.location.reload()
-            })
+            // $('#exampleModal').on('hidden.bs.modal', function () {
+            // window.location.reload()
+            // })
         })
     }
     //End Button Add Invoice
@@ -596,53 +625,6 @@
     }
 
 
-    //Json Server
-    PMD.fetchData = async () => {
-        try {
-            const response = await fetch(urlData)
-            if (!response.ok) {
-                throw new Error('Mạng lỗi hoặc file không tồn tại.')
-            }
-            const data = await response.json()
-            return data
-        } catch (error) {
-            console.error('Lỗi:', error)
-        }
-    }
-
-    PMD.addInvoice = (item) => {
-        fetch(urlData, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-        })
-            .then(response => response.json())
-            .then(data => console.log('Thêm thành công:', data))
-            .catch(error => console.error('Lỗi khi thêm:', error))
-    }
-
-    PMD.updateInvoice = (item) => {
-        fetch(`${urlData}/${item.reservation_id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`)
-                }
-                return response.json()
-            })
-            .then(data => console.log('Cập nhật thành công:', data))
-            .catch(error => console.error('Lỗi khi cập nhật:', error))
-    }
-    //End Json Server
-
-
     PMD.randomCodeReservation = () => {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let code = '';
@@ -702,7 +684,6 @@
     //End Show Modal Data
     $(document).ready(function () {
         PMD.showSuccessMessage()
-        PMD.fetchData()
         PMD.selectArrived()
         PMD.checkArrived()
         PMD.fetchAvailableTables()

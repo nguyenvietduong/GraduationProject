@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Ajax;
 use App\Http\Controllers\Controller;
 use App\Mail\ReservationCancellationMail;
 use App\Models\Category;
+use App\Models\Invoice;
+use App\Models\Invoice_item;
 use App\Models\Reservation;
 use App\Models\ReservationDetail;
 use Carbon\Carbon;
@@ -102,11 +104,30 @@ class UpdateStatusReservation extends Controller
         return response()->json(['menus' => $categories]);
     }
 
+    public function getInvoiceItemData(Request $request)
+    {
+        $reservation_id = $request->input('reservation_id');
+        $reservationDetail = ReservationDetail::where('reservation_id', $reservation_id)->get();
+
+        $invoice = Invoice::where('reservation_id', $reservation_id)->first();
+
+        if ($invoice->id) {
+            $invoiceItem = Invoice_item::where('invoice_id', $invoice->id)->get();
+        }
+
+        dd($invoice);
+    }
+
+    public function updateInvoiceDataDetail(Request $request){
+        $data = $request->all();
+        dd($data);
+    }
+
     public function createNewReservation(Request $request)
     {
         $data = $request->all();
 
-        
+
         $data['reservation_time'] = Carbon::now()->timestamp;
         $data['created_at'] = Carbon::now()->timestamp;
         $data['updated_at'] = Carbon::now()->timestamp;
