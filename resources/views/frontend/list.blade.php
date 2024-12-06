@@ -162,7 +162,7 @@
                     <thead>
                         <tr class="bg-gray-100">
                             <th>#</th>
-                            <th>Mã hóa đơn</th>
+                            <th>Mã đơn đặt</th>
                             <th>Thời gian đặt</th>
                             <th>Số người</th>
                             <th>Ghi chú</th>
@@ -185,9 +185,10 @@
                                         @endif
                                     @endforeach
                                 </td>
-                                @if ($value->status == 'completed')
+                                @if ($value->status == 'completed' || $value->status == 'arrived')
                                     <td class="text-center">
                                         <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                            style="background-color: #008000; padding: 5px; border-radius: 5px;color: white" 
                                             onclick="toggleModal('{{ $value->id }}')">
                                             Xem chi tiết
                                         </button>
@@ -196,7 +197,7 @@
                                     <td class="text-center">
                                         <button 
                                             class="text-blue-500 hover:text-blue-700 focus:outline-none" 
-                                            style="background-color: rgb(5, 153, 49); padding: 5px; border-radius: 10px;" 
+                                            style="background-color: #333366; padding: 5px; border-radius: 5px;color: white" 
                                             id="btn-canceled-{{ $value->id }}" 
                                             onclick="cancelReservation('{{ route('reservation.canceled', $value->id) }}', {{ $value->id }})">
                                             Hủy đơn đặt bàn
@@ -212,9 +213,9 @@
                 @foreach ($listReservation as $value)
                     <div id="modal-{{ $value->id }}"
                         class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-                        <div class="bg-white rounded-lg shadow-lg w-1/2">
+                        <div class="bg-white rounded-lg shadow-lg" style="width: 1300px;min-height: 500px">
                             <div class="flex justify-between items-center p-4 border-b">
-                                <h2 class="text-lg font-semibold">Chi tiết hóa đơn</h2>
+                                <h2 class="text-lg font-semibold">Chi tiết đơn đặt bàn - {{ $value->code }}</h2>
 
                                 <button class="text-gray-500 hover:text-gray-700"
                                     onclick="toggleModal('{{ $value->id }}')">
@@ -303,21 +304,49 @@
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr>
-                                                    <td colspan="4" style="text-align: center">Tổng tiền</td>
-                                                    <td>{{ formatCurrency($totalAmountPayable) }} đ</td>
-                                                </tr>
+                                                @if ($value->status && $value->status == 'completed')
+                                                    <tr style="background-color: #98FB98">
+                                                        <td colspan="4" style="text-align: center">Tổng tiền</td>
+                                                        <td>{{ formatCurrency($totalAmountPayable) }} đ</td>
+                                                    </tr>
+                                                @else
+                                                    <tr>
+                                                        <td colspan="4" style="text-align: center">Tổng tiền món ăn</td>
+                                                        <td>{{ formatCurrency($totalAmountPayable) }} đ</td>
+                                                    </tr>
+                                                    {{-- <tr>
+                                                        <td colspan="4" style="text-align: center"><input type="text" name="" id="" placeholder="Nhập mã giảm giá" style="border: 1px solid black; padding-left: 5px; border-radius: 5px"> <input type="button" value="Tìm" style="padding: 2px;background-color: #008000;border-radius: 5px"></td>
+                                                        <td>- đ</td>
+                                                    </tr> --}}
+                                                    <tr style="background-color: #98FB98">
+                                                        <td colspan="4" style="text-align: center">Tổng tiền phải trả</td>
+                                                        <td id="totalAmountPayable">{{ formatCurrency($totalAmountPayable) }} đ</td>
+                                                    </tr>
+                                                @endif
                                             </tfoot>
                                         </table>
                                         </p>
                                     </div>
                                 @endif
                             </div>
-                            @if ($value->invoice && is_null($value->invoice->review))
+                            @if ($value->status && $value->status == 'completed')
+                                @if ($value->invoice && is_null($value->invoice->review))
+                                    <div class="flex justify-end p-4 border-t">
+                                        <button style="background-color: #00ffea;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;" 
+                                            onclick="toggleModalEvaluate('{{ $value->id }}')"
+                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
+                                            onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                                            Đánh giá ngay
+                                        </button>
+                                    </div>
+                                @endif
+                            @elseif($value->status && $value->status == 'arrived')
                                 <div class="flex justify-end p-4 border-t">
-                                    <button style="border: 1px solid black; border-radius: 15px; padding: 3px"
-                                        onclick="toggleModalEvaluate('{{ $value->id }}')">
-                                        Đánh giá ngay
+                                    <button style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;" 
+                                        onclick="pay()" 
+                                        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
+                                        onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                                        Thanh toán ngay
                                     </button>
                                 </div>
                             @endif
@@ -448,6 +477,10 @@
                 modalEvaluate.classList.add('hidden'); // Hide the evaluate modal
                 body.classList.remove('modal-open');
             }
+        }
+
+        function pay() {
+            alert(123);
         }
 
         // Close the modal by clicking on the overlay
