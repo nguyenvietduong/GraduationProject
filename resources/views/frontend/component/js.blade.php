@@ -5,6 +5,7 @@
 <script src="{{ asset('frontend/assets/libs/swiper/js/swiper.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/plugins.init.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 <script>
     flatpickr("#input-time", {

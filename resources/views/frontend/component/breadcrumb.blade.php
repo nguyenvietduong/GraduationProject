@@ -3,10 +3,11 @@
     $title = $title ?? '';
 @endphp
 <section
-    class="relative md:py-44 py-32 bg-[url('../..//frontend/assets/images/bg/pages.html')] bg-no-repeat bg-bottom bg-cover">
+    class="relative md:py-44 py-32 bg-no-repeat bg-bottom bg-cover"
+    style="background-image: url('{{ asset('frontend/assets/images/bg/bg1.jpg') }}')">
     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-slate-900/70"></div>
     <div class="container relative">
-        <div class="grid grid-cols-1 text-center mt-6">
+        <div class="grid grid-cols-1 text-center mt-2">
             <div>
                 <h5 class="md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white mb-0">
                     {{ $titleHeader }}
@@ -20,7 +21,8 @@
                 <li class="inline-block text-base text-white/50 mx-0.5 ltr:rotate-0 rtl:rotate-180"><i
                         class="mdi mdi-chevron-right"></i></li>
                 <li class="inline-block capitalize font-medium duration-500 ease-in-out text-white" aria-current="page">
-                    {{ $title }}</li>
+                    {{ $title }}
+                </li>
             </ul>
         </div>
     </div>

@@ -593,11 +593,11 @@ return [
 
     'reservation' => [
         'status' => [
-            'pending' => 'Đang chờ',
-            'confirmed' => 'Đã xác nhận',
+            'pending' => 'Đang chờ xác nhận',
+            'confirmed' => 'Xác nhận',
             'canceled' => 'Đã hủy',
-            'arrived' => 'Đã đến',
-            'completed' => 'Đã hoàn thành',
+            'arrived' => 'Đã đến cửa hàng',
+            'completed' => 'Hoàn thành',
         ],
         'fields' => [
             'table' => 'Bàn',

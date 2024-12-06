@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Favorite;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -67,9 +66,9 @@ class User extends Authenticatable
     }
 
     // App\Models\User.php
-    public function invoices()
+    public function reservation()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Reservation::class);
     }
 
     public function sentMessages(): HasMany
@@ -100,13 +99,11 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->belongsToMany(Notification::class, 'notification_user')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
-    
+
     public function favorites()
-{
-    return $this->belongsToMany(Menu::class, 'favorites');
-}
-
-
+    {
+        return $this->belongsToMany(Menu::class, 'favorites');
+    }
 }

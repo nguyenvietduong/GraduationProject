@@ -80,11 +80,11 @@ class ReservationService extends BaseService implements ReservationServiceInterf
             $reservation_time = \Carbon\Carbon::parse($data['date'] . ' ' . $data['input-time']);
             $data['reservation_time'] = $reservation_time;
 
-            $data['status'] = 'confirmed';
+            $data['status'] = 'pending';
 
             // Tạo mã ngẫu nhiên bao gồm chữ in hoa và số
             do {
-                $codeRandum = strtoupper(Str::random(6)); // Tạo chuỗi gồm cả chữ cái và số, sau đó chuyển thành chữ in hoa
+                $codeRandum = strtoupper(Str::random(9));
             } while (Reservation::where('code', $codeRandum)->exists());
 
             // Gán mã vào dữ liệu

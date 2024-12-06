@@ -218,11 +218,15 @@
                                             </style>
                                             <input type="text" class="form-control input-voucher"
                                                 placeholder="Nhập mã giảm giá" value="">
-                                            <span class="feedback-voucher"></span>
                                         </div>
                                         <div class="col-6">
                                             <button class="btn btn-secondary btn-apply-voucher">Tìm kiếm</button>
                                         </div>
+                                        <div class="row  my-2" id="render_voucher">
+                                            
+                                        </div>
+                                        <span class="feedback-voucher"></span>
+
                                     </div>
                                     <div>
                                         <label for="" class="py-2">Phương thức thanh toán</label> <br>
@@ -242,7 +246,7 @@
                                             <p>Tên ctk: NGUYEN VIET DUONG</p>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Đã thanh
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Thanh
                                         toán</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
@@ -258,6 +262,6 @@
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js?v=104') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
     @endpush
 @endsection

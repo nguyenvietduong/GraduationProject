@@ -43,6 +43,16 @@ class StatisticalController extends Controller
         return view(self::PATH_VIEW . __FUNCTION__, []);
     }
 
+    public function menu()
+    {
+        return view(self::PATH_VIEW . __FUNCTION__, []);
+    }
+
+    public function client()
+    {
+        return view(self::PATH_VIEW . __FUNCTION__, []);
+    }
+
     // Đơn hàng
     public function getRevenueStatistics(Request $request)
     {
@@ -205,51 +215,170 @@ class StatisticalController extends Controller
     }
 
     // Khách hàng 
-    public function getPopularReservationTimes(Request $request)
+    public function getCustomerStatistics(Request $request)
     {
-        // Get start and end date from the request
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
-        $limit = $request->input('limit', 10); // Default to 10 results
-
-        // If no start and end dates, use a default range from 1st Jan 2020 to now
-        if (!$startDate && !$endDate) {
-            $startDate = Carbon::parse('2020-01-01')->startOfDay();
-            $endDate = Carbon::now()->endOfDay();
-        } else {
-            $startDate = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::parse('2020-01-01')->startOfDay();
-            $endDate = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfDay();
-        }
-
-        // Fetch customers with the highest number of reservations
-        $topCustomers = $this->getTopCustomers($startDate, $endDate, $limit);
-
-        return response()->json(['top_customers' => $topCustomers]);
-    }
-
-    private function getTopCustomers($startDate, $endDate, $limit)
-    {
-        // Get the customer data with reservation count
-        $customerData = Reservation::where('status', 'completed')->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('name, email, phone, COUNT(*) as reservation_count')
-            ->groupBy('name', 'email', 'phone') // Group by customer details
-            ->orderByDesc('reservation_count') // Order by the highest reservation count
-            ->limit($limit)
-            ->get();
-
-        // Prepare the result with detailed customer information
+        $day = $request->input('day');
+        $month = $request->input('month');
+        $year = $request->input('year');
         $result = [];
-        foreach ($customerData as $data) {
-            $result[] = [
-                'name' => $data->name,
-                'email' => $data->email,
-                'phone' => $data->phone,
-                'reservation_count' => $data->reservation_count
-            ];
+
+        // Xử lý logic dựa trên các tham số được gửi lên
+        if (!$year && !$month && !$day) {
+            $day = Carbon::now()->day;
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+
+            $result = $this->calculateCustomerCount($day, $month, $year);
+        } elseif ($year && !$month && !$day) {
+            if ($year != 'all') {
+                $result = $this->calculateYearlyCustomers($year);
+            } else {
+                $result = $this->calculateYearlyCustomerCount();
+            }
+        } elseif (!$year && $month && !$day) {
+            $month = $month;
+            $year = Carbon::now()->year;
+            $result = $this->calculateCustomerCount($day, $month, $year);
+        } elseif ($year && $month && !$day) {
+            $month = $month;
+            $year = $year;
+            $result = $this->calculateCustomerCount($day, $month, $year);
+        } elseif (!$year && !$month && $day) {
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+            $result = $this->calculateCustomerCount($day, $month, $year);
+        } elseif (!$year && $month && $day) {
+            $month = $month;
+            $year = Carbon::now()->year;
+            $result = $this->calculateCustomerCount($day, $month, $year);
+        } elseif ($year && !$month && $day) {
+            $month = Carbon::now()->month;
+            $year = $year;
+            $result = $this->calculateCustomerCount($day, $month, $year);
+        } else if ($year && $month && $day) {
+            $result = $this->calculateCustomerCount($day, $month, $year);
         }
 
-        return $result;
+        return response()->json(['customer_statistics' => $result]);
     }
+
+    // Thêm một phương thức mới để tính số lượng khách hàng theo năm
+    private function calculateYearlyCustomers($year)
+    {
+        // Lấy tổng số khách hàng đến theo từng tháng
+        $userData = Invoice::where('invoices.status', 'paid') // Chỉ rõ 'invoices.status'
+            ->whereYear('invoices.created_at', $year) // Chỉ rõ 'invoices.created_at'
+            ->selectRaw('MONTH(invoices.created_at) as month, COUNT(*) as user_count') // Không đổi
+            ->groupBy('month') // Không đổi
+            ->orderBy('month') // Không đổi
+            ->pluck('user_count', 'month') // Không đổi
+            ->toArray();    
+    
+        // Khởi tạo kết quả cho 12 tháng, mặc định là 0
+        $result = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $result['Tháng ' . $month] = $userData[$month] ?? 0; // Nếu không có dữ liệu, trả về 0
+        }
+    
+        return $result;
+    }    
+
+    private function calculateYearlyCustomerCount()
+    {
+        // Define start and end years
+        $startDate = 2020;
+        $endDate = Carbon::now()->year;
+        
+        // Query the customer count data based on the selected years
+        $user_count = Invoice::where('status', 'paid') // Removed 'invoices.' as it's not necessary
+            ->whereBetween('created_at', [
+                Carbon::createFromDate($startDate, 1, 1),
+                Carbon::createFromDate($endDate, 12, 31)
+            ])
+            ->selectRaw('YEAR(created_at) as year, COUNT(*) as user_count') // Select year and count
+            ->groupBy('year') // Group by year
+            ->orderBy('year') // Order by year
+            ->pluck('user_count', 'year') // Pluck by year
+            ->toArray();
+        
+        // Create a range of years from 2020 to the current year
+        $years = range($startDate, $endDate);
+        
+        // Prepare the result
+        $result = [];
+        foreach ($years as $year) {
+            // If no data for the year, set count to 0
+            $result['Năm ' . $year] = $user_count[$year] ?? 0;
+        }
+        
+        return $result;
+    }    
+
+    private function calculateCustomerCount($day = null, $month = null, $year = null)
+    {
+        $customerData = [];
+    
+        // Handle customer count for a specific month
+        if (!$day && $month && $year) {
+            $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+            $endOfMonth = $startOfMonth->copy()->endOfMonth();
+    
+            $defaultCustomerData = [];
+            for ($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay()) {
+                $defaultCustomerData[$date->toDateString()] = 0;
+            }
+    
+            // Query to count unique customers (by name, email, phone) per day in the given month
+            $reservations = Invoice::where('invoices.status', 'paid')
+                ->selectRaw('DATE(created_at) as day, COUNT(*) as customer_count')
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->groupBy('day')
+                ->orderBy('day')
+                ->get();
+    
+            // Map results to default data structure
+            foreach ($reservations as $reservation) {
+                $defaultCustomerData[$reservation->day] = $reservation->customer_count;
+            }
+    
+            return $defaultCustomerData;
+        }
+
+        else if ($day && $month && $year) {
+            $specificDate = Carbon::create($year, $month, $day)->startOfDay();
+            $startHour = 7;
+            $endHour = 22;
+        
+            // Initialize an array for the specified hours with customer count = 0
+            $defaultCustomerData = [];
+            for ($hour = $startHour; $hour <= $endHour; $hour++) {
+                $hourKey = $specificDate->copy()->addHours($hour)->format('H:00');
+                $defaultCustomerData[$hourKey] = 0;
+            }
+        
+            // Query to count unique customers (by name, email, phone) per hour on the given day
+            $reservations = Invoice::where('invoices.status', 'paid')
+                ->selectRaw('HOUR(created_at) as hour, COUNT(*) as customer_count')
+                ->whereDate('created_at', $specificDate)  // Ensure it's for the correct date
+                ->whereBetween(DB::raw('HOUR(created_at)'), [$startHour, $endHour]) // Restrict hours range
+                ->groupBy('hour')
+                ->orderBy('hour')
+                ->get();
+        
+            // Map results to the data structure for each hour
+            foreach ($reservations as $reservation) {
+                if (isset($reservation->hour)) {
+                    $hourKey = str_pad($reservation->hour, 2, '0', STR_PAD_LEFT) . ':00';
+                    $defaultCustomerData[$hourKey] = $reservation->customer_count;
+                }
+            }
+        
+            return $defaultCustomerData;
+        }
+        
+        return $customerData;
+    }
+    
 
     // Món ăn
     public function getMenuItemsWithReservationCounts(Request $request)

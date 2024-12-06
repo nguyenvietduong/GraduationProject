@@ -23,7 +23,7 @@ function exportPDFClient() {
     } = window.jspdf;
     const pdf = new jsPDF();
 
-    const canvas = document.getElementById('clientChart');
+    const canvas = document.getElementById('customerChart');
 
     if (canvas) {
         const imgData = canvas.toDataURL('image/png');

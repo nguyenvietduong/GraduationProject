@@ -22,7 +22,7 @@ use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\SearchController;
 use App\Http\Controllers\Backend\StatisticalController;
 
-Route::middleware(['auth', 'role:1, 2'])->group(function () {
+Route::middleware(['auth', 'role:1, 2, 3'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
         Route::get('/index', [DashboardController::class  , "index"])->name('admin.dashboard.index');
@@ -171,9 +171,11 @@ Route::middleware(['auth', 'role:1, 2'])->group(function () {
         });
 
         Route::prefix('statistical')->group(function () {
-            Route::get('', [StatisticalController::class, 'index'])->name('admin.statistical.index');
+            Route::get('revenue', [StatisticalController::class, 'index'])->name('admin.statistical.index');
+            Route::get('menu', [StatisticalController::class, 'menu'])->name('admin.statistical.menu');
+            Route::get('client', [StatisticalController::class, 'client'])->name('admin.statistical.client');
             Route::get('revenue-statistics', [StatisticalController::class, 'getRevenueStatistics']);
-            Route::get('top-clients', [StatisticalController::class, 'getPopularReservationTimes']);
+            Route::get('top-clients', [StatisticalController::class, 'getCustomerStatistics']);
             Route::get('top-menus', [StatisticalController::class, 'getMenuItemsWithReservationCounts']);
             Route::get('top-tables', [StatisticalController::class, 'getTableReservationStats']);
 

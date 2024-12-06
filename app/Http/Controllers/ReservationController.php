@@ -66,7 +66,7 @@ class ReservationController extends Controller
     {
         // Validate the data from the request using ReservationStoreRequest
         $data = $request->validated();
-        
+
         try {
             // Create a new reservation
             $reservationNew = $this->reservationService->createReservation($data);
@@ -107,12 +107,12 @@ class ReservationController extends Controller
             'duration' => 'required|integer|min:1',
         ]);
 
-        $date = $request->input('date'); 
+        $date = $request->input('date');
         $time = $request->input('time');
-        $duration = $request->input('duration'); 
+        $duration = $request->input('duration');
 
         $reservationStartTime = \Carbon\Carbon::parse("$date $time");
-        $reservationEndTime = $reservationStartTime->copy()->addHours($duration); 
+        $reservationEndTime = $reservationStartTime->copy()->addHours($duration);
 
         $reservedTableIds = Reservation::whereBetween('reservation_time', [$reservationStartTime, $reservationEndTime])
             ->pluck('table_id');
@@ -120,7 +120,7 @@ class ReservationController extends Controller
         $availableTables = Table::whereNotIn('id', $reservedTableIds)->get();
 
         $totalTables = Table::count();
-        $availableCount = $availableTables->count(); 
+        $availableCount = $availableTables->count();
 
         return response()->json([
             'available' => $availableTables,
@@ -131,11 +131,11 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function detail($reservationId) 
+    public function detail($reservationId)
     {
         // Tìm đơn hàng dựa vào ID
         $reservation = Reservation::find($reservationId);
-        
+
         // Kiểm tra nếu đơn hàng tồn tại
         if ($reservation) {
             return response()->json([
@@ -148,23 +148,33 @@ class ReservationController extends Controller
                 'message' => 'Reservation not found.'
             ], 404);
         }
-    }    
+    }
 
-    public function canceled($reservationId) 
+    public function canceled($reservationId)
     {
-        $updated = Reservation::where('id', $reservationId)->update(['status' => 'canceled']);
+        $reservation = Reservation::find($reservationId);
     
-        // Kiểm tra xem bản ghi có được cập nhật thành công hay không
-        if ($updated) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Reservation has been canceled successfully.'
-            ]);
-        } else {
+        if (!$reservation) {
             return response()->json([
                 'success' => false,
-                'message' => 'Reservation not found or could not be canceled.'
+                'message' => 'Reservation not found.'
             ], 404);
         }
+    
+        if ($reservation->status === 'pending') {
+            $reservation->update(['status' => 'canceled']);
+    
+            return response()->json([
+                'success' => true,
+                'data' => $reservation->status,
+                'message' => 'Reservation has been canceled successfully.'
+            ]);
+        }
+    
+        return response()->json([
+            'success' => false,
+            'data' => $reservation->status,
+            'message' => 'Reservation could not be canceled because it is not pending.'
+        ], 400);
     }    
 }

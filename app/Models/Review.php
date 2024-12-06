@@ -10,19 +10,18 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'invoice_id',
         'rating',
         'comment',
         'status'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class); // Giả sử bạn có model User
-    }
-
     public function countNewReviews(): int
     {
         return Review::where('status', 'pending')->count(); // Adjust the condition based on your criteria
+    }
+
+    public function invoice() {
+        return $this->belongsTo(Invoice::class);
     }
 }

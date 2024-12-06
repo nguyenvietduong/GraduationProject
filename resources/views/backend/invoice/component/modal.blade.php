@@ -1,3 +1,4 @@
+@if(isset($data->invoice->invoiceItems))
 <div class="modal fade bd-example-modal-xl-{{ $data->id }}" id="bd-example-modal-xl-{{ $data->id }}" tabindex="-1"
     role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -74,8 +75,8 @@
                                                 @if (isset($promotion))
                                                     <tr>
                                                         <td colspan="3">
-                                                            Mã giảm giá đã sử dụng: <span
-                                                                style="text-transform: uppercase;">{{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
+                                                            Mã giảm giá: <span
+                                                                style="text-transform: uppercase;">{{ $promotionDetail->promotion->title ?? 'Không có dữ liệu' }} - {{ $promotionDetail->promotion->code ?? 'Không có dữ liệu' }}</span>
                                                         </td>
                                                         <td>
                                                             - {{ number_format($voucher_discount ?? 0, 0, ',', '.') }} đ
@@ -142,8 +143,10 @@
                 </div>
             </div><!--end modal-body-->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Đóng</button>
             </div><!--end modal-footer-->
         </div><!--end modal-content-->
     </div><!--end modal-dialog-->
 </div>
+
+@endif

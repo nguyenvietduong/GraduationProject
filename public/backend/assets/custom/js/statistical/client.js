@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // VẼ BIỂU ĐỒ
 
-    let revenueChart = null;
+    let customerChart = null;
 
     fetchRevenueData('revenue');  
 
@@ -57,24 +57,24 @@ $(document).ready(function () {
 
         function fetchDataAndRenderChart(day, month, year) {
             $('.loading-spinner').show();
-            $('#revenueChart').hide();
+            $('#customerChart').hide();
             $('.no-data-message').hide();
 
             $.ajax({
-                url: '/admin/statistical/revenue-statistics',
+                url: '/admin/statistical/top-clients',
                 method: 'GET',
                 data: { day, month, year },
                 success: function (response) {
                     $('.loading-spinner').hide();
-
+                    
                     const periods = [];
                     const revenues = [];
 
-                    // Iterate through the revenue_statistics object
-                    for (let month in response.revenue_statistics) {
-                        if (response.revenue_statistics.hasOwnProperty(month)) {
+                    // Iterate through the customer_statistics object
+                    for (let month in response.customer_statistics) {
+                        if (response.customer_statistics.hasOwnProperty(month)) {
                             periods.push(month); // Add month to periods array
-                            revenues.push(response.revenue_statistics[month]); // Add corresponding revenue to revenues array
+                            revenues.push(response.customer_statistics[month]); // Add corresponding revenue to revenues array
                         }
                     }
 
@@ -84,13 +84,13 @@ $(document).ready(function () {
                         return;
                     }
 
-                    $('#revenueChart').show();
+                    $('#customerChart').show();
 
-                    if (revenueChart) {
-                        revenueChart.destroy(); // Destroy the previous chart if exists
+                    if (customerChart) {
+                        customerChart.destroy(); // Destroy the previous chart if exists
                     }
 
-                    const ctx = document.getElementById('revenueChart').getContext('2d');
+                    const ctx = document.getElementById('customerChart').getContext('2d');
                     let labelRevenueChart = '';
                     let titleText = '';
                     if (day == '' && month == '' && year != '') {
@@ -128,12 +128,12 @@ $(document).ready(function () {
                     }
 
                     // Ensure type is 'line'
-                    revenueChart = new Chart(ctx, {
+                    customerChart = new Chart(ctx, {
                         type: 'line', // Ensure line chart
                         data: {
                             labels: periods, // Set periods as labels (e.g., days, months, or years)
                             datasets: [{
-                                label: 'Doanh thu ' + labelRevenueChart,
+                                label: 'Số lượng khách ' + labelRevenueChart,
                                 data: revenues, // Revenue data
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
                                 borderColor: 'rgba(75, 192, 192, 1)', // Line color
@@ -153,10 +153,7 @@ $(document).ready(function () {
                                 tooltip: {
                                     callbacks: {
                                         label: function (tooltipItem) {
-                                            return `Doanh thu: ${new Intl.NumberFormat('vi-VN', {
-                                                style: 'currency',
-                                                currency: 'VND'
-                                            }).format(tooltipItem.raw)}`;
+                                            return `Số lượng khách: ${tooltipItem.raw} người`;
                                         }
                                     }
                                 }
@@ -166,16 +163,7 @@ $(document).ready(function () {
                                     title: { display: true, text: 'Thời gian ' + titleText }
                                 },
                                 y: {
-                                    title: { display: true, text: 'Doanh thu (VND)' },
-                                    ticks: {
-                                        beginAtZero: true,
-                                        callback: function (value) {
-                                            return new Intl.NumberFormat('vi-VN', {
-                                                style: 'currency',
-                                                currency: 'VND'
-                                            }).format(value);
-                                        }
-                                    }
+                                    title: { display: true, text: 'Số lượng khách (Người)' },
                                 }
                             }
                         }

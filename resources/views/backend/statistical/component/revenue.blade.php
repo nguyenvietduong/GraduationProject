@@ -4,7 +4,7 @@
             <div class="row mt-2">
                 <div class="col-md-3 d-flex align-items-center">
                     <label for="day" class="form-label me-2 mb-0">Ngày</label>
-                    <input type="number" name="day" id="day" class="form-control">
+                    <input type="number" name="day" id="day" class="form-control" min="1" max="31">
                 </div>
                 <div class="col-md-3 d-flex align-items-center">
                     <label for="month" class="form-label me-2 mb-0">Tháng</label>

@@ -32,7 +32,7 @@
                     <!-- Thêm id cho label -->
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control" id="start_price" name="start_price" step="0.1"
+                    <input type="number" class="form-control" id="start_price" name="start_price" step=""
                         value="{{ request('start_price') ?: old('start_price') }}">
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <!-- Thêm id cho label -->
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control" id="end_price" name="end_price" step="0.1"
+                    <input type="number" class="form-control" id="end_price" name="end_price" step=""
                         value="{{ request('end_price') ?: old('end_price') }}">
                 </div>
             </div>
@@ -66,7 +66,7 @@
             @endphp
             <div class="col-6" style="padding: 2px">
                 <select name="status" class="form-select  filter ">
-                    <option value="">--chọn--</option>
+                    <option value="">--Trạng thái--</option>
                     @foreach ($statuses as $key => $option)
                         <option value="{{ $key }}" {{ $status == $key ? 'selected' : '' }}>
                             {{ $option }}
@@ -79,7 +79,7 @@
             @endphp
             <div class="col-6" style="padding: 2px">
                 <select name="category" class="form-select  filter ">
-                    <option value="">--chọn--</option>
+                    <option value="">--Danh mục--</option>
                     @foreach ($categories as $category)
                         <option value="{{$category->id}}" {{ $categoryOld == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
