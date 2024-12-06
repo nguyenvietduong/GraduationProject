@@ -109,22 +109,18 @@
 
                     </td>
 
-                    <!-- <td class="text-end">
-                <div class="d-flex align-items-center">
-                    <a href="{{ route(__('messages.' . $object . '.edit.route'), $data->id) }}" class="me-2">
-                        <i class="fas fa-edit btn btn-primary btn-sm"></i>
-                    </a>
-                    <form action="{{ route(__('messages.' . $object . '.destroy.route'), $data->id) }}"
-                        method="post" class="d-inline-block" id="myForm_{{ $data->id }}">
-                        @csrf
-                        @method('DELETE')
-                        <button onclick="executeExample('handleDismiss', 'myForm_{{ $data->id }}')" type="button"
-                            class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </form>
-                </div>
-            </td> -->
+                    <td class="text-end">
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route(__('messages.' . $object . '.edit.route'), $data->id) }}" class="me-2">
+                                <button class=" btn btn-primary">Đặt món</button>
+                            </a>
+
+                            <button onclick="executeExample('handleDismiss', 'myForm_{{ $data->id }}')"
+                                type="button" class="btn btn-warning">
+                                Thanh toán
+                            </button>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
         @else

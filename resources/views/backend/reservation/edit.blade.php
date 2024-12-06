@@ -8,13 +8,12 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <h4 class="card-title mb-3">{{ __('messages.system.button.update') }}
-                                    {{ __('messages.' . $object . '.title') }} - {{ $promotionData->code }}</h4>
-                                <h6 class="text-danger">{{ __('messages.promotion.system.warning') }} </h6>
+                                    {{ __('messages.' . $object . '.title') }} mã : {{ $reservationData->code }}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
-                @include('backend.promotion.component.form.edit_form')
+                @include('backend.reservation.component.form.edit_form')
             </div>
         </div>
     </div>

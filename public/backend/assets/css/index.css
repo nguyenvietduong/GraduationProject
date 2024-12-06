@@ -13,7 +13,8 @@
     gap: 10px;
 } */
 .menu-info {
-    flex: 0 1 calc(20% - 10px); /* Đặt chiều rộng cho mỗi phần tử, đảm bảo vừa 5 phần tử trên 1 dòng */
+    flex: 0 1 calc(20% - 10px);
+    /* Đặt chiều rộng cho mỗi phần tử, đảm bảo vừa 5 phần tử trên 1 dòng */
     box-sizing: border-box;
 }
 
@@ -22,6 +23,41 @@
 }
 
 .footer-left {
-    text-align: left; /* Căn chữ bên trái */
-    flex-grow: 1;    /* Đẩy nội dung khác về phía bên phải */
+    text-align: left;
+    /* Căn chữ bên trái */
+    flex-grow: 1;
+    /* Đẩy nội dung khác về phía bên phải */
+}
+
+.table-info {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.table-info.selected {
+    border-color: #007bff;
+    background-color: #e0f7ff;
+}
+
+.menu-info {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.menu-info:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.menu-info.selected {
+    border-color: #007bff;
+    background-color: #e0f7ff;
 }
