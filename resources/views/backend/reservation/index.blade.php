@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-12">
                 @include('backend.reservation.component.filter.card', [
-                    'title' => __('messages.system.table.title') . ' đơn hàng',
+                    'title' => __('messages.system.table.title') . ' đơn hàng đã đến',
                     'totalRecords' => $totalRecords,
                 ])
 
@@ -207,7 +207,7 @@
                                     <h5 style="display: none" class="voucher-discount"></h5>
                                     <h5>Tổng thanh toán : <span class="total-payment">0</span></h5>
                                     <hr>
-                                    <label>Nhập mã giảm giá</label>
+                                    <label>Mã giảm giá</label>
                                     <div class="row mt-3">
                                         <div class="col-6">
                                             <style>
@@ -221,7 +221,7 @@
                                             <span class="feedback-voucher"></span>
                                         </div>
                                         <div class="col-6">
-                                            <button class="btn btn-secondary btn-apply-voucher">Nhập mã giảm giá</button>
+                                            <button class="btn btn-secondary btn-apply-voucher">Tìm kiếm</button>
                                         </div>
                                     </div>
                                     <div>

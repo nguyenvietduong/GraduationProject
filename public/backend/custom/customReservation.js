@@ -191,8 +191,11 @@
     }
 
     PMD.renderTdMenu = (accountId) => {
+        // let invoiceData = PMD.fetchData()
         let reservation = $('.tdReservation-' + accountId)
         let reservationId = reservation.attr('data-reservation')
+        // let invoiceDetail = invoiceData.find(item => item.reservation_id == reservationId)
+        // console.log(123123);
         let tableId = reservation.attr('data-table')
         let dataGuest = reservation.attr('data-guest')
         let dataCode = reservation.attr('data-reservation-code')
@@ -206,6 +209,12 @@
             dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
+        // if (invoiceDetail.length > 0) {
+        //     html += `
+        //     <button class="btn btn-warning" data-bs-toggle="modal"
+        //     dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
+        //     `
+        // }
         return reservation.append(html)
     }
     //End Render Data Table & Menus
