@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Ajax\UpdatePositionTable;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
@@ -45,6 +46,7 @@ Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailable
 Route::get('get-data-search-menu', [UpdateStatusReservation::class, 'getDataSearchleMenus']);
 Route::get('get-invoice-item-data', [UpdateStatusReservation::class, 'getInvoiceItemData']);
 Route::post('create-new-reservation', [UpdateStatusReservation::class, 'createNewReservation']);
+Route::post('create-invoice-detail', [UpdateStatusReservation::class, 'createInvoiceDataDetail']);
 Route::post('update-invoice-detail', [UpdateStatusReservation::class, 'updateInvoiceDataDetail']);
 
 

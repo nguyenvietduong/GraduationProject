@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Mail\ReservationConfirmed;
 use App\Models\Menu;
 use App\Models\Table;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class UpdateStatusReservation extends Controller
@@ -108,26 +109,100 @@ class UpdateStatusReservation extends Controller
     {
         $reservation_id = $request->input('reservation_id');
         $reservationDetail = ReservationDetail::where('reservation_id', $reservation_id)->get();
-
         $invoice = Invoice::where('reservation_id', $reservation_id)->first();
 
-        if ($invoice->id) {
-            $invoiceItem = Invoice_item::where('invoice_id', $invoice->id)->get();
+        if (!empty($invoice)) {
+
+            $data = [
+                'invoice_id' => $invoice->id,
+                'reservation_id' => $reservation_id,
+                'total_amount' => $invoice->total_amount ?? 0,
+                'list_table' => [],
+                'invoice_item' => [],
+            ];
+
+            foreach ($reservationDetail as $detail) {
+                $data['list_table'][] = [
+                    'id' => $detail->table_id,
+                    'name' => $detail->table->name ?? 'Chưa có tên bàn',
+                ];
+            }
+
+            if ($invoice && $invoice->invoiceItems) {
+                foreach ($invoice->invoiceItems as $item) {
+                    $data['invoice_item'][] = [
+                        'id' => $item->menu_id,
+                        'name' => $item->menu->name,
+                        'quantity' => $item->quantity,
+                        'price' => $item->price,
+                        'total' => $item->quantity * $item->price,
+                    ];
+                }
+            }
+        } else {
+            $data = [];
         }
 
-        dd($invoice);
+        return response()->json($data);
     }
 
-    public function updateInvoiceDataDetail(Request $request){
+    public function createInvoiceDataDetail(Request $request)
+    {
         $data = $request->all();
-        dd($data);
+
+        $invoice = Invoice::create([
+            'reservation_id' => $data['reservation_id'],
+            'total_amount' => $data['total_amount'],
+        ]);
+
+        foreach ($data['list_table'] as $table) {
+            ReservationDetail::create([
+                'reservation_id' => $data['reservation_id'],
+                'table_id' => $table['id'],
+            ]);
+        }
+
+        foreach ($data['invoice_item'] as $item) {
+            Invoice_item::create([
+                'invoice_id' => $invoice->id,
+                'menu_id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+                'total' => $item['total'],
+            ]);
+        }
+        return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
+    }
+
+    public function updateInvoiceDataDetail(Request $request)
+    {
+        $data = $request->all();
+        $invoiceItems = $request->input('invoice_item', []);
+
+        $invoice = Invoice::findOrFail($data['invoice_id']);
+
+        $invoice->update(['total_amount' => $data['total_amount']]);
+
+        $invoice->invoiceItems()->delete();
+
+        foreach ($invoiceItems as $item) {
+            $invoice->invoiceItems()->create([
+                'invoice_id' => $data['invoice_id'],
+                'menu_id' => $item['id'],
+                'name' => $item['name'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+            ]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
     }
 
     public function createNewReservation(Request $request)
     {
         $data = $request->all();
 
-
+        dd($data);
         $data['reservation_time'] = Carbon::now()->timestamp;
         $data['created_at'] = Carbon::now()->timestamp;
         $data['updated_at'] = Carbon::now()->timestamp;
