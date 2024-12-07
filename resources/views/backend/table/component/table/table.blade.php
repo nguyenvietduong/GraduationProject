@@ -2,16 +2,14 @@
     <thead class="table-light">
         <tr>
             <th style="width: 16px;">
-                <div class="form-check mb-0 ms-n1">
-                    <input type="checkbox" class="form-check-input" name="select-all" id="select-all">
-                </div>
+                <div class="form-check mb-0 ms-n1"></div>
             </th>
             <th class="ps-0">#</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.name') }}</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.capacity') }}</th>
             <th class="ps-0">{{ __('messages.' . $object . '.fields.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
-            <th>{{ __('messages.system.table.fields.action') }}</th>
+            <th style="display: {{ checkBladeAdmin() }}">{{ __('messages.system.table.fields.action') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -19,10 +17,7 @@
         @foreach ($tables as $item)
         <tr class="">
             <td style="width: 16px;">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" value="{{ $item->id }}" name="check"
-                        id="customCheck{{ $item->id }}">
-                </div>
+                <div class="form-check"></div>
             </td>
             <td class="ps-0">
                 {{ $item->id ?? __('messages.system.no_data_available') }}
@@ -55,7 +50,7 @@
             <td>
                 <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available') }}</span>
             </td>
-            <td>
+            <td style="display: {{ checkBladeAdmin() }}">
                 <div class="d-flex align-items-center">
                     <a href="{{ route(__('messages.' . $object . '.edit.route'), $item->id) }}" class="me-2">
                         <i class="fas fa-edit btn btn-primary btn-sm"></i>

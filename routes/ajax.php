@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\Ajax\UpdateStatusMenu;
 use App\Http\Controllers\Backend\Ajax\UpdatePositionTable;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusCategory;
 use App\Http\Controllers\Backend\Ajax\UpdateStatusReservation;
+use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\ReservationController as BackendReservationController;
@@ -43,7 +44,11 @@ Route::post('admin/reservation/updateTableStatus', [UpdateStatusReservation::cla
 Route::get('get-available-tables', [UpdateStatusReservation::class, 'getAvailableTables']);
 Route::get('get-available-menus', [UpdateStatusReservation::class, 'getAvailableMenus']);
 Route::get('get-data-search-menu', [UpdateStatusReservation::class, 'getDataSearchleMenus']);
+Route::get('get-invoice-item-data', [UpdateStatusReservation::class, 'getInvoiceItemData']);
 Route::post('create-new-reservation', [UpdateStatusReservation::class, 'createNewReservation']);
+Route::post('create-invoice-detail', [UpdateStatusReservation::class, 'createInvoiceDataDetail']);
+Route::post('update-invoice-detail', [UpdateStatusReservation::class, 'updateInvoiceDataDetail']);
+
 
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');
 Route::post('admin/blog/updateStatus', [UpdateStatusBlog::class, 'updateStatus'])->name('admin.blog.updateStatus');
@@ -52,7 +57,7 @@ Route::post('admin/category/updateStatus', [UpdateStatusCategory::class, 'update
 Route::post('admin/table/updatePositions', [UpdatePositionTable::class, 'updatePositions'])->name('admin.table.updatePositions');
 Route::post('blog/upload', [BlogController::class, 'uploadImage'])->name('blog.upload');
 Route::get('reservation/{id}/detail', [ReservationController::class, 'detail'])->where('id', '[0-9]+');
-Route::get('reservation/{reservationId}/canceled', [ReservationController::class, 'canceled']);
+Route::get('reservation/{id}/canceled', [ReservationController::class, 'canceled'])->name('reservation.canceled');
 
 Route::get('table/updateStatus', [TableController::class, 'updateStatus']);
 
@@ -66,6 +71,7 @@ Route::get('notifications/index', [NotificationController::class, 'index'])->nam
 Route::get('notifications/search', [NotificationController::class, 'search'])->name('notification.search');
 Route::post('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 Route::get('count-new-notifications-endpoint', [NotificationController::class, 'countUnreadNotifications']);
+Route::get('seed-all', [NotificationController::class, 'seedAll']);
 
 Route::post('check-availability', [ReservationController::class, 'checkAvailability'])->name('check.availability');
 Route::get('checkTable', [BackendReservationController::class, 'checkTableFullyBookedTimes'])->name('checkTableFullyBookedTimes');
@@ -100,3 +106,5 @@ Route::post('/remove-temp-image', function (Request $request) {
 })->name('image.removeTemp');
 
 Route::get("/checkVoucher", [AjaxPromotion::class, "getDetailVoucher"]);
+Route::get("/searchVoucher", [AjaxPromotion::class, "searchVoucher"]);
+Route::get("/getAllVoucher", [AjaxPromotion::class, "getAllVoucher"]);

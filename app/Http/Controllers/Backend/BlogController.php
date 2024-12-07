@@ -108,6 +108,10 @@ class BlogController extends Controller
             // Create a new blog
             $this->blogService->createBlog($data);
 
+            if (session('image_blog_temp') != null) {
+                session()->forget('image_blog_temp');        
+            }
+
             return redirect()->back()->with('success', 'Blog created successfully');
         } catch (\Exception $e) {
 
@@ -148,24 +152,6 @@ class BlogController extends Controller
         $data = $request->validated();
 
         try {
-            $title = 'Blog';
-            $message = 'edited blog!';
-
-            Log::info('Starting update process for blog ID: ' . $id); // Log thông tin
-
-            event(new NotificationEvent($title, $message, 'info', Auth::user()->full_name));
-            // dispatch(new SendNotificationJob($title, $message, 'info', Auth::user()->full_name)); // Thay thế 'info' và $review nếu cần
-
-            $dataNotification = [
-                'user_id' => Auth::user()->id,  // ID của người gửi thông báo
-                'title' => $title,
-                'message' => $message,
-            ];
-
-            Log::info('Preparing notification data: ', $dataNotification); // Log thông tin
-
-            $this->notificationService->createNotification($dataNotification);
-
             // Update the blog
             $this->blogService->updateBlog($id, $data);
 

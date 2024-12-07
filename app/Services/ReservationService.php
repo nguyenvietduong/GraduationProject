@@ -80,7 +80,7 @@ class ReservationService extends BaseService implements ReservationServiceInterf
             $reservation_time = \Carbon\Carbon::parse($data['date'] . ' ' . $data['input-time']);
             $data['reservation_time'] = $reservation_time;
 
-            $data['status'] = 'confirmed';
+            $data['status'] = 'pending';
 
             // Tạo mã ngẫu nhiên bao gồm chữ in hoa và số
             do {

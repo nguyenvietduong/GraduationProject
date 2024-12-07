@@ -143,6 +143,10 @@
             margin: 5px 0;
             /* Khoảng cách giữa các mục danh sách */
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 
     @include('frontend.component.breadcrumb', [
@@ -162,7 +166,7 @@
                             <th>Thời gian đặt</th>
                             <th>Số người</th>
                             <th>Ghi chú</th>
-                            <th>Trạng thái</th>
+                            <th>Trạng thái đơn hàng</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -174,7 +178,7 @@
                                 <td>{{ $value->reservation_time }}</td>
                                 <td>{{ $value->guests }}</td>
                                 <td>{{ $value->special_request }}</td>
-                                <td>
+                                <td id="statusReservation-{{$value->id}}">
                                     @foreach (__('messages.reservation.status') as $statusKey => $statusValue)
                                         @if ($statusKey == $value->status)
                                             {{ $statusValue }}
@@ -185,8 +189,18 @@
                                     <td class="text-center">
                                         <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
                                             onclick="toggleModal('{{ $value->id }}')">
-                                            <i class="fas fa-eye"></i>
+                                            Xem chi tiết
                                         </button>
+                                    </td>
+                                @elseif ($value->status == 'pending')
+                                    <td class="text-center">
+                                        <button 
+                                            class="text-blue-500 hover:text-blue-700 focus:outline-none" 
+                                            style="background-color: rgb(5, 153, 49); padding: 5px; border-radius: 10px;" 
+                                            id="btn-canceled-{{ $value->id }}" 
+                                            onclick="cancelReservation('{{ route('reservation.canceled', $value->id) }}', {{ $value->id }})">
+                                            Hủy đơn đặt bàn
+                                        </button>                                                           
                                     </td>
                                 @endif
                             </tr>
@@ -386,6 +400,39 @@
                 modal.classList.add('hidden');
                 body.classList.remove('modal-open');
             }
+        }
+
+        function cancelReservation(url, id) {
+            let btnCancel = $(`#btn-canceled-${id}`);
+            let statusReservation = $(`#statusReservation-${id}`);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        btnCancel.addClass('hidden');
+                        statusReservation.html('Đã hủy');
+                        alert('Hủy đơn đặt bàn thành công');
+                    } else if (response.success = 'false') {
+                        alert(123);
+                    }
+                },
+                error: function(response) {
+                    btnCancel.addClass('hidden');
+                    let text = null;
+                    if (response.responseJSON.data == 'confirmed') {
+                        text = 'Xác nhận'
+                    } else if (response.responseJSON.data == 'arrived') {
+                        text = 'Đã đến cửa hàng';
+                    } else if (response.responseJSON.data == 'completed') {
+                        text = 'Hoàn thành';
+                    }
+
+                    statusReservation.html(text);
+                    alert('Hủy đơn đặt bàn thất bại, đơn đặt bàn của bạn không thể hủy bỏ');
+                }
+            });
         }
 
         function toggleModalEvaluate(id) {

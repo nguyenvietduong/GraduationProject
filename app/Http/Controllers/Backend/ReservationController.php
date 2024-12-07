@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\Repositories\MenuRepositoryInterface;
 use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepository;
+use App\Interfaces\Repositories\TableRepositoryInterface;
 use App\Interfaces\Services\ReservationServiceInterface;
 use App\Interfaces\Repositories\ReservationRepositoryInterface;
+use App\Models\Category;
 use App\Traits\HandleExceptionTrait;
 
 // Requests
@@ -20,7 +23,8 @@ class ReservationController extends Controller
 
     protected $reservationService;
     protected $reservationRepository;
-
+    protected $tableRepository;
+    protected $menuRepository;
     protected $permissionRepository;
 
     // Base path for views
@@ -31,10 +35,14 @@ class ReservationController extends Controller
     public function __construct(
         ReservationServiceInterface $reservationService,
         ReservationRepositoryInterface $reservationRepository,
+        TableRepositoryInterface $tableRepository,
+        MenuRepositoryInterface $menuRepository,
         PermissionRepository $permissionRepository,
     ) {
         $this->reservationService = $reservationService;
         $this->reservationRepository = $reservationRepository;
+        $this->tableRepository = $tableRepository;
+        $this->menuRepository = $menuRepository;
         $this->permissionRepository = $permissionRepository;
     }
 
@@ -53,9 +61,9 @@ class ReservationController extends Controller
 
         // Apply filters from the request
         $filters = [
-            'reservation_time' => $params['reservation_time'] ?? '', 
-            'name' => $params['name'] ?? '', 
-            'email' => $params['email'] ?? '', 
+            'reservation_time' => $params['reservation_time'] ?? '',
+            'name' => $params['name'] ?? '',
+            'email' => $params['email'] ?? '',
             'phone' => $params['phone'] ?? '',
         ];
 
@@ -102,7 +110,7 @@ class ReservationController extends Controller
         }
     }
 
-        /**
+    /**
      * Show the form for editing a reservation.
      *
      * @param int $id
@@ -130,13 +138,19 @@ class ReservationController extends Controller
     public function edit($id)
     {
         $reservation = $this->reservationService->getReservationDetail($id);
+
+        $tables = $this->tableRepository->get(['id', 'name', 'capacity', 'status', 'description']);
+
+        $menus = Category::with('menus')->get();
+
         if ($reservation) {
             return view(self::PATH_VIEW . __FUNCTION__, [
                 'reservationData' => $reservation,
                 'object' => 'reservation',
+                'listTables' => $tables,
+                'listMenus' => $menus
             ]);
         }
-
         abort(404);
     }
 

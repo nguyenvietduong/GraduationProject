@@ -55,7 +55,9 @@ $title = 'Món ăn'
                     </a>
 
                     <h5 class="text-amber-500 font-medium mt-2">
-                        {{ $menu->price }} Đ 
+
+                        {{ number_format($menu->price, 0, ',', '.') }} đ
+
                         @if(isset($bestSeller) && $menu->id === $bestSeller->id)
                             <span class="text-sm font-semibold text-red-500 ml-2" style="color: red">(Best Seller)</span>
                         @endif

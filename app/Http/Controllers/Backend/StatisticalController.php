@@ -265,20 +265,19 @@ class StatisticalController extends Controller
     // Thêm một phương thức mới để tính số lượng khách hàng theo năm
     private function calculateYearlyCustomers($year)
     {
-        // Get the customer count for the specified year, grouped by month
-        $customerData = Invoice::where('status', 'paid')
-            ->whereYear('created_at', $year) // Filter by the specified year
-            ->join('customers', 'invoices.customer_id', '=', 'customers.id')
-            ->selectRaw('MONTH(invoices.created_at) as month, COUNT(DISTINCT CONCAT(customers.name, customers.phone, customers.email)) as customer_count')
-            ->groupBy('month') // Group by month
-            ->orderBy('month') // Ensure months are ordered
-            ->pluck('customer_count', 'month') // Get the total customer count by month
-            ->toArray();
+        // Lấy tổng số khách hàng đến theo từng tháng
+        $userData = Invoice::where('invoices.status', 'paid') // Chỉ rõ 'invoices.status'
+            ->whereYear('invoices.created_at', $year) // Chỉ rõ 'invoices.created_at'
+            ->selectRaw('MONTH(invoices.created_at) as month, COUNT(*) as user_count') // Không đổi
+            ->groupBy('month') // Không đổi
+            ->orderBy('month') // Không đổi
+            ->pluck('user_count', 'month') // Không đổi
+            ->toArray();    
     
-        // Initialize an array for all 12 months, ensuring no months are missing
+        // Khởi tạo kết quả cho 12 tháng, mặc định là 0
         $result = [];
         for ($month = 1; $month <= 12; $month++) {
-            $result['Tháng ' . $month] = $customerData[$month] ?? 0; // If no data for the month, return 0
+            $result['Tháng ' . $month] = $userData[$month] ?? 0; // Nếu không có dữ liệu, trả về 0
         }
     
         return $result;
@@ -289,28 +288,31 @@ class StatisticalController extends Controller
         // Define start and end years
         $startDate = 2020;
         $endDate = Carbon::now()->year;
-    
+        
         // Query the customer count data based on the selected years
-        $customerData = Invoice::where('status', 'paid')
-            ->whereBetween('created_at', [Carbon::createFromDate($startDate, 1, 1), Carbon::createFromDate($endDate, 12, 31)])
-            ->join('customers', 'invoices.customer_id', '=', 'customers.id')
-            ->selectRaw('YEAR(invoices.created_at) as year, COUNT(DISTINCT CONCAT(customers.name, customers.phone, customers.email)) as customer_count')
-            ->groupBy('year')
-            ->orderBy('year')
-            ->pluck('customer_count', 'year')
+        $user_count = Invoice::where('status', 'paid') // Removed 'invoices.' as it's not necessary
+            ->whereBetween('created_at', [
+                Carbon::createFromDate($startDate, 1, 1),
+                Carbon::createFromDate($endDate, 12, 31)
+            ])
+            ->selectRaw('YEAR(created_at) as year, COUNT(*) as user_count') // Select year and count
+            ->groupBy('year') // Group by year
+            ->orderBy('year') // Order by year
+            ->pluck('user_count', 'year') // Pluck by year
             ->toArray();
-    
+        
         // Create a range of years from 2020 to the current year
         $years = range($startDate, $endDate);
-    
+        
         // Prepare the result
         $result = [];
         foreach ($years as $year) {
-            $result['Năm ' . $year] = $customerData[$year] ?? 0; // If no data, set count to 0
+            // If no data for the year, set count to 0
+            $result['Năm ' . $year] = $user_count[$year] ?? 0;
         }
-    
+        
         return $result;
-    }
+    }    
 
     private function calculateCustomerCount($day = null, $month = null, $year = null)
     {
@@ -327,8 +329,8 @@ class StatisticalController extends Controller
             }
     
             // Query to count unique customers (by name, email, phone) per day in the given month
-            $reservations = DB::table('reservations')
-                ->selectRaw('DATE(created_at) as day, COUNT(DISTINCT CONCAT(name, email, phone)) as customer_count')
+            $reservations = Invoice::where('invoices.status', 'paid')
+                ->selectRaw('DATE(created_at) as day, COUNT(*) as customer_count')
                 ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
                 ->groupBy('day')
                 ->orderBy('day')
@@ -341,37 +343,39 @@ class StatisticalController extends Controller
     
             return $defaultCustomerData;
         }
-    
-        // Handle customer count for a specific day and hour range (7:00 AM - 10:00 PM)
+
         else if ($day && $month && $year) {
             $specificDate = Carbon::create($year, $month, $day)->startOfDay();
             $startHour = 7;
             $endHour = 22;
-    
+        
+            // Initialize an array for the specified hours with customer count = 0
             $defaultCustomerData = [];
             for ($hour = $startHour; $hour <= $endHour; $hour++) {
                 $hourKey = $specificDate->copy()->addHours($hour)->format('H:00');
                 $defaultCustomerData[$hourKey] = 0;
             }
-    
+        
             // Query to count unique customers (by name, email, phone) per hour on the given day
-            $reservations = DB::table('reservations')
-                ->selectRaw('HOUR(created_at) as hour, COUNT(DISTINCT CONCAT(name, email, phone)) as customer_count')
-                ->whereDate('created_at', $specificDate)
-                ->whereBetween(DB::raw('HOUR(created_at)'), [$startHour, $endHour])
+            $reservations = Invoice::where('invoices.status', 'paid')
+                ->selectRaw('HOUR(created_at) as hour, COUNT(*) as customer_count')
+                ->whereDate('created_at', $specificDate)  // Ensure it's for the correct date
+                ->whereBetween(DB::raw('HOUR(created_at)'), [$startHour, $endHour]) // Restrict hours range
                 ->groupBy('hour')
                 ->orderBy('hour')
                 ->get();
-    
+        
             // Map results to the data structure for each hour
             foreach ($reservations as $reservation) {
-                $hourKey = str_pad($reservation->hour, 2, '0', STR_PAD_LEFT) . ':00';
-                $defaultCustomerData[$hourKey] = $reservation->customer_count;
+                if (isset($reservation->hour)) {
+                    $hourKey = str_pad($reservation->hour, 2, '0', STR_PAD_LEFT) . ':00';
+                    $defaultCustomerData[$hourKey] = $reservation->customer_count;
+                }
             }
-    
+        
             return $defaultCustomerData;
         }
-    
+        
         return $customerData;
     }
     

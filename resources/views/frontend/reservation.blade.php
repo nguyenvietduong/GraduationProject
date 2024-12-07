@@ -104,146 +104,148 @@
         }
     </style>
 
-    <!-- Start -->
-    <section class="relative md:py-24 py-16">
-        <div class="container relative">
-            <div class="flex justify-center">
-                <div class="lg:w-2/4">
-                    <div class="section-title mb-4">
-                        <h4 class="text-2xl font-semibold mb-4">{{ __('messages.system.front_end.page.reservation.title') }}
-                        </h4> <!-- Khu vực thông báo -->
+    <div class="container md:mt-24 mt-16">
+        <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6">
+            <div class="lg:col-span-5 md:col-span-6">
+                <img src="{{ asset('frontend/assets/images/contact.svg') }}" alt="">
+            </div>
+
+            <div class="lg:col-span-7 md:col-span-6">
+                <div class="lg:ms-5">
+                    <div class="bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 p-6">
+                        <h3 class="mb-6 text-2xl leading-normal font-semibold">{{ __('messages.system.front_end.page.reservation.title') }} !</h3>
                         <div id="responseMessage" class="mt-4"></div>
                         <p class="text-slate-400 para-desc">{{ __('messages.system.front_end.page.reservation.messages') }}
                         </p>
-                    </div>
-                    <form id="reservationForm" action="{{ route('reservation') }}" method="post"
-                        style="background-color: rgb(212, 211, 210);padding: 20px;border-radius: 10px">
-                        @csrf <!-- Don't forget to include the CSRF token -->
-                        <div class="grid md:grid-cols-2 gap-4 mt-6">
-                            <!-- Các trường nhập liệu như cũ -->
-                            <div>
-                                <label class="">{{ __('messages.reservation.fields.full_name') }} <span
-                                        style="color: red">*</span></label>
-                                <input name="name" id="name" type="text"
-                                    class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('name') border-red-500 @enderror"
-                                    placeholder="{{ __('messages.reservation.fields.name_placeholder') }}"
-                                    value="{{ old('name', Auth::check() ? Auth::user()->full_name : '') }}">
-                                @error('name')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
 
-                            <div>
-                                <label class="">{{ __('messages.reservation.fields.email') }} <span
-                                        style="color: red">*</span></label>
-                                <input name="email" id="email" type="email"
-                                    class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('email') border-red-500 @enderror"
-                                    placeholder="{{ __('messages.reservation.fields.email_placeholder') }}"
-                                    value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}">
-                                @error('email')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <form id="reservationForm" action="{{ route('reservation') }}" method="post"
+                            style="padding: 20px;border-radius: 10px">
+                            @csrf <!-- Don't forget to include the CSRF token -->
+                            <div class="grid md:grid-cols-2 gap-4 mt-6">
+                                <!-- Các trường nhập liệu như cũ -->
+                                <div>
+                                    <label class="">{{ __('messages.reservation.fields.full_name') }} <span
+                                            style="color: red">*</span></label>
+                                    <input name="name" id="name" type="text"
+                                        class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('name') border-red-500 @enderror"
+                                        placeholder="{{ __('messages.reservation.fields.name_placeholder') }}"
+                                        value="{{ old('name', Auth::check() ? Auth::user()->full_name : '') }}">
+                                    @error('name')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                            <div>
-                                <label class="">{{ __('messages.reservation.fields.phone') }} <span
-                                        style="color: red">*</span></label>
-                                <input name="phone" type="number" id="phone"
-                                    class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('phone') border-red-500 @enderror"
-                                    placeholder="{{ __('messages.reservation.fields.phone_placeholder') }}"
-                                    value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}">
-                                @error('phone')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                <div>
+                                    <label class="">{{ __('messages.reservation.fields.email') }} <span
+                                            style="color: red">*</span></label>
+                                    <input name="email" id="email" type="email"
+                                        class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('email') border-red-500 @enderror"
+                                        placeholder="{{ __('messages.reservation.fields.email_placeholder') }}"
+                                        value="{{ old('email', Auth::check() ? Auth::user()->email : '') }}">
+                                    @error('email')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                            <div>
-                                <label class="">{{ __('messages.reservation.fields.guests') }} <span
-                                        style="color: red">*</span></label>
-                                <input type="number" min="0" max="100" autocomplete="off" id="guests"
-                                    name="guests"
-                                    class="out-of-range:border-red-500 mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror"
-                                    required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}"
-                                    value="{{ old('guests') }}">
-                                @error('guests')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                <div>
+                                    <label class="">{{ __('messages.reservation.fields.phone') }} <span
+                                            style="color: red">*</span></label>
+                                    <input name="phone" type="number" id="phone"
+                                        class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('phone') border-red-500 @enderror"
+                                        placeholder="{{ __('messages.reservation.fields.phone_placeholder') }}"
+                                        value="{{ old('phone', Auth::check() ? Auth::user()->phone : '') }}">
+                                    @error('phone')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                            <div>
-                                <label class="">{{ __('messages.reservation.fields.date') }} <span
-                                        style="color: red">*</span></label>
-                                <!-- Chỉ cho phép chọn ngày hôm nay trở đi -->
-                                <input type="date" min="{{ \Carbon\Carbon::today()->toDateString() }}"
-                                    autocomplete="off" id="date" name="date"
-                                    class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('date') border-red-500 @enderror"
-                                    required="" placeholder="{{ __('messages.reservation.fields.date_placeholder') }}"
-                                    value="{{ old('date') }}">
-                                @error('date')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                <div>
+                                    <label class="">{{ __('messages.reservation.fields.guests') }} <span
+                                            style="color: red">*</span></label>
+                                    <input type="number" min="0" max="100" autocomplete="off" id="guests"
+                                        name="guests"
+                                        class="out-of-range:border-red-500 mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror"
+                                        required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}"
+                                        value="{{ old('guests') }}">
+                                    @error('guests')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                            <div>
-                                <label>{{ __('messages.reservation.fields.time') }} <span
-                                        style="color: red">*</span></label>
-                                <select name="input-time" id="input-time"
-                                    class="mt-2 disabled w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
-                                    <option value="">{{ __('messages.reservation.fields.time') }}</option>
-                                    @php
-                                        $opening_hours = $restaurantDatas->opening_hours; // E.g., 7.0 (7 AM)
-                                        $closing_time = $restaurantDatas->closing_time; // E.g., 22.5 (10:30 PM)
-                                    @endphp
+                                <div>
+                                    <label class="">{{ __('messages.reservation.fields.date') }} <span
+                                            style="color: red">*</span></label>
+                                    <!-- Chỉ cho phép chọn ngày hôm nay trở đi -->
+                                    <input type="date" min="{{ \Carbon\Carbon::today()->toDateString() }}"
+                                        autocomplete="off" id="date" name="date"
+                                        class="mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('date') border-red-500 @enderror"
+                                        required="" placeholder="{{ __('messages.reservation.fields.date_placeholder') }}"
+                                        value="{{ old('date') }}">
+                                    @error('date')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                                    @for ($i = (float) $opening_hours; $i <= (float) $closing_time; $i += 0.5)
+                                <div>
+                                    <label>{{ __('messages.reservation.fields.time') }} <span
+                                            style="color: red">*</span></label>
+                                    <select name="input-time" id="input-time"
+                                        class="mt-2 disabled w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
+                                        <option value="">{{ __('messages.reservation.fields.time') }}</option>
                                         @php
-                                            // Calculate hour and minute
-                                            $displayHour = floor($i);
-                                            $displayMinute = ($i - $displayHour) * 60;
-
-                                            // Format in 12-hour with AM/PM
-                                            $formattedTime = sprintf(
-                                                '%02d:%02d %s',
-                                                $displayHour % 12 ?: 12,
-                                                $displayMinute,
-                                                $displayHour < 12 ? 'AM' : 'PM',
-                                            );
-
-                                            // Create the time value in 24-hour format (HH:mm)
-                                            $timeValue = sprintf('%02d:%02d', $displayHour, $displayMinute);
+                                            $opening_hours = $restaurantDatas->opening_hours; // E.g., 7.0 (7 AM)
+                                            $closing_time = $restaurantDatas->closing_time; // E.g., 22.5 (10:30 PM)
                                         @endphp
 
-                                        <option value="{{ $timeValue }}" data-available="false">{{ $formattedTime }}
-                                        </option>
-                                    @endfor
-                                </select>
-                                @error('input-time')
+                                        @for ($i = (float) $opening_hours; $i <= (float) $closing_time; $i += 0.5)
+                                            @php
+                                                // Calculate hour and minute
+                                                $displayHour = floor($i);
+                                                $displayMinute = ($i - $displayHour) * 60;
+
+                                                // Format in 12-hour with AM/PM
+                                                $formattedTime = sprintf(
+                                                    '%02d:%02d %s',
+                                                    $displayHour % 12 ?: 12,
+                                                    $displayMinute,
+                                                    $displayHour < 12 ? 'AM' : 'PM',
+                                                );
+
+                                                // Create the time value in 24-hour format (HH:mm)
+                                                $timeValue = sprintf('%02d:%02d', $displayHour, $displayMinute);
+                                            @endphp
+
+                                            <option value="{{ $timeValue }}" data-available="false">{{ $formattedTime }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                    @error('input-time')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div><!--end grid-->
+
+                            <div class="grid grid-cols-1 mt-4">
+                                <label class="">{{ __('messages.reservation.fields.special_request') }}</label>
+                                <textarea name="special_request"
+                                    class="mt-2 w-full py-2 px-3 h-32 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0"
+                                    placeholder="{{ __('messages.reservation.fields.special_request_placeholder') }}">{{ old('special_request') }}</textarea>
+                                @error('special_request')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div><!--end grid-->
 
-                        <div class="grid grid-cols-1 mt-4">
-                            <label class="">{{ __('messages.reservation.fields.special_request') }}</label>
-                            <textarea name="special_request"
-                                class="mt-2 w-full py-2 px-3 h-32 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0"
-                                placeholder="{{ __('messages.reservation.fields.special_request_placeholder') }}">{{ old('special_request') }}</textarea>
-                            @error('special_request')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="grid grid-cols-1 mt-4">
-                            <input type="submit" id="submit" name="send"
-                                class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-md mt-2 w-full"
-                                value="{{ __('messages.system.button.book_a_table') }}">
-                        </div>
-                    </form><!--end form-->
+                            <div class="grid grid-cols-1 mt-4">
+                                <input type="submit" id="submit" name="send"
+                                    class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-md mt-2 w-full"
+                                    value="{{ __('messages.system.button.book_a_table') }}">
+                            </div>
+                        </form><!--end form-->
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End -->
+    </div><!--end container-->
 
     <script>
         $(document).ready(function() {

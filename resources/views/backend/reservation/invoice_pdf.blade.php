@@ -45,6 +45,7 @@
     <h3>Thông tin khách hàng</h3>
     <p>Tên khách hàng: {{ $reservation->name }}</p>
     <p>Số điện thoại: {{ $reservation->phone }}</p>
+    <p>Bàn đã ngồi: {{ $reservation->reservationDetails->table->name }}</p>
     <p>Thời gian đặt chỗ: {{ $reservation->reservation_time  }}</p>
     <!-- Chi tiết hóa đơn -->
     <h3>Chi tiết hóa đơn</h3>

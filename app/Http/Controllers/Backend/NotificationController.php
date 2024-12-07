@@ -15,6 +15,7 @@ use App\Http\Requests\BackEnd\Notifications\UpdateRequest as NotificationUpdateR
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -117,6 +118,27 @@ class NotificationController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function seedAll()
+    {
+        $user = Auth::user();
+        $notifications = Notification::all();
+    
+        $newNotifications = 0;
+    
+        foreach ($notifications as $notification) {
+            if (!$notification->users()->where('user_id', $user->id)->exists()) {
+                $notification->users()->attach($user->id); // Gắn thông báo cho user
+                $newNotifications++;
+            }
+        }
+    
+        if ($newNotifications > 0) {
+            return response()->json(['success' => true, 'message' => "$newNotifications new notifications assigned."]);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'No new notifications were assigned.']);
+    }    
 
     /**
      * Show the form for editing a notification.

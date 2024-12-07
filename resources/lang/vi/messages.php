@@ -592,12 +592,14 @@ return [
     ],
 
     'reservation' => [
+        'title' => 'hóa đơn',
+
         'status' => [
-            'pending' => 'Đang chờ',
-            'confirmed' => 'Đã xác nhận',
+            'pending' => 'Đang chờ xác nhận',
+            'confirmed' => 'Xác nhận',
             'canceled' => 'Đã hủy',
-            'arrived' => 'Đã đến',
-            'completed' => 'Đã hoàn thành',
+            'arrived' => 'Đã đến cửa hàng',
+            'completed' => 'Hoàn thành',
         ],
         'fields' => [
             'table' => 'Bàn',
@@ -619,22 +621,22 @@ return [
         ],
 
         'index' => [
-            'route' => 'admin.user.index',
+            'route' => 'admin.reservation.index',
         ],
         'create' => [
-            'route' => 'admin.user.create',
+            'route' => 'admin.reservation.create',
         ],
         'store' => [
-            'route' => 'admin.user.store',
+            'route' => 'admin.reservation.store',
         ],
         'edit' => [
-            'route' => 'admin.user.edit',
+            'route' => 'admin.reservation.edit',
         ],
         'update' => [
-            'route' => 'admin.user.update',
+            'route' => 'admin.reservation.update',
         ],
         'destroy' => [
-            'route' => 'admin.user.destroy',
+            'route' => 'admin.reservation.destroy',
         ],
     ],
     'reservation_details' => [
