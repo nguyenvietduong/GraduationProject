@@ -96,60 +96,33 @@ class InvoiceController extends Controller
     {
         try {
             DB::transaction(function () use ($request) {
-                $reservation = Reservation::find($request->reservation_id);
-
-                
-
+                $data = $request->json()->all();
+                $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
                 $reservation->update(['status' => 'completed']);
+
                 $dataInvoice = [
-                    'reservation_id' => $request->reservation_id,
                     'total_amount' => $request->total_payment,
-                    'payment_method' => $request->payment_method,
                     'status' => 'paid',
                 ];
 
-                $invoice = Invoice::create($dataInvoice);
+                $invoice = Invoice::where("reservation_id",$reservation->id)->first();
+                $invoice->update($dataInvoice);
+
                 $promotion = Promotion::where('code', $request->code)->first();
+
                 if ($promotion) {
                     PromotionUser::create([
                         'promotion_id' => $promotion->id,
                         'invoice_id' => $invoice->id,
                     ]);
                 }
-                foreach ($request->invoice_item as $data) {
-                    Invoice_item::create([
-                        'invoice_id' => $invoice->id,
-                        'menu_id' => $data['id'],
-                        'quantity' => $data['quantity'],
-                        'price' => $data['price'],
-                        'total' => $data['total']
-                    ]);
-                }
-                foreach ($request->list_tables as $table) {
-                    Table::where('id', $table['id'])->update([
+
+                foreach ($data['invoiceDetail']['reservation']['reservation_details'] as $table) {
+                    Table::where('id', $table['table_id'])->update([
                         'status' => "available",
                     ]);
                 }
-
-                $jsonFile = base_path('db.json');
-
-                $jsonData = File::get($jsonFile);
-                $invoiceJson = json_decode($jsonData, true); // Chuyển dữ liệu thành mảng
-
-                // Tìm index của bản ghi có id cần xóa
-
-                if (isset($invoiceJson['invoice'])) {
-                    // Tìm và xóa phần tử trong mảng 'invoice' có reservation_id khớp
-                    $invoiceJson['invoice'] = array_filter($invoiceJson['invoice'], function ($invoice) use ($request) {
-                        return $invoice['reservation_id'] != $request->reservation_id;
-                    });
-
-                    // Đảm bảo mảng không có các phần tử rỗng sau khi filter
-                    $invoiceJson['invoice'] = array_values($invoiceJson['invoice']);
-
-                    // Lưu lại dữ liệu vào file db.json
-                    File::put($jsonFile, json_encode($invoiceJson, JSON_PRETTY_PRINT));
-                }
+                
             });
             return response()->json(['success' => 'Thêm mới thành công']);
         } catch (\Throwable $th) {
@@ -157,15 +130,17 @@ class InvoiceController extends Controller
     }
     public function exportAndSavePDF(Request $request)
     {
-        $invoice_item = $request->invoice_item;
-        $total_payment = $request->total_payment;
-        $voucher_discount = $request->voucher_discount;
+        $data = $request->json()->all();
+        $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
+        $invoice = Invoice::where("reservation_id",$reservation->id)->first();
+        $invoice_item = $invoice->invoiceItems;
+        $total_payment = $data['total_payment'];
+        $voucher_discount = $data['voucher_discount'];
         $code = '';
         if (isset($request->code)) {
             $code = Promotion::where('code', $request->code)->first();
         }
         $res = Restaurant::get()->first();
-        $reservation = Reservation::find($request->reservation_id);
         // Tạo file PDF từ view với dữ liệu truyền vào
         $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('res', 'reservation', 'invoice_item', 'total_payment', 'code', 'voucher_discount'));
 

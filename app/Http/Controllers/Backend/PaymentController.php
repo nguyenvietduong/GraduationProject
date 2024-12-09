@@ -39,7 +39,7 @@ class PaymentController extends Controller
     {
 
         $data = [];
-        $reservation = Reservation::find($id)->with("reservationDetails.table")->first();
+        $reservation = Reservation::with("reservationDetails.table")->find($id);
         $invoice = Reservation::find($id)->invoice()->with([
             'invoiceItems.menu' => function ($query) {
                 $query->select('id', 'name', 'price');

@@ -9,4 +9,3 @@ function generateSlug(nameId, slugId) {
 
     document.getElementById(slugId).value = slug;
 }
-console.log("file set slug");
