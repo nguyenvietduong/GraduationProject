@@ -105,7 +105,7 @@ class InvoiceController extends Controller
                     'status' => 'paid',
                 ];
 
-                $invoice = Invoice::where("reservation_id",$reservation->id)->first();
+                $invoice = Invoice::where("reservation_id", $reservation->id)->first();
                 $invoice->update($dataInvoice);
 
                 $promotion = Promotion::where('code', $request->code)->first();
@@ -122,7 +122,6 @@ class InvoiceController extends Controller
                         'status' => "available",
                     ]);
                 }
-                
             });
             return response()->json(['success' => 'Thêm mới thành công']);
         } catch (\Throwable $th) {
@@ -132,17 +131,16 @@ class InvoiceController extends Controller
     {
         $data = $request->json()->all();
         $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
-        $invoice = Invoice::where("reservation_id",$reservation->id)->first();
-        $invoice_item = $invoice->invoiceItems;
-        $total_payment = $data['total_payment'];
-        $voucher_discount = $data['voucher_discount'];
+        $invoice = Invoice::where("reservation_id", $reservation->id)->first();
+        $total_payment = $request->total_payment;
+        $voucher_discount = $request->voucher_discount;
         $code = '';
         if (isset($request->code)) {
             $code = Promotion::where('code', $request->code)->first();
         }
         $res = Restaurant::get()->first();
         // Tạo file PDF từ view với dữ liệu truyền vào
-        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('res', 'reservation', 'invoice_item', 'total_payment', 'code', 'voucher_discount'));
+        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('res', 'reservation', 'invoice', 'total_payment', 'code', 'voucher_discount'));
 
         $pdfContent = $pdf->output();
 

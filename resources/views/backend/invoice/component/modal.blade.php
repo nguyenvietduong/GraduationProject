@@ -46,7 +46,7 @@
 
                                                 @foreach ($invoiceDetail as $key => $data)
                                                     @php
-                                                        $total_amount += $data->total;
+                                                        $total_amount += $data->price*$data->quantity;
                                                     @endphp
                                                     <tr>
                                                         <td>{{ $key + 1 }}</td>
@@ -69,6 +69,10 @@
                                                                 $voucher_discount =
                                                                     ($total_amount * $promotion->discount) / 100;
                                                             }
+                                                        }
+                                                        if ($voucher_discount > $total_amount && $promotion->type == 'fixed') {
+                                                            $voucher_discount -=$total_amount;
+                                                            $total_amount= 0; 
                                                         }
                                                     }
                                                 @endphp
