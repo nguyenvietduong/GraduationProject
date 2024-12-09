@@ -78,6 +78,7 @@ class AjaxPromotion extends Controller
         return  Promotion::where("start_date", '<=', Carbon::now())
             ->where("end_date", '>', Carbon::now())
             ->where("is_active", '=', 1)
+            ->with("promotionUsers")
             ->take(3)
             ->get();
     }
