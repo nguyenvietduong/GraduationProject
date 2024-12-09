@@ -2,7 +2,7 @@
     "use strict"
     var CUONG = {}
     var invoices
-    let urlData = 'http://localhost:3000/invoice'
+    let urlData = 'http://graduationproject.test/admin/payment/'
     let conditionTemp = 1
     var _token = $('meta[name="csrf-token"]').attr('content')
 
@@ -50,17 +50,17 @@
 
     CUONG.renderMenuItem = async (menuItems) => {
         $('#list_menu_item').empty()
-        if (menuItems[0].invoice_item.length === 0) {
+        if (menuItems.invoice.invoice_items.length === 0) {
             $('#list_menu_item').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
         } else {
-            await menuItems[0].invoice_item.forEach(menu => {
+            await menuItems.invoice.invoice_items.forEach(item => {
                 $('#list_menu_item').append(`
                     <tr>
-                        <td>${menu.name}</td>
+                        <td>${item.menu.name}</td>
                         <td>
-                            <span>${menu.quantity}</span>
+                            <span>${item.quantity}</span>
                         </td>
-                        <td class="price-invoice-item-${menu.id}">${formatNumber(menu.total)}</td>
+                        <td class="price-invoice-item-${item.id}">${formatNumber(item.menu.price*item.quantity)}</td>
                     </tr>
                 `)
             })
@@ -69,7 +69,7 @@
                     <td colspan="2">
                         <b>Tổng hóa đơn</b>
                     </td>
-                    <td><b>${formatNumber(menuItems[0].totalAmount)}</b></td>
+                    <td><b>${formatNumber(menuItems.invoice.total_amount)}</b></td>
                 </tr>
             `)
         }
@@ -162,21 +162,21 @@
             var button = $(event.relatedTarget)
             let reservationId;
             let invoiceDetail;
-
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
-                invoiceDetail = await CUONG.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
+                invoiceDetail = await CUONG.fetchInvoiceDetail(`/admin/payment/${reservationId}`);
                 CUONG.renderMenuItem(invoiceDetail);
-            }
+
             let voucher_discount = 0;
             let code;
-            let list_tables = invoiceDetail[0].list_table;
+            let list_tables = invoiceDetail.reservation.reservation_details;// check 
+            console.log(invoiceDetail);
             $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
-
-            var total_amount = invoiceDetail[0].totalAmount;
-            let total_payment = invoiceDetail[0].totalAmount;
+            var total_amount = invoiceDetail.invoice.total_amount;
+            let total_payment = invoiceDetail.invoice.total_amount;
             $('#pay').find('.total-amount').text(formatNumber(total_amount))
             $('#pay').find('.total-payment').text(formatNumber(total_payment))
+
             $('input[name="payment_method"]').on('change', function () {
                 if ($(this).val() === 'bank') {
                     $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
@@ -185,6 +185,7 @@
                 }
             });
             let allVoucher = await CUONG.fetchVoucher(`/getAllVoucher`);
+            console.log(allVoucher[1].promotion_users.length);
             CUONG.renderAllVoucher(allVoucher);
             let feedback = $('#pay').find('.feedback-voucher');
 
@@ -254,6 +255,7 @@
                     window.location.reload();
                 }, 3000)
             });
+        }
 
         })
         $('#pay').on('hidden.bs.modal', function () {

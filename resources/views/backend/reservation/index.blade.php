@@ -182,7 +182,7 @@
                                                     <tr>
                                                         <th>Tên món</th>
                                                         <th>Số lượng</th>
-                                                        <th>Giá</th>
+                                                        <th>Thành tiền</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="list_menu_item">
