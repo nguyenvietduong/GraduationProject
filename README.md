@@ -15,7 +15,8 @@ php artisan db:seed --class=TableSeeder
 php artisan db:seed --class=CategorySeeder
 php artisan db:seed --class=PermissionSeeder
 
-composer dump-autoload
+
+
 npm install
 npm run dev
 php artisan queue:work

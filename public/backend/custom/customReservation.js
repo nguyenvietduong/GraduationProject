@@ -449,7 +449,6 @@
     //Button Add Invoice
     PMD.checkButtonAddInvoice = (item, guest, invoice = false) => {
         $(document).on('click', '.btnSaveInvoice', function () {
-            console.log(46654556);
             if (invoice == true) {
                 PMD.updateInvoiceDataDetail(item)
 

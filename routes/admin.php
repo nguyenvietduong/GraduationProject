@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\Promotion\PromotionController;
 use App\Http\Controllers\Backend\TableController;
 use Illuminate\Support\Facades\Route;
@@ -179,6 +180,9 @@ Route::middleware(['auth', 'role:1, 2, 3'])->group(function () {
             Route::get('top-menus', [StatisticalController::class, 'getMenuItemsWithReservationCounts']);
             Route::get('top-tables', [StatisticalController::class, 'getTableReservationStats']);
 
+        });
+        Route::prefix('payment')->group(function () {
+            Route::get('{id}', [PaymentController::class, 'show'])->name('admin.payment.index');
         });
 
         Route::get('search', [SearchController::class, 'search'])->name('search');

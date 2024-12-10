@@ -2,7 +2,7 @@
     "use strict"
     var CUONG = {}
     var invoices
-    let urlData = 'http://localhost:3000/invoice'
+    let urlData = 'http://graduationproject.test/admin/payment/'
     let conditionTemp = 1
     var _token = $('meta[name="csrf-token"]').attr('content')
 
@@ -50,17 +50,17 @@
 
     CUONG.renderMenuItem = async (menuItems) => {
         $('#list_menu_item').empty()
-        if (menuItems[0].invoice_item.length === 0) {
+        if (menuItems.invoice.invoice_items.length === 0) {
             $('#list_menu_item').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
         } else {
-            await menuItems[0].invoice_item.forEach(menu => {
+            await menuItems.invoice.invoice_items.forEach(item => {
                 $('#list_menu_item').append(`
                     <tr>
-                        <td>${menu.name}</td>
+                        <td>${item.menu.name}</td>
                         <td>
-                            <span>${menu.quantity}</span>
+                            <span>${item.quantity}</span>
                         </td>
-                        <td class="price-invoice-item-${menu.id}">${formatNumber(menu.total)}</td>
+                        <td class="price-invoice-item-${item.id}">${formatNumber(item.menu.price * item.quantity)}</td>
                     </tr>
                 `)
             })
@@ -69,7 +69,7 @@
                     <td colspan="2">
                         <b>Tổng hóa đơn</b>
                     </td>
-                    <td><b>${formatNumber(menuItems[0].totalAmount)}</b></td>
+                    <td><b>${formatNumber(menuItems.invoice.total_amount)}</b></td>
                 </tr>
             `)
         }
@@ -85,7 +85,8 @@
                         <input type="radio" name="use_voucher" id="${voucher.id}">
                         <div class="div">
                             <p class="m-0">${voucher.title}</p>
-                            <small>Mô tả: ${voucher.description}</small>
+                            <small class="m-0">Mô tả: ${voucher.description}</small> <br>
+                            <small>Số lượng: ${(voucher.total - voucher.promotion_users.length) <= 0 ? 0 : voucher.total - voucher.promotion_users.length }</small>
                         </div>
                     </div>
                 `)
@@ -103,7 +104,8 @@
                         <input type="radio" name="use_voucher" id="${voucher.id}">
                         <div class="div">
                             <p class="m-0">${voucher.title}</p>
-                            <small>Mô tả: ${voucher.description}</small>
+                            <small class="m-0">Mô tả: ${voucher.description}</small> <br>
+                            <small >Số lượng: ${(voucher.total - voucher.promotion_users.length) <= 0 ? 0 : voucher.total - voucher.promotion_users.length }</small>
                         </div>
                     </div>
                 `)
@@ -119,8 +121,7 @@
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(data => executeExample('success'),
-
+            .then(data => executeExample('success')
             )
             .catch(error => console.error('Lỗi khi thêm:', error))
     }
@@ -162,101 +163,102 @@
             var button = $(event.relatedTarget)
             let reservationId;
             let invoiceDetail;
-
             if (button.length) {
                 reservationId = button.attr('dataReservationId')
-                invoiceDetail = await CUONG.fetchInvoiceDetail(`${urlData}?reservation_id=${reservationId}`)
+                invoiceDetail = await CUONG.fetchInvoiceDetail(`/admin/payment/${reservationId}`);
                 CUONG.renderMenuItem(invoiceDetail);
-            }
-            let voucher_discount = 0;
-            let code;
-            let list_tables = invoiceDetail[0].list_table;
-            $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
-
-            var total_amount = invoiceDetail[0].totalAmount;
-            let total_payment = invoiceDetail[0].totalAmount;
-            $('#pay').find('.total-amount').text(formatNumber(total_amount))
-            $('#pay').find('.total-payment').text(formatNumber(total_payment))
-            $('input[name="payment_method"]').on('change', function () {
-                if ($(this).val() === 'bank') {
-                    $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
-                } else {
-                    $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
-                }
-            });
-            let allVoucher = await CUONG.fetchVoucher(`/getAllVoucher`);
-            CUONG.renderAllVoucher(allVoucher);
-            let feedback = $('#pay').find('.feedback-voucher');
-
-            $('#pay').on('click', '.btn-apply-voucher', async function () {
-                let inputVoucher = $('#pay').find('.input-voucher').val();
-                let voucher = await CUONG.fetchVoucher(`/searchVoucher?code=${inputVoucher}`);
-                console.log(voucher);
                 
-                if (voucher.length == 0) {
-                    feedback.text(`Không tồn tại mã giảm giá`).css("color", "red");
-                } else {
-                    CUONG.renderVoucherItem(voucher);
-                    feedback.text(``);
-                }
-            });
-            $('#pay').on('change', 'input[name="use_voucher"]', async function () {
-                if (this.checked) {
-                    const selectedVoucherId = this.id;
-                    let checkVoucher = await CUONG.fetchVoucher(`/checkVoucher?id=${selectedVoucherId}&totalAmount=${total_amount}`);
-                    let dataVoucher = checkVoucher['data'];
+                let voucher_discount = 0;
+                let code;
+                $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
+                var total_amount = invoiceDetail.invoice.total_amount;
+                let total_payment = invoiceDetail.invoice.total_amount;
+                $('#pay').find('.total-amount').text(formatNumber(total_amount))
+                $('#pay').find('.total-payment').text(formatNumber(total_payment))
 
-                    if (!dataVoucher) {
-                        feedback.text(`${checkVoucher.message}`).css("color", "red");
-                        code = "";
-                        voucher_discount = 0;
-                        total_payment = total_amount;
-                        $('#pay').find('.voucher-discount').hide();
-                        $('#pay').find('.total-payment').text(formatNumber(total_amount));
+                $('input[name="payment_method"]').on('change', function () {
+                    if ($(this).val() === 'bank') {
+                        $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
                     } else {
-                        code = dataVoucher.code;
-                        feedback.text(`${checkVoucher.message}`).css("color", "green");
-                        if (dataVoucher.type == 'fixed') {
-                            total_payment = total_amount - dataVoucher.discount
-                            voucher_discount = dataVoucher.discount
-                        } else {
-                            if (total_amount * dataVoucher.discount / 100 > dataVoucher.max_discount) {
-                                total_payment = total_amount - dataVoucher.max_discount
-                                voucher_discount = dataVoucher.max_discount
-                            } else {
-                                total_payment = total_amount - (total_amount * dataVoucher.discount) / 100
-                                voucher_discount = (total_amount * dataVoucher.discount) / 100
-                            }
-                        }
-                        $('#pay').find('.voucher-discount').text(`Giảm giá : ${formatNumber(voucher_discount)}`);
-                        $('#pay').find('.voucher-discount').show();
-                        $('#pay').find('.total-payment').text(formatNumber(total_payment));
+                        $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
                     }
-                }
-            });
-            $(`#btn_paid_${reservationId}`).off('click').click((e) => {
-                let payment_method = $('input[name="payment_method"]:checked').val();
-                let data = {
-                    _token: _token,
-                    ...invoiceDetail[0],
-                    total_payment,
-                    payment_method,
-                    voucher_discount,
-                    code,
-                    list_tables
-                }
+                });
+                let allVoucher = await CUONG.fetchVoucher(`/getAllVoucher`);
+                CUONG.renderAllVoucher(allVoucher);
+                let feedback = $('#pay').find('.feedback-voucher');
 
-                $('#pay').modal('hide'),
+                $('#pay').on('click', '.btn-apply-voucher', async function () {
+                    let inputVoucher = $('#pay').find('.input-voucher').val();
+                    let voucher = await CUONG.fetchVoucher(`/searchVoucher?code=${inputVoucher}`);
+                    if (voucher.length == 0) {
+                        feedback.text(`Không tồn tại mã giảm giá`).css("color", "red");
+                    } else {
+                        CUONG.renderVoucherItem(voucher);
+                        feedback.text(``);
+                    }
+                });
+                $('#pay').on('change', 'input[name="use_voucher"]', async function () {
+                    if (this.checked) {
+                        const selectedVoucherId = this.id;
+                        let checkVoucher = await CUONG.fetchVoucher(`/checkVoucher?id=${selectedVoucherId}&totalAmount=${total_amount}`);
+                        let dataVoucher = checkVoucher['data'];
 
-                    CUONG.addInvoice(data)
-                CUONG.exportAndSavePDF(data)
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000)
-            });
+                        if (!dataVoucher) {
+                            feedback.text(`${checkVoucher.message}`).css("color", "red");
+                            code = "";
+                            voucher_discount = 0;
+                            total_payment = total_amount;
+                            $('#pay').find('.voucher-discount').hide();
+                            $('#pay').find('.total-payment').text(formatNumber(total_amount));
+                        } else {
+                            code = dataVoucher.code;
+                            feedback.text(`${checkVoucher.message}`).css("color", "green");
+                            if (dataVoucher.type == 'fixed') {
+                                total_payment = total_amount - dataVoucher.discount
+                                voucher_discount = dataVoucher.discount
+                            } else {
+                                if (total_amount * dataVoucher.discount / 100 > dataVoucher.max_discount) {
+                                    total_payment = total_amount - dataVoucher.max_discount
+                                    voucher_discount = dataVoucher.max_discount
+                                } else {
+                                    total_payment = total_amount - (total_amount * dataVoucher.discount) / 100
+                                    voucher_discount = (total_amount * dataVoucher.discount) / 100
+                                }
+                            }
+                            if (total_payment <= 0 && dataVoucher.type == 'fixed') {
+                                total_payment = 0
+                                voucher_discount = voucher_discount - total_amount
+                            }
+                            $('#pay').find('.voucher-discount').text(`Giảm giá : ${formatNumber(voucher_discount)}`);
+                            $('#pay').find('.voucher-discount').show();
+                            $('#pay').find('.total-payment').text(formatNumber(total_payment));
+                        }
+                    }
+                });
+                $(`#btn_paid_${reservationId}`).off('click').click((e) => {
+                    let data = {
+                        _token: _token,
+                        invoiceDetail,
+                        total_payment,
+                        voucher_discount,
+                        code,
+                    }
+                    console.log(data);
+                    
+                    $('#pay').modal('hide'),
+
+                        CUONG.addInvoice(data)
+                        CUONG.exportAndSavePDF(data)
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000)
+                });
+            }
 
         })
         $('#pay').on('hidden.bs.modal', function () {
+            $('#pay').off('click', '.btn-apply-voucher');
+            $('#pay').off('change', 'input[name="use_voucher"]');
             // Đặt lại các giá trị giảm giá
             $('#pay').find('.input-voucher').val('');
             $('#pay').find('.feedback-voucher').text('');

@@ -182,7 +182,7 @@
                                                     <tr>
                                                         <th>Tên món</th>
                                                         <th>Số lượng</th>
-                                                        <th>Giá</th>
+                                                        <th>Thành tiền</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="list_menu_item">
@@ -223,25 +223,11 @@
                                         <div class="col-6">
                                             <button class="btn btn-secondary btn-apply-voucher">Nhập mã giảm giá</button>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <label for="" class="py-2">Phương thức thanh toán</label> <br>
-                                        <input type="radio" name="payment_method" id="" value="cash"
-                                            checked> Tiền mặt
-                                        <input type="radio" name="payment_method" id="" value="bank">
-                                        Chuyển khoản
-                                    </div>
-                                    <div id="qr-image" style="display: none" class="row">
-                                        <div class="col-4">
-                                            <img src="{{ asset('storage/qrcode_images/qrcode.jpg') }}" alt="QR Code"
-                                                style="width: 150px;">
-                                        </div>
-                                        <div class="col-8 mt-4">
-                                            <p>Số tài khoản: 1907 3092 0610 17</p>
-                                            <p>Ngân hàng: TECHCOMBANK</p>
-                                            <p>Tên ctk: NGUYEN VIET DUONG</p>
+                                        <div class="row  my-2" id="render_voucher">
+
                                         </div>
                                     </div>
+                                    
                                     <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Đã thanh
                                         toán</button>
                                 </div><!--end card-body-->
@@ -258,6 +244,6 @@
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js?v=104') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js?v=108') }}"></script>
     @endpush
 @endsection
