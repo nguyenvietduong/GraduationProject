@@ -244,6 +244,6 @@
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js?v=108') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js?v=109') }}"></script>
     @endpush
 @endsection
