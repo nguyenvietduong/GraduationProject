@@ -55,10 +55,8 @@ class UpdateStatusReservation extends Controller
         $reservationId = $request->input('reservation_id');
         $guest = $request->input('guest');
 
-        // Kiểm tra nếu mảng bàn không rỗng
         if (!empty($tables)) {
             foreach ($tables as $table) {
-                // Cập nhật trạng thái của từng bàn thành "selected"
                 Table::where('id', $table['id'])->update(['status' => 'occupied']);
 
                 ReservationDetail::create([
@@ -69,9 +67,6 @@ class UpdateStatusReservation extends Controller
                 ]);
             }
         }
-
-
-
 
         return response()->json(['message' => 'Status updated successfully']);
     }
@@ -155,13 +150,6 @@ class UpdateStatusReservation extends Controller
             'total_amount' => $data['total_amount'],
         ]);
 
-        foreach ($data['list_table'] as $table) {
-            ReservationDetail::create([
-                'reservation_id' => $data['reservation_id'],
-                'table_id' => $table['id'],
-            ]);
-        }
-
         foreach ($data['invoice_item'] as $item) {
             Invoice_item::create([
                 'invoice_id' => $invoice->id,
@@ -192,6 +180,7 @@ class UpdateStatusReservation extends Controller
                 'name' => $item['name'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
+                'total' => $item['total']
             ]);
         }
 
