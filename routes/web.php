@@ -30,12 +30,7 @@ Route::get('/', function () {
 });
 
 Route::get('', [HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->get('history/reservation/list', function () {
-    $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
-        ->with('reservationDetails')->with('invoice')->get();
-
-    return view('frontend.list', compact('listReservation'));
-})->name('reservation.list');
+Route::middleware(['auth'])->get('history/reservation/list',[ReservationController::class,'listReservation'])->name('reservation.list');
 Route::post('history/reservation/list', [ReviewController::class, 'store']);
 Route::get('reservation', [ReservationController::class, 'create'])->name('reservation');
 Route::post('reservation', [ReservationController::class, 'store'])->name('reservation');

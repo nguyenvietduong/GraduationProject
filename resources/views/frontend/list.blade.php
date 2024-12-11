@@ -207,6 +207,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                
 
                 <!-- Modals -->
                 @foreach ($listReservation as $value)
@@ -363,7 +364,6 @@
                         </div>
                     </div>
                 @endforeach
-
                 {{-- Modal đánh giá --}}
                 @foreach ($listReservation as $value)
                     <div id="modalEvaluate-{{ $value->id }}"
@@ -422,7 +422,11 @@
                     </div>
                 @endforeach
             </div>
+            <div class="mt-4">
+                {{ $listReservation->links('pagination::tailwind') }}
+            </div>
         </div>
+        
     </section>
 @endsection
 
