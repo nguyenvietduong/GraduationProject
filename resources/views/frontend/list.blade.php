@@ -354,8 +354,7 @@
                                         <button
                                             style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;"
                                             name="redirect"
-                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
-                                            onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';">
                                             Thanh toán ngay
                                         </button>
                                     </form>

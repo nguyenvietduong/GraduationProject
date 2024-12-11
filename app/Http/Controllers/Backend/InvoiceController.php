@@ -94,49 +94,125 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            DB::transaction(function () use ($request) {
-                $data = $request->json()->all();
-                $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
-                $reservation->update(['status' => 'completed']);
+        $data = $request->json()->all(); // Get the request data
 
-                $dataInvoice = [
-                    'total_amount' => $request->total_payment,
-                    'status' => 'paid',
-                ];
+        // If request data is not empty
+        if (!empty($data)) {
+            // Find the reservation and update status to 'completed'
+            $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
 
-                $invoice = Invoice::where("reservation_id", $reservation->id)->first();
+            if (!$reservation) {
+                // Reservation not found
+                return response()->json(['error' => 'Không tìm thấy đặt chỗ.'], 404);
+            }
+
+            if ($reservation->status == 'completed') {
+                return response()->json(['error' => 'Đơn hàng đã được thanh toán.']);
+            }    
+
+            // Update reservation status
+            $reservation->update(['status' => 'completed']);
+
+            // Prepare invoice data and update invoice
+            $dataInvoice = [
+                'total_amount' => $request->total_payment,
+                'status' => 'paid'
+            ];
+            $invoice = Invoice::where("reservation_id", $reservation->id)->first();
+            if ($invoice) {
                 $invoice->update($dataInvoice);
+            } else {
+                return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
+            }
 
-                $promotion = Promotion::where('code', $request->code)->first();
+            // Handle promotion if present
+            $promotion = Promotion::where('code', $request->code)->first();
+            if ($promotion) {
+                PromotionUser::create([
+                    'promotion_id' => $promotion->id,
+                    'invoice_id' => $invoice->id,
+                ]);
+            } else {
+                // If no promotion found, return message
+                return response()->json(['error' => 'Mã khuyến mãi không hợp lệ.'], 400);
+            }
 
-                if ($promotion) {
-                    PromotionUser::create([
-                        'promotion_id' => $promotion->id,
-                        'invoice_id' => $invoice->id,
-                    ]);
-                }
+            // Update table statuses to "available"
+            foreach ($data['invoiceDetail']['reservation']['reservation_details'] as $table) {
+                Table::where('id', $table['table_id'])->update([
+                    'status' => "available",
+                ]);
+            }
 
-                foreach ($data['invoiceDetail']['reservation']['reservation_details'] as $table) {
-                    Table::where('id', $table['table_id'])->update([
-                        'status' => "available",
-                    ]);
-                }
-            });
-            return response()->json(['success' => 'Thêm mới thành công']);
-        } catch (\Throwable $th) {
+            return response()->json(['success' => 'Đặt chỗ và thanh toán thành công.']);
         }
+
+        // If no data was provided, process the request with reservation_id
+        $reservation = Reservation::find($request->reservation_id);
+
+        if (!$reservation) {
+            // Reservation not found
+            return response()->json(['error' => 'Không tìm thấy đặt chỗ.'], 404);
+        }
+
+        // If reservation is already completed
+        if ($reservation->status == 'completed') {
+            return response()->json(['error' => 'Đơn hàng đã được thanh toán.']);
+        }
+
+        // Update reservation status to 'completed'
+        $reservation->update(['status' => 'completed']);
+
+        // Prepare invoice data and update the invoice
+        $dataInvoice = [
+            'total_amount' => $request->total_payment,
+            'status' => 'paid',
+            'payment_method' => 'bank'  // This assumes it's a bank payment, adjust if other methods are possible
+        ];
+        $invoice = Invoice::where("reservation_id", $reservation->id)->first();
+        if ($invoice) {
+            $invoice->update($dataInvoice);
+        } else {
+            return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
+        }
+
+        // Handle promotion
+        $promotion = Promotion::where('code', $request->code)->first();
+        if ($promotion) {
+            PromotionUser::create([
+                'promotion_id' => $promotion->id,
+                'invoice_id' => $invoice->id,
+            ]);
+        }
+
+        // Update table statuses to "available"
+        foreach ($reservation->reservationDetails as $table) {
+            Table::where('id', $table->table_id)->update([
+                'status' => "available",
+            ]);
+        }
+
+        return response()->json(['success' => 'Đặt chỗ và thanh toán thành công.']);
     }
+
     public function exportAndSavePDF(Request $request)
     {
         $data = $request->json()->all();
-        $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
+        if (!empty($data)) {
+            $reservation = Reservation::find($data['invoiceDetail']['reservation']['id']);
+        } else {
+            $reservation = Reservation::find($request->reservation_id);
+        }
         $invoice = Invoice::where("reservation_id", $reservation->id)->first();
         $total_payment = $request->total_payment;
         $voucher_discount = $request->voucher_discount;
         $code = '';
         if (isset($request->code)) {
             $code = Promotion::where('code', $request->code)->first();
+            if ($voucher_discount == null) {
+                $voucherDiscount = Promotion::where('id', $request->code)->first();
+                $voucher_discount = $voucherDiscount->max_discount;
+            }
         }
         $res = Restaurant::get()->first();
         // Tạo file PDF từ view với dữ liệu truyền vào
