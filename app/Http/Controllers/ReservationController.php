@@ -16,6 +16,7 @@ use App\Mail\ReservationCancellationMail;
 use App\Mail\ReservationConfirmed;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 // Requests
 
 class ReservationController extends Controller
@@ -153,28 +154,38 @@ class ReservationController extends Controller
     public function canceled($reservationId)
     {
         $reservation = Reservation::find($reservationId);
-    
+
         if (!$reservation) {
             return response()->json([
                 'success' => false,
                 'message' => 'Reservation not found.'
             ], 404);
         }
-    
+
         if ($reservation->status === 'pending') {
             $reservation->update(['status' => 'canceled']);
-    
+
             return response()->json([
                 'success' => true,
                 'data' => $reservation->status,
                 'message' => 'Reservation has been canceled successfully.'
             ]);
         }
-    
+
         return response()->json([
             'success' => false,
             'data' => $reservation->status,
             'message' => 'Reservation could not be canceled because it is not pending.'
         ], 400);
-    }    
+    }
+    public function listReservation()
+    {
+        $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
+            ->with('reservationDetails')->with('invoice')
+            ->orderBy('reservation_time', 'DESC')
+            ->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled','completed') ASC")
+            ->paginate(10);
+
+        return view('frontend.list', compact('listReservation'));
+    }
 }

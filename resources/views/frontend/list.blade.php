@@ -178,7 +178,7 @@
                                 <td>{{ $value->reservation_time }}</td>
                                 <td>{{ $value->guests }}</td>
                                 <td>{{ $value->special_request }}</td>
-                                <td id="statusReservation-{{$value->id}}">
+                                <td id="statusReservation-{{ $value->id }}">
                                     @foreach (__('messages.reservation.status') as $statusKey => $statusValue)
                                         @if ($statusKey == $value->status)
                                             {{ $statusValue }}
@@ -188,26 +188,26 @@
                                 @if ($value->status == 'completed' || $value->status == 'arrived')
                                     <td class="text-center">
                                         <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
-                                            style="background-color: #008000; padding: 5px; border-radius: 5px;color: white" 
+                                            style="background-color: #008000; padding: 5px; border-radius: 5px;color: white"
                                             onclick="toggleModal('{{ $value->id }}')">
                                             Xem chi tiết
                                         </button>
                                     </td>
                                 @elseif ($value->status == 'pending')
                                     <td class="text-center">
-                                        <button 
-                                            class="text-blue-500 hover:text-blue-700 focus:outline-none" 
-                                            style="background-color: #333366; padding: 5px; border-radius: 5px;color: white" 
-                                            id="btn-canceled-{{ $value->id }}" 
+                                        <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                            style="background-color: #333366; padding: 5px; border-radius: 5px;color: white"
+                                            id="btn-canceled-{{ $value->id }}"
                                             onclick="cancelReservation('{{ route('reservation.canceled', $value->id) }}', {{ $value->id }})">
                                             Hủy đơn đặt bàn
-                                        </button>                                                           
+                                        </button>
                                     </td>
                                 @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                
 
                 <!-- Modals -->
                 @foreach ($listReservation as $value)
@@ -257,7 +257,7 @@
                                             @if ($value->invoice && $value->invoice->review)
                                                 <div class="mt-2">
                                                     <div class="flex items-center">
-                                                        <span class="text-sm font-medium text-gray-700">Số điểm:  </span>
+                                                        <span class="text-sm font-medium text-gray-700">Số điểm: </span>
                                                         <span class="ml-2 text-yellow-500 text-lg">
                                                             @for ($i = 0; $i < 5; $i++)
                                                                 @if ($i < $value->invoice->review->rating)
@@ -286,7 +286,7 @@
                                                     <th>Tên món</th>
                                                     <th>Số lượng</th>
                                                     <th>Giá món</th>
-                                                    <th>Tiền</th>
+                                                    <th>Thành tiền</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -297,10 +297,11 @@
                                                         <td>{{ $valueInvoice->menu->name ?? 'N/A' }}</td>
                                                         <td>{{ $valueInvoice->quantity }}</td>
                                                         <td>{{ formatCurrency($valueInvoice->price) }} đ</td>
-                                                        <td>{{ formatCurrency($valueInvoice->total) }} đ</td>
+                                                        <td>{{ formatCurrency($valueInvoice->quantity * $valueInvoice->price) }}
+                                                            đ</td>
                                                     </tr>
 
-                                                    @php($totalAmountPayable += $valueInvoice->total)
+                                                    @php($totalAmountPayable += $valueInvoice->quantity * $valueInvoice->price)
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
@@ -319,8 +320,10 @@
                                                         <td>- đ</td>
                                                     </tr> --}}
                                                     <tr style="background-color: #98FB98">
-                                                        <td colspan="4" style="text-align: center">Tổng tiền phải trả</td>
-                                                        <td id="totalAmountPayable">{{ formatCurrency($totalAmountPayable) }} đ</td>
+                                                        <td colspan="4" style="text-align: center">Tổng tiền phải trả
+                                                        </td>
+                                                        <td id="totalAmountPayable">
+                                                            {{ formatCurrency($totalAmountPayable) }} đ</td>
                                                     </tr>
                                                 @endif
                                             </tfoot>
@@ -332,9 +335,10 @@
                             @if ($value->status && $value->status == 'completed')
                                 @if ($value->invoice && is_null($value->invoice->review))
                                     <div class="flex justify-end p-4 border-t">
-                                        <button style="background-color: #00ffea;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;" 
+                                        <button
+                                            style="background-color: #00ffea;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;"
                                             onclick="toggleModalEvaluate('{{ $value->id }}')"
-                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
+                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
                                             onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
                                             Đánh giá ngay
                                         </button>
@@ -342,18 +346,24 @@
                                 @endif
                             @elseif($value->status && $value->status == 'arrived')
                                 <div class="flex justify-end p-4 border-t">
-                                    <button style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;" 
-                                        onclick="pay()" 
-                                        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
-                                        onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
-                                        Thanh toán ngay
-                                    </button>
+                                    <form action="{{ route('vnpay_payment') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $value->id }}">
+                                        <input type="hidden" name="code" value="{{ $value->code }}">
+                                        <input type="hidden" name="total_amount" value="{{ $totalAmountPayable }}">
+                                        <button
+                                            style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;"
+                                            name="redirect"
+                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+                                            onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                                            Thanh toán ngay
+                                        </button>
+                                    </form>
                                 </div>
                             @endif
                         </div>
                     </div>
                 @endforeach
-
                 {{-- Modal đánh giá --}}
                 @foreach ($listReservation as $value)
                     <div id="modalEvaluate-{{ $value->id }}"
@@ -412,7 +422,11 @@
                     </div>
                 @endforeach
             </div>
+            <div class="mt-4">
+                {{ $listReservation->links('pagination::tailwind') }}
+            </div>
         </div>
+        
     </section>
 @endsection
 
@@ -480,7 +494,7 @@
         }
 
         function pay() {
-            alert(123);
+
         }
 
         // Close the modal by clicking on the overlay
