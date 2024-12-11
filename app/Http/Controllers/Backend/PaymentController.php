@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
+use App\Models\Table;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -159,6 +160,11 @@ class PaymentController extends Controller
                 $reservation = Reservation::find($reservation_id);
                 $reservation->update(['status' => 'completed']);
                 $reservation->invoice()->update(['status' => 'paid', 'payment_method' => 'bank']);
+                foreach ($reservation->reservationDetails as $data) {
+                    Table::where('id', $data->table_id)->update([
+                        'status' => "available",
+                    ]);
+                }
                 return redirect()->route('reservation.list')->with('success', 'Thanh toán thành công!');
             } else {
                 // Giao dịch thất bại
