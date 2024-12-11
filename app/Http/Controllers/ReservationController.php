@@ -182,8 +182,8 @@ class ReservationController extends Controller
     {
         $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
             ->with('reservationDetails')->with('invoice')
-            ->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','completed') ASC")
             ->orderBy('reservation_time', 'DESC')
+            ->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled','completed') ASC")
             ->paginate(10);
 
         return view('frontend.list', compact('listReservation'));

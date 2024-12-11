@@ -39,7 +39,7 @@
                                                     <th>#</th>
                                                     <th>Tên</th>
                                                     <th>Số lượng</th>
-                                                    <th>Giá</th>
+                                                    <th>Thành tiền</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -52,7 +52,7 @@
                                                         <td>{{ $key + 1 }}</td>
                                                         <td> {{ $data->menu->name ?? 'Không có dữ liệu' }}</td>
                                                         <td> {{ $data->quantity ?? 0 }}</td>
-                                                        <td>{{ number_format($data->price ?? 0, 0, ',', '.') }} đ</td>
+                                                        <td>{{ number_format($data->price*$data->quantity ?? 0, 0, ',', '.') }} đ</td>
                                                     </tr>
                                                 @endforeach
                                                 @php

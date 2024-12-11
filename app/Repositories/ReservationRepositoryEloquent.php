@@ -58,8 +58,8 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
         }
     
         // Sort by creation date (latest first)
-        $query->orderBy('id', 'desc');
-    
+        $query->orderBy('reservation_time', 'desc');
+        $query->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled') ASC");
         // Paginate results
         return $query->paginate($perPage);
     }    

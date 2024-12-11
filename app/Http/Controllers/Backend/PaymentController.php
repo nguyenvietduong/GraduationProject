@@ -86,6 +86,16 @@ class PaymentController extends Controller
         $vnp_Locale = "vn";
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+        $reservation = Reservation::find($request->id); // Lấy đơn hàng theo id
+        if (!$reservation) {
+            return redirect()->route('reservation.list')->with('error', 'Đơn hàng không tồn tại!');
+        }
+
+        if ($reservation->status === 'completed' || $reservation->invoice->status === 'paid') {
+            return redirect()->route('reservation.list')->with('error', 'Đơn hàng đã được thanh toán!');
+        }
+
         //Add Params of 2.0.1 Version
         // $vnp_ExpireDate = $_POST['txtexpire'];
         $inputData = array(
