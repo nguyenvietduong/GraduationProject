@@ -342,12 +342,16 @@
                                 @endif
                             @elseif($value->status && $value->status == 'arrived')
                                 <div class="flex justify-end p-4 border-t">
-                                    <button style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;" 
-                                        onclick="pay()" 
-                                        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
-                                        onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
-                                        Thanh toán ngay
-                                    </button>
+                                    <form action="{{route('payment.create')}}" method="post">
+                                        @csrf
+                                        <button style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;" 
+                                            onclick="pay()" 
+                                            name="redirect"
+                                            onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
+                                            onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                                            Thanh toán ngay
+                                        </button>
+                                    </form>
                                 </div>
                             @endif
                         </div>

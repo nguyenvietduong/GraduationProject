@@ -260,8 +260,8 @@
             dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" dataReservationCode="${dataCode}" data-bs-target="#exampleModal">
             Đặt món
             </button>
-            <button class="btn btn-warning" data-bs-toggle="modal"
-            dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" id="btn-reservation-id"
+            dataReservationId="${reservationId}" data-reservation-id="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
         return reservation.append(html)

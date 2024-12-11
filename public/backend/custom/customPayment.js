@@ -230,6 +230,7 @@
                                 voucher_discount = voucher_discount - total_amount
                             }
                             $('#pay').find('.voucher-discount').text(`Giảm giá : ${formatNumber(voucher_discount)}`);
+                            $('#pay').find('.voucher-discount').attr('data-id-vouchar', selectedVoucherId);
                             $('#pay').find('.voucher-discount').show();
                             $('#pay').find('.total-payment').text(formatNumber(total_payment));
                         }
