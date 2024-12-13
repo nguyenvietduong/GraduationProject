@@ -162,19 +162,33 @@ class UpdateStatusReservation extends Controller
     public function createInvoiceDataDetail(Request $request)
     {
         $data = $request->all();
-
+    
+        // Tạo hóa đơn mới
         $invoice = Invoice::create([
             'reservation_id' => $data['reservation_id'],
             'total_amount' => $data['total_amount'],
         ]);
-
+    
+        // Lặp qua danh sách bàn
         foreach ($data['list_table'] as $table) {
-            ReservationDetail::create([
-                'reservation_id' => $data['reservation_id'],
-                'table_id' => $table['id'],
-            ]);
+            // Kiểm tra xem bàn đã tồn tại trong chi tiết đặt bàn chưa
+            $existingReservationDetail = ReservationDetail::where('reservation_id', $data['reservation_id'])
+                ->where('table_id', $table['id'])
+                ->first();
+    
+            if (!$existingReservationDetail) {
+                // Nếu chưa có, thêm bàn vào chi tiết đặt bàn
+                ReservationDetail::create([
+                    'reservation_id' => $data['reservation_id'],
+                    'table_id' => $table['id'],
+                ]);
+    
+                // Cập nhật trạng thái bàn thành "đã có người ngồi"
+                Table::where('id', $table['id'])->update(['status' => 'occupied']);
+            }
         }
-
+    
+        // Lặp qua danh sách món ăn trong hóa đơn
         foreach ($data['invoice_item'] as $item) {
             Invoice_item::create([
                 'invoice_id' => $invoice->id,
@@ -184,8 +198,9 @@ class UpdateStatusReservation extends Controller
                 'total' => $item['total'],
             ]);
         }
+    
         return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
-    }
+    }    
 
     public function updateInvoiceDataDetail(Request $request)
     {
@@ -215,7 +230,6 @@ class UpdateStatusReservation extends Controller
     {
         $data = $request->all();
 
-        dd($data);
         $data['reservation_time'] = Carbon::now()->timestamp;
         $data['created_at'] = Carbon::now()->timestamp;
         $data['updated_at'] = Carbon::now()->timestamp;

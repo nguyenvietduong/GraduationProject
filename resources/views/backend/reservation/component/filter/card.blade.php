@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-auto">
-                <h4 class="card-title">{{ $title }} ({{ $totalRecords }})</h4>
+                <h4 class="card-title">{{ $title }} - Hôm nay ({{$todayArrivedCount ?? ''}} đơn)</h4>
             </div>
             <div class="col-auto ms-auto mt-1">
                 <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"

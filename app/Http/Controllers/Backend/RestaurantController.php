@@ -71,7 +71,7 @@ class RestaurantController extends Controller
             'object' => self::OBJECT,
             'restaurantDatas' => $restaurantDatas,
             'description' => $description,
-            'currentLocale' => $currentLocale, // Truyền ngôn ngữ hiện tại đến view
+            'currentLocale' => $currentLocale,
         ]);
     }
     

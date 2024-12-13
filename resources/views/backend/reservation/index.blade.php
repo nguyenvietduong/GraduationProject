@@ -44,7 +44,7 @@
             <div class="col-12">
                 @include('backend.reservation.component.filter.card', [
                     'title' => __('messages.system.table.title') . ' đơn hàng',
-                    'totalRecords' => $totalRecords,
+                    'todayArrivedCount' => $todayArrivedCount,
                 ])
 
                 <div class="card-body pt-0">
