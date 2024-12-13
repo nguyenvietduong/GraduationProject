@@ -90,7 +90,7 @@ const exportAndSavePDF = (reservationId, voucherId, formattedAmount) => {
             let formattedAmount = totalPayment.replace(/[.đ]/g, '');
             
             // Cập nhật thuộc tính src của thẻ img
-            qrCodeImage.attr('src', `https://img.vietqr.io/image/TCB-19073092061017-compact2.jpg?amount=${formattedAmount}&addInfo=dong%20qop%20quy%20vac%20xin&accountName=THANH%20TOAN%20DON%20DAT%20BAN`);
+            qrCodeImage.attr('src', `https://img.vietqr.io/image/TCB-19073092061017-compact2.jpg?amount=${formattedAmount}&addInfo=thanh-%20toan%20don%20hang%20&accountName=THANH%20TOAN%20DON%20DAT%20BAN`);
             
             // Hiển thị QR Code Modal
             qrCodeModal.show();

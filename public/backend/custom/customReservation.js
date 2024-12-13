@@ -97,6 +97,12 @@
                         await PMD.renderSelectArrived(accountId)
                         // $('#exampleModal').modal('show')
                     }
+
+                    if (response.data.status === 'confirmed') {
+                        setTimeout(() => {
+                            window.location.href = window.location.href;
+                        }, 1000);
+                    }
                     executeExample('success')
                 },
                 error: function (xhr, status, error) {

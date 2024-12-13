@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\Repositories\InvoiceRepositoryInterface;
 use App\Interfaces\Services\InvoiceServiceInterface;
 use App\Traits\HandleExceptionTrait;
-
+use App\Mail\ReservationConfirmed;
 use App\Models\Invoice;
 use App\Models\Invoice_item;
 use App\Models\Promotion;
@@ -14,6 +14,7 @@ use App\Models\Reservation;
 use App\Models\Restaurant;
 use App\Models\Table;
 
+use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -121,6 +122,10 @@ class InvoiceController extends Controller
             $invoice = Invoice::where("reservation_id", $reservation->id)->first();
             if ($invoice) {
                 $invoice->update($dataInvoice);
+
+                if (isset($reservation->email)) {
+                    Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
+                }
             } else {
                 return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
             }
@@ -172,6 +177,10 @@ class InvoiceController extends Controller
         $invoice = Invoice::where("reservation_id", $reservation->id)->first();
         if ($invoice) {
             $invoice->update($dataInvoice);
+
+            if (isset($reservation->email)) {
+                Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
+            }
         } else {
             return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
         }

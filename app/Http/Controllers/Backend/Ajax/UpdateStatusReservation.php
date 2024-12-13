@@ -22,32 +22,45 @@ class UpdateStatusReservation extends Controller
     public function updateStatus(Request $request)
     {
         // Validate input
-        $data = $request->all();
-        // dd($data);
+        $data = $request->validate([
+            'id' => 'required|exists:reservations,id',
+            'status' => 'required|in:pending,confirmed,arrived,canceled,completed',
+        ]);
+    
         // Find the reservation by ID
         $reservation = Reservation::find($data['id']);
-
+    
         if (!$reservation) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => 'Reservation not found'], 404);
         }
-
+    
+        // Check if the status is already updated by another user
+        if ($reservation->status === $data['status']) {
+            return response()->json(['message' => 'The status is already set to the requested value'], 200);
+        }
+    
+        // Prevent cancellation after the reservation is confirmed
+        if ($reservation->status !== 'pending' && $data['status'] === 'canceled') {
+            return response()->json(['message' => 'Cannot cancel a reservation that has already been confirmed!'], 400);
+        }
+    
         // Update the status
-        $reservation->status = $request->status;
+        $reservation->status = $data['status'];
         $reservation->save();
-
-        if ($reservation->status == 'confirmed') {
-            // Send confirmation email
+    
+        // Send appropriate email based on the status
+        if ($data['status'] === 'confirmed') {
             Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
-        } else if ($reservation->status == 'canceled') {
+        } elseif ($data['status'] === 'canceled') {
             Mail::to($reservation->email)->send(new ReservationCancellationMail($reservation));
         }
-
+    
         return response()->json([
             'message' => 'Status updated successfully',
-            'data' => $reservation
+            'data' => $reservation,
         ]);
     }
-
+    
     public function updateTableStatus(Request $request)
     {
         // dd(123123);
