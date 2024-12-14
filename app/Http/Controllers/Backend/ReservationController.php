@@ -72,7 +72,7 @@ class ReservationController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'todayArrivedCount' =>  $this->reservationRepository->whereDate('reservation_time', '=', now()->toDateString())->count(),
+            'todayArrivedCount' =>  $this->reservationRepository->where('status', '!=', 'completed')->whereDate('reservation_time', '=', now()->toDateString())->count(),
             'datas' => $this->reservationService->getAllReservations($filters, $perPage, self::OBJECT), // Paginated reservation list for the view
         ]);
     }
