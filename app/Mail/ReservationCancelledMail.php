@@ -30,7 +30,7 @@ class ReservationCancelledMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Reservation Canceled')
+        return $this->subject($this->reservation->code . ' ' . 'Reservation Canceled')
                     ->view('emails.reservation_canceled')
                     ->with([
                         'reservation_time' => $this->reservation->reservation_time,

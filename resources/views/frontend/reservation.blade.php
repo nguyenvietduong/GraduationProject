@@ -193,8 +193,8 @@
                                         class="mt-2 disabled w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('input-time') border-red-500 @enderror">
                                         <option value="">{{ __('messages.reservation.fields.time') }}</option>
                                         @php
-                                            $opening_hours = $restaurantDatas->opening_hours; // E.g., 7.0 (7 AM)
-                                            $closing_time = $restaurantDatas->closing_time; // E.g., 22.5 (10:30 PM)
+                                            $opening_hours = $restaurantDatas->opening_hours;
+                                            $closing_time = $restaurantDatas->closing_time;
                                         @endphp
 
                                         @for ($i = (float) $opening_hours; $i <= (float) $closing_time; $i += 0.5)
@@ -248,57 +248,57 @@
     </div><!--end container-->
 
     <script>
-        $(document).ready(function() {
-            $('#reservationForm').on('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
+        // $(document).ready(function() {
+        //     $('#reservationForm').on('submit', function(event) {
+        //         event.preventDefault(); // Prevent the default form submission
 
-                // Get form data
-                var formData = $(this).serialize();
+        //         // Get form data
+        //         var formData = $(this).serialize();
 
-                // Show the loading overlay
-                $('#loadingOverlay').show();
+        //         // Show the loading overlay
+        //         $('#loadingOverlay').show();
 
-                $.ajax({
-                    url: $(this).attr('action'), // Lấy URL từ thuộc tính action của form
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // Kiểm tra nếu thành công
-                        if (response.success) {
-                            // Lưu thông tin đơn đặt bàn vào localStorage
-                            let reservations = JSON.parse(localStorage.getItem(
-                                'myReservation')) || [];
-                            // Thêm đơn đặt chỗ mới vào mảng
-                            reservations.push(response.data.id);
-                            // Lưu lại mảng vào localStorage
-                            localStorage.setItem('myReservation', JSON.stringify(reservations));
+        //         $.ajax({
+        //             url: $(this).attr('action'), // Lấy URL từ thuộc tính action của form
+        //             type: 'POST',
+        //             data: formData,
+        //             success: function(response) {
+        //                 // Kiểm tra nếu thành công
+        //                 if (response.success) {
+        //                     // Lưu thông tin đơn đặt bàn vào localStorage
+        //                     let reservations = JSON.parse(localStorage.getItem(
+        //                         'myReservation')) || [];
+        //                     // Thêm đơn đặt chỗ mới vào mảng
+        //                     reservations.push(response.data.id);
+        //                     // Lưu lại mảng vào localStorage
+        //                     localStorage.setItem('myReservation', JSON.stringify(reservations));
 
-                            // Tạo và hiển thị thông báo thành công
-                            var successMessage = '<div class="success-message fade-in show">' +
-                                response.message +
-                                '<span class="close" onclick="$(this).parent().remove();">&times;</span>' +
-                                '</div>';
-                            $('#responseMessage').html(successMessage);
+        //                     // Tạo và hiển thị thông báo thành công
+        //                     var successMessage = '<div class="success-message fade-in show">' +
+        //                         response.message +
+        //                         '<span class="close" onclick="$(this).parent().remove();">&times;</span>' +
+        //                         '</div>';
+        //                     $('#responseMessage').html(successMessage);
 
-                            // Reset form
-                            $('#reservationForm')[0].reset();
+        //                     // Reset form
+        //                     $('#reservationForm')[0].reset();
 
-                            $('#loadingOverlay').hide(); // Ẩn overlay khi xong
+        //                     $('#loadingOverlay').hide(); // Ẩn overlay khi xong
 
-                            // Xóa thông báo sau 2 giây
-                            setTimeout(function() {
-                                $('#responseMessage').html('');
-                            }, 2000);
-                        } else {
-                            console.log('Error: ' + response.message);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.log(xhr);
-                    }
-                });
-            });
-        });
+        //                     // Xóa thông báo sau 2 giây
+        //                     setTimeout(function() {
+        //                         $('#responseMessage').html('');
+        //                     }, 2000);
+        //                 } else {
+        //                     console.log('Error: ' + response.message);
+        //                 }
+        //             },
+        //             error: function(xhr) {
+        //                 console.log(xhr);
+        //             }
+        //         });
+        //     });
+        // });
     </script>
 
     <script>

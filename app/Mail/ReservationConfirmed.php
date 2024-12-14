@@ -20,7 +20,7 @@ class ReservationConfirmed extends Mailable
 
     public function build()
     {
-        return $this->subject('Reservation Confirmed')
+        return $this->subject($this->reservation->code . ' ' . 'Reservation Confirmed')
                     ->view('emails.reservation_confirmed')
                     ->with([
                         'reservation' => $this->reservation,

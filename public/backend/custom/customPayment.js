@@ -50,7 +50,8 @@
 
     CUONG.renderMenuItem = async (menuItems) => {
         $('#list_menu_item').empty()
-        if (menuItems.invoice.invoice_items.length === 0) {
+        
+        if (menuItems.invoice == null) {
             $('#list_menu_item').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
         } else {
             await menuItems.invoice.invoice_items.forEach(item => {
@@ -171,8 +172,14 @@
                 let voucher_discount = 0;
                 let code;
                 $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
-                var total_amount = invoiceDetail.invoice.total_amount;
-                let total_payment = invoiceDetail.invoice.total_amount;
+                let total_amount = 0
+                let total_payment = 0
+
+                if (invoiceDetail.invoice) {
+                    total_amount = invoiceDetail.invoice.total_amount
+                    total_payment = invoiceDetail.invoice.total_amount
+                } 
+
                 $('#pay').find('.total-amount').text(formatNumber(total_amount))
                 $('#pay').find('.total-payment').text(formatNumber(total_payment))
 
@@ -237,6 +244,10 @@
                     }
                 });
                 $(`#btn_paid_${reservationId}`).off('click').click((e) => {
+                    if (total_amount == 0 && total_payment == 0) {
+                        alert('Vui lòng chọn món để được thanh toán!')
+                        return
+                    }
                     let data = {
                         _token: _token,
                         invoiceDetail,
@@ -244,7 +255,6 @@
                         voucher_discount,
                         code,
                     }
-                    console.log(data);
                     
                     $('#pay').modal('hide'),
 

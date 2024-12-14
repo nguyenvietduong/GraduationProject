@@ -35,7 +35,10 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" id="export_btn_revenue" class="btn btn-primary">Xuất PDF</button>
+                    <div class="row">
+                        <button type="button" id="reset_btn_statistical" class="btn btn-primary col-5" style="font-size: 10px; margin-right: 5px">Làm mới</button>
+                        <button type="button" id="export_btn_revenue" class="btn btn-primary col-5" style="font-size: 10px">Xuất PDF</button>
+                    </div>
                 </div>
             </div>
             <div class="card-body" style="position: relative;">
