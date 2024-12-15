@@ -114,50 +114,51 @@
         }
     }
     CUONG.addInvoice = (data) => {
-        fetch("/admin/invoice/store", {
-            method: 'POST',
+        $.ajax({
+            url: "/admin/invoice/store",
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(data => executeExample('success')
-            )
-            .catch(error => console.error('Lỗi khi thêm:', error))
+            data: JSON.stringify(data),
+            success: function(response) {
+                if (response.success) {
+                    executeExample('success');
+                } else {
+                    alert('Lỗi khi thêm hóa đơn.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
     }
 
-    CUONG.exportAndSavePDF = (data) => {
-        fetch("/admin/invoice/exportPDF", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+    CUONG.exportAndSavePDF = (reservationId) => {
+        $.ajax({
+            url: "/admin/invoice/exportPDF",
+            method: "POST",
+            data: {
+                reservation_id: reservationId,
+                _token: $('meta[name="csrf-token"]').attr('content')
             },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const pdfContent = data.pdfContent;
-                    const fileName = data.fileName;
-
-                    const binary = atob(pdfContent);
-                    const array = new Uint8Array(binary.length);
-                    for (let i = 0; i < binary.length; i++) {
-                        array[i] = binary.charCodeAt(i);
-                    }
-
-                    const blob = new Blob([array], { type: 'application/pdf' });
-
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    const pdfUrl = response.pdfUrl;
+        
                     // Mở PDF trong một tab mới
-                    const pdfURL = URL.createObjectURL(blob);
-                    window.open(pdfURL, '_blank');
+                    window.open(pdfUrl, '_blank');
                 } else {
                     alert('Lỗi khi tạo và lưu hóa đơn.');
                 }
-            })
-            .catch(error => console.error('Lỗi khi thêm:', error));
-    }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }    
+    
     //Show Modal Data
     CUONG.showBsModal = () => {
         $('#pay').on('show.bs.modal', async function (event) {
@@ -183,13 +184,13 @@
                 $('#pay').find('.total-amount').text(formatNumber(total_amount))
                 $('#pay').find('.total-payment').text(formatNumber(total_payment))
 
-                $('input[name="payment_method"]').on('change', function () {
-                    if ($(this).val() === 'bank') {
-                        $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
-                    } else {
-                        $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
-                    }
-                });
+                // $('input[name="payment_method"]').on('change', function () {
+                //     if ($(this).val() === 'bank') {
+                //         $('#qr-image').show(); // Hiển thị hình ảnh QR khi chọn "Chuyển khoản"
+                //     } else {
+                //         $('#qr-image').hide(); // Ẩn hình ảnh QR khi chọn phương thức khác
+                //     }
+                // });
                 let allVoucher = await CUONG.fetchVoucher(`/getAllVoucher`);
                 CUONG.renderAllVoucher(allVoucher);
                 let feedback = $('#pay').find('.feedback-voucher');
@@ -248,18 +249,20 @@
                         alert('Vui lòng chọn món để được thanh toán!')
                         return
                     }
+                    let payment_method = 'cash';
                     let data = {
                         _token: _token,
                         invoiceDetail,
                         total_payment,
                         voucher_discount,
                         code,
+                        payment_method
                     }
                     
                     $('#pay').modal('hide'),
 
                         CUONG.addInvoice(data)
-                        CUONG.exportAndSavePDF(data)
+                        CUONG.exportAndSavePDF(reservationId)
                     setTimeout(() => {
                         window.location.reload();
                     }, 3000)

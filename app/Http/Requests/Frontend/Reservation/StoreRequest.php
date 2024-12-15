@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Frontend\Reservation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class StoreRequest extends FormRequest
 {
@@ -23,15 +24,23 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        Validator::extend('valid_guests', function ($attribute, $value, $parameters, $validator) {
+            // Lấy tổng số bàn hiện tại
+            $totalTables = \App\Models\Table::sum('capacity'); // Tổng sức chứa tất cả các bàn
+            
+            // Kiểm tra số lượng khách có vượt sức chứa không
+            return $value <= $totalTables;
+        });
+    
         return [
-            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u', // Chỉ cho phép ký tự chữ, khoảng trắng, và dấu gạch ngang
-            'email' => 'required|email|max:255', // Đảm bảo email hợp lệ
-            'phone' => 'required|numeric|digits_between:10,11', // Đảm bảo số điện thoại hợp lệ với độ dài 10-15 chữ số
-            'guests' => 'required|integer|min:1|max:100', // Số lượng khách tối đa 100 (tùy theo yêu cầu thực tế)
-            'date' => 'required|date|after_or_equal:today', // Ngày phải là hôm nay hoặc sau đó
-            'input-time' => 'required|date_format:H:i', // Đảm bảo thời gian đúng định dạng HH:mm (24-hour format)
-            'special_request' => 'nullable|string|max:500', // Yêu cầu đặc biệt là tùy chọn với độ dài tối đa 500 ký tự
-        ];        
+            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|numeric|digits_between:10,11',
+            'guests' => 'required|integer|min:1|max:100|valid_guests', // Áp dụng custom rule
+            'date' => 'required|date|after_or_equal:today',
+            'input-time' => 'required|date_format:H:i',
+            'special_request' => 'nullable|string|max:500',
+        ];
     }
 
     /**

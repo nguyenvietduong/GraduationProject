@@ -72,6 +72,10 @@
                 <td style="border: 1px solid #ddd; padding: 8px;">Thông tin ngày đặt</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">{{ formatDate($reservation->reservation_time) }}</td>
             </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">Mã đơn hàng</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">{{ $reservation->code }}</td>
+            </tr>      
         </table>
         <p>Chúng tôi hân hạnh được chào đón quý khách đến với nhà hàng!</p>
         <p>Trân trọng,<br>Đội ngũ Nhà Hàng</p>
@@ -104,6 +108,10 @@
                     <td style="border: 1px solid #ddd; padding: 8px;">Thông tin ngày đặt</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">{{ formatDate($reservation->reservation_time) }}</td>
                 </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Mã đơn hàng</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ $reservation->code }}</td>
+                </tr>         
             </table>
         
             <h3 style="margin-top: 20px; color: #333;">Danh Sách Món Ăn:</h3>
