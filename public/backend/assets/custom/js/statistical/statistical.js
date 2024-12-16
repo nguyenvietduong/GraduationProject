@@ -11,6 +11,16 @@ $(document).ready(function () {
         let monthOld = $('#month').val();
         let yearOld = $('#year').val();
 
+        $('#reset_btn_statistical').on('click', function () {
+            alert('Đã reset dữ liệu!');
+            
+            $('#day').val('');
+            $('#month').val(0);
+            $('#year').val(0);
+    
+            fetchDataAndRenderChart('', 0, 0);
+        });
+
         $('#day, #month, #year').on('change', function () {
             let day = $('#day').val();
             let month = $('#month').val();

@@ -66,13 +66,13 @@
                                     <span>Vai trò</span>
                                 </a>
                             </li>
-                            <li class="nav-item checkPermissionMenu">
+                            {{-- <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['permission'], 'active', 'admin') }}"
                                     href="{{ route('admin.permission.index') }}">
                                     <i class="fas fa-lock menu-icon"></i>
                                     <span>Quyền hạn</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

@@ -86,17 +86,9 @@ class ReservationController extends Controller
                 Mail::to($reservationNew->email)->send(new ReservationConfirmed($reservationNew));
             }
 
-            return response()->json([
-                'success' => true,
-                'message' => App::getLocale() == 'vi' ? self::successfulReservation['vi'] : self::successfulReservation['en'],
-                'data' => $reservationNew
-            ], 201); // Created
+            return redirect()->route('reservation')->with('success', 'Đặt bàn thành công!');
         } catch (\Exception $e) {
-            \Log::error('Reservation store error: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred: ' . $e->getMessage()
-            ], 500); // Internal Server Error
+            return redirect()->route('reservation')->with('error', 'Đặt bàn thất bại!');
         }
     }
 
