@@ -25,30 +25,30 @@ class UpdateStatusReservation extends Controller
             'id' => 'required|exists:reservations,id',
             'status' => 'required|in:pending,confirmed,arrived,canceled,completed',
         ]);
-    
+
         $reservation = Reservation::find($data['id']);
-    
+
         if (!$reservation) {
             return response()->json(['message' => 'Reservation not found'], 404);
         }
-    
+
         if ($reservation->status === $data['status']) {
             return response()->json(['message' => 'The status is already set to the requested value'], 200);
         }
-    
+
         if ($reservation->status !== 'pending' && $data['status'] === 'canceled') {
             return response()->json(['message' => 'Cannot cancel a reservation that has already been confirmed!'], 400);
         }
-    
+
         $reservation->status = $data['status'];
         $reservation->save();
-    
+
         // Trả JSON response ngay lập tức
         $response = response()->json([
             'message' => 'Status updated successfully',
             'data' => $reservation,
         ]);
-    
+
         // Đăng ký hàm gửi email trong `register_shutdown_function`
         register_shutdown_function(function () use ($reservation, $data) {
             if ($data['status'] === 'confirmed') {
@@ -57,10 +57,10 @@ class UpdateStatusReservation extends Controller
                 Mail::to($reservation->email)->send(new ReservationCancellationMail($reservation));
             }
         });
-    
+
         return $response;
-    }    
-    
+    }
+
     public function updateTableStatus(Request $request)
     {
         // dd(123123);
@@ -68,10 +68,8 @@ class UpdateStatusReservation extends Controller
         $reservationId = $request->input('reservation_id');
         $guest = $request->input('guest');
 
-        // Kiểm tra nếu mảng bàn không rỗng
         if (!empty($tables)) {
             foreach ($tables as $table) {
-                // Cập nhật trạng thái của từng bàn thành "selected"
                 Table::where('id', $table['id'])->update(['status' => 'occupied']);
 
                 ReservationDetail::create([
@@ -82,9 +80,6 @@ class UpdateStatusReservation extends Controller
                 ]);
             }
         }
-
-
-
 
         return response()->json(['message' => 'Status updated successfully']);
     }
@@ -162,32 +157,32 @@ class UpdateStatusReservation extends Controller
     public function createInvoiceDataDetail(Request $request)
     {
         $data = $request->all();
-    
+
         // Tạo hóa đơn mới
         $invoice = Invoice::create([
             'reservation_id' => $data['reservation_id'],
             'total_amount' => $data['total_amount'],
         ]);
-    
+
         // Lặp qua danh sách bàn
         foreach ($data['list_table'] as $table) {
             // Kiểm tra xem bàn đã tồn tại trong chi tiết đặt bàn chưa
             $existingReservationDetail = ReservationDetail::where('reservation_id', $data['reservation_id'])
                 ->where('table_id', $table['id'])
                 ->first();
-    
+
             if (!$existingReservationDetail) {
                 // Nếu chưa có, thêm bàn vào chi tiết đặt bàn
                 ReservationDetail::create([
                     'reservation_id' => $data['reservation_id'],
                     'table_id' => $table['id'],
                 ]);
-    
+
                 // Cập nhật trạng thái bàn thành "đã có người ngồi"
                 Table::where('id', $table['id'])->update(['status' => 'occupied']);
             }
         }
-    
+
         // Lặp qua danh sách món ăn trong hóa đơn
         foreach ($data['invoice_item'] as $item) {
             Invoice_item::create([
@@ -198,9 +193,9 @@ class UpdateStatusReservation extends Controller
                 'total' => $item['total'],
             ]);
         }
-    
+
         return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
-    }    
+    }
 
     public function updateInvoiceDataDetail(Request $request)
     {
@@ -220,6 +215,7 @@ class UpdateStatusReservation extends Controller
                 'name' => $item['name'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
+                'total' => $item['total']
             ]);
         }
 

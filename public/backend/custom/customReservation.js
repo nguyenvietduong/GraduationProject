@@ -284,6 +284,12 @@
         $('#notiTable').append(html)
     }
 
+    PMD.closeBSModal = () => {
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            $('.table-info').removeClass('cursor-not-allowed')
+        })
+    }
+
     //Show Modal Data
     PMD.showBsModal = () => {
         $('#exampleModal').on('show.bs.modal', async function (event) {
@@ -298,7 +304,6 @@
                 PMD.renderNotiTable(guestsReservation)
             }
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
-
             if (invoiceData.length != []) {
                 let selectedMenus = {
                     invoice_id: invoiceData.invoice_id,
@@ -342,6 +347,7 @@
                 await PMD.searchMenuItem(selectedMenus)
                 PMD.quantityInput(selectedMenus)
                 PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
+                return
             } else {
                 let selectedMenus = {
                     reservation_id: reservationId,
@@ -394,9 +400,10 @@
                 })
                 PMD.searchMenuItem(selectedMenus)
                 PMD.quantityInput(selectedMenus)
-                PMD.checkButtonAddInvoice(selectedMenus, guestsReservation)
-            }
 
+                PMD.checkButtonAddInvoice(selectedMenus, guestsReservation)
+                return
+            }
         })
     }
     //End Show Modal Data
@@ -655,6 +662,9 @@
     PMD.createReservationNew = () => {
         $(document).on('click', '.btnCreateReservation', function (e) {
             e.preventDefault()
+
+            $('.errorReservation').html('')
+
             let _this = $(this)
 
             let name = $('input[name="name"]').val()
@@ -663,30 +673,53 @@
             let guest = $('input[name="guest"]').val()
             let message = $('textarea[name="message"]').val()
             let code = PMD.randomCodeReservation()
+            let checked = true
 
-            let data = {
-                'code': code,
-                'name': name,
-                'email': email,
-                'phone': phone,
-                'guests': guest,
-                'special_request': message
+
+            if (!name) {
+                $('.errNameReservation').append('Tên khách hàng không được trống')
+                checked = false
+            }
+            if (!email) {
+                $('.errEmailReservation').append('Email khách hàng không được trống')
+                checked = false
+            }
+            if (!phone) {
+                $('.errPhoneReservation').append('SDT khách hàng không được trống')
+                checked = false
+            }
+            if (!guest) {
+                $('.errGuestReservation').append('Số lượng khách hàng không được trống')
+                checked = false
             }
 
-            $.ajax({
-                url: '/create-new-reservation',
-                type: 'POST',
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': _token
-                },
-                success: async function (response) {
-                    executeExample('success')
-                },
-                error: function (xhr, status, error) {
-                    executeExample('error')
+            if (checked == true) {
+                let data = {
+                    'code': code,
+                    'name': name,
+                    'email': email,
+                    'phone': phone,
+                    'guests': guest,
+                    'special_request': message
                 }
-            })
+
+                $.ajax({
+                    url: '/create-new-reservation',
+                    type: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': _token
+                    },
+                    success: async function (response) {
+                        $('#create-reservation').modal('hide')
+                        localStorage.setItem('showSuccessMessage', 'true')
+                        window.location.reload()
+                    },
+                    error: function (xhr, status, error) {
+                        executeExample('error')
+                    }
+                })
+            }
 
         })
     }
@@ -704,5 +737,6 @@
         PMD.createReservationNew()
         PMD.showBsModal()
         PMD.resetSelectedTables()
+        PMD.closeBSModal()
     })
 })(jQuery)

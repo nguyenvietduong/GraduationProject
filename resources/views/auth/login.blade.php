@@ -40,7 +40,6 @@
                         <input
                             class="form-checkbox rounded border-gray-100 dark:border-gray-800 text-amber-500 focus:border-amber-300 focus:ring focus:ring-offset-0 focus:ring-amber-200 focus:ring-opacity-50 me-2"
                             type="checkbox" value="" id="RememberMe">
-                        <label class="form-checkbox-label text-slate-400" for="RememberMe">Ghi nhớ tôi</label>
                     </div>
                     <p class="text-slate-400 mb-0"><a href="{{ route('password.request') }}"
                             class="text-slate-400">Quên mật khẩu?</a></p>

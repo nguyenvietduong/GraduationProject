@@ -30,20 +30,28 @@
                         <div class="input-group mb-2">
                             <input type="text" name="name" class="form-control">
                         </div>
+                        <p class="errorReservation errNameReservation text-danger"></p>
+
                         <label class="mb-2">Email</label>
                         <div class="input-group mb-2">
                             <input type="text" name="email" class="form-control">
                         </div>
+                        <p class="errorReservation errEmailReservation text-danger"></p>
+
                     </div>
                     <div class="col-lg-6">
                         <label class="mb-2">Điện thoại</label>
                         <div class="input-group mb-2">
                             <input type="text" name="phone" class="form-control">
                         </div>
+                        <p class="errorReservation errPhoneReservation text-danger"></p>
+
                         <label class="mb-2">Số người</label>
                         <div class="input-group mb-2">
                             <input type="number" name="guest" class="form-control">
                         </div>
+                        <p class="errorReservation errGuestReservation text-danger"></p>
+
                     </div>
                     <div class="col-lg-12">
                         <label class="form-label" for="message">Ghi chú</label>
