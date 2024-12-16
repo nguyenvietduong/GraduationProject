@@ -92,7 +92,7 @@ class PaymentController extends Controller
             return redirect()->route('reservation.list')->with('error', 'Đơn hàng không tồn tại!');
         }
 
-        if ($reservation->status === 'completed' || $reservation->invoice->status === 'paid') {
+        if ($reservation->status === 'completed' && $reservation->invoice->status === 'paid') {
             return redirect()->route('reservation.list')->with('error', 'Đơn hàng đã được thanh toán!');
         }
 

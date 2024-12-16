@@ -14,6 +14,7 @@ php artisan db:seed --class=RestaurantSeeder
 php artisan db:seed --class=TableSeeder
 php artisan db:seed --class=CategorySeeder
 php artisan db:seed --class=PermissionSeeder
+php artisan db:seed --class=ReservationSeeder
 
 
 

@@ -132,9 +132,6 @@ class InvoiceController extends Controller
                     'promotion_id' => $promotion->id,
                     'invoice_id' => $invoice->id,
                 ]);
-            } else {
-                // If no promotion found, return message
-                return response()->json(['error' => 'Mã khuyến mãi không hợp lệ.'], 400);
             }
 
             // Update table statuses to "available"
@@ -146,53 +143,6 @@ class InvoiceController extends Controller
 
             return response()->json(['success' => 'Đặt chỗ và thanh toán thành công.']);
         }
-
-        // If no data was provided, process the request with reservation_id
-        $reservation = Reservation::find($request->reservation_id);
-
-        if (!$reservation) {
-            // Reservation not found
-            return response()->json(['error' => 'Không tìm thấy đặt chỗ.'], 404);
-        }
-
-        // If reservation is already completed
-        if ($reservation->status == 'completed') {
-            return response()->json(['error' => 'Đơn hàng đã được thanh toán.']);
-        }
-
-        // Update reservation status to 'completed'
-        $reservation->update(['status' => 'completed']);
-
-        // Prepare invoice data and update the invoice
-        $dataInvoice = [
-            'total_amount' => $request->total_payment,
-            'status' => 'paid',
-            'payment_method' => 'bank'  // This assumes it's a bank payment, adjust if other methods are possible
-        ];
-        $invoice = Invoice::where("reservation_id", $reservation->id)->first();
-        if ($invoice) {
-            $invoice->update($dataInvoice);
-        } else {
-            return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
-        }
-
-        // Handle promotion
-        $promotion = Promotion::where('code', $request->code)->first();
-        if ($promotion) {
-            PromotionUser::create([
-                'promotion_id' => $promotion->id,
-                'invoice_id' => $invoice->id,
-            ]);
-        }
-
-        // Update table statuses to "available"
-        foreach ($reservation->reservationDetails as $table) {
-            Table::where('id', $table->table_id)->update([
-                'status' => "available",
-            ]);
-        }
-
-        return response()->json(['success' => 'Đặt chỗ và thanh toán thành công.']);
     }
 
     public function exportAndSavePDF(Request $request)
