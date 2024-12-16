@@ -155,7 +155,7 @@
         </div>
     </section>
 
-    {{-- <section class="relative pt-6 md:pb-24 pb-16 bg-gray-50 dark:bg-slate-800">
+    <section class="relative pt-6 md:pb-24 pb-16 bg-gray-50 dark:bg-slate-800">
         <div class="container relative">
             <div class="grid md:grid-cols-12">
                 <div class="lg:col-span-3 md:col-span-3 p-3">
@@ -203,4 +203,4 @@
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>

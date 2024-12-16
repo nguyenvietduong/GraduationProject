@@ -388,5 +388,16 @@
                 }
             }
         });
+
+        document.getElementById('reservationForm').addEventListener('submit', function (e) {
+            // Tìm nút submit
+            var submitButton = document.getElementById('submit');
+            
+            // Tắt nút submit để không cho nhấn thêm
+            submitButton.disabled = true;
+
+            // Hiển thị thông báo loading (hoặc có thể sử dụng spinner)
+            submitButton.value = "Đang xử lý...";  // Thay đổi nội dung nút thành "Đang xử lý..."
+        });
     </script>
 @endsection

@@ -7,9 +7,66 @@
 
 <body>
     <div class="overlay"></div>
-    <div class="spinner">
-        <div></div>
-    </div>
+    <div class="spinner"></div>
+
+    <style>
+        /* Overlay che toàn màn hình */
+        .overlay {
+            display: none; /* Ẩn mặc định */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+            z-index: 999; /* Nằm trên các nội dung khác */
+            backdrop-filter: blur(10px); /* Làm mờ nội dung phía sau */
+        }
+    
+        /* Spinner trung tâm */
+        .spinner {
+            display: none; /* Ẩn mặc định */
+            position: fixed;
+            top: 50%; /* Giữa màn hình */
+            left: 50%;
+            transform: translate(-50%, -50%); /* Căn giữa */
+            z-index: 1000; /* Nằm trên cả overlay */
+            width: 60px;
+            height: 60px;
+            border: 5px solid #ddd; /* Viền ngoài */
+            border-top: 5px solid #3498db; /* Viền xoay */
+            border-radius: 50%;
+            animation: spin 1s linear infinite; /* Hiệu ứng xoay */
+        }
+    
+        /* Hiệu ứng xoay cho spinner */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    
+        /* Làm mờ body */
+        body.blur {
+            filter: blur(5px); /* Làm mờ toàn bộ nội dung */
+            pointer-events: none; /* Vô hiệu hóa tương tác */
+        }
+    
+        /* Làm mờ startbar khi spinner hiển thị */
+        .startbar.blur {
+            filter: blur(5px); /* Làm mờ startbar */
+            pointer-events: none; /* Vô hiệu hóa tương tác */
+        }
+    
+        /* Làm mờ topbar khi spinner hiển thị */
+        .topbar.blur {
+            filter: blur(5px); /* Làm mờ topbar */
+            pointer-events: none; /* Vô hiệu hóa tương tác */
+        }
+    </style>    
 
     <div class="card-body pt-0">
         <div aria-live="polite" aria-atomic="true" class="position-relative bd-example-toasts"
@@ -22,7 +79,7 @@
 
     <!-- Top Bar Start -->
     @include('backend.component.top_bar')
-    <!-- Top Bar End -->ư
+    <!-- Top Bar End -->
 
     <!-- leftbar-tab-menu -->
     <div class="startbar d-print-none">
