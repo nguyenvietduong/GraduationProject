@@ -136,9 +136,6 @@ class InvoiceController extends Controller
                     'promotion_id' => $promotion->id,
                     'invoice_id' => $invoice->id,
                 ]);
-            } else {
-                // If no promotion found, return message
-                return response()->json(['error' => 'Mã khuyến mãi không hợp lệ.'], 400);
             }
 
             // Update table statuses to "available"

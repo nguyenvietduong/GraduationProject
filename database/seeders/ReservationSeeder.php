@@ -32,7 +32,7 @@ class ReservationSeeder extends Seeder
                 $reservationCount = rand(1, 5);
                 for ($i = 0; $i < $reservationCount; $i++) {
                     $randomDay = Carbon::createFromTimestamp(rand(strtotime('2020-01-01'), strtotime('now')));
-                    $status = collect(['pending', 'confirmed', 'canceled', 'completed', 'arrived'])->random();
+                    $status = collect(['canceled', 'completed', 'arrived'])->random();
                     // Tạo đơn hàng
                     $reservation = Reservation::create([
                         'user_id' => $user->id,
