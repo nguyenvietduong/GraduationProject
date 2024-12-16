@@ -662,6 +662,9 @@
     PMD.createReservationNew = () => {
         $(document).on('click', '.btnCreateReservation', function (e) {
             e.preventDefault()
+
+            $('.errorReservation').html('')
+
             let _this = $(this)
 
             let name = $('input[name="name"]').val()
@@ -670,30 +673,53 @@
             let guest = $('input[name="guest"]').val()
             let message = $('textarea[name="message"]').val()
             let code = PMD.randomCodeReservation()
+            let checked = true
 
-            let data = {
-                'code': code,
-                'name': name,
-                'email': email,
-                'phone': phone,
-                'guests': guest,
-                'special_request': message
+
+            if (!name) {
+                $('.errNameReservation').append('Tên khách hàng không được trống')
+                checked = false
+            }
+            if (!email) {
+                $('.errEmailReservation').append('Email khách hàng không được trống')
+                checked = false
+            }
+            if (!phone) {
+                $('.errPhoneReservation').append('SDT khách hàng không được trống')
+                checked = false
+            }
+            if (!guest) {
+                $('.errGuestReservation').append('Số lượng khách hàng không được trống')
+                checked = false
             }
 
-            $.ajax({
-                url: '/create-new-reservation',
-                type: 'POST',
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': _token
-                },
-                success: async function (response) {
-                    executeExample('success')
-                },
-                error: function (xhr, status, error) {
-                    executeExample('error')
+            if (checked == true) {
+                let data = {
+                    'code': code,
+                    'name': name,
+                    'email': email,
+                    'phone': phone,
+                    'guests': guest,
+                    'special_request': message
                 }
-            })
+
+                $.ajax({
+                    url: '/create-new-reservation',
+                    type: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': _token
+                    },
+                    success: async function (response) {
+                        $('#create-reservation').modal('hide')
+                        localStorage.setItem('showSuccessMessage', 'true')
+                        window.location.reload()
+                    },
+                    error: function (xhr, status, error) {
+                        executeExample('error')
+                    }
+                })
+            }
 
         })
     }
