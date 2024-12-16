@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\NotificationEvent;
+use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\BlogController;
@@ -29,12 +30,7 @@ Route::get('/', function () {
 });
 
 Route::get('', [HomeController::class, 'index'])->name('home');
-Route::middleware(['auth'])->get('history/reservation/list', function () {
-    $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
-        ->with('reservationDetails')->with('invoice')->get();
-
-    return view('frontend.list', compact('listReservation'));
-})->name('reservation.list');
+Route::middleware(['auth'])->get('history/reservation/list',[ReservationController::class,'listReservation'])->name('reservation.list');
 Route::post('history/reservation/list', [ReviewController::class, 'store']);
 Route::get('reservation', [ReservationController::class, 'create'])->name('reservation');
 Route::post('reservation', [ReservationController::class, 'store'])->name('reservation');
@@ -46,6 +42,9 @@ Route::get('blog-detail/{slug}', [BlogController::class, 'detail'])->name('blog.
 Route::get('favortite/{menus}', [FavoriteController::class,  'favorite'])->name('favorite');
 Route::get('favortite', [FavoriteController::class,  'favorite_list'])->name('favorite.list');
 
+// Cổng thanh toán VNpay
+Route::post('vnpay_payment', [PaymentController::class,  'vnpay_payment'])->name('vnpay_payment');
+Route::get('/vnpay/callback', [PaymentController::class, 'handlePaymentReturn'])->name('vnpay.return');
 
 Route::group(['middleware' => 'profile'], function () {
     Route::get('profile', [ProfilesController::class, 'profile'])->name('profile');

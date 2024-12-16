@@ -33,13 +33,18 @@
             border-color: #007bff;
             background-color: #e0f7ff;
         }
+
+        /* Lớp làm mờ */
+        .modal-blur {
+            filter: blur(5px);
+        }
     </style>
     <div class="container-xxl">
         <div class="row">
             <div class="col-12">
                 @include('backend.reservation.component.filter.card', [
                     'title' => __('messages.system.table.title') . ' đơn hàng',
-                    'totalRecords' => $totalRecords,
+                    'todayArrivedCount' => $todayArrivedCount,
                 ])
 
                 <div class="card-body pt-0">
@@ -204,7 +209,7 @@
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
                                     <h5 style="display: none"><span class="total-amount">0</span></h5>
-                                    <h5 style="display: none" class="voucher-discount"></h5>
+                                    <h5 style="display: none" class="voucher-discount" id="voucher-discount" data-id-vouchar=""></h5>
                                     <h5>Tổng thanh toán : <span class="total-payment">0</span></h5>
                                     <hr>
                                     <label>Nhập mã giảm giá</label>
@@ -228,8 +233,11 @@
                                         </div>
                                     </div>
                                     
-                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Đã thanh
-                                        toán</button>
+                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code">
+                                        QR Code
+                                    </button>
+
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Trả tiền mặt</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>
@@ -240,10 +248,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="qr_code" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR Code</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img class="text-center" id="qr-code-image" src="" alt="QR Code" width="380px">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="confirm_pay_qrCode()">Xác nhận chuyển khoản</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('script')
+        <script src="{{ asset('backend/custom/customQrCode.js') }}"></script>
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
         <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
-        <script src="{{ asset('backend/custom/customPayment.js?v=108') }}"></script>
+        <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
     @endpush
 @endsection

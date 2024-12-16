@@ -39,6 +39,8 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
         $query = $this->model->query();
         $query->where('status', '!=', ['completed', 'pending']);
     
+        $query->whereDate('reservation_time', '=', now()->toDateString());
+        
         // Apply search filters
         if (!empty($filters['name'])) {
             $query->where('name', 'like', '%' . $filters['name'] . '%');
@@ -58,8 +60,8 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
         }
     
         // Sort by creation date (latest first)
-        $query->orderBy('id', 'desc');
-    
+        $query->orderBy('reservation_time', 'desc');
+        $query->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled') ASC");
         // Paginate results
         return $query->paginate($perPage);
     }    

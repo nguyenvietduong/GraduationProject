@@ -17,7 +17,6 @@
                     reservation_id: reservationId
                 }
             });
-            console.log(response); // In kết quả trong console
             return response;
         } catch (error) {
             console.error(error);
@@ -42,7 +41,7 @@
             type: 'POST',
             data: data,
             success: async function (response) {
-                executeExample('success')
+                // executeExample('success')
             },
             error: function (xhr, status, error) {
                 executeExample('error')
@@ -66,7 +65,7 @@
             type: 'POST',
             data: data,
             success: async function (response) {
-                executeExample('success')
+                // executeExample('success')
             },
             error: function (xhr, status, error) {
                 executeExample('error')
@@ -94,6 +93,12 @@
                         await PMD.renderTdMenu(accountId)
                         await PMD.renderSelectArrived(accountId)
                         // $('#exampleModal').modal('show')
+                    }
+
+                    if (response.data.status === 'confirmed') {
+                        setTimeout(() => {
+                            window.location.href = window.location.href;
+                        }, 1000);
                     }
                     executeExample('success')
                 },
@@ -258,8 +263,8 @@
             dataReservationId="${reservationId}" dataTableId="${tableId}" dataGuests="${dataGuest}" dataReservationCode="${dataCode}" data-bs-target="#exampleModal">
             Đặt món
             </button>
-            <button class="btn btn-warning" data-bs-toggle="modal"
-            dataReservationId="${reservationId}" data-bs-target="#pay">Thanh toán</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" id="btn-reservation-id"
+            dataReservationId="${reservationId}" data-reservation-id="${reservationId}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
         return reservation.append(html)
@@ -299,8 +304,6 @@
                 PMD.renderNotiTable(guestsReservation)
             }
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
-            console.log(invoiceData);
-
             if (invoiceData.length != []) {
                 let selectedMenus = {
                     invoice_id: invoiceData.invoice_id,
@@ -401,7 +404,6 @@
                 PMD.checkButtonAddInvoice(selectedMenus, guestsReservation)
                 return
             }
-
         })
     }
     //End Show Modal Data
@@ -458,12 +460,16 @@
                 PMD.updateInvoiceDataDetail(item)
 
             } else {
-                PMD.checkTableSelected(item, guest)
                 PMD.createInvoiceDataDetail(item, guest)
             }
-            $('#exampleModal').on('hidden.bs.modal', function () {
-                window.location.reload()
-            })
+
+            $('#exampleModal').modal('hide')
+
+            localStorage.setItem('showSuccessMessage', 'true')
+
+            // $('#exampleModal').on('hidden.bs.modal', function () {
+            window.location.reload()
+            // })
         })
     }
     //End Button Add Invoice

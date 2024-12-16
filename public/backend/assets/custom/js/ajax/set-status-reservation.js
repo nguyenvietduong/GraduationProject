@@ -4,7 +4,6 @@ $(document).ready(function () {
         var select = $(this);
         var selectedValue = select.val();
         var accountId = select.data('account-id'); // Get the correct account ID
-
         var data = {
             _token: csrfToken,
             id: accountId,
@@ -12,31 +11,41 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: updateStatusUrl, // Pointing to the correct URL
+            url: updateStatusUrl, // URL chính xác
             type: 'POST',
             data: data,
             success: function (response) {
-                // Check if the status is 'arrived'
+                executeExample('success');
+        
+                // Kiểm tra trạng thái trả về
                 if (response.data.status === 'arrived') {
                     var idReservation = response.data.id;
                     var guestsReservation = response.data.guests;
-
-                    // Set the value for hidden inputs using jQuery
+        
+                    // Gán giá trị cho input ẩn
                     $('#reservationId').val(idReservation);
                     $('#guestsReservation').val(guestsReservation);
-
-                    // Show the modal using Bootstrap's jQuery method
+        
+                    // Hiển thị modal
                     $('#exampleModal').modal('show');
-                }
-
-                // Execute success function
-                executeExample('success');
+                } 
+                
+                // if (response.data.status === 'confirmed') {
+                //     console.log("Confirmed status received. Reloading the page...");
+        
+                //     // Thêm log kiểm tra xem hàm có chạy tới đây không
+                //     setTimeout(() => {
+                //         // Reload bằng cách thay đổi href
+                //         window.location.href = window.location.href;
+                //     }, 1000);
+                // }
             },
             error: function (xhr, status, error) {
-                // Execute error function
+                // Gọi hàm xử lý lỗi
+                console.error("Error occurred: ", error);
                 executeExample('error');
             }
-        });
+        });        
     });
 
     // Hàm gọi AJAX để lấy các bàn trống
