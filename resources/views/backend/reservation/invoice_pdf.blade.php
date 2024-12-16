@@ -78,19 +78,19 @@
             $totalCount = 0;
             @endphp
             @foreach ($reservation->invoice->invoiceItems as $dish)
-            @php
-                $totalCount += $dish->price;
-            @endphp
+                @php
+                    $totalCount += $dish->price;
+                @endphp
             @endforeach
-            @if ($reservation->invoice->promotionDetail)
+            @if ($totalCount - $reservation->invoice->total_amount != 0)
                 <tr>
                     <td colspan="3" style="text-align: right;"><strong>Giảm giá:</strong></td>
-                    <td><strong>{{ number_format($totalCount, 0, ',', '.') }} đ</strong></td>
+                    <td><strong>{{ number_format($totalCount - $reservation->invoice->total_amount, 0, ',', '.') }} đ</strong></td>
                 </tr>
             @endif
             <tr>
                 <td colspan="3" style="text-align: right;"><strong>Thành tiền:</strong></td>
-                <td><strong>{{ number_format($totalCount - $reservation->invoice->total_amount, 0, ',', '.') }} đ</strong></td>
+                <td><strong>{{ number_format($reservation->invoice->total_amount, 0, ',', '.') }} đ</strong></td>
             </tr>
         </tbody>
     </table>
