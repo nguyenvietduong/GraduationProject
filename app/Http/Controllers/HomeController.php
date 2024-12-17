@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Menu;
@@ -26,9 +27,11 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::with('menus')->get();
+        $listBlogs = Blog::orderBy('created_at', 'desc')
+        ->take(3)
+        ->get();
 
-
-        return view('frontend.index', compact('categories'));
+        return view('frontend.index', compact('categories', 'listBlogs'));
     }
 
     public function reservation()
