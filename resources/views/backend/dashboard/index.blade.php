@@ -7,12 +7,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                            <div class="col-9">
-                                <p class="text-dark mb-0 fw-semibold fs-14">Số người đang sử dụng</p>
+                            <div class="col-8">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Số tài khoản</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countUser'] / 1000, 3, '.', '') }}
                                 </h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-solid fa-user" style="color: green"></i>
@@ -26,11 +26,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                            <div class="col-9">
+                            <div class="col-8">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Danh mục</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countCategory'], 0, '.', '.') }}</h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-solid fa-list" style="color: rgb(32, 59, 182)"></i>
@@ -44,11 +44,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                            <div class="col-9">
+                            <div class="col-8">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Món ăn</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countFood'], 0, '.', '.') }}</h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-solid fa-bowl-food" style="color: coral"></i>
@@ -62,11 +62,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                            <div class="col-9">
-                                <p class="text-dark mb-0 fw-semibold fs-14">Blog</p>
+                            <div class="col-8">
+                                <p class="text-dark mb-0 fw-semibold fs-14">Bài viết</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countBlog'], 0, '.', '.') }}</h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-solid fa-newspaper" style="color: rgb(29, 29, 29)"></i>
@@ -80,11 +80,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
-                            <div class="col-9">
+                            <div class="col-8">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Bàn</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['countTable'], 0, '.', '.') }}</h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-solid fa-chair" style="color: rgb(193, 27, 27)"></i>
@@ -99,10 +99,10 @@
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
                             <div class="col">
-                                <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu Năm </p>
+                                <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu năm </p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['totalYear'], 0, '.', '.') }} VNĐ</h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-regular fa-money-bill-1" style="color: green"></i>
@@ -120,7 +120,7 @@
                                 <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu tháng</p>
                                 <h5 class="mt-2 mb-0 fw-bold" ">{{ number_format($data['totalMonth'], 0, '.', '.') }} VNĐ</h3>
                                           </div>
-                                          <div class=" col-3 align-self-center">
+                                          <div class=" col-4 d-flex justify-content-center align-items-center">
                                     <div
                                         class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                         <i class="fa-regular fa-money-bill-1" style="color: green"></i>
@@ -138,7 +138,7 @@
                                 <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu hôm nay</p>
                                 <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['totalToday'], 0, '.', '.') }} VNĐ</h5>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
                                 <div
                                     class="d-flex justify-content-center align-items-center thumb-xl bg-light rounded-circle mx-auto">
                                     <i class="fa-regular fa-money-bill-1" style="color: green"></i>
@@ -200,7 +200,7 @@
             </div>
             <div class="col-md-12">
                 <div class="card-header">
-                    <div class="card-title">Đơn hàng</div>
+                    <div class="card-title h4">Đơn hàng</div>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
@@ -210,7 +210,7 @@
             </div>
             <div class="col-md-12">
                 <div class="card-header">
-                    <div class="card-title">Doanh thu</div>
+                    <div class="card-title h4">Doanh thu</div>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">

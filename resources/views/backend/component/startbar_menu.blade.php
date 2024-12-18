@@ -133,7 +133,7 @@
                     <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"
                         href="{{ route('admin.blog.index') }}">
                         <i class="fa fa-newspaper menu-icon"></i>
-                        <span>Blog</span>
+                        <span>Bài viết</span>
                     </a>
                 </li>
                 {{-- Khuyến mãi --}}
