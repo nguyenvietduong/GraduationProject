@@ -55,8 +55,8 @@
             `${yyyy}-${mm}-${dd}T${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}`;
 
         // Thiết lập giá trị max cho input datetime-local
-        document.getElementById('start_date').setAttribute('max', maxDateTime);
-        document.getElementById('end_date').setAttribute('max', maxDateTime);
+        // document.getElementById('start_date').setAttribute('max', maxDateTime);
+        // document.getElementById('end_date').setAttribute('max', maxDateTime);
 
         // Kiểm tra ngày bắt đầu và ngày kết thúc
         const startDateInput = document.getElementById('start_date');
