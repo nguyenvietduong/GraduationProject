@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 use App\Models\Table;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,16 +17,29 @@ class TableController extends Controller
     {
         $id = $request->id;
         $requestData = $request->all();
-        $validator = \Validator::make($requestData, [
+        $validator = \Validator::make(
+            $requestData,
+            [
                 'id' => 'required',
                 'status' => 'required'
             ]
         );
         if ($validator->fails())
             return response()->json(['status' => false, 'errors' => $validator->errors()->all()]);
+
+        $checkStatusInvoice = Invoice::whereHas('reservation.ReservationDetails.table', function ($query) {
+            $query->where('id', 5); // Bàn có id là 5
+        })->where('status', 'unpaid') // Kiểm tra trạng thái hóa đơn (thanh toán hay chưa)
+            ->get();
+            // dd($checkStatusInvoice);
+            if(!$checkStatusInvoice){
+                return response()->json(['status' => false, 'errors' => 'Bàn đang có người sử dụng!']);
+            }
+
         try {
             $table = Table::find($id);
-            if (!$table) return response()->json(['status' => false, 'errors' => 'Table not found']);
+            if (!$table)
+                return response()->json(['status' => false, 'errors' => 'Table not found']);
             $table->update([
                 'status' => $request->status ?? 'available'
             ]);
