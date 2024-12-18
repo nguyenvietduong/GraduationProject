@@ -445,36 +445,40 @@
         }
 
         function cancelReservation(url, id) {
-            let btnCancel = $(`#btn-canceled-${id}`);
-            let statusReservation = $(`#statusReservation-${id}`);
+            let confirmCancel = confirm('Bạn có chắc chắn không?');
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(response) {
-                    if (response.success) {
+            if (confirmCancel) {
+                let btnCancel = $(`#btn-canceled-${id}`);
+                let statusReservation = $(`#statusReservation-${id}`);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            btnCancel.addClass('hidden');
+                            statusReservation.html('Đã hủy');
+                            alert('Hủy đơn đặt bàn thành công');
+                        } else if (response.success = 'false') {
+                            alert(123);
+                        }
+                    },
+                    error: function(response) {
                         btnCancel.addClass('hidden');
-                        statusReservation.html('Đã hủy');
-                        alert('Hủy đơn đặt bàn thành công');
-                    } else if (response.success = 'false') {
-                        alert(123);
-                    }
-                },
-                error: function(response) {
-                    btnCancel.addClass('hidden');
-                    let text = null;
-                    if (response.responseJSON.data == 'confirmed') {
-                        text = 'Xác nhận'
-                    } else if (response.responseJSON.data == 'arrived') {
-                        text = 'Đã đến cửa hàng';
-                    } else if (response.responseJSON.data == 'completed') {
-                        text = 'Hoàn thành';
-                    }
+                        let text = null;
+                        if (response.responseJSON.data == 'confirmed') {
+                            text = 'Xác nhận'
+                        } else if (response.responseJSON.data == 'arrived') {
+                            text = 'Đã đến cửa hàng';
+                        } else if (response.responseJSON.data == 'completed') {
+                            text = 'Hoàn thành';
+                        }
 
-                    statusReservation.html(text);
-                    alert('Hủy đơn đặt bàn thất bại, đơn đặt bàn của bạn không thể hủy bỏ');
-                }
-            });
+                        statusReservation.html(text);
+                        alert('Hủy đơn đặt bàn thất bại, đơn đặt bàn của bạn không thể hủy bỏ');
+                    }
+                });
+            }
         }
 
         function toggleModalEvaluate(id) {
