@@ -702,14 +702,18 @@
 
             let _this = $(this)
 
-            let name = $('input[name="name"]').val()
-            let email = $('input[name="email"]').val()
-            let phone = $('input[name="phone"]').val()
-            let guest = $('input[name="guest"]').val()
-            let message = $('textarea[name="message"]').val()
+            let name = $('input[name="nameAddNew"]').val()
+            let email = $('input[name="emailAddNew"]').val()
+            let phone = $('input[name="phoneAddNew"]').val()
+            let guest = $('input[name="guestAddNew"]').val()
+            let message = $('textarea[name="messageAddNew"]').val()
             let code = PMD.randomCodeReservation()
             let checked = true
 
+            $('.errNameReservation').text('');
+            $('.errEmailReservation').text('');
+            $('.errPhoneReservation').text('');
+            $('.errGuestReservation').text('');
 
             if (!name) {
                 $('.errNameReservation').append('Tên khách hàng không được trống')
@@ -718,14 +722,25 @@
             if (!email) {
                 $('.errEmailReservation').append('Email khách hàng không được trống')
                 checked = false
+            } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+                $('.errEmailReservation').append('Email không hợp lệ');
+                checked = false;
             }
+
             if (!phone) {
                 $('.errPhoneReservation').append('SDT khách hàng không được trống')
                 checked = false
+            }else if (!/^\d{10,11}$/.test(phone)) {
+                $('.errPhoneReservation').append('Số điện thoại phải là số từ 10 đến 11 chữ số');
+                checked = false;
             }
+
             if (!guest) {
                 $('.errGuestReservation').append('Số lượng khách hàng không được trống')
                 checked = false
+            } else if (isNaN(guest) || parseInt(guest) <= 0) {
+                $('.errGuestReservation').append('Số lượng khách phải là số lớn hơn 0');
+                checked = false;
             }
 
             if (checked == true) {

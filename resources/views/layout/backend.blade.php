@@ -137,6 +137,139 @@
         </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" id="create-reservation" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title m-0" id="myLargeModalLabel">Tạo đơn mới</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="mb-2">Họ tên</label>
+                            <div class="input-group mb-2">
+                                <input type="text" name="nameAddNew" class="form-control">
+                            </div>
+                            <p class="errorReservation errNameReservation text-danger"></p>
+
+                            <label class="mb-2">Email</label>
+                            <div class="input-group mb-2">
+                                <input type="email" name="emailAddNew" class="form-control">
+                            </div>
+                            <p class="errorReservation errEmailReservation text-danger"></p>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="mb-2">Điện thoại</label>
+                            <div class="input-group mb-2">
+                                <input type="number" name="phoneAddNew" class="form-control">
+                            </div>
+                            <p class="errorReservation errPhoneReservation text-danger"></p>
+
+                            <label class="mb-2">Số người</label>
+                            <div class="input-group mb-2">
+                                <input type="number" name="guestAddNew" class="form-control">
+                            </div>
+                            <p class="errorReservation errGuestReservation text-danger"></p>
+
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="form-label" for="message">Ghi chú</label>
+                            <textarea class="form-control" name="messageAddNew" rows="5" id="message"></textarea>
+                        </div>
+                    </div><!--end row-->
+                </div><!--end modal-body-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary btnCreateReservation">Tạo đơn</button>
+                </div><!--end modal-footer-->
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div>
+
+    <button class="chat-button btn btn-primary" type="button" data-bs-toggle="modal"
+    data-bs-target="#create-reservation">
+        <div class="icon-wrapper">
+            <i class="fas fa-book"></i> <!-- Icon -->
+            <span class="chat-text">Tạo đơn mới</span>
+        </div>
+    </button>    
+    
+    <style>
+    /* Chat Button Styles */
+    .chat-button {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.5s ease;
+    }
+
+    .chat-button .icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: opacity 0.5s ease;
+    }
+
+    .chat-button .chat-text {
+        display: none;
+        margin-left: 10px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .chat-button.expanded {
+        width: 170px;
+        border-radius: 30px;
+    }
+
+    .chat-button.expanded .chat-text {
+        display: inline;
+    }
+
+    .chat-button.expanded .fas {
+        margin-right: 5px;
+    }
+    </style>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const chatButton = document.querySelector('.chat-button');
+
+            // Hàm để bật ra
+            const expandButton = () => {
+                chatButton.classList.add('expanded');
+                setTimeout(collapseButton, 3000); // Sau 3 giây bật vào
+            };
+
+            // Hàm để bật vào
+            const collapseButton = () => {
+                chatButton.classList.remove('expanded');
+                setTimeout(expandButton, 3000); // Sau 3 giây bật ra lại
+            };
+
+            // Khởi chạy hiệu ứng
+            setTimeout(expandButton, 3000); // Sau 3 giây bắt đầu bật ra
+        });
+    </script>
+
     @include('backend.component.Javascript')
 </body>
 <!--end body-->
