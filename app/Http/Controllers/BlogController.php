@@ -33,7 +33,7 @@ class BlogController extends Controller
     {
         
         return view(self::PATH_VIEW_BLOG_DETAIL, [
-            'blogData' => $this->blogRepository->findByField('slug', $slug), // Paginated blog list for the view
+            'blogData' => $this->blogRepository->findByField('slug', $slug)->first(),
         ]);
     }
 }

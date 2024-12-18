@@ -26,90 +26,121 @@
 
 
     PMD.createInvoiceDataDetail = (item, guest) => {
-        let data = {
-            _token: _token,
-            guests_detail: guest,
-            reservation_id: item.reservation_id,
-            reservation_code: item.reservation_code,
-            total_amount: item.totalAmount,
-            list_table: item.list_table,
-            invoice_item: item.invoice_item,
-        }
-
-        $.ajax({
-            url: '/create-invoice-detail',
-            type: 'POST',
-            data: data,
-            success: async function (response) {
-                // executeExample('success')
-            },
-            error: function (xhr, status, error) {
-                executeExample('error')
+        if (item.list_table == null) {
+            alert('Vui lòng chọn bàn!');
+        } else {
+            let data = {
+                _token: _token,
+                guests_detail: guest,
+                reservation_id: item.reservation_id,
+                reservation_code: item.reservation_code,
+                total_amount: item.totalAmount,
+                list_table: item.list_table,
+                invoice_item: item.invoice_item,
             }
-        })
+    
+            $.ajax({
+                url: '/create-invoice-detail',
+                type: 'POST',
+                data: data,
+                success: async function (response) {
+                    // executeExample('success')
+                },
+                error: function (xhr, status, error) {
+                    executeExample('error')
+                }
+            })
+        }
     }
 
 
     PMD.updateInvoiceDataDetail = (item) => {
-        let data = {
-            _token: _token,
-            invoice_id: item.invoice_id,
-            reservation_id: item.reservation_id,
-            total_amount: item.totalAmount,
-            list_table: item.list_table,
-            invoice_item: item.invoice_item,
-        }
-
-        $.ajax({
-            url: '/update-invoice-detail',
-            type: 'POST',
-            data: data,
-            success: async function (response) {
-                // executeExample('success')
-            },
-            error: function (xhr, status, error) {
-                executeExample('error')
+        if (item.list_table == null) {
+            alert('Vui lòng chọn bàn!');
+        } else {
+            let data = {
+                _token: _token,
+                invoice_id: item.invoice_id,
+                reservation_id: item.reservation_id,
+                total_amount: item.totalAmount,
+                list_table: item.list_table,
+                invoice_item: item.invoice_item,
             }
-        })
+    
+            $.ajax({
+                url: '/update-invoice-detail',
+                type: 'POST',
+                data: data,
+                success: async function (response) {
+                    // executeExample('success')
+                },
+                error: function (xhr, status, error) {
+                    executeExample('error')
+                }
+            })
+        }
     }
 
 
     //Check Arrived
     PMD.selectArrived = async () => {
         $(document).on('change', '.selectReservation', function (e) {
-            let selectedValue = $(this).val()
-            let accountId = $(this).attr('data-account-id')
+            e.preventDefault();
+    
+            // Hiển thị spinner
+            showSpinner();
+    
+            let selectedValue = $(this).val();
+            let accountId = $(this).attr('data-account-id');
             let data = {
                 _token: _token,
                 id: accountId,
                 status: selectedValue
-            }
+            };
+    
             $.ajax({
                 url: '/admin/reservation/updateStatus',
                 type: 'POST',
                 data: data,
                 success: async function (response) {
+                    hideSpinner();
+                    
                     if (response.data.status === 'arrived') {
-                        await PMD.renderTdMenu(accountId)
-                        await PMD.renderSelectArrived(accountId)
-                        // $('#exampleModal').modal('show')
+                        await PMD.renderTdMenu(accountId);
+                        await PMD.renderSelectArrived(accountId);
                     }
-
+    
                     if (response.data.status === 'confirmed') {
                         setTimeout(() => {
                             window.location.href = window.location.href;
                         }, 1000);
                     }
-                    executeExample('success')
+                    executeExample('success');
                 },
                 error: function (xhr, status, error) {
-                    executeExample('error')
+                    // Ẩn spinner khi có lỗi
+                    spinner.style.display = 'none';
+                    executeExample('error');
                 }
-            })
-            e.preventDefault()
-        })
-    }
+            });
+        });
+    };    
 
+    function showSpinner() {
+        document.querySelector('.overlay').style.display = 'block';
+        document.querySelector('.spinner').style.display = 'block';
+        document.querySelector('.startbar').classList.add('blur'); // Thêm lớp làm mờ startbar
+        document.querySelector('.topbar').classList.add('blur'); // Thêm lớp làm mờ topbar
+    }    
+    
+    function hideSpinner() {
+        document.querySelector('.overlay').style.display = 'none';
+        document.querySelector('.spinner').style.display = 'none';
+        document.querySelector('.startbar').classList.remove('blur'); // Xóa lớp làm mờ startbar
+        document.querySelector('.topbar').classList.remove('blur'); // Xóa lớp làm mờ topbar
+    }
+    
+    
     PMD.checkArrived = async () => {
         let reservation = $('.selectReservation')
         reservation.each((index, item) => {
@@ -456,20 +487,24 @@
     //Button Add Invoice
     PMD.checkButtonAddInvoice = (item, guest, invoice = false) => {
         $(document).on('click', '.btnSaveInvoice', function () {
-            if (invoice == true) {
-                PMD.updateInvoiceDataDetail(item)
-
+            if (item.list_table == '') {
+                alert('Vui lòng chọn bàn!!');
             } else {
-                PMD.createInvoiceDataDetail(item, guest)
+                if (invoice == true) {
+                    PMD.updateInvoiceDataDetail(item)
+    
+                } else {
+                    PMD.createInvoiceDataDetail(item, guest)
+                }
+    
+                $('#exampleModal').modal('hide')
+    
+                localStorage.setItem('showSuccessMessage', 'true')
+    
+                // $('#exampleModal').on('hidden.bs.modal', function () {
+                window.location.reload()
+                // })
             }
-
-            $('#exampleModal').modal('hide')
-
-            localStorage.setItem('showSuccessMessage', 'true')
-
-            // $('#exampleModal').on('hidden.bs.modal', function () {
-            window.location.reload()
-            // })
         })
     }
     //End Button Add Invoice
@@ -667,14 +702,18 @@
 
             let _this = $(this)
 
-            let name = $('input[name="name"]').val()
-            let email = $('input[name="email"]').val()
-            let phone = $('input[name="phone"]').val()
-            let guest = $('input[name="guest"]').val()
-            let message = $('textarea[name="message"]').val()
+            let name = $('input[name="nameAddNew"]').val()
+            let email = $('input[name="emailAddNew"]').val()
+            let phone = $('input[name="phoneAddNew"]').val()
+            let guest = $('input[name="guestAddNew"]').val()
+            let message = $('textarea[name="messageAddNew"]').val()
             let code = PMD.randomCodeReservation()
             let checked = true
 
+            $('.errNameReservation').text('');
+            $('.errEmailReservation').text('');
+            $('.errPhoneReservation').text('');
+            $('.errGuestReservation').text('');
 
             if (!name) {
                 $('.errNameReservation').append('Tên khách hàng không được trống')
@@ -683,14 +722,25 @@
             if (!email) {
                 $('.errEmailReservation').append('Email khách hàng không được trống')
                 checked = false
+            } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+                $('.errEmailReservation').append('Email không hợp lệ');
+                checked = false;
             }
+
             if (!phone) {
                 $('.errPhoneReservation').append('SDT khách hàng không được trống')
                 checked = false
+            }else if (!/^\d{10,11}$/.test(phone)) {
+                $('.errPhoneReservation').append('Số điện thoại phải là số từ 10 đến 11 chữ số');
+                checked = false;
             }
+
             if (!guest) {
                 $('.errGuestReservation').append('Số lượng khách hàng không được trống')
                 checked = false
+            } else if (isNaN(guest) || parseInt(guest) <= 0) {
+                $('.errGuestReservation').append('Số lượng khách phải là số lớn hơn 0');
+                checked = false;
             }
 
             if (checked == true) {

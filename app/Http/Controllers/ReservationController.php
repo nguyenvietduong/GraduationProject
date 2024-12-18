@@ -170,14 +170,27 @@ class ReservationController extends Controller
             'message' => 'Reservation could not be canceled because it is not pending.'
         ], 400);
     }
-    public function listReservation()
+    public function listReservation(Request $request)
     {
-        $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
-            ->with('reservationDetails')->with('invoice')
-            ->orderBy('reservation_time', 'DESC')
-            ->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled','completed') ASC")
-            ->paginate(10);
 
+        $listReservation = Reservation::where('user_id', '=', Auth::user()->id)
+            ->with('reservationDetails')->with('invoice');
+        if (isset($_GET['status']) && $_GET['status'] != '') {
+            $status = $_GET['status'];
+            $listReservation = $listReservation->where('status', $status);
+        }
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            $listReservation = $listReservation->where(function ($query) use ($keyword) {
+                $query->where('code', 'LIKE', "%$keyword%")
+                    ->orWhere('name', 'LIKE', "%$keyword%")
+                    ->orWhere('email', 'LIKE', "%$keyword%")
+                    ->orWhere('phone', 'LIKE', "%$keyword%");
+            });
+        }
+        $listReservation = $listReservation->orderBy('reservation_time', 'DESC')
+            ->orderByRaw("FIELD(status, 'arrived','completed' ,'confirmed', 'pending','canceled') ASC")
+            ->paginate(10);
         return view('frontend.list', compact('listReservation'));
     }
 }

@@ -55,5 +55,6 @@
 <script src="{{ asset('backend/assets/js/pages/file-upload.init.js') }}"></script>
 <script src="{{ asset('backend/assets/js/pages/form-wizard.js') }}"></script>
 <script src="{{ asset('backend/assets/custom/js/ajax/set-notification.js') }}"></script>
+<script src="{{ asset('backend/custom/customReservation.js') }}"></script>
 
 @stack('script')
