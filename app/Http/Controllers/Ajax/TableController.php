@@ -27,12 +27,12 @@ class TableController extends Controller
         if ($validator->fails())
             return response()->json(['status' => false, 'errors' => $validator->errors()->all()]);
 
-        $checkStatusInvoice = Invoice::whereHas('reservation.ReservationDetails.table', function ($query) {
-            $query->where('id', 5); // Bàn có id là 5
+        $checkStatusInvoice = Invoice::whereHas('reservation.ReservationDetails.table', function ($query) use($id) {
+            $query->where('id', $id); // Bàn có id là 5
         })->where('status', 'unpaid') // Kiểm tra trạng thái hóa đơn (thanh toán hay chưa)
             ->get();
-            // dd($checkStatusInvoice);
-            if(!$checkStatusInvoice){
+            // dd(count($checkStatusInvoice));
+            if(count($checkStatusInvoice) > 0){
                 return response()->json(['status' => false, 'errors' => 'Bàn đang có người sử dụng!']);
             }
 
