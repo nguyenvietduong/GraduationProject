@@ -28,13 +28,14 @@ class TableController extends Controller
             return response()->json(['status' => false, 'errors' => $validator->errors()->all()]);
 
         $checkStatusInvoice = Invoice::whereHas('reservation.ReservationDetails.table', function ($query) use($id) {
-            $query->where('id', $id); // Bàn có id là 5
-        })->where('status', 'unpaid') // Kiểm tra trạng thái hóa đơn (thanh toán hay chưa)
+            $query->where('id', $id); 
+        })->where('status', 'unpaid') // Kiểm tra trạng thái hóa đơn 
             ->get();
             // dd(count($checkStatusInvoice));
-            if(count($checkStatusInvoice) > 0){
-                return response()->json(['status' => false, 'errors' => 'Bàn đang có người sử dụng!']);
-            }
+            
+        if(count($checkStatusInvoice) > 0)
+            return response()->json(['status' => false, 'errors' => 'Bàn đang có người sử dụng!']);
+        
 
         try {
             $table = Table::find($id);
@@ -44,7 +45,7 @@ class TableController extends Controller
                 'status' => $request->status ?? 'available'
             ]);
 
-            return \response()->json([
+            return response()->json([
                 'status' => true,
                 'message' => 'Update table success',
 

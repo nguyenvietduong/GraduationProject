@@ -35,7 +35,6 @@
                 e.preventDefault();
                 let id = $(this).data('table-id');
                 let status = $(this).val();
-                console.log(status);
 
                 $.ajax({
                     url: '/table/updateStatus', // Use route helper for more reliable URL generation
@@ -46,7 +45,7 @@
                         _token: '{{ csrf_token() }}' // Add CSRF token if needed
                     },
                     success: function(response) {
-                        if (response.status) {
+                        if (response.status === true) {
                             Swal.fire({
                                 icon: 'success',
                                 title: '{{ __('Success') }}', // Direct translation usage
@@ -54,13 +53,22 @@
                             }).then(() => {
                                 window.location.reload(); // Reloads the page correctly
                             });
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: '{{ __('Error') }}',
+                                text: response.errors,
+                            }).then(() => {
+                                window.location.reload()
+                            });
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function(xhr, status, error, response) {
+                        console.log(response + 123);
                         Swal.fire({
                             icon: 'error',
                             title: '{{ __('Error') }}',
-                            text: 'Có lỗi xảy ra, vui lòng thử lại sau.',
+                            text: response.errors,
                         });
                     }
                 });
