@@ -386,7 +386,7 @@ return [
         ],
     ],
     'promotion' => [
-        'title' => 'Permission',
+        'title' => 'mã gỉam giá',
         'titleFormR' => 'Thông tin chi tiết',
         'titleFormL' => 'Thông tin chung',
         'fields' => [
