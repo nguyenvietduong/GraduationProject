@@ -201,14 +201,14 @@
     /* Chat Button Styles */
     .chat-button {
         position: fixed;
-        bottom: 20px;
+        bottom: 50px;
         right: 20px; /* Đặt vị trí bên phải màn hình */
         background-color: #007bff;
         color: white;
         border: none;
         border-radius: 50%;
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
         font-size: 15px;
         cursor: pointer;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
