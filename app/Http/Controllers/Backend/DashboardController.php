@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\Menu;
+use App\Models\Reservation;
 use App\Models\Table;
 use App\Models\User;
 use Carbon\Carbon;
@@ -31,9 +32,9 @@ class DashboardController extends Controller
 
         // Các khoảng thời gian trong ngày
         $timeRanges = [
-            'Buổi sáng (7h - 11h)' => ['start' => '07:00:00', 'end' => '10:59:59'],
-            'Buổi trưa (11h - 17h)' => ['start' => '11:00:00', 'end' => '16:59:59'],
-            'Buổi tối (17h - 22h)' => ['start' => '17:00:00', 'end' => '22:00:59'],
+            'Ca sáng (7h - 11h)' => ['start' => '07:00:00', 'end' => '10:59:59'],
+            'Ca chiều (11h - 17h)' => ['start' => '11:00:00', 'end' => '16:59:59'],
+            'Ca tối (17h - 22h)' => ['start' => '17:00:00', 'end' => '22:00:00'],
         ];
 
         // Lấy ca làm việc từ request
@@ -46,11 +47,15 @@ class DashboardController extends Controller
                 $startTime = Carbon::today()->toDateString() . ' ' . $range['start'];
                 $endTime = Carbon::today()->toDateString() . ' ' . $range['end'];
 
-                $totalAmount = Invoice::whereBetween('created_at', [$startTime, $endTime])
-                    ->where('status', 'paid')
-                    ->sum('total_amount');
-                $orderCount = Invoice::whereBetween('created_at', [$startTime, $endTime])
-                    ->where('status', 'paid')
+                $totalAmount = Reservation::join('invoices', 'invoices.reservation_id', '=', 'reservations.id')
+                    ->whereBetween('reservation_time', [$startTime, $endTime])
+                    ->where('invoices.status', 'paid')
+                    ->where('reservations.status', 'completed')
+                    ->sum('invoices.total_amount');
+                $orderCount = Reservation::join('invoices', 'invoices.reservation_id', '=', 'reservations.id')
+                    ->whereBetween('reservation_time', [$startTime, $endTime])
+                    ->where('invoices.status', 'paid')
+                    ->where('reservations.status', 'completed')
                     ->count();
 
                 $dataChart[] = [
@@ -65,11 +70,16 @@ class DashboardController extends Controller
                 $startTime = Carbon::today()->toDateString() . ' ' . $timeRanges[$selectedShift]['start'];
                 $endTime = Carbon::today()->toDateString() . ' ' . $timeRanges[$selectedShift]['end'];
 
-                $totalAmount = Invoice::whereBetween('created_at', [$startTime, $endTime])
-                    ->where('status', 'paid')
-                    ->sum('total_amount');
-                $orderCount = Invoice::whereBetween('created_at', [$startTime, $endTime])
-                    ->where('status', 'paid')
+                $totalAmount = Reservation::join('invoices', 'invoices.reservation_id', '=', 'reservations.id')
+                    ->whereBetween('reservation_time', [$startTime, $endTime])
+                    ->where('invoices.status', 'paid')
+                    ->where('reservations.status', 'completed')
+                    ->sum('invoices.total_amount');
+            
+                $orderCount = Reservation::join('invoices', 'invoices.reservation_id', '=', 'reservations.id')
+                    ->whereBetween('reservation_time', [$startTime, $endTime])
+                    ->where('invoices.status', 'paid')
+                    ->where('reservations.status', 'completed')
                     ->count();
 
                 $dataChart[] = [
