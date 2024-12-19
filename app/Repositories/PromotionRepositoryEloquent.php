@@ -48,11 +48,11 @@ class PromotionRepositoryEloquent extends BaseRepository implements PromotionRep
         }
 
         if (!empty($filters['start_date'])) {
-            $query->whereDate('created_at', '>=', $filters['start_date']);
+            $query->whereDate('start_date', '>=', $filters['start_date']);
         }
 
         if (!empty($filters['end_date'])) {
-            $query->whereDate('created_at', '<=', $filters['end_date']);
+            $query->whereDate('end_date', '<=', $filters['end_date']);
         }
 
         if (!empty($filters['is_active'])) {

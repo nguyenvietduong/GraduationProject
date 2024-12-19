@@ -288,16 +288,16 @@ if (!function_exists('formatDate')) {
     }
 }
 
-// if (!function_exists('formatCreateDate')) {
-//     function formatCreateDate($amount)
-//     {
-//         if ($amount == null || $amount == '') {
-//             return '';
-//         }
+if (!function_exists('formatCreateDate')) {
+    function formatCreateDate($amount)
+    {
+        if ($amount == null || $amount == '') {
+            return '';
+        }
 
-//         return Carbon::parse($amount)->format('Y-m-d H:i:s');
-//     }
-// }
+        return Carbon::parse($amount)->format('Y-m-d H:i:s');
+    }
+}
 
 if (!function_exists('formatDiscount')) {
     function formatDiscount($value)

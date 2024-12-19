@@ -38,7 +38,10 @@ class PromotionController extends Controller
             'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
             'start_date' => $params['start_date'] ?? '',
             'end_date' => $params['end_date'] ?? '',
+            'is_active' => $params['is_active'] ?? ''
         ];
+
+        // dd($filters);
 
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
 

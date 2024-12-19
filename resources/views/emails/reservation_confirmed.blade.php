@@ -47,7 +47,7 @@
         <p>Trân trọng,<br>Đội ngũ Nhà Hàng</p>
         @elseif ($reservation->status == 'confirmed')
         <h1>Xác Nhận Đơn Đặt Bàn</h1>
-        <p>Chào {{ $reservation->name }}</p>
+        <p>Chào {{ $reservation->name ?? '' }}</p>
         <p>Đơn đặt bàn của quý khách đã được xác nhận thành công.</p>
         <p>Mã xác nhận của quý khách là: <strong style="color: red">{{ $reservation->code }}</strong>.</p>
         <h3 style="margin-top: 20px; color: #333;">Thông Tin Đặt Bàn:</h3>
@@ -58,7 +58,7 @@
             </tr>
             <tr>
                 <td style="border: 1px solid #ddd; padding: 8px;">Tên đơn hàng</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">{{ $reservation->name }}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">{{ $reservation->name ?? '' }}</td>
             </tr>
             <tr>
                 <td style="border: 1px solid #ddd; padding: 8px;">Số Điện Thoại</td>
@@ -82,7 +82,7 @@
         @elseif ($reservation->status == 'completed') 
         <div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
             <h1 style="text-align: center; color: #4CAF50;">Cảm Ơn Quý Khách</h1>
-            <p>Chào <strong>{{ $reservation->name }}</strong>,</p>
+            <p>Chào <strong>{{ $reservation->name ?? '' }}</strong>,</p>
             <p>Đơn đặt bàn của quý khách vào lúc <strong>{{ formatDate($reservation->reservation_time) }}</strong> đã được hoàn tất và thanh toán thành công.</p>
             <p>Mã xác nhận của quý khách là: <strong style="color: red">{{ $reservation->code }}</strong>.</p>
             
@@ -94,7 +94,7 @@
                 </tr>
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">Tên Khách</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ $reservation->name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ $reservation->name ?? '' }}</td>
                 </tr>
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">Số Điện Thoại</td>
