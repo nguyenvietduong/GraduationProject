@@ -151,24 +151,6 @@
             
         </div>
         <!--end row-->
-        <?php
-        $months = [
-            '1' => 'Tháng 1',
-            '2' => 'Tháng 2',
-            '3' => 'Tháng 3',
-            '4' => 'Tháng 4',
-            '5' => 'Tháng 5',
-            '6' => 'Tháng 6',
-            '7' => 'Tháng 7',
-            '8' => 'Tháng 8',
-            '9' => 'Tháng 9',
-            '10' => 'Tháng 10',
-            '11' => 'Tháng 11',
-            '12' => 'Tháng 12',
-        ];
-        $years = [2020, 2021, 2022, 2023, 2024];
-        ?>
-        
         <!--end row-->
         {{-- start chart --}}
         <div class="row card">
@@ -176,21 +158,11 @@
                 <div class="card-header">
                     <form method="GET" class="row align-items-center">
                         <div class="col-5">
-                            <select name="month" id="monthSelect" class="form-select">
-                                <option value="">---Chọn tháng---</option>
-                                @foreach ($months as $key => $value)
-                                    <option value="{{ $key }}" @selected($key == request('month'))>{{ $value }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-5">
-                            <select name="year" id="yearSelect" class="form-select">
-                                <option value="">--Chọn năm ---</option>
-                                @foreach ($years as $year)
-                                    <option value="{{ $year }}" @selected($year == request('year'))>{{ $year }}
-                                    </option>
-                                @endforeach
+                            <select name="ca" id="yearSelect" class="form-select">
+                                <option value="">--Chọn ca ---</option>
+                                 <option value="sang" @selected("sang" == request('ca'))>Buổi sáng</option>
+                                 <option value="trua" @selected("trua" == request('ca'))>Buổi trưa</option>
+                                 <option value="toi" @selected("toi" == request('ca'))>Buổi tối</option>
                             </select>
                         </div>
                         <button class="col-2 btn btn-primary">Tìm kiếm</button>
