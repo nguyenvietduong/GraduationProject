@@ -29,7 +29,7 @@
 
             qrCodeImage.attr('src', `https://img.vietqr.io/image/${MY_BANK.BANK_ID}-${MY_BANK.ACCOUNT_NO}-compact2.jpg?amount=${formattedAmount}&addInfo=${MY_BANK.INFO}&accountName=NHA%20HANG%20HUONG%20VIET%20`);
             qrCodeModal.show();
-            exampleModal.addClass('modal-blur');
+            // exampleModal.addClass('modal-blur');
 
             const checkPaymentInterval = setInterval(async () => {
                 if (!isPaymentSuccessful && await checkPaid(formattedAmount, MY_BANK.INFO)) {
@@ -38,6 +38,10 @@
                     processPayment();
                 }
             }, 1000);
+        });
+
+        exampleModal.on('hide.bs.modal', function () {
+            $(this).removeClass('modal-blur');
         });
 
         async function checkPaid(price, content) {
@@ -92,7 +96,9 @@
                     if (response.success) {
                         exportInvoicePDF(reservationId);
                         // setTimeout(function () {
-                        //     location.reload();
+                        $('#create-reservation').modal('hide')
+                        localStorage.setItem('showSuccessMessage', 'true')
+                        window.location.reload()
                         // }, 3000);                   
                     }
                 },

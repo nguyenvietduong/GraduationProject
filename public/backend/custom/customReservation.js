@@ -38,7 +38,7 @@
                 list_table: item.list_table,
                 invoice_item: item.invoice_item,
             }
-    
+
             $.ajax({
                 url: '/create-invoice-detail',
                 type: 'POST',
@@ -66,7 +66,7 @@
                 list_table: item.list_table,
                 invoice_item: item.invoice_item,
             }
-    
+
             $.ajax({
                 url: '/update-invoice-detail',
                 type: 'POST',
@@ -86,10 +86,10 @@
     PMD.selectArrived = async () => {
         $(document).on('change', '.selectReservation', function (e) {
             e.preventDefault();
-    
+
             // Hiển thị spinner
             showSpinner();
-    
+
             let selectedValue = $(this).val();
             let accountId = $(this).attr('data-account-id');
             let data = {
@@ -97,19 +97,19 @@
                 id: accountId,
                 status: selectedValue
             };
-    
+
             $.ajax({
                 url: '/admin/reservation/updateStatus',
                 type: 'POST',
                 data: data,
                 success: async function (response) {
                     hideSpinner();
-                    
+
                     if (response.data.status === 'arrived') {
                         await PMD.renderTdMenu(accountId);
                         await PMD.renderSelectArrived(accountId);
                     }
-    
+
                     if (response.data.status === 'confirmed') {
                         setTimeout(() => {
                             window.location.href = window.location.href;
@@ -124,23 +124,23 @@
                 }
             });
         });
-    };    
+    };
 
     function showSpinner() {
         document.querySelector('.overlay').style.display = 'block';
         document.querySelector('.spinner').style.display = 'block';
         document.querySelector('.startbar').classList.add('blur'); // Thêm lớp làm mờ startbar
         document.querySelector('.topbar').classList.add('blur'); // Thêm lớp làm mờ topbar
-    }    
-    
+    }
+
     function hideSpinner() {
         document.querySelector('.overlay').style.display = 'none';
         document.querySelector('.spinner').style.display = 'none';
         document.querySelector('.startbar').classList.remove('blur'); // Xóa lớp làm mờ startbar
         document.querySelector('.topbar').classList.remove('blur'); // Xóa lớp làm mờ topbar
     }
-    
-    
+
+
     PMD.checkArrived = async () => {
         let reservation = $('.selectReservation')
         reservation.each((index, item) => {
@@ -492,15 +492,15 @@
             } else {
                 if (invoice == true) {
                     PMD.updateInvoiceDataDetail(item)
-    
+
                 } else {
                     PMD.createInvoiceDataDetail(item, guest)
                 }
-    
+
                 $('#exampleModal').modal('hide')
-    
+
                 localStorage.setItem('showSuccessMessage', 'true')
-    
+
                 // $('#exampleModal').on('hidden.bs.modal', function () {
                 window.location.reload()
                 // })
@@ -577,21 +577,11 @@
             const menuId = $(this).data('menu-id');
             const newQuantity = parseInt($(this).val(), 10) || 1; // Nếu không có giá trị, mặc định là 1
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
-
-            if (menu) {
-                if (newQuantity > 100) {
-                    alert('Không được chọn quá 100 món cho mỗi loại!');
-                    $(this).val(100); // Đặt giá trị tối đa là 100
-                    menu.quantity = 100;
-                } else {
-                    menu.quantity = newQuantity;
-                }
-
-                menu.total = menu.quantity * menu.price;
-                let totalFormat = PMD.formatCurrency(menu.total);
-                $('.price-invoice-item-' + menu.id).html(totalFormat);
-                PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
-            }
+            menu.quantity = newQuantity;
+            menu.total = menu.quantity * menu.price;
+            let totalFormat = PMD.formatCurrency(menu.total);
+            $('.price-invoice-item-' + menu.id).html(totalFormat);
+            PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
         });
 
         // Xử lý khi nhấn nút giảm số lượng
@@ -618,22 +608,20 @@
             const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
             const currentValue = parseInt(input.val(), 10);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
-
-            if (menu) {
-                if (currentValue >= 100) {
-                    alert('Không được chọn quá 100 món cho mỗi loại!');
-                    return; // Không tăng thêm số lượng
-                }
-
-                const newQuantity = currentValue + 1;
-                menu.quantity = newQuantity;
-                menu.total = newQuantity * menu.price;
-                input.val(newQuantity); // Cập nhật lại số lượng trong ô input
-                let totalFormat = PMD.formatCurrency(menu.total);
-                $('.price-invoice-item-' + menu.id).html(totalFormat);
-                PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
-            }
+            const newQuantity = currentValue + 1;
+            menu.quantity = newQuantity;
+            menu.total = newQuantity * menu.price;
+            input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+            let totalFormat = PMD.formatCurrency(menu.total);
+            $('.price-invoice-item-' + menu.id).html(totalFormat);
+            PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
         });
+
+        // $('.btnCloseReservation').on('click', function () {
+        //     alert('ajsd')
+        //     newQuantity = currentValue
+        // })
+
     };
 
     //End Quantity Input
@@ -730,7 +718,7 @@
             if (!phone) {
                 $('.errPhoneReservation').append('SDT khách hàng không được trống')
                 checked = false
-            }else if (!/^\d{10,11}$/.test(phone)) {
+            } else if (!/^\d{10,11}$/.test(phone)) {
                 $('.errPhoneReservation').append('Số điện thoại phải là số từ 10 đến 11 chữ số');
                 checked = false;
             }
@@ -777,6 +765,7 @@
     PMD.formatCurrency = (number) => {
         return number.toLocaleString();
     }
+
 
     //End Show Modal Data
     $(document).ready(function () {

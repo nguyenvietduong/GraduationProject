@@ -36,7 +36,7 @@
                         <span>Tài khoản</span>
                     </a>
                     <div class="collapse {{ set_active(['user', 'staff', 'admin', 'role', 'permission'], 'show', 'admin') }}"
-                        id="sidebarAccountManagement" >
+                        id="sidebarAccountManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['user'], 'active', 'admin') }}"
@@ -85,7 +85,8 @@
                         <i class="fa fa-utensils menu-icon"></i> <!-- Icon thực phẩm -->
                         <span>Thực phẩm</span>
                     </a>
-                    <div class="collapse {{ set_active(['category', 'menu'], 'show', 'admin') }}" id="sidebarFoodManagement">
+                    <div class="collapse {{ set_active(['category', 'menu'], 'show', 'admin') }}"
+                        id="sidebarFoodManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item checkPermissionMenu">
                                 <a class="nav-link {{ set_active(['category'], 'active', 'admin') }}"
@@ -111,7 +112,7 @@
                         <i class="fa fa-table menu-icon"></i>
                         <span>Bàn</span>
                     </a>
-                </li> 
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ set_active(['reservation'], 'active', 'admin') }}"
@@ -128,7 +129,7 @@
                     </a>
                 </li>
                 <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
-                
+
                 <li class="nav-item checkPermissionMenu" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['blog'], 'active', 'admin') }}"
                         href="{{ route('admin.blog.index') }}">
@@ -155,45 +156,47 @@
 
                 <li class="nav-item" style="display: {{ checkBladeAdmin() }}">
                     <a class="nav-link {{ set_active(['statistical'], 'active', 'admin', 2) }}"
-                        href="#sidebarStatistical" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarStatistical">
+                        href="#sidebarStatistical" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarStatistical">
                         <i class="fa fa-chart-bar menu-icon"></i>
                         <span>Thống kê</span>
                     </a>
-                    <div class="collapse {{ set_active(['statistical'], 'show', 'admin', 2) }}" id="sidebarStatistical">
+                    <div class="collapse {{ set_active(['statistical'], 'show', 'admin', 2) }}"
+                        id="sidebarStatistical">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['revenue'], 'active', 'admin', 3) }}" href="{{ route('admin.statistical.index') }}">
+                                <a class="nav-link {{ set_active(['revenue'], 'active', 'admin', 3) }}"
+                                    href="{{ route('admin.statistical.index') }}">
                                     <i class="fa fa-dollar-sign menu-icon"></i>
                                     <span>Doanh thu</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['client'], 'active', 'admin', 3) }}" href="{{ route('admin.statistical.client') }}">
+                                <a class="nav-link {{ set_active(['client'], 'active', 'admin', 3) }}"
+                                    href="{{ route('admin.statistical.client') }}">
                                     <i class="fa fa-user menu-icon"></i>
                                     <span>Khách hàng</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin', 3) }}" href="{{ route('admin.statistical.menu') }}">
+                                <a class="nav-link {{ set_active(['menu'], 'active', 'admin', 3) }}"
+                                    href="{{ route('admin.statistical.menu') }}">
                                     <i class="fa fa-utensils menu-icon"></i>
                                     <span>Món ăn</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                </li>                
+                </li>
 
                 <!-- Hệ thống -->
                 <li class="nav-item">
-                    <a class="nav-link"
-                        href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link" href="#sidebarSystemManagement" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarSystemManagement">
                         <i class="fa fa-cogs menu-icon"></i>
                         <span>Hệ thống</span>
                     </a>
-                    <div class="collapse"
-                        id="sidebarSystemManagement">
+                    <div class="collapse" id="sidebarSystemManagement">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">

@@ -468,7 +468,7 @@
 
                                         <div class="col-span-12">
                                             <button type="submit" id="submit" name="send"
-                                                class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-md w-full">Đánh
+                                                class="submitFormContact py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-md w-full">Đánh
                                                 giá</button>
                                         </div>
                                     </div>
@@ -620,6 +620,19 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+            // Tìm nút submit
+            var submitButton = document.getElementById('submitFormContact');
+            
+            // Tắt nút submit để không cho nhấn thêm
+            submitButton.disabled = true;
+
+            // Hiển thị thông báo loading (hoặc có thể sử dụng spinner)
+            submitButton.value = "Đang xử lý...";  // Thay đổi nội dung nút thành "Đang xử lý..."
         });
     </script>
 @endpush

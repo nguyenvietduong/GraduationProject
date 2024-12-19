@@ -130,7 +130,7 @@
                     $totalCount += $dish->price;
                 @endphp
                 <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ $dish->menu->name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ $dish->menu_name }}</td>
                     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ $dish->quantity }}</td>
                     <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">{{ number_format($dish->price, 0, ',', '.') }} đ</td>
                     <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">{{ number_format($dish->quantity * $dish->price, 0, ',', '.') }} đ</td>
