@@ -213,7 +213,7 @@ class InvoiceController extends Controller
         if (!$reservation) {
             return response()->json(['success' => false, 'message' => 'Reservation not found']);
         }
-    
+        $reservation->invoice()->update(['isExport' => true]);
         // Tạo file PDF từ view
         $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('reservation'));
 
