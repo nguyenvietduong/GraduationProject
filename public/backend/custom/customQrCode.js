@@ -92,7 +92,9 @@
                     if (response.success) {
                         exportInvoicePDF(reservationId);
                         // setTimeout(function () {
-                        //     location.reload();
+                        $('#create-reservation').modal('hide')
+                        localStorage.setItem('showSuccessMessage', 'true')
+                        window.location.reload()
                         // }, 3000);                   
                     }
                 },
