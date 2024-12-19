@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-end">Mật khẩu</label>
                         <input id="password" type="password" class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 form-control @error('password') is-invalid @enderror"
                             name="password" required autocomplete="new-password">
 
@@ -43,7 +43,7 @@
 
                     <div class="mb-4">
                         <label for="password-confirm"
-                            class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            class="col-md-4 col-form-label text-md-end">Nhập lại mật khẩu</label>
 
                         <input id="password-confirm" type="password" class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 form-control" name="password_confirmation"
                             required autocomplete="new-password">

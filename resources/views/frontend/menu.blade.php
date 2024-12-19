@@ -21,7 +21,7 @@ $title = 'Món ăn'
 </style>
 <!-- End Hero -->
 <!-- Start -->
-<section class="relative md:py-24 py-16">
+<section class="relative md:py-24 py-16" style="background-color: aliceblue">
     <div class="container relative">
         <div class="grid grid-cols-1 items-center gap-6">
             <div class="filters-group-wrap text-center">
