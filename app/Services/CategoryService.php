@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Interfaces\Services\CategoryServiceInterface;
+use App\Models\Category;
+use App\Models\Menu;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 
@@ -91,7 +93,6 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     {
         try {
             $data['guard_name'] = 'web';
-
             return $this->categoryRepository->updateCategory($id, $data);
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
@@ -111,7 +112,12 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     public function deleteCategory(int $id)
     {
         try {
-            return $this->categoryRepository->deleteCategory($id);
+            $isDelete =  $this->categoryRepository->deleteCategory($id);
+            if($isDelete){
+                $category = Category::where('slug', 'chua-phan-loai')->first();
+                Menu::where('category_id', $id)->update(['category_id' => $category->id]);
+            }
+            return $isDelete;
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException('Category does not exist with ID: ' . $id);
         } catch (Exception $e) {
