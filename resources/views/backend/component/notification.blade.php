@@ -51,9 +51,11 @@
         }
     </style>
 
-    <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0" id="notificationMenu">
-        <h5 class="dropdown-item-text m-0 py-2 d-flex justify-content-between align-items-center bg-success">
-            <span class="countNotification">Thông báo</span>
+    <div class="dropdown-menu stop dropdown-menu-end dropdown-lg py-0" id="notificationMenu" style="width:350px ; border-radius: 10px">
+        <h5 class="dropdown-item-text m-0 py-2 d-flex justify-content-between align-items-center "
+            style="border-radius: 10px 10px 0 0; border-bottom: 1px solid #ccc"
+        >
+            <span class="countNotification h5">Thông báo</span>
         </h5>
         <div class="form-group px-2 pt-2 pb-2 bg-success-subtle">
             <input type="text" class="form-control mb-2" id="searchInput"

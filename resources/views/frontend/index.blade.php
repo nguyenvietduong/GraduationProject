@@ -79,7 +79,7 @@
         <div class="container relative">
             <div class="grid md:grid-cols-12">
                 <div class="lg:col-span-3 md:col-span-3 p-3">
-                    <div class="shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-4 sticky top-20">
+                    <div class="" style="padding: 30px 0;border: 1px solid #f0f0f0;box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) , -8px -8px 8px white">
                         <div class="filters-group-wrap text-center">
                             <div class="filters-group">
                                 <ul class="mb-0 list-none container-filter-border-bottom filter-options">
@@ -104,7 +104,9 @@
                             @foreach ($category->menus as $menu)
                                 <div class="group lg:w-1/4 md:w-1/3 picture-item p-3" data-groups='["{{ $category->id }}"]'>
                                     <div class="group relative overflow-hidden shadow dark:shadow-gray-800">
-                                        <img src="{{ checkFile($menu->image_url) }}" alt="{{ $menu->name ?? 'No Name' }}">
+                                        <img src="{{ checkFile($menu->image_url) }}"
+                                            style="display: block;width:100%; height:150px ; border-radius:10px"
+                                         alt="{{ $menu->name ?? 'No Name' }}">
                                         <div
                                             class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-0 group-hover:opacity-100 duration-500">
                                         </div>
@@ -138,10 +140,10 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-6 gap-6">
 
                 @foreach ($listBlogs as $listBlog)
-                    <div class="md:px-6 duration-500 text-center">
+                    <div class="md:px-6 duration-500 text-center" style="display: flex;flex-direction: column; justify-content: center; align-items: center">
                         <div
-                            class="size-20 bg-amber-500/5 mx-auto text-amber-500 text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800">
-                            <img src="{{ checkFile($listBlog->image) }}" alt="">
+                            class="d-flex justify-center ">
+                            <img src="{{ checkFile($listBlog->image) }}" alt="" class="d-block" style="width 200px ;height:200px; ">
                         </div>
 
                         <div class="content mt-7" style="width: 310px;white-space: nowrap;overflow: hidden;">

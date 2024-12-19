@@ -106,5 +106,6 @@ Route::post('/remove-temp-image', function (Request $request) {
 })->name('image.removeTemp');
 
 Route::get("/checkVoucher", [AjaxPromotion::class, "getDetailVoucher"]);
+Route::get("/checkVoucherClient", [AjaxPromotion::class, "getDetailVoucherClient"]);
 Route::get("/searchVoucher", [AjaxPromotion::class, "searchVoucher"]);
 Route::get("/getAllVoucher", [AjaxPromotion::class, "getAllVoucher"]);

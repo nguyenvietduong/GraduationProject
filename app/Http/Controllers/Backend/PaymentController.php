@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Promotion;
+use App\Models\PromotionUser;
 use App\Models\Reservation;
 use App\Models\Table;
 use Carbon\Carbon;
@@ -79,10 +81,28 @@ class PaymentController extends Controller
         $vnp_TmnCode = "TW34Y9EQ"; //Mã website tại VNPAY 
         $vnp_HashSecret = "OX5R6KHM3F5G4KHAD5J8MQAUA66YWFJV"; //Chuỗi bí mật
 
-        $vnp_TxnRef = "HUONGVIET " . $request->code . " " . time() . " " . $request->id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = $request->code . "-" . time() . "-" . $request->voucher; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+
         $vnp_OrderInfo = "Thanh toán VNPay";
         $vnp_OrderType = "billpayment";
-        $vnp_Amount = $request->total_amount * 100;
+
+        $total_amount = $request->total_amount;
+        if (isset($request->voucher)) {
+            $promotion = Promotion::where('code', $request->voucher)->first();
+            if (isset($promotion)) {
+                if ($promotion->type == 'fixed') {
+                    $total_amount = $request->total_amount - $promotion->discount;
+                } else {
+                    if (($total_amount * $promotion->discount) / 100 > $promotion->max_discount) {
+                        $total_amount = $request->total_amount - $promotion->max_discount;
+                    } else {
+                        $total_amount = $request->total_amount - ($request->total_amount * $promotion->discount) / 100;
+                    }
+                }
+            }
+        }
+
+        $vnp_Amount = $total_amount * 100;
         $vnp_Locale = "vn";
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -166,13 +186,27 @@ class PaymentController extends Controller
         if ($secureHash === $vnp_SecureHash) {
             if ($inputData['vnp_ResponseCode'] === '00') {
                 // Giao dịch thành công
-                $reservation_id = substr($inputData['vnp_TxnRef'], strrpos($inputData['vnp_TxnRef'], ' ') + 1);
-                $reservation = Reservation::find($reservation_id);
+
+                // Lấy phần đầu (trước dấu cách đầu tiên)
+                $code_reservation = strstr($inputData['vnp_TxnRef'], '-', true);
+                // Lấy phần cuối (sau dấu cách cuối cùng)
+                $voucher = substr(strrchr($inputData['vnp_TxnRef'], '-'), 1);
+                if ($voucher != "") {
+                    $promotion = Promotion::where('code', $voucher)->first();
+                }
+                $reservation = Reservation::where('code', $code_reservation)->first();
+                // dd($code_reservation, $promotion ?? "",$reservation->invoice->id);
                 $reservation->update(['status' => 'completed']);
-                $reservation->invoice()->update(['status' => 'paid', 'payment_method' => 'bank']);
+                $reservation->invoice()->update(['status' => 'paid', 'payment_method' => 'bank' , 'total_amount' => $inputData['vnp_Amount']]);
                 foreach ($reservation->reservationDetails as $data) {
                     Table::where('id', $data->table_id)->update([
                         'status' => "available",
+                    ]);
+                }
+                if ($promotion) {
+                    PromotionUser::create([
+                        'promotion_id' => $promotion->id,
+                        'invoice_id' => $reservation->invoice->id,
                     ]);
                 }
                 return redirect()->route('reservation.list')->with('success', 'Thanh toán thành công!');

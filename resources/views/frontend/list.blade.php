@@ -157,6 +157,46 @@
     <!-- Reservation Table -->
     <section class="relative md:py-24 py-16">
         <div class="container relative">
+            <div class="">
+                <form method="get" action="" id="form_filter" class="space-y-4">
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <div class="flex flex-wrap items-center gap-4">
+                            <!-- Status Dropdown -->
+                            <div class="w-full md:w-auto">
+                                <select name="status"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Trạng thái</option>
+                                    @php
+                                        $status = request('status') ?: old('status');
+                                        $statuses = __('messages.reservation.status');
+                                    @endphp
+                                    @foreach ($statuses as $key => $option)
+                                        <option value="{{ $key }}" {{ $status == $key ? 'selected' : '' }}>
+                                            {{ $option }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Search Input -->
+                            <div class="w-full md:flex-1">
+                                <input type="text" id="search" name="keyword" placeholder="Tìm kiếm..."
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    value="{{ request('keyword') ?: old('keyword') }}">
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="w-full md:flex-1">
+                                <button type="submit" class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                    style="background-color: #008000; padding: 5px; border-radius: 5px;color: white"> <i
+                                        class="iconoir-filter-alt mr-2"></i> Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
             <div class="custom-table-container">
                 <table class="table-auto w-full border-collapse border border-gray-300">
                     <thead>
@@ -171,49 +211,55 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($listReservation as $key => $value)
-                            <tr class="hover:bg-gray-50">
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $value->code }}</td>
-                                <td>{{ $value->reservation_time }}</td>
-                                <td>{{ $value->guests }}</td>
-                                <td>{{ $value->special_request }}</td>
-                                <td id="statusReservation-{{ $value->id }}">
-                                    @foreach (__('messages.reservation.status') as $statusKey => $statusValue)
-                                        @if ($statusKey == $value->status)
-                                            {{ $statusValue }}
-                                        @endif
-                                    @endforeach
-                                </td>
-                                @if ($value->status == 'completed' || $value->status == 'arrived')
-                                    <td class="text-center">
-                                        <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
-                                            style="background-color: #008000; padding: 5px; border-radius: 5px;color: white"
-                                            onclick="toggleModal('{{ $value->id }}')">
-                                            Xem chi tiết
-                                        </button>
+                        @if (isset($listReservation) && is_object($listReservation) && $listReservation->isNotEmpty())
+                            @foreach ($listReservation as $key => $value)
+                                <tr class="hover:bg-gray-50">
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $value->code }}</td>
+                                    <td>{{ $value->reservation_time }}</td>
+                                    <td>{{ $value->guests }}</td>
+                                    <td>{{ $value->special_request }}</td>
+                                    <td id="statusReservation-{{ $value->id }}">
+                                        @foreach (__('messages.reservation.status') as $statusKey => $statusValue)
+                                            @if ($statusKey == $value->status)
+                                                {{ $statusValue }}
+                                            @endif
+                                        @endforeach
                                     </td>
-                                @elseif ($value->status == 'pending')
-                                    <td class="text-center">
-                                        <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
-                                            style="background-color: #333366; padding: 5px; border-radius: 5px;color: white"
-                                            id="btn-canceled-{{ $value->id }}"
-                                            onclick="cancelReservation('{{ route('reservation.canceled', $value->id) }}', {{ $value->id }})">
-                                            Hủy đơn đặt bàn
-                                        </button>
-                                    </td>
-                                @endif
+                                    @if ($value->status == 'completed' || $value->status == 'arrived')
+                                        <td class="text-center">
+                                            <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                                style="background-color: #008000; padding: 5px; border-radius: 5px;color: white"
+                                                onclick="toggleModal('{{ $value->id }}')">
+                                                Xem chi tiết
+                                            </button>
+                                        </td>
+                                    @elseif ($value->status == 'pending')
+                                        <td class="text-center">
+                                            <button class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                                style="background-color: #333366; padding: 5px; border-radius: 5px;color: white"
+                                                id="btn-canceled-{{ $value->id }}"
+                                                onclick="cancelReservation('{{ route('reservation.canceled', $value->id) }}', {{ $value->id }})">
+                                                Hủy đơn đặt bàn
+                                            </button>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7" class="text-center">Không có dữ liệu</td>
                             </tr>
-                        @endforeach
+                        @endif
                     </tbody>
                 </table>
-                
+
 
                 <!-- Modals -->
                 @foreach ($listReservation as $value)
                     <div id="modal-{{ $value->id }}"
                         class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-                        <div class="bg-white rounded-lg shadow-lg" style="width: 1300px;min-height: 500px">
+                        <div class="bg-white rounded-lg shadow-lg" style="width: 1300px;min-height: 450px">
                             <div class="flex justify-between items-center p-4 border-b">
                                 <h2 class="text-lg font-semibold">Chi tiết đơn đặt bàn - {{ $value->code }}</h2>
 
@@ -306,9 +352,13 @@
                                             </tbody>
                                             <tfoot>
                                                 @if ($value->status && $value->status == 'completed')
-                                                    <tr style="background-color: #98FB98">
-                                                        <td colspan="4" style="text-align: center">Tổng tiền</td>
+                                                    <tr>
+                                                        <td colspan="4" style="text-align: center">Tổng tiền món ăn</td>
                                                         <td>{{ formatCurrency($totalAmountPayable) }} đ</td>
+                                                    </tr>
+                                                    <tr style="background-color: #98FB98">
+                                                        <td colspan="4" style="text-align: center">Tổng thanh toán</td>
+                                                        <td>{{ formatCurrency($value->invoice->total_amount) }} đ</td>
                                                     </tr>
                                                 @else
                                                     <tr>
@@ -345,18 +395,25 @@
                                     </div>
                                 @endif
                             @elseif($value->status && $value->status == 'arrived')
-                                <div class="flex justify-end p-4 border-t">
-                                    <form action="{{ route('vnpay_payment') }}" method="post">
+                                <div class=" p-4 border-t">
+                                    <form action="{{ route('vnpay_payment') }}" method="post" class="flex justify-between ">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $value->id }}">
                                         <input type="hidden" name="code" value="{{ $value->code }}">
                                         <input type="hidden" name="total_amount" value="{{ $totalAmountPayable }}">
-                                        <button
+                                        <div class="mb-4">
+                                            <input type="text" id="voucher" name="voucher"
+                                                class="mt-2 p-2 border border-gray-300 rounded w-full"
+                                                placeholder="Nhập mã giảm giá">
+                                        </div>
+                                        <div class="mb-4">
+                                            <button
                                             style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;"
                                             name="redirect"
                                             onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';">
                                             Thanh toán ngay
                                         </button>
+                                        </div>
                                     </form>
                                 </div>
                             @endif
@@ -425,7 +482,7 @@
                 {{ $listReservation->links('pagination::tailwind') }}
             </div>
         </div>
-        
+
     </section>
 @endsection
 

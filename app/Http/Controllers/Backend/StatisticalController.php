@@ -184,7 +184,6 @@ class StatisticalController extends Controller
             $specificDate = Carbon::create($year, $month, $day)->startOfDay();
             $startHour = 7;
             $endHour = 22;
-
             // Initialize an array for the specified hours with revenue = 0
             $defaultRevenueData = [];
             for ($hour = $startHour; $hour <= $endHour; $hour++) {
@@ -210,7 +209,6 @@ class StatisticalController extends Controller
             // Convert the revenue data to a one-dimensional array format
             $revenueData = $defaultRevenueData;
         }
-
         return $revenueData;
     }
 

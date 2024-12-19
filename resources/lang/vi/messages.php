@@ -601,6 +601,7 @@ return [
             'arrived' => 'Đã đến cửa hàng',
             'completed' => 'Hoàn thành',
         ],
+        
         'fields' => [
             'table' => 'Bàn',
             'full_name' => 'Họ Tên',
@@ -658,9 +659,13 @@ return [
             'cash' => 'Tiền mặt',
             'bank' => 'Chuyển khoản'
         ],
+        'isExport' => [
+            '0' => 'Chờ xuất hóa đơn',
+            '1' => 'Đã xuất hóa đơn'
+        ],
         'fields' => [
             'invoice_detail' => 'Chi tiết món ăn',
-
+            'isExport' => 'Hóa đơn',
             'total_amount' => 'Tổng tiền',
             'payment_method' => 'Phương thức thanh toán',
             'status' => 'Trạng thái thanh toán',

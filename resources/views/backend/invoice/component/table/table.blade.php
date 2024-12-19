@@ -12,6 +12,7 @@
             {{-- <th>{{ __('messages.system.status') }}</th> --}}
             <th>{{ __('messages.invoice.fields.payment_method') }}</th>
             <th>{{ __('messages.invoice.fields.status') }}</th>
+            <th>{{ __('messages.invoice.fields.isExport') }}</th>
             <th>{{ __('messages.invoice.fields.total_amount') }}</th>
             <th>{{ __('messages.system.table.fields.action') }}</th>
             {{-- <th>{{ __('messages.reservation.fields.dish') }}</th> --}}
@@ -74,6 +75,18 @@
                         @foreach ($statuses_invoice as $key => $option)
                             @if (isset($data->invoice->status) && $data->invoice->status == $key)
                                 <span class="badge bg-primary">{{ $option }}</span>
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @php
+                            $status_isEx = request('status_isEx') ?: old('status_isEx');
+                            $statuses_isEx = __('messages.invoice.isExport');
+                        @endphp
+
+                        @foreach ($statuses_isEx as $key => $option)
+                            @if (isset($data->invoice->isExport) && $data->invoice->isExport == $key)
+                                <span class="badge bg-primary @if($data->invoice->isExport == 0) bg-danger @endif">{{ $option }}</span>
                             @endif
                         @endforeach
                     </td>
