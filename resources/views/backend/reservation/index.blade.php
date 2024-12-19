@@ -251,7 +251,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="qr_code" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">QR Code</h1>

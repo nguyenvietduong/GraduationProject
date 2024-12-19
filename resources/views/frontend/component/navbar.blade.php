@@ -1,13 +1,15 @@
+@php
+    $segment = request()->segment(1);
+@endphp
 <nav id="topnav" class="defaultscroll is-sticky">
     <div class="container relative">
         <!-- Logo container-->
-        <a class="logo" href="{{ route('home') }}">
+        <a class="logo" href="{{ route('home') }}" @if ($segment == null) style="margin-top: 10px" @endif>
             <span class="inline-block dark:hidden">
                 <img src="{{ asset('frontend/assets/images/huongviet.png') }}" class="l-dark" alt="">
                 <img src="{{ asset('frontend/assets/images/huongviet.png') }}" class="l-light" alt="">
             </span>
-            <img src="{{ asset('frontend/assets/images/huongviet.png') }}" class="hidden dark:inline-block"
-                alt="">
+            <img src="{{ asset('frontend/assets/images/huongviet.png') }}" class="hidden dark:inline-block" alt="">
         </a>
         <!-- End Logo container-->
 
