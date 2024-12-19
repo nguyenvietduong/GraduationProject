@@ -295,7 +295,7 @@
             Đặt món
             </button>
             <button class="btn btn-warning" data-bs-toggle="modal" id="btn-reservation-id"
-            dataReservationId="${reservationId}" data-reservation-id="${reservationId}" data-bs-target="#pay">Thanh toán</button>
+            dataReservationId="${reservationId}" data-reservation-id="${reservationId}" data-reservation-code="${dataCode}" data-bs-target="#pay">Thanh toán</button>
         </td>
         `
         return reservation.append(html)

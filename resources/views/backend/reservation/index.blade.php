@@ -261,8 +261,9 @@
                     <img class="text-center" id="qr-code-image" src="" alt="QR Code" width="380px">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="confirm_pay_qrCode()">Xác nhận chuyển khoản</button>
+                    {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="checkPaid()">Check ngay</button>
+                    <button type="button" class="btn btn-primary" onclick="confirm_pay_qrCode()">Xác nhận chuyển khoản</button> --}}
                 </div>
             </div>
         </div>
