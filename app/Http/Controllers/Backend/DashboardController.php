@@ -14,49 +14,73 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request){
-        $countUser =  User::count();
-        $countFood =  Menu::count();
-        $countCategory =  Category::count();
-        $countTable =  Table::count();
-        $countBlog =  Blog::count();
+    public function index(Request $request)
+    {
+        $countUser = User::count();
+        $countFood = Menu::count();
+        $countCategory = Category::count();
+        $countTable = Table::count();
+        $countBlog = Blog::count();
+
+        // Tổng doanh thu
         $totalMonth = Invoice::whereYear('created_at', Carbon::now()->year)
-        ->whereMonth('created_at', Carbon::now()->month)->sum('total_amount');
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->sum('total_amount');
         $totalYear = Invoice::whereYear('created_at', Carbon::now()->year)->sum('total_amount');
         $totalToday = Invoice::whereDate('created_at', Carbon::today())->sum('total_amount');
-        $month = $request->get('month')??"";
-        $year = $request->get('year')?? Carbon::now()->year;
-        if (!$month && !$year) {
-            $year = Carbon::now()->year;
-        }
+
+        // Các khoảng thời gian trong ngày
+        $timeRanges = [
+            'Buổi sáng (7h - 11h)' => ['start' => '07:00:00', 'end' => '10:59:59'],
+            'Buổi trưa (11h - 17h)' => ['start' => '11:00:00', 'end' => '16:59:59'],
+            'Buổi tối (17h - 22h)' => ['start' => '17:00:00', 'end' => '22:00:59'],
+        ];
+
+        // Lấy ca làm việc từ request
+        $selectedShift = $request->get('ca', 'all'); // Default là 'all'
+
         $dataChart = [];
-        if($month && $year){
-            for ($day = 1; $day <= Carbon::create($year, $month)->daysInMonth; $day++) {
-                $date = Carbon::create($year, $month, $day);
-                $dailyTotal = Invoice::whereDate('created_at', $date)->where('status', 'paid')->sum('total_amount');
-                $dailyOrder = Invoice::whereDate('created_at', $date)->where('status', 'paid')->count();
+        if ($selectedShift === 'all') {
+            // Thống kê cả ngày
+            foreach ($timeRanges as $period => $range) {
+                $startTime = Carbon::today()->toDateString() . ' ' . $range['start'];
+                $endTime = Carbon::today()->toDateString() . ' ' . $range['end'];
+
+                $totalAmount = Invoice::whereBetween('created_at', [$startTime, $endTime])
+                    ->where('status', 'paid')
+                    ->sum('total_amount');
+                $orderCount = Invoice::whereBetween('created_at', [$startTime, $endTime])
+                    ->where('status', 'paid')
+                    ->count();
+
                 $dataChart[] = [
-                    "order" => $dailyOrder,
-                    'total' => $dailyTotal,
-                    'date' => $date->format('d/m/Y')
+                    'period' => ucfirst($period), // Capital hóa tên khoảng thời gian
+                    'order' => $orderCount,
+                    'total' => $totalAmount,
                 ];
             }
-        }elseif(!$month && $year)
-        for ($month = 1; $month <= 12; $month++) {
-            $monthlyTotal = Invoice::whereYear('created_at', $year)
-                                   ->whereMonth('created_at', $month)
-                                   ->where('status', 'paid')
-                                   ->sum('total_amount');
-            $monthlyOrder = Invoice::whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
-            ->where('status', 'paid')
-            ->count(); 
-            $dataChart[] = [
-                "order" => $monthlyOrder,
-                'total' => $monthlyTotal,
-                'date' => 'Tháng ' . $month
-            ];
+        } else {
+            // Thống kê theo ca làm việc
+            if (isset($timeRanges[$selectedShift])) {
+                $startTime = Carbon::today()->toDateString() . ' ' . $timeRanges[$selectedShift]['start'];
+                $endTime = Carbon::today()->toDateString() . ' ' . $timeRanges[$selectedShift]['end'];
+
+                $totalAmount = Invoice::whereBetween('created_at', [$startTime, $endTime])
+                    ->where('status', 'paid')
+                    ->sum('total_amount');
+                $orderCount = Invoice::whereBetween('created_at', [$startTime, $endTime])
+                    ->where('status', 'paid')
+                    ->count();
+
+                $dataChart[] = [
+                    'period' => ucfirst($selectedShift),
+                    'order' => $orderCount,
+                    'total' => $totalAmount,
+                ];
+            }
         }
+
+        // Chuẩn bị dữ liệu cho view
         $data["countUser"] = $countUser;
         $data["countFood"] = $countFood;
         $data["countCategory"] = $countCategory;
@@ -66,6 +90,7 @@ class DashboardController extends Controller
         $data["totalYear"] = $totalYear;
         $data["totalToday"] = $totalToday;
         $data["dataChart"] = $dataChart;
-        return view('backend.dashboard.index' , compact('data')); 
+
+        return view('backend.dashboard.index', compact('data'));
     }
 }
