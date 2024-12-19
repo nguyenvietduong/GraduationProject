@@ -158,13 +158,10 @@
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                @php
-                                    $totalTables = \App\Models\Table::sum('capacity');
-                                @endphp
                                 <div>
                                     <label class="">{{ __('messages.reservation.fields.guests') }} <span
                                             style="color: red">*</span></label>
-                                    <input type="number" min="0" max="{{$totalTables}}" autocomplete="off" id="guests"
+                                    <input type="number" min="0" autocomplete="off" id="guests"
                                         name="guests"
                                         class="out-of-range:border-red-500 mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('guests') border-red-500 @enderror"
                                         required="" placeholder="{{ __('messages.reservation.fields.guests_placeholder') }}"

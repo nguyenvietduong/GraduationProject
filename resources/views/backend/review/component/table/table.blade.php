@@ -5,7 +5,7 @@
                 <div class="form-check mb-0 ms-n1">
                 </div>
             </th>
-            <th>#</th>
+            <th>Mã hóa đơn</th>
             <th class="ps-0">{{ __('messages.review.fields.review_creator') }}</th>
             <th>{{ __('messages.review.fields.rating') }}</th>
             <th>{{ __('messages.review.fields.comment') }}</th>

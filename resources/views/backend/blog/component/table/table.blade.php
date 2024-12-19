@@ -6,7 +6,7 @@
                 </div>
             </th>
             <th>#</th>
-            <th class="ps-0">{{ __('messages.blog.fields.title') }}</th>
+            <th class="ps-0" style="width: 200px;">{{ __('messages.blog.fields.title') }}</th>
             <th>{{ __('messages.blog.fields.blog_creator') }}</th>
             <th>{{ __('messages.system.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
@@ -23,7 +23,6 @@
                     </td>
                     <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
                     <td class="ps-0">
-                        <img src="{{ checkFile($data->image) }}" alt width="50">
                         <p class="d-inline-block align-middle mb-0">
                             {{ $data->title ?? __('messages.system.no_data_available') }}
                         </p>

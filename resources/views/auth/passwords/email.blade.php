@@ -21,7 +21,7 @@
                 @csrf
                 <div class="grid grid-cols-1">
                     <div class="mb-4">
-                        <label class="font-medium" for="LoginEmail">Email Address:</label>
+                        <label class="font-medium" for="LoginEmail">Email:</label>
                         <input id="LoginEmail" type="email" name="email" value="{{ old('email') }}"
                                class="mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 @error('email') is-invalid @enderror"
                                placeholder="name@example.com" required>
@@ -33,7 +33,7 @@
                     <div class="mb-4">
                         <input type="submit"
                                class="py-2 px-5 inline-block tracking-wide align-middle duration-500 text-base text-center bg-amber-500 text-white rounded-md w-full"
-                               value="Send Password Reset Link">
+                               value="Gửi mail">
                     </div>
                 </div>
             </form>
