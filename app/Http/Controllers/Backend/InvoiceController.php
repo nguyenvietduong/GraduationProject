@@ -175,9 +175,9 @@ class InvoiceController extends Controller
                     'payment_method' => 'bank'  // This assumes it's a bank payment, adjust if other methods are possible
                 ]);
 
-                if (isset($reservation->email)) {
-                    Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
-                }
+                // if (isset($reservation->email)) {
+                //     Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
+                // }
             } else {
                 return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
             }
@@ -206,6 +206,7 @@ class InvoiceController extends Controller
     public function exportAndSavePDF(Request $request)
     {
         // Lấy reservationId từ dữ liệu JSON
+        // dd($request->all());
         $reservationId = $request->reservation_id;
     
         // Kiểm tra nếu Reservation tồn tại

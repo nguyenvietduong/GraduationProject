@@ -31,14 +31,14 @@
 
 <body>
     <div class="header">
-        <h2>{{ $reservation->code }}</h2>
+        <h2>{{ $reservation->code ?? '' }}</h2>
         <p>Hóa đơn thanh toán</p>
     </div>
     <hr>
     <h3>Thông tin khách hàng</h3>
-    <p>Tên khách hàng: {{ $reservation->name }}</p>
-    <p>Số điện thoại: {{ $reservation->phone }}</p>
-    <p>Thời gian đặt chỗ: {{ $reservation->reservation_time }}</p>
+    <p>Tên khách hàng: {{ $reservation->name ?? '' }}</p>
+    <p>Số điện thoại: {{ $reservation->phone ?? '' }}</p>
+    <p>Thời gian đặt chỗ: {{ $reservation->reservation_time ?? '' }}</p>
 
     <h3>Chi tiết hóa đơn</h3>
     <table>
@@ -60,8 +60,8 @@
                 @endphp
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>{{ $item->menu->name }}</td>
-                    <td>{{ $item->quantity }}</td>
+                    <td>{{ $item->menu->name ?? '' }}</td>
+                    <td>{{ $item->quantity ?? '' }}</td>
                     <td>{{ number_format($item->price * $item->quantity, 0, ',', '.') }} đ</td>
                 </tr>
             @endforeach

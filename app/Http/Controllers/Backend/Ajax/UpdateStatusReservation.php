@@ -156,7 +156,10 @@ class UpdateStatusReservation extends Controller
 
     public function createInvoiceDataDetail(Request $request)
     {
+        // dd($request->all());
+
         $data = $request->all();
+
 
         // Tạo hóa đơn mới
         $invoice = Invoice::create([
@@ -188,6 +191,7 @@ class UpdateStatusReservation extends Controller
             Invoice_item::create([
                 'invoice_id' => $invoice->id,
                 'menu_id' => $item['id'],
+                'menu_name' => $item['name'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
                 'total' => $item['total'],
@@ -200,6 +204,8 @@ class UpdateStatusReservation extends Controller
     public function updateInvoiceDataDetail(Request $request)
     {
         $data = $request->all();
+        // dd($data);
+
         $invoiceItems = $request->input('invoice_item', []);
 
         $invoice = Invoice::findOrFail($data['invoice_id']);
@@ -212,7 +218,7 @@ class UpdateStatusReservation extends Controller
             $invoice->invoiceItems()->create([
                 'invoice_id' => $data['invoice_id'],
                 'menu_id' => $item['id'],
-                'name' => $item['name'],
+                'menu_name' => $item['name'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
                 'total' => $item['total']
