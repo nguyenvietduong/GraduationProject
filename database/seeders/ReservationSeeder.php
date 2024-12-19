@@ -32,16 +32,17 @@ class ReservationSeeder extends Seeder
                 $reservationCount = rand(1, 5);
                 for ($i = 0; $i < $reservationCount; $i++) {
                     $randomDay = Carbon::createFromTimestamp(rand(strtotime('2020-01-01'), strtotime('now')));
-                    $status = collect(['canceled', 'completed', 'arrived'])->random();
+                    $status = collect(['canceled', 'completed'])->random();
                     // Tạo đơn hàng
+                    $guests = rand(1, 5);
                     $reservation = Reservation::create([
                         'user_id' => $user->id,
-                        'code' => 'R-' . Str::upper(Str::random(6)), // Mã đặt bàn ngẫu nhiên
+                        'code' => 'R' . Str::upper(Str::random(6)), // Mã đặt bàn ngẫu nhiên
                         'name' => $user->full_name,  // Sử dụng tên người dùng
                         'email' => $user->email,
                         'phone' => $user->phone,
                         'reservation_time' => $randomDay, // Ngày ngẫu nhiên trong tháng tới
-                        'guests' => rand(1, 5), // Số lượng khách ngẫu nhiên
+                        'guests' => $guests, // Số lượng khách ngẫu nhiên
                         'special_request' => 'None', // Yêu cầu đặc biệt (tuỳ chỉnh nếu cần)
                         'status' => $status,
                     ]);
@@ -49,14 +50,11 @@ class ReservationSeeder extends Seeder
                         continue; // Dừng vòng lặp này và chuyển qua vòng lặp tiếp theo
                     }
                     // Tạo reservation_details (bàn)
-                    $tableCount = rand(1, 3); // Số bàn ngẫu nhiên cho mỗi đơn hàng
-                    for ($j = 0; $j < $tableCount; $j++) {
                         ReservationDetail::create([
                             'reservation_id' => $reservation->id,
                             'table_id' => $tables->random()->id, // Chọn bàn ngẫu nhiên từ bảng 'tables'
-                            'guests_detail' => rand(1, 5), // Số lượng khách cho bàn cụ thể
+                            'guests_detail' => $guests, // Số lượng khách cho bàn cụ thể
                         ]);
-                    }
 
                     // Tạo hóa đơn
                     $invoice = Invoice::create([

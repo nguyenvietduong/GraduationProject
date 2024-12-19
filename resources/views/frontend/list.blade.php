@@ -259,7 +259,7 @@
                 @foreach ($listReservation as $value)
                     <div id="modal-{{ $value->id }}"
                         class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-                        <div class="bg-white rounded-lg shadow-lg" style="width: 1300px;min-height: 500px">
+                        <div class="bg-white rounded-lg shadow-lg" style="width: 1300px;min-height: 450px">
                             <div class="flex justify-between items-center p-4 border-b">
                                 <h2 class="text-lg font-semibold">Chi tiết đơn đặt bàn - {{ $value->code }}</h2>
 
@@ -395,25 +395,25 @@
                                     </div>
                                 @endif
                             @elseif($value->status && $value->status == 'arrived')
-                                <div class="flex justify-end p-4 border-t">
-                                    <form action="{{ route('vnpay_payment') }}" method="post">
+                                <div class=" p-4 border-t">
+                                    <form action="{{ route('vnpay_payment') }}" method="post" class="flex justify-between ">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $value->id }}">
                                         <input type="hidden" name="code" value="{{ $value->code }}">
                                         <input type="hidden" name="total_amount" value="{{ $totalAmountPayable }}">
                                         <div class="mb-4">
-                                            <label for="voucher" class="block text-sm font-medium text-gray-700">Mã giảm
-                                                giá</label>
                                             <input type="text" id="voucher" name="voucher"
                                                 class="mt-2 p-2 border border-gray-300 rounded w-full"
                                                 placeholder="Nhập mã giảm giá">
                                         </div>
-                                        <button
+                                        <div class="mb-4">
+                                            <button
                                             style="background-color: #007bff;color: white;border: none;border-radius: 5px;padding: 10px 20px;font-size: 16px;cursor: pointer;transition: background-color 0.3s, transform 0.2s;"
                                             name="redirect"
                                             onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';">
                                             Thanh toán ngay
                                         </button>
+                                        </div>
                                     </form>
                                 </div>
                             @endif
