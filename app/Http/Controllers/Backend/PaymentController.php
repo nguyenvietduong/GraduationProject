@@ -89,7 +89,7 @@ class PaymentController extends Controller
         $total_amount = $request->total_amount;
         if (isset($request->voucher)) {
             $promotion = Promotion::where('code', $request->voucher)->first();
-            if (isset($promotion)) {
+            if (isset($promotion) && $request->total_amount > $promotion->min_order_value) {
                 if ($promotion->type == 'fixed') {
                     $total_amount = $request->total_amount - $promotion->discount;
                 } else {
@@ -197,13 +197,13 @@ class PaymentController extends Controller
                 $reservation = Reservation::where('code', $code_reservation)->first();
                 // dd($code_reservation, $promotion ?? "",$reservation->invoice->id);
                 $reservation->update(['status' => 'completed']);
-                $reservation->invoice()->update(['status' => 'paid', 'payment_method' => 'bank' , 'total_amount' => $inputData['vnp_Amount']]);
+                $reservation->invoice()->update(['status' => 'paid', 'payment_method' => 'bank' , 'total_amount' => $inputData['vnp_Amount']/100]);
                 foreach ($reservation->reservationDetails as $data) {
                     Table::where('id', $data->table_id)->update([
                         'status' => "available",
                     ]);
                 }
-                if ($promotion) {
+                if (isset($promotion) && $reservation->invoice->total_amount > $promotion->min_order_value) {
                     PromotionUser::create([
                         'promotion_id' => $promotion->id,
                         'invoice_id' => $reservation->invoice->id,

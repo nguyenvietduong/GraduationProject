@@ -5,7 +5,7 @@
                 <div class="form-check mb-0 ms-n1">
                 </div>
             </th>
-            <th>#</th>
+            <th>Mã đơn hàng</th>
             <th>{{ __('messages.reservation.fields.reservation_information') }}</th>
             <th>{{ __('messages.reservation.fields.guests') }}</th>
             <th>{{ __('messages.reservation.fields.reservation_time') }}</th>
@@ -26,7 +26,7 @@
                         <div class="form-check">
                         </div>
                     </td>
-                    <td>{{ $data->id ?? __('messages.system.no_data_available') }}</td>
+                    <td>{{ $data->code ?? __('messages.system.no_data_available') }}</td>
                     <td>
                         <ul>
                             <li>{{ __('messages.reservation.fields.full_name') }}:
