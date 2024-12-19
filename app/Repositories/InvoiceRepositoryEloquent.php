@@ -44,7 +44,10 @@ class InvoiceRepositoryEloquent extends BaseRepository implements InvoiceReposit
         // Apply search filters
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+                $q->where('name', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('phone', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('code', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('email', 'like', '%' . $filters['search'] . '%');
             });
         }
 
