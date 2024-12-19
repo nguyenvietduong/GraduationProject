@@ -143,7 +143,7 @@
                     <div class="md:px-6 duration-500 text-center" style="display: flex;flex-direction: column; justify-content: center; align-items: center">
                         <div
                             class="d-flex justify-center ">
-                            <img src="{{ checkFile($listBlog->image) }}" alt="" class="d-block" style="width 200px ;height:200px; ">
+                            <img src="{{ checkFile($listBlog->image) }}" alt="" class="d-block" style="width 200px;height:200px; ">
                         </div>
 
                         <div class="content mt-7" style="width: 310px;white-space: nowrap;overflow: hidden;">
