@@ -190,19 +190,19 @@
     </div>
 
     <button class="chat-button btn btn-primary" type="button" data-bs-toggle="modal"
-    data-bs-target="#create-reservation">
+        data-bs-target="#create-reservation">
         <div class="icon-wrapper">
             <i class="fas fa-book"></i> <!-- Icon -->
             <span class="chat-text">Tạo đơn mới</span>
         </div>
     </button>    
-    
+
     <style>
     /* Chat Button Styles */
     .chat-button {
         position: fixed;
         bottom: 20px;
-        left: 20px;
+        right: 20px; /* Đặt vị trí bên phải màn hình */
         background-color: #007bff;
         color: white;
         border: none;
@@ -218,6 +218,7 @@
         justify-content: center;
         overflow: hidden;
         transition: all 0.5s ease;
+        transform-origin: right center; /* Thiết lập trục mở rộng từ phải */
     }
 
     .chat-button .icon-wrapper {
@@ -226,11 +227,12 @@
         justify-content: center;
         gap: 5px;
         transition: opacity 0.5s ease;
+        flex-direction: row-reverse; /* Đảo hướng icon và text */
     }
 
     .chat-button .chat-text {
         display: none;
-        margin-left: 10px;
+        margin-right: 10px; /* Cách biểu tượng 10px */
         font-size: 14px;
         white-space: nowrap;
     }
@@ -238,6 +240,7 @@
     .chat-button.expanded {
         width: 170px;
         border-radius: 30px;
+        right: 20px; /* Giữ nút mở rộng từ vị trí cố định */
     }
 
     .chat-button.expanded .chat-text {
@@ -245,29 +248,29 @@
     }
 
     .chat-button.expanded .fas {
-        margin-right: 5px;
+        margin-left: 5px; /* Đặt biểu tượng sát hơn khi mở rộng */
     }
     </style>
-    
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const chatButton = document.querySelector('.chat-button');
+    document.addEventListener("DOMContentLoaded", () => {
+        const chatButton = document.querySelector('.chat-button');
 
-            // Hàm để bật ra
-            const expandButton = () => {
-                chatButton.classList.add('expanded');
-                setTimeout(collapseButton, 3000); // Sau 3 giây bật vào
-            };
+        // Hàm để bật ra
+        const expandButton = () => {
+            chatButton.classList.add('expanded');
+            setTimeout(collapseButton, 3000); // Sau 3 giây bật vào
+        };
 
-            // Hàm để bật vào
-            const collapseButton = () => {
-                chatButton.classList.remove('expanded');
-                setTimeout(expandButton, 3000); // Sau 3 giây bật ra lại
-            };
+        // Hàm để bật vào
+        const collapseButton = () => {
+            chatButton.classList.remove('expanded');
+            setTimeout(expandButton, 3000); // Sau 3 giây bật ra lại
+        };
 
-            // Khởi chạy hiệu ứng
-            setTimeout(expandButton, 3000); // Sau 3 giây bắt đầu bật ra
-        });
+        // Khởi chạy hiệu ứng
+        setTimeout(expandButton, 3000); // Sau 3 giây bắt đầu bật ra
+    });
     </script>
 
     @include('backend.component.Javascript')

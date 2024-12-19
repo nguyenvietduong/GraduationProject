@@ -142,13 +142,13 @@
                         @php
                             
                         @endphp
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">{{ number_format($totalCount, 0, ',', '.') }} đ</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">{{ number_format($totalCount - $reservation->invoice->total_amount, 0, ',', '.') }} đ</td>
                     </tr>
                 @endif
                 
                 <tr>
                     <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">Tổng Cộng:</td>
-                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">{{ number_format($totalCount - $reservation->invoice->total_amount, 0, ',', '.') }} đ</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">{{ number_format($reservation->invoice->total_amount, 0, ',', '.') }} đ</td>
                 </tr>
             </table>
         

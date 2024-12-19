@@ -52,6 +52,7 @@
                     }}</span>
             </td>
             <td>
+                @if($item->slug!== "chua-phan-loai")
                 <div class="d-flex align-items-center">
                     <a href="{{ route(__('messages.' . $object . '.edit.route'), $item->id) }}" class="me-2">
                         <i class="fas fa-edit btn btn-primary btn-sm"></i>
@@ -66,6 +67,7 @@
                         </button>
                     </form>
                 </div>
+                @endif
             </td>
         </tr>
         @endforeach
