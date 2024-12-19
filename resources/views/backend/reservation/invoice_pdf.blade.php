@@ -60,7 +60,7 @@
                 @endphp
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>{{ $item->menu->name ?? '' }}</td>
+                    <td>{{ $item->menu_name ?? '' }}</td>
                     <td>{{ $item->quantity ?? '' }}</td>
                     <td>{{ number_format($item->price * $item->quantity, 0, ',', '.') }} đ</td>
                 </tr>
