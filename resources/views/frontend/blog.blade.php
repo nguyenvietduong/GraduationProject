@@ -15,12 +15,13 @@
                     class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
                     <div class="relative overflow-hidden">
                         <img src="{{ checkFile($item->image) }}"
-                            class="w-full h-auto object-cover group-hover:scale-110 group-hover:rotate-3 duration-500"
-                            alt="">
-                    </div>
+                            class="w-full object-cover group-hover:scale-110 group-hover:rotate-3 duration-500"
+                            alt=""
+                            style="height: 200px;object-fit: cover; object-position: center;">
+                    </div>                    
 
                     <div class="p-6">
-                        <a href="{{ route('blog.detail', $item->slug) }}" class="text-lg hover:text-amber-500 h5">{{ $item->title }}</a>
+                        <a href="{{ route('blog.detail', $item->slug) }}" class="text-lg hover:text-amber-500 h5" style="display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ $item->title }}</a>
 
                         <div
                             class="mt-6 pt-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-800">

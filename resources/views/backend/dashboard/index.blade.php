@@ -118,7 +118,7 @@
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
                             <div class="col">
                                 <p class="text-dark mb-0 fw-semibold fs-14">Doanh thu tháng</p>
-                                <h5 class="mt-2 mb-0 fw-bold" ">{{ number_format($data['totalMonth'], 0, '.', '.') }} VNĐ</h3>
+                                <h5 class="mt-2 mb-0 fw-bold">{{ number_format($data['totalMonth'], 0, '.', '.') }} VNĐ</h3>
                                           </div>
                                           <div class=" col-4 d-flex justify-content-center align-items-center">
                                     <div
@@ -159,15 +159,14 @@
                     <form method="GET" class="row align-items-center">
                         <div class="col-5">
                             <select name="ca" id="yearSelect" class="form-select">
-                                <option value="">--Chọn ca ---</option>
-                                 <option value="sang" @selected("sang" == request('ca'))>Buổi sáng</option>
-                                 <option value="trua" @selected("trua" == request('ca'))>Buổi trưa</option>
-                                 <option value="toi" @selected("toi" == request('ca'))>Buổi tối</option>
+                                <option value="all">--Chọn ca---</option>
+                                <option value="morning" @selected("morning" == request('ca'))>Buổi sáng</option>
+                                <option value="afternoon" @selected("afternoon" == request('ca'))>Buổi trưa</option>
+                                <option value="evening" @selected("evening" == request('ca'))>Buổi tối</option>
                             </select>
                         </div>
                         <button class="col-2 btn btn-primary">Tìm kiếm</button>
                     </form>
-
                 </div>
             </div>
             <div class="col-md-12">
@@ -191,100 +190,89 @@
                 </div>
             </div>
         </div>
-        {{-- end chart --}}
-
-    </div>
-    <script src="{{ asset('backend/assets/libs/chart.js/chart.min.js') }}"></script>
-    <script>
-        const dataChart = @json($data['dataChart']);
-        var lineChart = document.getElementById("lineChart").getContext("2d"),
-            barChart = document.getElementById("barChart").getContext("2d")
-        var myLineChart = new Chart(lineChart, {
-            type: "line",
-            data: {
-                labels: [
-                    ...dataChart.map(item => {
-                        return item.date
-                    })
-                ],
-                datasets: [{
-                    label: "Đơn hàng",
-                    borderColor: "#1d7af3",
-                    pointBorderColor: "#1d7af3",
-                    pointBackgroundColor: "#FFF",
-                    pointBorderWidth: 2,
-                    pointHoverRadius: 4,
-                    pointHoverBorderWidth: 1,
-                    pointRadius: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
-                    borderWidth: 1,
-                    data: [
-                        ...dataChart.map(item => {
-                            return item.order
-                        })
-                    ],
-                }, ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: "top",
-                    labels: {
-                        usePointStyle: true,
-                        padding: 10,
-                        fontColor: "#1d7af3",
+        
+        <script src="{{ asset('backend/assets/libs/chart.js/chart.min.js') }}"></script>
+        <script>
+            const dataChart = @json($data['dataChart']);
+        
+            const lineChart = document.getElementById("lineChart").getContext("2d");
+            const barChart = document.getElementById("barChart").getContext("2d");
+        
+            const myLineChart = new Chart(lineChart, {
+                type: "line",
+                data: {
+                    labels: dataChart.map(item => item.period), // Sử dụng period thay vì date
+                    datasets: [{
+                        label: "Đơn hàng",
+                        borderColor: "#1d7af3",
+                        pointBorderColor: "#1d7af3",
+                        pointBackgroundColor: "#FFF",
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 1,
+                        pointRadius: 4,
+                        backgroundColor: "transparent",
+                        fill: true,
+                        borderWidth: 1,
+                        data: dataChart.map(item => item.order),
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: "top",
+                            labels: {
+                                usePointStyle: true,
+                                padding: 10,
+                                color: "#1d7af3",
+                            },
+                        },
+                        tooltip: {
+                            bodySpacing: 4,
+                            mode: "nearest",
+                            intersect: false,
+                            position: "nearest",
+                            padding: 10,
+                        },
                     },
-                },
-                tooltips: {
-                    bodySpacing: 4,
-                    mode: "nearest",
-                    intersect: 0,
-                    position: "nearest",
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10,
-                },
-                layout: {
-                    padding: {
-                        left: 15,
-                        right: 15,
-                        top: 15,
-                        bottom: 15
+                    layout: {
+                        padding: {
+                            left: 15,
+                            right: 15,
+                            top: 15,
+                            bottom: 15,
+                        },
                     },
-                },
-                
-            },
-        });
-        var myBarChart = new Chart(barChart, {
-            type: "bar",
-            data: {
-                labels: [
-                    ...dataChart.map(item => {
-                        return item.date
-                    })
-                ],
-                datasets: [{
-                    label: "Doanh thu",
-                    backgroundColor: "rgb(23, 125, 255)",
-                    borderColor: "rgb(23, 125, 255)",
-                    data: [...dataChart.map(item => {
-                        return item.total
-                    })],
-                }, ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
+                    scales: {
+                        y: {
                             beginAtZero: true,
                         },
-                    }, ],
+                    },
                 },
-            },
-        });
-    </script>
+            });
+        
+            const myBarChart = new Chart(barChart, {
+                type: "bar",
+                data: {
+                    labels: dataChart.map(item => item.period),
+                    datasets: [{
+                        label: "Doanh thu",
+                        backgroundColor: "rgb(23, 125, 255)",
+                        borderColor: "rgb(23, 125, 255)",
+                        data: dataChart.map(item => item.total),
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            });
+        </script>
 @endsection
