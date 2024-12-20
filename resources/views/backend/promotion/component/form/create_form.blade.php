@@ -61,7 +61,7 @@
                         <div class="col-lg-6">
                             <div class="mb-2">
                                 <label class="mb-2">{{ __('messages.' . $object . '.fields.type') }} <span class="text-danger">*</span></label>
-                                <select name="is_active" class="form-select selectPromotion" id="">
+                                <select name="type" class="form-select selectPromotion" id="">
                                     @foreach (__('messages.promotion.type') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach

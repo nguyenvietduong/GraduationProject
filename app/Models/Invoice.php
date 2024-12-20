@@ -13,6 +13,7 @@ class Invoice extends Model
         'total_amount',
         'payment_method',
         'status',
+        'isExport'
     ];
     
     public function invoiceItems()

@@ -197,16 +197,33 @@ class InvoiceController extends Controller
                     'status' => "available",
                 ]);
             }
+        
+            // Lấy invoice nếu có
+            if ($invoice) {
+                $invoice->update(['isExport' => true]);
+            }
+        
+            // Tạo tên file PDF
+            $fileName = 'invoice_' . $reservation->id . '.pdf';
+            $filePath = 'pdf/' . $fileName;
+        
+            // Nếu file chưa tồn tại, tạo file PDF mới
+            $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('reservation'));
+        
+            // Lưu file PDF vào storage/public/pdf
+            Storage::disk('public')->put($filePath, $pdf->output());
+        
+            // Trả về URL của file PDF mới
+            $pdfUrl = Storage::url($filePath);
 
             // $this->exportAndSavePDF($reservation->id);
-            return response()->json(['success' => 'Đặt chỗ và thanh toán thành công.']);
+            return response()->json(['success' => 'Đặt chỗ và thanh toán thành công.', 'pdfUrl' => $pdfUrl]);
         }
     }
 
     public function exportAndSavePDF(Request $request)
     {
         // Lấy reservationId từ dữ liệu JSON
-        // dd($request->all());
         $reservationId = $request->reservation_id;
     
         // Kiểm tra nếu Reservation tồn tại
@@ -214,21 +231,35 @@ class InvoiceController extends Controller
         if (!$reservation) {
             return response()->json(['success' => false, 'message' => 'Reservation not found']);
         }
-        $reservation->invoice()->update(['isExport' => true]);
-        // Tạo file PDF từ view
-        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('reservation'));
-
-        // Đặt tên file PDF
+    
+        // Lấy invoice nếu có
+        $invoice = Invoice::where('reservation_id', $reservationId)->first(); // Fetch the first invoice
+        if ($invoice) {
+            $invoice->update(['isExport' => true]);
+        }
+    
+        // Tạo tên file PDF
         $fileName = 'invoice_' . $reservation->id . '.pdf';
+        $filePath = 'pdf/' . $fileName;
+    
+        // Kiểm tra nếu file đã tồn tại
+        if (Storage::disk('public')->exists($filePath)) {
+            // Nếu file đã tồn tại, lấy URL của file đó
+            $pdfUrl = Storage::url($filePath);
+            return response()->json(['success' => true, 'pdfUrl' => $pdfUrl]);
+        }
+    
+        // Nếu file chưa tồn tại, tạo file PDF mới
+        $pdf = Pdf::loadView('backend.reservation.invoice_pdf', compact('reservation'));
     
         // Lưu file PDF vào storage/public/pdf
-        $filePath = 'pdf/' . $fileName;
         Storage::disk('public')->put($filePath, $pdf->output());
     
-        // Trả về URL của file PDF trong storage
-        $pdfUrl = Storage::url($filePath);
-    
-        // Trả về phản hồi JSON với URL
-        return response()->json(['success' => true, 'pdfUrl' => $pdfUrl]);
-    }    
+        // Trả về URL của file PDF mới
+        if (Storage::disk('public')->exists($filePath)) {
+            // Nếu file đã tồn tại, lấy URL của file đó
+            $pdfUrl = Storage::url($filePath);
+            return response()->json(['success' => true, 'pdfUrl' => $pdfUrl]);
+        }
+    }     
 }
