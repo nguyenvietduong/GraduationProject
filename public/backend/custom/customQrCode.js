@@ -94,8 +94,8 @@
                 },
                 success: function (response) {
                     if (response.success) {
-                        exportInvoicePDF(reservationId);
-                        // setTimeout(function () {
+                        const pdfUrl = response.pdfUrl;
+                        window.open(pdfUrl, '_blank');
                         $('#create-reservation').modal('hide')
                         localStorage.setItem('showSuccessMessage', 'true')
                         window.location.reload()
@@ -111,26 +111,5 @@
             exampleModal.removeClass('modal-blur');
         }
 
-        function exportInvoicePDF(reservationId) {
-            $.ajax({
-                url: "/admin/invoice/exportPDF",
-                method: "POST",
-                data: { reservation_id: reservationId, _token: csrfToken },
-                success: function (response) {
-                    if (response.success) {
-                        const pdfUrl = response.pdfUrl;
-                        const newTab = window.open('', '_blank');
-                        if (pdfUrl) {
-                            newTab.location.href = pdfUrl;
-                        }
-                    } else {
-                        console.log('Error generating or saving the invoice.');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error during PDF export:', error);
-                }
-            });
-        }
     });
 })(jQuery);

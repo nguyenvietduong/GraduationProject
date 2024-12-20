@@ -63,10 +63,14 @@ class ProfileController extends Controller
         // Validate input data
         $request->validate([
             'full_name' => 'required|string|max:255',
-            'phone' => ['required', 'regex:/^[0-9\-\+\(\)\s]+$/', 'max:15'], // Chỉ cho phép các ký tự số, dấu cộng, dấu gạch, dấu ngoặc
+            'phone' => [
+                'required',
+                'regex:/^(0|\+84)[1-9][0-9]{8}$/', // Số điện thoại Việt Nam: bắt đầu bằng 0 hoặc +84 và có 9 chữ số tiếp theo
+                'max:10'
+            ],
             'email' => 'required|email|max:255',
             'address' => 'nullable|string|max:255',
-        ]);
+        ]);        
 
         // Update user profile if no validation errors
         $user = Auth::user();
