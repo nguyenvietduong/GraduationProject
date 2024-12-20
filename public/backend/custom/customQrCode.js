@@ -77,7 +77,7 @@
         }
 
         function processPayment() {
-            const reservationId = $('#btn-reservation-id').data('reservation-id');
+            const reservationId = $("#idDonhang").attr('iddonhang');
             const voucherId = $('#voucher-discount').data('id-vouchar') || null;
             const totalPayment = $('.total-payment').html();
             const formattedAmount = totalPayment.replace(/[^0-9]/g, '');

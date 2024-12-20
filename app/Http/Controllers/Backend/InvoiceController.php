@@ -172,12 +172,13 @@ class InvoiceController extends Controller
                 $invoice->update([
                     'total_amount' => $request->total_payment,
                     'status' => 'paid',
-                    'payment_method' => 'bank'  // This assumes it's a bank payment, adjust if other methods are possible
+                    'payment_method' => 'bank',
+                    'isExport' => true
                 ]);
 
-                // if (isset($reservation->email)) {
-                //     Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
-                // }
+                if (isset($reservation->email)) {
+                    Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
+                }
             } else {
                 return response()->json(['error' => 'Không tìm thấy hóa đơn.'], 404);
             }
@@ -196,11 +197,6 @@ class InvoiceController extends Controller
                 Table::where('id', $table->table_id)->update([
                     'status' => "available",
                 ]);
-            }
-        
-            // Lấy invoice nếu có
-            if ($invoice) {
-                $invoice->update(['isExport' => true]);
             }
         
             // Tạo tên file PDF

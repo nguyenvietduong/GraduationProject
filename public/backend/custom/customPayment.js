@@ -166,10 +166,10 @@
             let reservationId;
             let invoiceDetail;
             if (button.length) {
-                reservationId = button.attr('dataReservationId')
+                reservationId = button.attr('dataReservationId')    
                 invoiceDetail = await CUONG.fetchInvoiceDetail(`/admin/payment/${reservationId}`);
                 CUONG.renderMenuItem(invoiceDetail);
-                
+                $("#idDonhang").attr("idDonHang", invoiceDetail.reservation.id);
                 let voucher_discount = 0;
                 let code;
                 $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);

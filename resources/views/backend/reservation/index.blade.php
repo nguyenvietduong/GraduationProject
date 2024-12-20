@@ -159,7 +159,7 @@
         </div>
     </div>
 
-
+<!--  -->
     <div class="modal fade" id="pay" tabindex="-1" aria-labelledby="paylable" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
@@ -233,7 +233,7 @@
                                         </div>
                                     </div>
                                     
-                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code">
+                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code" id="idDonhang" data-id="">
                                         QR Code
                                     </button>
 
