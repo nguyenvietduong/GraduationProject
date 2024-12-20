@@ -3,6 +3,7 @@
 @section('adminContent')
     <div class="container-xxl">
         <div class="row justify-content-center">
+            @if(Auth::check() && Auth::user()->role_id == 1)
             <div class="col-md-6 col-lg-3">
                 <div class="card">
                     <div class="card-body">
@@ -130,7 +131,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
+            @endif
+            <div class="
+            @if(Auth::check() && Auth::user()->role_id == 1)
+                col-md-6 col-lg-3
+            @else 
+                col-md-12 col-lg-12
+            @endif">
                 <div class="card">
                     <div class="card-body">
                         <div class="row d-flex justify-content-center border-dashed-bottom pb-3">
@@ -148,7 +155,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
         <!--end row-->
         <!--end row-->
