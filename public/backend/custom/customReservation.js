@@ -104,13 +104,18 @@
                 data: data,
                 success: async function (response) {
                     hideSpinner();
-
                     if (response.data.status === 'arrived') {
                         await PMD.renderTdMenu(accountId);
                         await PMD.renderSelectArrived(accountId);
                     }
 
                     if (response.data.status === 'confirmed') {
+                        setTimeout(() => {
+                            window.location.href = window.location.href;
+                        }, 1000);
+                    }
+
+                    if (response.data.status === 'canceled') {
                         setTimeout(() => {
                             window.location.href = window.location.href;
                         }, 1000);
