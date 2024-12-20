@@ -54,7 +54,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h4 class="card-title">Personal Information</h4>
+                                <h4 class="card-title">Thông tin tài khoản</h4>
                             </div><!--end col-->
                             <div class="col-auto" id="div-edit">
                                 <a href="javascript:void(0);" id="editButton"
