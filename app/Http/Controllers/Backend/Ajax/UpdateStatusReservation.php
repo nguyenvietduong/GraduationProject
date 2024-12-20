@@ -102,6 +102,7 @@ class UpdateStatusReservation extends Controller
                 if ($search) {
                     $query->where('name', 'LIKE', "%{$search}%");
                 }
+                $query->where('status', '=', 'active');
             }
         ])->get();
         // dd($categories);
