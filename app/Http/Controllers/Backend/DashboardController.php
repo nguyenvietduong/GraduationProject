@@ -49,12 +49,10 @@ class DashboardController extends Controller
 
                 $totalAmount = Reservation::join('invoices', 'invoices.reservation_id', '=', 'reservations.id')
                     ->whereBetween('reservation_time', [$startTime, $endTime])
-                    ->where('invoices.status', 'paid')
                     ->where('reservations.status', 'completed')
                     ->sum('invoices.total_amount');
                 $orderCount = Reservation::join('invoices', 'invoices.reservation_id', '=', 'reservations.id')
                     ->whereBetween('reservation_time', [$startTime, $endTime])
-                    ->where('invoices.status', 'paid')
                     ->where('reservations.status', 'completed')
                     ->count();
 

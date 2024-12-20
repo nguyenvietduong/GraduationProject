@@ -154,7 +154,7 @@
         <!--end row-->
         {{-- start chart --}}
         <div class="row card">
-            <div class="col-md-6 col-lg-8">
+            {{-- <div class="col-md-6 col-lg-8">
                 <div class="card-header">
                     <form method="GET" class="row align-items-center">
                         <div class="col-5">
@@ -168,10 +168,10 @@
                         <button class="col-2 btn btn-primary">Tìm kiếm</button>
                     </form>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-12">
                 <div class="card-header">
-                    <div class="card-title h4">Đơn hàng</div>
+                    <div class="card-title h4">Thống kê đơn hàng hôm nay</div>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
@@ -181,7 +181,7 @@
             </div>
             <div class="col-md-12">
                 <div class="card-header">
-                    <div class="card-title h4">Doanh thu</div>
+                    <div class="card-title h4">Thống kê doanh thu hôm nay</div>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">

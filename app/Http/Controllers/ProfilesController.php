@@ -36,7 +36,7 @@ class ProfilesController extends Controller
             'phone' => ['required', 'regex:/^[0-9\-\+\(\)\s]+$/', 'max:15'],
             'email' => 'required|email|max:255',
             'address' => 'nullable|string|max:255',
-            
+            'birthday' => 'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
