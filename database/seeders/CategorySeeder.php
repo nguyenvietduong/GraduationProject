@@ -51,13 +51,13 @@ class CategorySeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
-            [
-                'name' => 'Chưa phân loại',
-                'slug' => 'chua-phan-loai',
-                'status' => 'active',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
+            // [
+            //     'name' => 'Chưa phân loại',
+            //     'slug' => 'chua-phan-loai',
+            //     'status' => 'active',
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now(),
+            // ],
             ]);
         // Thêm mới dữ liệu vào menu
         DB::table('menus')->insert([

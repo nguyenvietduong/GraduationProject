@@ -505,7 +505,7 @@ return [
     'account' => [
         'status' => [
             'normal' => 'Bình thường',
-            'locked' => 'Đã khóa',
+            'locked' => 'Khóa tài khoản',
             'warning' => 'Cảnh báo',
         ],
         'fields' => [
