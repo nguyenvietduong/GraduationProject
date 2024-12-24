@@ -1,4 +1,4 @@
-function executeExample(t, message = '', formId) {
+function executeExample(t, formId) {
   const formElement = document.getElementById(formId);
 
   switch (t) {
@@ -251,9 +251,9 @@ function executeExample(t, message = '', formId) {
 
 
     case "success":
-      return void Swal.fire({ icon: "success", title: translations.alert.success, timer: 1500, title: message == '' ? 'Cập nhật thành công!' : message });
+      return void Swal.fire({ icon: "success", title: translations.alert.success, timer: 1500 });
 
     case "error":
-      return void Swal.fire({ icon: "error", title: translations.alert.error.title, text: message == '' ? 'Đã xảy ra lỗi!' : message });
+      return void Swal.fire({ icon: "error", title: translations.alert.error.title, text: translations.alert.error.text });
   }
 }

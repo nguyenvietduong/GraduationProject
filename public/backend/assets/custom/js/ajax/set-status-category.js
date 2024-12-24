@@ -6,10 +6,10 @@ $(document).ready(function () {
         var selectedValue = select.val();
 
         var categoryId = select.data('category-id'); // This should get the correct account ID
-        
+
         var data = {
-            _token: csrfToken, 
-            id: categoryId,        
+            _token: csrfToken,
+            id: categoryId,
             status: selectedValue
         };
 
@@ -18,10 +18,10 @@ $(document).ready(function () {
             type: 'POST',
             data: data,
             success: function (response) {
-                if(response.status == false){
-                    executeExample('error', response.message);
-                }else{
-                    executeExample('success', response.message);
+                if (response.status == false) {
+                    executeExample('error');
+                } else {
+                    executeExample('success');
                 }
                 window.location.reload();
                 // Tùy chọn reload bảng để hiển thị trạng thái mới
@@ -29,6 +29,6 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 executeExample('error');
             }
-        });        
+        });
     });
 });
