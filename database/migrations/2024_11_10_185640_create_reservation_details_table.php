@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade');
             $table->foreignId('table_id')->nullable()->constrained('tables')->onDelete('cascade');
-            $table->integer('guests_detail')->nullable(); 
+            $table->string('table_name')->nullable(); 
             $table->timestamps();
         });
     }

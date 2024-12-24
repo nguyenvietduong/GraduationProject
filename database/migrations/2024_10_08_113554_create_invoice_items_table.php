@@ -12,11 +12,11 @@ return new class extends Migration {
     {
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');  // Hóa đơn liên quan
-            $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');  // Món ăn trong hóa đơn
-            $table->integer('quantity');  // Số lượng món ăn
-            $table->json('price');  // Giá món ăn hỗ trợ đa loại tiền tệ
-            $table->json('total');  // Tổng tiền cho món (số lượng * giá) hỗ trợ đa loại tiền tệ
+            $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
+            $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
+            $table->integer('quantity');
+            $table->json('price'); 
+            $table->json('total');
             $table->timestamps();
         });
     }

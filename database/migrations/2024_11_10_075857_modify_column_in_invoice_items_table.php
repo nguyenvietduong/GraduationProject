@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('invoice_items', function (Blueprint $table) {
             $table->integer('price')->default(0)->change();
             $table->integer('total')->default(0)->change();
+            $table->boolean('is_served')->default(false)->after('total');
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('invoice_items', function (Blueprint $table) {
             $table->json('price')->change();
             $table->json('total')->change();
+            $table->dropColumn('is_served');
         });
     }
 };
