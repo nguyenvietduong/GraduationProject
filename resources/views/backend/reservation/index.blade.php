@@ -22,6 +22,7 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
+            position: relative;
         }
 
         .menu-info:hover {
@@ -32,6 +33,40 @@
         .menu-info.selected {
             border-color: #007bff;
             background-color: #e0f7ff;
+        }
+
+        /* Giao diện Sold Out */
+        .menu-info.sold-out {
+            opacity: 0.6;
+            /* Làm mờ */
+            pointer-events: none;
+            /* Không thể click */
+            cursor: not-allowed;
+            /* Con trỏ cấm */
+            background-color: #f9f9f9;
+            /* Nền nhạt */
+        }
+
+        .menu-info.sold-out img {
+            filter: grayscale(100%);
+            /* Ảnh đen trắng */
+        }
+
+        .menu-info.sold-out::after {
+            content: "Sold Out";
+            /* Thêm chữ */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 0, 0, 0.9);
+            /* Nền mờ */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
 
         /* Lớp làm mờ */
@@ -66,7 +101,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Chọn Bàn</h1>
-                    <button type="button" class="btn-close btnCloseReservation" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btnCloseReservation" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
@@ -159,7 +195,7 @@
         </div>
     </div>
 
-<!--  -->
+    <!--  -->
     <div class="modal fade" id="pay" tabindex="-1" aria-labelledby="paylable" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
@@ -209,7 +245,8 @@
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
                                     <h5 style="display: none"><span class="total-amount">0</span></h5>
-                                    <h5 style="display: none" class="voucher-discount" id="voucher-discount" data-id-vouchar=""></h5>
+                                    <h5 style="display: none" class="voucher-discount" id="voucher-discount"
+                                        data-id-vouchar=""></h5>
                                     <h5>Tổng thanh toán : <span class="total-payment">0</span></h5>
                                     <hr>
                                     <label>Nhập mã giảm giá</label>
@@ -232,12 +269,14 @@
 
                                         </div>
                                     </div>
-                                    
-                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code" id="idDonhang" data-id="">
+
+                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code"
+                                        id="idDonhang" data-id="">
                                         QR Code
                                     </button>
 
-                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Trả tiền mặt</button>
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Trả tiền
+                                        mặt</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>

@@ -213,6 +213,8 @@
                 // return
                 $('#availableMenu').empty()
                 let data = response.menus
+                console.log(data);
+                // return
                 if (data && data.length > 0) {
                     PMD.renderListMenu(data)
                 } else {
@@ -270,13 +272,18 @@
             html += `
             <div class="tab-pane p-3 ${active}" id="${cate.slug}" role="tabpanel">
                 <div class="row">
-                ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu => `
-                    <div class="menu-info col-2 mb-4" data-menu-id="${menu.id}" data-menu-name="${menu.name}" data-menu-price="${menu.price}">
-                        <img class="my-2" src="/storage/${menu.image_url}" alt="" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
-                        <p>${menu.name}</p>
-                        <p>Giá: ${PMD.formatCurrency(menu.price)}đ</p>
+                ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu => 
+                    `
+                    <div class="menu-info col-2 mb-4 ${menu.status !== 'active' ? 'sold-out' : ''}" 
+                    data-menu-id="${menu.id}" 
+                    data-menu-name="${menu.name}" 
+                    data-menu-price="${menu.price}">
+                    <img class="my-2" src="/storage/${menu.image_url}" alt="" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                    <p>${menu.name}</p>
+                    <p>Giá: ${PMD.formatCurrency(menu.price)}đ</p>
                     </div>
-                `).join('') : '<p>Không có menu nào</p>'}
+                    `
+                ).join('') : '<p>Không có menu nào</p>'}
                 </div>
             </div>
         `
