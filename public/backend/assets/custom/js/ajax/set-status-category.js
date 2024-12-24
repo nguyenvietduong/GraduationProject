@@ -18,7 +18,12 @@ $(document).ready(function () {
             type: 'POST',
             data: data,
             success: function (response) {
-                executeExample('success');
+                if(response.status == false){
+                    executeExample('error', response.message);
+                }else{
+                    executeExample('success', response.message);
+                }
+                window.location.reload();
                 // Tùy chọn reload bảng để hiển thị trạng thái mới
             },
             error: function (xhr, status, error) {
