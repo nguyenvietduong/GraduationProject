@@ -25,54 +25,16 @@
             position: relative;
         }
 
-        .menu-info:hover {
+        /* .menu-info:hover {
             background-color: #f0f0f0;
             transform: scale(1.05);
-        }
+        } */
 
         .menu-info.selected {
             border-color: #007bff;
             background-color: #e0f7ff;
         }
 
-        /* Giao diện Sold Out */
-        .menu-info.sold-out {
-            opacity: 0.6;
-            /* Làm mờ */
-            pointer-events: none;
-            /* Không thể click */
-            cursor: not-allowed;
-            /* Con trỏ cấm */
-            background-color: #f9f9f9;
-            /* Nền nhạt */
-        }
-
-        .menu-info.sold-out img {
-            filter: grayscale(100%);
-            /* Ảnh đen trắng */
-        }
-
-        .menu-info.sold-out::after {
-            content: "Sold Out";
-            /* Thêm chữ */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 0, 0, 0.9);
-            /* Nền mờ */
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        /* Lớp làm mờ */
-        .modal-blur {
-            filter: blur(5px);
-        }
     </style>
     <div class="container-xxl">
         <div class="row">
@@ -160,7 +122,7 @@
                                                                 </div><!--end col-->
                                                             </div> <!--end row-->
                                                         </div><!--end card-header-->
-                                                        <div class="card-body pt-0">
+                                                        <div class="card-body pt-0 px-0">
                                                             <div class="row align-items-center">
                                                                 <div class="col">
                                                                     <h5 class="">Món đã chọn:</h5>
@@ -173,7 +135,8 @@
                                                                     <tr>
                                                                         <th>Tên món</th>
                                                                         <th class="text-center">Số lượng</th>
-                                                                        <th class="text-end">Thành tiền</th>
+                                                                        <th class="text-center">Thành tiền</th>
+                                                                        <th class="text-end">Trạng thái</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="array-menu"></tbody>

@@ -213,7 +213,6 @@
                 // return
                 $('#availableMenu').empty()
                 let data = response.menus
-                console.log(data);
                 // return
                 if (data && data.length > 0) {
                     PMD.renderListMenu(data)
@@ -272,8 +271,8 @@
             html += `
             <div class="tab-pane p-3 ${active}" id="${cate.slug}" role="tabpanel">
                 <div class="row">
-                ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu => 
-                    `
+                ${cate.menus && cate.menus.length > 0 ? cate.menus.map(menu =>
+                `
                     <div class="menu-info col-2 mb-4 ${menu.status !== 'active' ? 'sold-out' : ''}" 
                     data-menu-id="${menu.id}" 
                     data-menu-name="${menu.name}" 
@@ -283,7 +282,7 @@
                     <p>Giá: ${PMD.formatCurrency(menu.price)}đ</p>
                     </div>
                     `
-                ).join('') : '<p>Không có menu nào</p>'}
+            ).join('') : '<p>Không có menu nào</p>'}
                 </div>
             </div>
         `
@@ -369,23 +368,27 @@
                 })
 
                 selectedMenus.invoice_item.forEach(item => {
-                    $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
+                    $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected cursor-not-allowed-menu')
                 })
 
 
                 $('#availableMenu').off('click').on('click', '.menu-info', function () {
-                    $(this).toggleClass('selected')
-                    const menuId = $(this).data('menu-id')
-                    const menuPrice = $(this).data('menu-price')
-                    const menuName = $(this).data('menu-name')
+                    if (!$(this).hasClass('cursor-not-allowed-menu')) {
+                        $(this).toggleClass('selected')
+                        const menuId = $(this).data('menu-id')
+                        const menuPrice = $(this).data('menu-price')
+                        const menuName = $(this).data('menu-name')
 
-                    if ($(this).hasClass('selected')) {
-                        selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
-                    } else {
-                        selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
+                        if ($(this).hasClass('selected')) {
+                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice, is_served: 0 }) // Initialize quantity to 1
+                        } else {
+                            selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
+                        }
+                        console.log(selectedMenus);
+                        PMD.renderSelectedMenus(selectedMenus)
+                        $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     }
-                    PMD.renderSelectedMenus(selectedMenus)
-                    $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
+
                 })
                 await PMD.searchMenuItem(selectedMenus)
                 PMD.quantityInput(selectedMenus)
@@ -434,7 +437,7 @@
                     const menuName = $(this).data('menu-name')
 
                     if ($(this).hasClass('selected')) {
-                        selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice }) // Initialize quantity to 1
+                        selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice, served: 0 }) // Initialize quantity to 1
                     } else {
                         selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                     }
@@ -495,6 +498,19 @@
     //End Render Button Amount
 
 
+    PMD.checkBoxServed = (arrayItem) => {
+        console.log(12313);
+        $('.served-checkbox').each(function () {
+            if ($(this).is(':checked')) {
+                let servedMenuId = $(this).data('served-id')
+                const existingMenu = arrayItem.invoice_item.find(menu => menu.id === servedMenuId);
+                existingMenu.is_served = 1;
+            }
+            return arrayItem
+        });
+    }
+
+
 
     //Button Add Invoice
     PMD.checkButtonAddInvoice = (item, guest, invoice = false) => {
@@ -503,9 +519,16 @@
                 alert('Vui lòng chọn bàn!!');
             } else {
                 if (invoice == true) {
+                    $('.served-checkbox').each(function () {
+                        if ($(this).is(':checked')) {
+                            let servedMenuId = $(this).data('served-id')
+                            const existingMenu = item.invoice_item.find(menu => menu.id === servedMenuId);
+                            existingMenu.is_served = 1;
+                        }
+                    })
                     PMD.updateInvoiceDataDetail(item)
-
                 } else {
+                    // console.log(item);
                     PMD.createInvoiceDataDetail(item, guest)
                 }
 
@@ -647,13 +670,14 @@
         if (selectedMenus.invoice_item.length === 0) {
             PMD.checkRenderButtonAmount(false)
             conditionTemp = 1
-            $('#array-menu').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
+            $('#array-menu').append('<tr><td colspan="4" class="text-center">No items selected</td></tr>')
         } else {
             PMD.checkRenderButtonAmount()
             conditionTemp = 2
+            let html = ''
             await selectedMenus.invoice_item.forEach(menu => {
                 let total = PMD.formatCurrency(menu.total)
-                $('#array-menu').append(`
+                html += `
                     <tr>
                         <td>${menu.name}</td>
                         <td class="text-center">
@@ -664,9 +688,20 @@
                             </div>
                         </td>
                         <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
+                `
+                if (menu.is_served == 0) {
+                    html += `
+                    <td class="text-center"><input class="served-checkbox" data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
                     </tr>
-                `)
+                    `
+                } else {
+                    html += `
+                    <td class="text-center"><input class="served-checkbox" checked disabled data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
+                    </tr>
+                    `
+                }
             })
+            $('#array-menu').append(html)
             PMD.totalAmount(selectedMenus)
         }
     }
