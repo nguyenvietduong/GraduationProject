@@ -270,9 +270,7 @@
         </div>
     </div>
 
-    <div class="cursor-not-allowed-menu" title="Đã lên món không thể hủy">
-        Nội dung
-    </div>    
+    <div class="cursor-not-allowed-menu" title="Đã lên món không thể hủy"></div>    
 
     @push('script')
         <script src="{{ asset('backend/custom/customQrCode.js') }}"></script>
