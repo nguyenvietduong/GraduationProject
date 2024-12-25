@@ -268,6 +268,7 @@
         html += '<div class="tab-content">'
         data.forEach(function (cate) {
             cate.slug == 'bua-sang' ? active = 'active show' : active = ''
+            console.log(cate.menus);
             html += `
             <div class="tab-pane p-3 ${active}" id="${cate.slug}" role="tabpanel">
                 <div class="row">
@@ -346,8 +347,9 @@
                 PMD.renderNotiTable(guestsReservation)
             }
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
+            let dataItem = await PMD.getInvoiceDataDetail(reservationId);
             if (invoiceData.length != []) {
-                const dataInvoiceItem = invoiceData.invoice_item
+                const dataInvoiceItem = dataItem.invoice_item
                 console.log(dataInvoiceItem);
                 let selectedMenus = {
                     invoice_id: invoiceData.invoice_id,
@@ -370,7 +372,11 @@
                 })
 
                 selectedMenus.invoice_item.forEach(item => {
-                    $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected cursor-not-allowed-menu')
+                    if (item.is_served == 0) {
+                        $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
+                    } else {
+                        $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected cursor-not-allowed-menu');
+                    }
                 })
 
 
@@ -394,6 +400,7 @@
                 })
                 await PMD.searchMenuItem(selectedMenus)
                 PMD.quantityInput(selectedMenus, dataInvoiceItem)
+
                 PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
                 return
             } else {
@@ -610,6 +617,7 @@
     //Quantity Input
     PMD.quantityInput = (selectedMenus, dataInvoice) => {
         console.log(dataInvoice);
+
         // Xử lý khi thay đổi số lượng qua input
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id');
@@ -635,7 +643,7 @@
             console.log("Menu quan: " + dataInvoiceItem.quantity);
             console.log("Current quan: " + currentValue);
 
-            if (menu && currentValue > 1 && dataInvoiceItem.quantity <= currentValue) {
+            if (menu && currentValue > 1 && dataInvoiceItem.quantity < currentValue) {
                 const newQuantity = currentValue - 1;
                 menu.quantity = newQuantity;
                 menu.total = newQuantity * menu.price;
@@ -700,14 +708,14 @@
                         </td>
                         <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
                 `
-                if (menu.is_served == 0) {
+                if (menu.is_served == 1) {
                     html += `
-                    <td class="text-center"><input class="served-checkbox" data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
+                    <td class="text-center"><input class="served-checkbox" checked disabled data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
                     </tr>
                     `
                 } else {
                     html += `
-                    <td class="text-center"><input class="served-checkbox" checked disabled data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
+                    <td class="text-center"><input class="served-checkbox" data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
                     </tr>
                     `
                 }
