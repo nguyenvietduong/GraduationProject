@@ -347,6 +347,8 @@
             }
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
             if (invoiceData.length != []) {
+                const dataInvoiceItem = invoiceData.invoice_item
+                console.log(dataInvoiceItem);
                 let selectedMenus = {
                     invoice_id: invoiceData.invoice_id,
                     reservation_id: invoiceData.reservation_id,
@@ -391,7 +393,7 @@
 
                 })
                 await PMD.searchMenuItem(selectedMenus)
-                PMD.quantityInput(selectedMenus)
+                PMD.quantityInput(selectedMenus, dataInvoiceItem)
                 PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
                 return
             } else {
@@ -606,7 +608,8 @@
 
 
     //Quantity Input
-    PMD.quantityInput = (selectedMenus) => {
+    PMD.quantityInput = (selectedMenus, dataInvoice) => {
+        console.log(dataInvoice);
         // Xử lý khi thay đổi số lượng qua input
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id');
@@ -621,12 +624,18 @@
 
         // Xử lý khi nhấn nút giảm số lượng
         $('#array-menu').on('click', '.decrease-btn', function () {
+            console.log(dataInvoice);
+
             const menuId = $(this).data('menu-id');
             const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
-            const currentValue = parseInt(input.val(), 10);
+            // const currentValue = parseInt(input.val(), 10);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
+            const currentValue = menu.quantity
+            const dataInvoiceItem = dataInvoice.find(item => item.id === menuId)
+            console.log("Menu quan: " + dataInvoiceItem.quantity);
+            console.log("Current quan: " + currentValue);
 
-            if (menu && currentValue > 1) {
+            if (menu && currentValue > 1 && dataInvoiceItem.quantity <= currentValue) {
                 const newQuantity = currentValue - 1;
                 menu.quantity = newQuantity;
                 menu.total = newQuantity * menu.price;
@@ -641,8 +650,10 @@
         $('#array-menu').on('click', '.increase-btn', function () {
             const menuId = $(this).data('menu-id');
             const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
-            const currentValue = parseInt(input.val(), 10);
+            // const currentValue = parseInt(input.val(), 10);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
+            const currentValue = menu.quantity
+            // const currentValue = parseInt(input.val(), 10);
             const newQuantity = currentValue + 1;
             menu.quantity = newQuantity;
             menu.total = newQuantity * menu.price;

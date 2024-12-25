@@ -26,15 +26,14 @@
         }
 
         /* .menu-info:hover {
-            background-color: #f0f0f0;
-            transform: scale(1.05);
-        } */
+                background-color: #f0f0f0;
+                transform: scale(1.05);
+            } */
 
         .menu-info.selected {
             border-color: #007bff;
             background-color: #e0f7ff;
         }
-
     </style>
     <div class="container-xxl">
         <div class="row">
