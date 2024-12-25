@@ -102,7 +102,7 @@ class UpdateStatusReservation extends Controller
                 if ($search) {
                     $query->where('name', 'LIKE', "%{$search}%");
                 }
-                $query->where('status', '=', 'active');
+                // $query->where('status', '=', 'active');
             }
         ])->get();
         // dd($categories);
@@ -141,10 +141,11 @@ class UpdateStatusReservation extends Controller
                 foreach ($invoice->invoiceItems as $item) {
                     $data['invoice_item'][] = [
                         'id' => $item->menu_id,
-                        'name' => $item->menu->name,
+                        'name' => $item->menu_name,
                         'quantity' => $item->quantity,
                         'price' => $item->price,
                         'total' => $item->quantity * $item->price,
+                        'is_served' => $item->is_served
                     ];
                 }
             }
@@ -205,7 +206,6 @@ class UpdateStatusReservation extends Controller
     public function updateInvoiceDataDetail(Request $request)
     {
         $data = $request->all();
-        // dd($data);
 
         $invoiceItems = $request->input('invoice_item', []);
 
@@ -222,7 +222,8 @@ class UpdateStatusReservation extends Controller
                 'menu_name' => $item['name'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
-                'total' => $item['total']
+                'total' => $item['total'],
+                'is_served' => $item['is_served']
             ]);
         }
 

@@ -10,7 +10,7 @@
             <th class="ps-0">{{ __('messages.'. $object .'.fields.accountsCount') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th>{{ __('messages.system.table.fields.updated_at') }}</th>
-            <th>{{ __('messages.system.table.fields.action') }}</th>
+            {{-- <th>{{ __('messages.system.table.fields.action') }}</th> --}}
         </tr>
     </thead>
     <tbody>
@@ -40,7 +40,7 @@
                 <span>{{ date('d/m/Y H:i:s', strtotime($item->updated_at)) ?? __('messages.system.no_data_available')
                     }}</span>
             </td>
-            <td>
+            {{-- <td>
                 <div class="d-flex align-items-center">
                     <a href="{{ route(__('messages.' . $object . '.edit.route'), $item->id) }}" class="me-2">
                         <i class="fas fa-edit btn btn-primary btn-sm"></i>
@@ -55,7 +55,7 @@
                         </button>
                     </form>
                 </div>
-            </td>
+            </td> --}}
         </tr>
         @endforeach
         @else

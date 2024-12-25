@@ -22,7 +22,7 @@
                         </div>
                     </td>
                     <td>{{ $key + 1 ?? __('messages.system.no_data_available') }}</td>
-                    <td>{{ $data->menu->name ?? __('messages.system.no_data_available') }}</td>
+                    <td>{{ $data->menu_name ?? __('messages.system.no_data_available') }}</td>
                     <td>{{ $data->quantity ?? __('messages.system.no_data_available') }}</td>
                     <td>{{ $data->price ?? __('messages.system.no_data_available') }}</td>
                     <td>{{ $data->total ?? __('messages.system.no_data_available') }}</td>
@@ -57,7 +57,7 @@
                         </div>
                     </td>
                     <td>{{ $key + 1 ?? __('messages.system.no_data_available') }}</td>
-                    <td>{{ $data->table->name ?? __('messages.system.no_data_available') }}</td>
+                    <td>{{ $data->table_name ?? __('messages.system.no_data_available') }}</td>
                     <td>{{ $data->guests_detail ?? __('messages.system.no_data_available') }}</td>
                 </tr>
             @endforeach

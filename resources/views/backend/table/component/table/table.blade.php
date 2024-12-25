@@ -52,10 +52,10 @@
             </td>
             <td style="display: {{ checkBladeAdmin() }}">
                 <div class="d-flex align-items-center">
-                    <a href="{{ route(__('messages.' . $object . '.edit.route'), $item->id) }}" class="me-2">
-                        <i class="fas fa-edit btn btn-primary btn-sm"></i>
+                    <a href="{{ route(__('messages.' . $object . '.edit.route'), $item->id) }}" class="me-2 btn btn-primary btn-sm">
+                        <i class="fas fa-edit"></i>
                     </a>
-                    <form action="{{ route(__('messages.' . $object . '.destroy.route'), $item->id) }}"
+                    {{-- <form action="{{ route(__('messages.' . $object . '.destroy.route'), $item->id) }}"
                         method="post" class="d-inline-block" id="myForm_{{ $item->id }}">
                         @csrf
                         @method('DELETE')
@@ -63,7 +63,7 @@
                             type="button" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i>
                         </button>
-                    </form>
+                    </form> --}}
                 </div>
             </td>
         </tr>

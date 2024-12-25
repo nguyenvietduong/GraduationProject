@@ -15,8 +15,8 @@
             <th>{{ __('messages.account.fields.address') }}</th>
             <th>{{ __('messages.system.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
-            @if (Auth::check() && $segment != 'admin')
-                <th class="text-center">{{ __('messages.system.table.fields.action') }}</th>
+            @if (Auth::check() && $segment != 'user')
+                <th class="">Sửa</th>
             @endif
         </tr>
     </thead>
@@ -55,13 +55,13 @@
                     <td>
                         <span>{{ date('d/m/Y H:i:s', strtotime($data->created_at)) }}</span>
                     </td>
-                    @if (Auth::check() && $segment != 'admin')
+                    @if (Auth::check() && $segment != 'user')
                         <td class="text-end">
                             <div class="d-flex align-items-center">
-                                <a href="{{ route(__('messages.account.' . $object . '.edit.route'), $data->id) }}" class="me-2">
-                                    <i class="fas fa-edit btn btn-primary btn-sm"></i>
+                                <a href="{{ route(__('messages.account.' . $object . '.edit.route'), $data->id) }}" class="me-2 btn btn-primary btn-sm">
+                                    <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route(__('messages.account.' . $object . '.destroy.route'), $data->id) }}"
+                                {{-- <form action="{{ route(__('messages.account.' . $object . '.destroy.route'), $data->id) }}"
                                     method="post" class="d-inline-block" id="myForm_{{ $data->id }}">
                                     @csrf
                                     @method('DELETE')
@@ -69,7 +69,7 @@
                                         class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                </form>
+                                </form> --}}
                             </div>
                         </td>
                     @endif

@@ -132,7 +132,7 @@ class StaffController extends Controller
             return view(self::PATH_VIEW . __FUNCTION__, [
                 'data' => $data,
                 'object' => self::OBJECT,
-                'dataRole' => $this->roleRepository->pluck('name', 'id'),
+                'dataRole' => $this->roleRepository->where('name', '!=', 'Admin')->pluck('name', 'id'),
             ]);
         }
 

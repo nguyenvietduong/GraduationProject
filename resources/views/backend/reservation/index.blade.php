@@ -22,21 +22,17 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
+            position: relative;
         }
 
-        .menu-info:hover {
-            background-color: #f0f0f0;
-            transform: scale(1.05);
-        }
+        /* .menu-info:hover {
+                background-color: #f0f0f0;
+                transform: scale(1.05);
+            } */
 
         .menu-info.selected {
             border-color: #007bff;
             background-color: #e0f7ff;
-        }
-
-        /* Lớp làm mờ */
-        .modal-blur {
-            filter: blur(5px);
         }
     </style>
     <div class="container-xxl">
@@ -66,7 +62,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Chọn Bàn</h1>
-                    <button type="button" class="btn-close btnCloseReservation" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btnCloseReservation" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
@@ -124,7 +121,7 @@
                                                                 </div><!--end col-->
                                                             </div> <!--end row-->
                                                         </div><!--end card-header-->
-                                                        <div class="card-body pt-0">
+                                                        <div class="card-body pt-0 px-0">
                                                             <div class="row align-items-center">
                                                                 <div class="col">
                                                                     <h5 class="">Món đã chọn:</h5>
@@ -137,7 +134,8 @@
                                                                     <tr>
                                                                         <th>Tên món</th>
                                                                         <th class="text-center">Số lượng</th>
-                                                                        <th class="text-end">Thành tiền</th>
+                                                                        <th class="text-center">Thành tiền</th>
+                                                                        <th class="text-end">Trạng thái</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="array-menu"></tbody>
@@ -159,7 +157,7 @@
         </div>
     </div>
 
-<!--  -->
+    <!--  -->
     <div class="modal fade" id="pay" tabindex="-1" aria-labelledby="paylable" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
@@ -209,7 +207,8 @@
                                 </div><!--end card-header-->
                                 <div class="card-body pt-0">
                                     <h5 style="display: none"><span class="total-amount">0</span></h5>
-                                    <h5 style="display: none" class="voucher-discount" id="voucher-discount" data-id-vouchar=""></h5>
+                                    <h5 style="display: none" class="voucher-discount" id="voucher-discount"
+                                        data-id-vouchar=""></h5>
                                     <h5>Tổng thanh toán : <span class="total-payment">0</span></h5>
                                     <hr>
                                     <label>Nhập mã giảm giá</label>
@@ -232,12 +231,14 @@
 
                                         </div>
                                     </div>
-                                    
-                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code" id="idDonhang" data-id="">
+
+                                    <button type="button" class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_qr_code"
+                                        id="idDonhang" data-id="">
                                         QR Code
                                     </button>
 
-                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Trả tiền mặt</button>
+                                    <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Trả tiền
+                                        mặt</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>
