@@ -268,7 +268,6 @@
         html += '<div class="tab-content">'
         data.forEach(function (cate) {
             cate.slug == 'bua-sang' ? active = 'active show' : active = ''
-            console.log(cate.menus);
             html += `
             <div class="tab-pane p-3 ${active}" id="${cate.slug}" role="tabpanel">
                 <div class="row">
@@ -392,7 +391,6 @@
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                         }
-                        console.log(selectedMenus);
                         PMD.renderSelectedMenus(selectedMenus)
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     }
@@ -702,7 +700,7 @@
                         <td class="text-center">
                             <div class="d-flex align-items-center justify-content-center">
                                 <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
-                                <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
+                                <input type="text" class="quantity-input form-control text-center px-3" style="width: 80px;" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
                                 <button class="btn btn-success btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
                             </div>
                         </td>

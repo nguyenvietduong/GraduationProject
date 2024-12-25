@@ -11,8 +11,8 @@
         }
 
         .table-info.selected {
-            border-color: #007bff;
-            background-color: #e0f7ff;
+            border-color: #00ff40;
+            background-color: #d1ffe4;
         }
 
         .menu-info {
@@ -31,8 +31,8 @@
             } */
 
         .menu-info.selected {
-            border-color: #007bff;
-            background-color: #e0f7ff;
+            border-color: #00ff40;
+            background-color: #d1ffe4;
         }
     </style>
     <div class="container-xxl">
@@ -104,14 +104,14 @@
                                                     </div><!--end col-->
 
                                                 </div> <!--end row-->
-                                                <div class="col-md-8 col-lg-8">
+                                                <div class="col-md-7 col-lg-7">
                                                     <div class="card-header px-0">
 
                                                     </div><!--end card-header-->
                                                     <div id="availableMenu" class="row">
                                                     </div>
                                                 </div> <!--end col-->
-                                                <div class="col-md-4 col-lg-4">
+                                                <div class="col-md-5 col-lg-5">
                                                     <div class="card">
                                                         <div class="card-header px-0">
                                                             <div class="row align-items-center">
@@ -135,7 +135,7 @@
                                                                         <th>Tên món</th>
                                                                         <th class="text-center">Số lượng</th>
                                                                         <th class="text-center">Thành tiền</th>
-                                                                        <th class="text-end">Trạng thái</th>
+                                                                        <th class="text-end">Lên món</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="array-menu"></tbody>
@@ -269,6 +269,10 @@
             </div>
         </div>
     </div>
+
+    <div class="cursor-not-allowed-menu" title="Đã lên món không thể hủy">
+        Nội dung
+    </div>    
 
     @push('script')
         <script src="{{ asset('backend/custom/customQrCode.js') }}"></script>

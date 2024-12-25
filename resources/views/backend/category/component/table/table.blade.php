@@ -7,6 +7,7 @@
             </th>
             <th class="ps-0">#</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.name') }}</th>
+            <th class="ps-0">Số lượng món</th>
             <th>{{ __('messages.'. $object .'.fields.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
             <th>{{ __('messages.system.table.fields.updated_at') }}</th>
@@ -28,6 +29,9 @@
                 <p class="d-inline-block align-middle mb-0">
                     {{ $item->name ?? __('messages.system.no_data_available') }}
                 </p>
+            </td>
+            <td class="ps-0">
+                {{ $item->menus->count() ?? __('messages.system.no_data_available') }}
             </td>
             <td>
                 @php

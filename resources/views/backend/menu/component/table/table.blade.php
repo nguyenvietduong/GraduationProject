@@ -10,8 +10,9 @@
             <th class="ps-0">{{ __('messages.'. $object .'.fields.price') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.category_id') }}</th>
             <th class="ps-0">{{ __('messages.'. $object .'.fields.image_url') }}</th>
-            <th class="ps-0">{{ __('messages.'. $object .'.fields.status') }}</th>
             <th>{{ __('messages.system.table.fields.created_at') }}</th>
+            <th>Ngày chỉnh sửa</th>
+            <th class="ps-0">{{ __('messages.'. $object .'.fields.status') }}</th>
             <th class="ps-0">{{ __('messages.system.table.fields.action') }}</th>
         </tr>
     </thead>
@@ -45,6 +46,14 @@
 
             </td>
             <td>
+                <span>{{ date('d/m/Y', strtotime($item->created_at)) ?? __('messages.system.no_data_available')
+                    }}</span>
+            </td>
+            <td>
+                <span>{{ date('d/m/Y', strtotime($item->updated_at)) ?? __('messages.system.no_data_available')
+                    }}</span>
+            </td>
+            <td>
                 @php
                     $status = request('status') ?: old('status');
                     $statuses = __('messages.menu.status');
@@ -57,10 +66,6 @@
                         </option>
                     @endforeach
                 </select>
-            </td>
-            <td>
-                <span>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) ?? __('messages.system.no_data_available')
-                    }}</span>
             </td>
             <td>
                 <div class="d-flex align-items-center">

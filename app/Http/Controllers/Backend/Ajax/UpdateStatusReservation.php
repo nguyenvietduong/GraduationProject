@@ -178,9 +178,11 @@ class UpdateStatusReservation extends Controller
 
             if (!$existingReservationDetail) {
                 // Nếu chưa có, thêm bàn vào chi tiết đặt bàn
+                $tableName = Table::where('id', $table['id'])->get();
                 ReservationDetail::create([
                     'reservation_id' => $data['reservation_id'],
                     'table_id' => $table['id'],
+                    'table_name' => $tableName
                 ]);
 
                 // Cập nhật trạng thái bàn thành "đã có người ngồi"
