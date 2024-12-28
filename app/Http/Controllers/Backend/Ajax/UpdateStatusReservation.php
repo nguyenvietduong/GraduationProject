@@ -237,6 +237,11 @@ class UpdateStatusReservation extends Controller
         return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
     }
 
+
+    public function updateStatusMenuInvoiceDetail(Request $request){
+
+    }
+
     public function createNewReservation(Request $request)
     {
         $data = $request->all();

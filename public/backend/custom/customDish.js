@@ -49,21 +49,15 @@
     }
 
 
-    PMD.updateInvoiceDataDetail = (item) => {
-        if (item.list_table == null) {
-            alert('Vui lòng chọn bàn!');
-        } else {
+    PMD.updateInvoiceDataDetail = (objMenus) => {
+
             let data = {
                 _token: _token,
-                invoice_id: item.invoice_id,
-                reservation_id: item.reservation_id,
-                total_amount: item.totalAmount,
-                list_table: item.list_table,
-                invoice_item: item.invoice_item,
+                objMenus: objMenus
             }
 
             $.ajax({
-                url: '/update-invoice-detail',
+                url: '/update-status-menu-invoice-detail',
                 type: 'POST',
                 data: data,
                 success: async function (response) {
@@ -73,12 +67,31 @@
                     executeExample('error')
                 }
             })
-        }
     }
 
 PMD.saveDish = () => {
     $(document).on('click', '.btnSaveDish', function(){
-        
+        let objMenus = {};
+
+    // Duyệt qua tất cả các menu_id
+    $('tr[data-menu-id]').each(function() {
+        let menuId = $(this).data('menu-id')
+
+        // Nếu menuId chưa có trong objMenus, khởi tạo đối tượng statusCount
+        if (!objMenus[menuId]) {
+            objMenus[menuId] = { 1: 0, 2: 0, 3: 0 };
+        }
+
+        // Duyệt qua tất cả các select trong dòng hiện tại có cùng menu_id
+        $(this).find('select').each(function() {
+            let selectedValue = $(this).val()
+            objMenus[menuId][selectedValue] += 1; // Tăng số lượng món cho trạng thái đã chọn
+        });
+    });
+
+    console.log(objMenus);
+
+    PMD.updateInvoiceDataDetail(objMenus)
     })
 }
 
@@ -101,6 +114,8 @@ PMD.saveDish = () => {
         let html = ''
             await invoiceItem.invoice_item.forEach(menu => {
                 let total = PMD.formatCurrency(menu.total)
+                console.log(menu);
+                
                 
                 Object.entries(menu.status_menu).forEach(([key, value]) => {
                     if(value != 0){
@@ -108,7 +123,7 @@ PMD.saveDish = () => {
 
                         if (key == 1) {
                             optionsHtml = `
-                                <select name="" class="form-select" id="">
+                                <select class="form-select" data-select-key="${key}">
                                     <option value="1" selected>Xác nhận</option>
                                     <option value="2">Đang nấu</option>
                                     <option value="3">Hoàn thành</option>
@@ -116,19 +131,21 @@ PMD.saveDish = () => {
                             `;
                         } else if (key == 2) {
                             optionsHtml = `
-                                <select name="" class="form-select" id="">
+                                <select class="form-select" data-select-key="${key}">
                                     <option value="2" selected>Đang nấu</option>
                                     <option value="3">Hoàn thành</option>
                                 </select>
                             `;
                         } else if (key == 3) {
                             optionsHtml = `
-                                <input type="text" readonly name="" class="form-control" value="Hoàn thành" id="">
+                                <select class="form-select" data-select-key="${key}">
+                                    <option value="3" selected>Hoàn thành</option>
+                                </select>
                             `;
                         }
                     
                         html += `
-                        <tr>
+                        <tr data-menu-id="${menu.id}">
                             <td>${menu.name}</td>
                             <td class="text-center">${value}</td>
                             <td class="text-center">${total}đ</td>
@@ -181,5 +198,6 @@ PMD.saveDish = () => {
         PMD.checkInvoiceDetail()
         PMD.showBsModal()
         PMD.closeBSModal()
+        PMD.saveDish()
     })
 })(jQuery)
