@@ -93,31 +93,30 @@
                                         <div class="tab-pane p-3" id="menu" role="tabpanel">
                                             <div class="row justify-content-center">
                                                 <div class="row align-items-center">
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-7">
                                                         <div class="input-group">
                                                             <input type="" class="form-control searchMenu"
                                                                 placeholder="Tìm kiếm món ăn"
                                                                 aria-describedby="button-addon3">
                                                         </div>
                                                     </div><!--end col-->
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-5">
                                                     </div><!--end col-->
 
                                                 </div> <!--end row-->
-                                                <div class="col-md-8 col-lg-8">
+                                                <div class="col-md-7 col-lg-7">
                                                     <div class="card-header px-0">
 
                                                     </div><!--end card-header-->
                                                     <div id="availableMenu" class="row">
                                                     </div>
                                                 </div> <!--end col-->
-                                                <div class="col-md-4 col-lg-4">
+                                                <div class="col-md-5 col-lg-5">
                                                     <div class="card">
                                                         <div class="card-header px-0">
                                                             <div class="row align-items-center">
                                                                 <div class="col">
-                                                                    {{-- <p>Món đã chọn:</p> --}}
-                                                                    {{-- <input type="hidden" name="" id="idTable_"> --}}
+                                                    
                                                                 </div><!--end col-->
                                                             </div> <!--end row-->
                                                         </div><!--end card-header-->

@@ -197,7 +197,7 @@ class UpdateStatusReservation extends Controller
                 '2' => 0,
                 '3' => 0
             ];
-            
+
             Invoice_item::create([
                 'invoice_id' => $invoice->id,
                 'menu_id' => $item['id'],
@@ -218,6 +218,7 @@ class UpdateStatusReservation extends Controller
 
         $invoiceItems = $request->input('invoice_item', []);
 
+
         $invoice = Invoice::findOrFail($data['invoice_id']);
 
         $invoice->update(['total_amount' => $data['total_amount']]);
@@ -232,7 +233,8 @@ class UpdateStatusReservation extends Controller
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
                 'total' => $item['total'],
-                'is_served' => $item['is_served']
+                'is_served' => $item['is_served'],
+                'status_menu' => json_encode($item['status_menu'])
             ]);
         }
 
