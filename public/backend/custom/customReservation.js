@@ -58,6 +58,7 @@
         if (item.list_table == null) {
             alert('Vui lòng chọn bàn!');
         } else {
+            
             let data = {
                 _token: _token,
                 invoice_id: item.invoice_id,
@@ -371,11 +372,13 @@
                 })
 
                 selectedMenus.invoice_item.forEach(item => {
-                    if (item.is_served == 0) {
-                        $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
-                    } else {
+                    Object.entries(item.status_menu).forEach(([key, value]) => {
+                        if(key == 1 && value == 0){
                         $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected cursor-not-allowed-menu');
-                    }
+                        }else{
+                            $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
+                        }
+                    })
                 })
 
 
@@ -526,14 +529,7 @@
                 alert('Vui lòng chọn bàn!!');
             } else {
                 if (invoice == true) {
-                    $('.served-checkbox').each(function () {
-                        if ($(this).is(':checked')) {
-                            let servedMenuId = $(this).data('served-id')
-                            const existingMenu = item.invoice_item.find(menu => menu.id === servedMenuId);
-                            existingMenu.is_served = 1;
-                        }
-                    })
-                    PMD.updateInvoiceDataDetail(item)
+                    PMD.getStatusDish(item)
                 } else {
                     // console.log(item);
                     PMD.createInvoiceDataDetail(item, guest)
@@ -543,9 +539,7 @@
 
                 localStorage.setItem('showSuccessMessage', 'true')
 
-                // $('#exampleModal').on('hidden.bs.modal', function () {
                 window.location.reload()
-                // })
             }
         })
     }
@@ -613,57 +607,99 @@
 
 
     //Quantity Input
-    PMD.quantityInput = (selectedMenus, dataInvoice) => {
+    PMD.quantityInput = (selectedMenus, dataInvoice = null) => {
         console.log(dataInvoice);
 
         // Xử lý khi thay đổi số lượng qua input
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id');
-            const newQuantity = parseInt($(this).val(), 10) || 1; // Nếu không có giá trị, mặc định là 1
+            const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
+            const currentValue = menu.quantity
+            const inputQuantityPrimary = $('.quantityPrimary-'+menuId)
+            const quantityPrimary = inputQuantityPrimary.text()
+            const newQuantity = parseInt($(this).val(), 10) || 1; // Nếu không có giá trị, mặc định là 1
+            const newQuantityPrimary = $(this).val() - parseInt(quantityPrimary)
+
             menu.quantity = newQuantity;
             menu.total = menu.quantity * menu.price;
             let totalFormat = PMD.formatCurrency(menu.total);
             $('.price-invoice-item-' + menu.id).html(totalFormat);
+            inputQuantityPrimary.html(newQuantityPrimary)
             PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
         });
 
         // Xử lý khi nhấn nút giảm số lượng
         $('#array-menu').on('click', '.decrease-btn', function () {
-            console.log(dataInvoice);
-
             const menuId = $(this).data('menu-id');
             const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
+            const inputQuantityPrimary = $('.quantityPrimary-'+menuId)
+            const quantityPrimary = inputQuantityPrimary.text()
             // const currentValue = parseInt(input.val(), 10);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
             const currentValue = menu.quantity
-            const dataInvoiceItem = dataInvoice.find(item => item.id === menuId)
-            console.log("Menu quan: " + dataInvoiceItem.quantity);
-            console.log("Current quan: " + currentValue);
+            if(dataInvoice != null){
+                const dataInvoiceItem = dataInvoice.find(item => item.id === menuId)
 
-            if (menu && currentValue > 1 && dataInvoiceItem.quantity < currentValue) {
-                const newQuantity = currentValue - 1;
-                menu.quantity = newQuantity;
-                menu.total = newQuantity * menu.price;
-                input.val(newQuantity); // Cập nhật lại số lượng trong ô input
-                let totalFormat = PMD.formatCurrency(menu.total);
-                $('.price-invoice-item-' + menu.id).html(totalFormat);
-                PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
+                if (parseInt(quantityPrimary) != 0) {
+                    if(menu && currentValue > 1){
+                        const newQuantity = currentValue - 1;
+                        const newQuantityPrimary = parseInt(quantityPrimary) - 1
+                        menu.quantity = newQuantity;
+                        menu.total = newQuantity * menu.price;
+                        input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+                        inputQuantityPrimary.html(newQuantityPrimary)
+                        let totalFormat = PMD.formatCurrency(menu.total);
+                        $('.price-invoice-item-' + menu.id).html(totalFormat);
+                        PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
+                    }
+                }else{
+                    if(menu && currentValue > 1 && dataInvoiceItem.quantity < currentValue){
+                        const newQuantity = currentValue - 1;
+                        const newQuantityPrimary = parseInt(quantityPrimary) - 1
+                        menu.quantity = newQuantity;
+                        menu.total = newQuantity * menu.price;
+                        input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+                        inputQuantityPrimary.html(newQuantityPrimary)
+                        let totalFormat = PMD.formatCurrency(menu.total);
+                        $('.price-invoice-item-' + menu.id).html(totalFormat);
+                        PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
+                    }
+                }
+            }else{
+                if (menu && currentValue > 1) {
+                    const newQuantity = currentValue - 1;
+                    const newQuantityPrimary = parseInt(quantityPrimary) - 1
+                    menu.quantity = newQuantity;
+                    menu.total = newQuantity * menu.price;
+                    input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+                    inputQuantityPrimary.html(newQuantityPrimary)
+                    let totalFormat = PMD.formatCurrency(menu.total);
+                    $('.price-invoice-item-' + menu.id).html(totalFormat);
+                    PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
+                }
             }
+
+            
         });
 
         // Xử lý khi nhấn nút tăng số lượng
         $('#array-menu').on('click', '.increase-btn', function () {
             const menuId = $(this).data('menu-id');
             const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
+            const inputQuantityPrimary = $('.quantityPrimary-'+menuId)
+            const quantityPrimary = inputQuantityPrimary.text()
+            
             // const currentValue = parseInt(input.val(), 10);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
             const currentValue = menu.quantity
             // const currentValue = parseInt(input.val(), 10);
             const newQuantity = currentValue + 1;
+            const newQuantityPrimary = parseInt(quantityPrimary) + 1
             menu.quantity = newQuantity;
             menu.total = newQuantity * menu.price;
             input.val(newQuantity); // Cập nhật lại số lượng trong ô input
+            inputQuantityPrimary.html(newQuantityPrimary)
             let totalFormat = PMD.formatCurrency(menu.total);
             $('.price-invoice-item-' + menu.id).html(totalFormat);
             PMD.totalAmount(selectedMenus); // Tính lại tổng số tiền
@@ -678,6 +714,48 @@
 
     //End Quantity Input
 
+    PMD.getStatusDish = (selectedMenus) =>{
+        $('tr[data-status-menu-id]').each(function() {
+            let menuId = $(this).data('status-menu-id')
+
+            let invoiceItem = selectedMenus.invoice_item.find(item => item.id === menuId);
+    
+            if (invoiceItem) {
+                // Khởi tạo lại status_menu với giá trị mặc định
+                let statusCount = { 1: 0, 2: 0, 3: 0 };
+    
+                // Duyệt qua tất cả các button có số lượng món trong dòng này
+                $(this).find('.btn').each(function() {
+                    // Lấy số lượng món từ text của button
+                    let quantity = parseInt($(this).text());
+    
+                    // Lấy class của button để xác định trạng thái
+                    let buttonClass = $(this).attr('class');
+                    let selectedValue = null;
+    
+                    // Kiểm tra class để xác định trạng thái
+                    if (buttonClass.includes('primary')) {
+                        selectedValue = 1; // Xác nhận
+                    } else if (buttonClass.includes('warning')) {
+                        selectedValue = 2; // Đang nấu
+                    } else if (buttonClass.includes('success')) {
+                        selectedValue = 3; // Hoàn thành
+                    }
+    
+                    // Cộng số lượng vào trạng thái tương ứng
+                    if (selectedValue !== null) {
+                        statusCount[selectedValue] += quantity;
+                    }
+                });
+    
+                // Cập nhật lại status_menu cho invoiceItem
+                invoiceItem.status_menu = statusCount;
+            }
+        });
+    
+        
+        PMD.updateInvoiceDataDetail(selectedMenus)
+    }
 
 
     //Start Render Selected Menu
@@ -694,29 +772,44 @@
             let html = ''
             await selectedMenus.invoice_item.forEach(menu => {
                 let total = PMD.formatCurrency(menu.total)
-                html += `
-                    <tr>
+                    html += `
+                    <tr data-status-menu-id="${menu.id}">
                         <td>${menu.name}</td>
                         <td class="text-center">
                             <div class="d-flex align-items-center justify-content-center">
                                 <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
-                                <input type="text" class="quantity-input form-control text-center px-3" style="width: 80px;" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
-                                <button class="btn btn-success btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
+                                <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
+                                <button class="btn btn-secondary btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
                             </div>
                         </td>
                         <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
+                        <td>
                 `
-                if (menu.is_served == 1) {
+
+                if(menu.status_menu != null){
+                    Object.entries(menu.status_menu).forEach(([key, value]) => {
+                        let type = ''
+                        if(key == 1){
+                            type = 'primary quantityPrimary-'+menu.id
+                        }else if(key == 2){
+                            type = 'warning'
+                        }else if(key == 3){
+                            type = 'success'
+                        }
+                        html += `
+                                <button type="button" class="btn btn-${type} btn-sm text-end">${value}</button>
+                        `
+                    })
+                }else{
                     html += `
-                    <td class="text-center"><input class="served-checkbox" checked disabled data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
-                    </tr>
-                    `
-                } else {
-                    html += `
-                    <td class="text-center"><input class="served-checkbox" data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
-                    </tr>
-                    `
+                                <button type="button" class="btn btn-primary btn-sm text-end quantityPrimary-${menu.id}">1</button>
+                                <button type="button" class="btn btn-warning btn-sm text-end">0</button>
+                                <button type="button" class="btn btn-success btn-sm text-end">0</button>
+                        `
                 }
+                html += '</td><tr>'
+
+
             })
             $('#array-menu').append(html)
             PMD.totalAmount(selectedMenus)

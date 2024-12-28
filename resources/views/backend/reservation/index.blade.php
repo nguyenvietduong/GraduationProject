@@ -93,14 +93,14 @@
                                         <div class="tab-pane p-3" id="menu" role="tabpanel">
                                             <div class="row justify-content-center">
                                                 <div class="row align-items-center">
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-7">
                                                         <div class="input-group">
                                                             <input type="" class="form-control searchMenu"
                                                                 placeholder="Tìm kiếm món ăn"
                                                                 aria-describedby="button-addon3">
                                                         </div>
                                                     </div><!--end col-->
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-5">
                                                     </div><!--end col-->
 
                                                 </div> <!--end row-->
@@ -116,8 +116,7 @@
                                                         <div class="card-header px-0">
                                                             <div class="row align-items-center">
                                                                 <div class="col">
-                                                                    {{-- <p>Món đã chọn:</p> --}}
-                                                                    {{-- <input type="hidden" name="" id="idTable_"> --}}
+                                                    
                                                                 </div><!--end col-->
                                                             </div> <!--end row-->
                                                         </div><!--end card-header-->
@@ -276,7 +275,7 @@
         <script src="{{ asset('backend/custom/customQrCode.js') }}"></script>
         <script src="{{ asset('backend/custom/customTemp.js') }}"></script>
         <script src="{{ asset('backend/custom/data.js') }}"></script>
-        {{-- <script src="{{ asset('backend/custom/customReservation.js') }}"></script> --}}
+        <script src="{{ asset('backend/custom/customReservation.js') }}"></script>
         <script src="{{ asset('backend/custom/customPayment.js') }}"></script>
     @endpush
 @endsection

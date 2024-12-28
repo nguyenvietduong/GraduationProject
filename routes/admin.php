@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChatController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\DishController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\RoleController;
@@ -23,10 +24,10 @@ use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\SearchController;
 use App\Http\Controllers\Backend\StatisticalController;
 
-Route::middleware(['auth', 'role:1, 2, 3'])->group(function () {
+Route::middleware(['auth', 'role:1, 2, 3, 4'])->group(function () {
     Route::prefix('admin')->group(function () {
         // Dashboard
-        Route::get('/index', [DashboardController::class  , "index"])->name('admin.dashboard.index');
+        Route::get('/index', [DashboardController::class, "index"])->name('admin.dashboard.index');
 
         // User Management
         Route::prefix('user')->group(function () {
@@ -156,6 +157,15 @@ Route::middleware(['auth', 'role:1, 2, 3'])->group(function () {
             Route::post('exportPDF', [InvoiceController::class, 'exportAndSavePDF'])->name('admin.invoice.exportPDF');
         });
 
+        Route::prefix('dish')->group(function () {
+            Route::get('index', [DishController::class, 'index'])->name('admin.dish.index');
+            Route::get('create', [DishController::class, 'create'])->name('admin.dish.create');
+            Route::post('store', [DishController::class, 'store'])->name('admin.dish.store');
+            Route::get('{id}/detail', [DishController::class, 'detail'])->where('id', '[0-9]+')->name('admin.dish.detail');
+            Route::get('{id}/edit', [DishController::class, 'edit'])->where('id', '[0-9]+')->name('admin.dish.edit');
+            Route::put('{id}/update', [DishController::class, 'update'])->where('id', '[0-9]+')->name('admin.dish.update');
+            Route::delete('{id}/destroy', [DishController::class, 'destroy'])->where('id', '[0-9]+')->name('admin.dish.destroy');
+        });
         Route::prefix('chat')->group(function () {
             Route::get('index', [NotificationController::class, 'index'])->name('admin.chat.index');
         });
@@ -179,7 +189,6 @@ Route::middleware(['auth', 'role:1, 2, 3'])->group(function () {
             Route::get('top-clients', [StatisticalController::class, 'getCustomerStatistics']);
             Route::get('top-menus', [StatisticalController::class, 'getMenuItemsWithReservationCounts']);
             Route::get('top-tables', [StatisticalController::class, 'getTableReservationStats']);
-
         });
         Route::prefix('payment')->group(function () {
             Route::get('{id}', [PaymentController::class, 'show'])->name('admin.payment.index');

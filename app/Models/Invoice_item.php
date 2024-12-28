@@ -15,7 +15,8 @@ class Invoice_item extends Model
         'quantity',
         'price',
         'total',
-        'is_served'
+        'is_served',
+        'status_menu'
     ];
     public function invoice()
     {
