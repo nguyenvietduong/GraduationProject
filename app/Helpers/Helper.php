@@ -307,14 +307,22 @@ if (!function_exists('formatDiscount')) {
 }
 
 if (!function_exists('checkBladeAdmin')) {
-    function checkBladeAdmin()
+    function checkBladeAdmin($role = null)
     {
         if (Auth::check() && Auth::user()->role_id == 1) {
             return '';
         } else if (Auth::check() && Auth::user()->role_id == 2) {
-            return 'none';
+            if ($role == 2) {
+                return '';
+            } else {
+                return 'none';
+            }
+        } else if (Auth::check() && Auth::user()->role_id == 4) {
+            if ($role == 4) {
+                return '';
+            } else {
+                return 'none';
+            }
         }
     }
 }
-
-
