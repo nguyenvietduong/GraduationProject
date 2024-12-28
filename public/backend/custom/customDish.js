@@ -76,26 +76,11 @@
         }
     }
 
-    function showSpinner() {
-        document.querySelector('.overlay').style.display = 'block';
-        document.querySelector('.spinner').style.display = 'block';
-        document.querySelector('.startbar').classList.add('blur'); // Thêm lớp làm mờ startbar
-        document.querySelector('.topbar').classList.add('blur'); // Thêm lớp làm mờ topbar
-    }
-
-    function hideSpinner() {
-        document.querySelector('.overlay').style.display = 'none';
-        document.querySelector('.spinner').style.display = 'none';
-        document.querySelector('.startbar').classList.remove('blur'); // Xóa lớp làm mờ startbar
-        document.querySelector('.topbar').classList.remove('blur'); // Xóa lớp làm mờ topbar
-    }
-
-
-    PMD.closeBSModal = () => {
-        $('#modalDish').on('hidden.bs.modal', function () {
-            $('.table-info').removeClass('cursor-not-allowed')
-        })
-    }
+PMD.saveDish = () => {
+    $(document).on('click', '.btnSaveDish', function(){
+        
+    })
+}
 
     //Show Modal Data
     PMD.showBsModal = () => {
@@ -104,13 +89,10 @@
             if (button.length) {
                 var reservationId = button.attr('dataReservationId')
             }
-            console.log(12345);
             
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
-            console.log(invoiceData);
 
             PMD.renderListInvoiceItem(invoiceData)
-            
         })
     }
     //End Show Modal Data
@@ -119,50 +101,52 @@
         let html = ''
             await invoiceItem.invoice_item.forEach(menu => {
                 let total = PMD.formatCurrency(menu.total)
-                html += `
-                    <tr>
-                        <td>${menu.name}</td>
-                        <td class="text-center">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
-                                <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}">
-                                <button class="btn btn-success btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
-                            </div>
-                        </td>
-                        <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
-                `
-                if (menu.is_served == 1) {
-                    html += `
-                    <td class="text-center"><input class="served-checkbox" checked disabled data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
-                    </tr>
-                    `
-                } else {
-                    html += `
-                    <td class="text-center"><input class="served-checkbox" data-served-id="${menu.id}" type="checkbox" name="" id=""></td>
-                    </tr>
-                    `
-                }
+                
+                Object.entries(menu.status_menu).forEach(([key, value]) => {
+                    if(value != 0){
+                        let optionsHtml = '';
+
+                        if (key == 1) {
+                            optionsHtml = `
+                                <select name="" class="form-select" id="">
+                                    <option value="1" selected>Xác nhận</option>
+                                    <option value="2">Đang nấu</option>
+                                    <option value="3">Hoàn thành</option>
+                                </select>
+                            `;
+                        } else if (key == 2) {
+                            optionsHtml = `
+                                <select name="" class="form-select" id="">
+                                    <option value="2" selected>Đang nấu</option>
+                                    <option value="3">Hoàn thành</option>
+                                </select>
+                            `;
+                        } else if (key == 3) {
+                            optionsHtml = `
+                                <input type="text" readonly name="" class="form-control" value="Hoàn thành" id="">
+                            `;
+                        }
+                    
+                        html += `
+                        <tr>
+                            <td>${menu.name}</td>
+                            <td class="text-center">${value}</td>
+                            <td class="text-center">${total}đ</td>
+                            <td class="text-center">${optionsHtml}</td>
+                        </tr>`;
+                    }
+                })
+
             })
             $('#array-invoice-item-detail').append(html)
     }
 
 
-    //Start Render Button Amount
-    PMD.checkRenderButtonAmount = (condition = true, invoice = false) => {
-        if (condition == true) {
-            if (conditionTemp == 1) {
-                let html = `
-                <strong class="mx-3">Tổng hóa đơn: <span class="total-invoice">0</span>đ</strong>
-                <button class="btn btn-primary btnSaveInvoice">Lưu hóa đơn</button>`
-                $('.modal-footer-reservation').append(html)
-            }
-        }
-        if (condition == false) {
-            $('.modal-footer-reservation').empty()
-        }
+    PMD.closeBSModal = () => {
+        $('#modalDish').on('hidden.bs.modal', function () {
+            $('.table-info').removeClass('cursor-not-allowed')
+        })
     }
-    //End Render Button Amount
-
 
 
     PMD.showSuccessMessage = () => {
@@ -176,6 +160,20 @@
         return number.toLocaleString();
     }
 
+
+    function showSpinner() {
+        document.querySelector('.overlay').style.display = 'block';
+        document.querySelector('.spinner').style.display = 'block';
+        document.querySelector('.startbar').classList.add('blur'); // Thêm lớp làm mờ startbar
+        document.querySelector('.topbar').classList.add('blur'); // Thêm lớp làm mờ topbar
+    }
+
+    function hideSpinner() {
+        document.querySelector('.overlay').style.display = 'none';
+        document.querySelector('.spinner').style.display = 'none';
+        document.querySelector('.startbar').classList.remove('blur'); // Xóa lớp làm mờ startbar
+        document.querySelector('.topbar').classList.remove('blur'); // Xóa lớp làm mờ topbar
+    }
 
     //End Show Modal Data
     $(document).ready(function () {

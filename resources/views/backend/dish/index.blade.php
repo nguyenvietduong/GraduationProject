@@ -76,10 +76,10 @@
                                     id="datatable_1">
                                     <thead>
                                         <tr>
-                                            <th>Tên món</th>
-                                            <th class="text-center">Số lượng</th>
-                                            <th class="text-center">Thành tiền</th>
-                                            <th class="text-end">Trạng thái</th>
+                                            <th style="background-color: #f4f4f4">Tên món</th>
+                                            <th style="background-color: #f4f4f4" class="text-center">Số lượng</th>
+                                            <th style="background-color: #f4f4f4" class="text-center">Thành tiền</th>
+                                            <th style="background-color: #f4f4f4" class="text-center">Trạng thái</th>
                                         </tr>
                                     </thead>
                                     <tbody id="array-invoice-item-detail"></tbody>
@@ -89,7 +89,8 @@
                     </div> <!--end col-->
                 </div>
             </div>
-            <div class="modal-footer modal-footer-reservation">
+            <div class="modal-footer">
+                <button class="btn btn-primary btnSaveDish">Lưu thông tin</button>
             </div>
         </div>
     </div>

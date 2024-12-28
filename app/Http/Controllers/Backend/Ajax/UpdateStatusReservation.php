@@ -145,7 +145,8 @@ class UpdateStatusReservation extends Controller
                         'price' => $item->price,
                         'total' => $item->quantity * $item->price,
                         'is_served' => $item->is_served,
-                        'status_menu' => json_decode($item->status_menu)
+                        'status_menu' => json_decode($item->status_menu),
+                        'updated_at' => $item->updated_at
                     ];
                 }
             }
