@@ -188,14 +188,16 @@ class UpdateStatusReservation extends Controller
             }
         }
 
-        $temp = [
-            '1' => 2,
-            '2' => 0,
-            '3' => 0
-        ];
+
 
         // Lặp qua danh sách món ăn trong hóa đơn
         foreach ($data['invoice_item'] as $item) {
+            $temp = [
+                '1' => $item['quantity'],
+                '2' => 0,
+                '3' => 0
+            ];
+            
             Invoice_item::create([
                 'invoice_id' => $invoice->id,
                 'menu_id' => $item['id'],
@@ -238,8 +240,22 @@ class UpdateStatusReservation extends Controller
     }
 
 
-    public function updateStatusMenuInvoiceDetail(Request $request){
+    public function updateStatusMenuInvoiceDetail(Request $request)
+    {
+        $invoice_id = $request->input('invoice_id');
+        $data = $request->input('objMenus');
 
+        $invoice = Invoice::findOrFail($invoice_id);
+
+        foreach ($data as $menuId => $status) {
+            $invoiceItems = $invoice->invoiceItems()->where('menu_id', $menuId)->get();
+
+            foreach ($invoiceItems as $invoiceItem) {
+                $invoiceItem->update(['status_menu' => $status]);
+            }
+        }
+
+        return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
     }
 
     public function createNewReservation(Request $request)

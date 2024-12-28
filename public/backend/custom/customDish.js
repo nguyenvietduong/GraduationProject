@@ -49,10 +49,11 @@
     }
 
 
-    PMD.updateInvoiceDataDetail = (objMenus) => {
+    PMD.updateInvoiceDataDetail = (objMenus, invoice_id) => {
 
             let data = {
                 _token: _token,
+                invoice_id: invoice_id,
                 objMenus: objMenus
             }
 
@@ -69,7 +70,7 @@
             })
     }
 
-PMD.saveDish = () => {
+PMD.saveDish = (invoice_id) => {
     $(document).on('click', '.btnSaveDish', function(){
         let objMenus = {};
 
@@ -83,15 +84,23 @@ PMD.saveDish = () => {
         }
 
         // Duyệt qua tất cả các select trong dòng hiện tại có cùng menu_id
-        $(this).find('select').each(function() {
-            let selectedValue = $(this).val()
-            objMenus[menuId][selectedValue] += 1; // Tăng số lượng món cho trạng thái đã chọn
+        $(this).find('.quantityDishMenus').each(function() {
+            let quantity = parseInt($(this).text());
+            let select = $(this).siblings('td').find('select')
+            let selectedValue = select.val();
+            objMenus[menuId][selectedValue] += quantity; // Tăng số lượng món cho trạng thái đã chọn
         });
     });
 
     console.log(objMenus);
 
-    PMD.updateInvoiceDataDetail(objMenus)
+    PMD.updateInvoiceDataDetail(objMenus, invoice_id)
+
+    $('#modalDish').modal('hide')
+
+                localStorage.setItem('showSuccessMessage', 'true')
+
+                window.location.reload()
     })
 }
 
@@ -106,6 +115,8 @@ PMD.saveDish = () => {
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
 
             PMD.renderListInvoiceItem(invoiceData)
+
+            PMD.saveDish(invoiceData.invoice_id)
         })
     }
     //End Show Modal Data
@@ -147,7 +158,7 @@ PMD.saveDish = () => {
                         html += `
                         <tr data-menu-id="${menu.id}">
                             <td>${menu.name}</td>
-                            <td class="text-center">${value}</td>
+                            <td class="text-center quantityDishMenus">${value}</td>
                             <td class="text-center">${total}đ</td>
                             <td class="text-center">${optionsHtml}</td>
                         </tr>`;
@@ -161,7 +172,7 @@ PMD.saveDish = () => {
 
     PMD.closeBSModal = () => {
         $('#modalDish').on('hidden.bs.modal', function () {
-            $('.table-info').removeClass('cursor-not-allowed')
+            $(this).find('#array-invoice-item-detail').html('');
         })
     }
 
@@ -198,6 +209,6 @@ PMD.saveDish = () => {
         PMD.checkInvoiceDetail()
         PMD.showBsModal()
         PMD.closeBSModal()
-        PMD.saveDish()
+        // PMD.saveDish()
     })
 })(jQuery)
