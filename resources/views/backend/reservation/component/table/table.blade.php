@@ -98,10 +98,7 @@
                         @endphp
                         @if (isset($reservationDetails) && count($reservationDetails))
                             @foreach ($reservationDetails as $reservationDetail)
-                                @php
-                                    $table = $reservationDetail->table;
-                                @endphp
-                                <p>{{ $table->name ?? __('messages.system.no_data_available') }}</p>
+                                <p>{{ $reservationDetail->table_name ?? __('messages.system.no_data_available') }}</p>
                             @endforeach
                         @else
                             <p>Chưa chọn</p>

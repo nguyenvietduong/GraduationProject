@@ -24,8 +24,31 @@
 
 
 .cursor-not-allowed-menu {
+    position: relative;
     opacity: 0.4;
     cursor: not-allowed !important;
+}
+
+.cursor-not-allowed-menu:hover::after {
+    content: "Đã lên món!";
+    position: absolute;
+    top: 50%; /* Đặt tooltip bên dưới */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 9999;
+    opacity: 1;
+    pointer-events: none; /* Để không bị cản trở khi hover */
+}
+
+.cursor-not-allowed-menu::after {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .footer-left {
@@ -45,8 +68,8 @@
 }
 
 .table-info.selected {
-    border-color: #007bff;
-    background-color: #e0f7ff;
+    border-color: #00ff40;
+    background-color: #d1ffe4;
 }
 
 .menu-info {
@@ -64,6 +87,6 @@
 } */
 
 .menu-info.selected {
-    border-color: #007bff;
-    background-color: #e0f7ff;
+    border-color: #00ff40;
+    background-color: #d1ffe4;
 }

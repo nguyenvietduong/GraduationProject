@@ -102,6 +102,16 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         }
     }
 
+    public function isOrderAwaitingConfirmation(int $phone)
+    {
+        // Kiểm tra đơn hàng có trạng thái "chờ xác nhận"
+        $orderExists = Reservation::where('phone', $phone)
+            ->where('status', 'pending')
+            ->exists();
+    
+        return $orderExists;
+    }    
+
     /**
      * Update a reservation by its ID.
      *

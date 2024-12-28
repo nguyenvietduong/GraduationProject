@@ -46,4 +46,6 @@ interface ReservationServiceInterface
      * @return bool
      */
     public function deleteReservation(int $id);
+
+    public function isOrderAwaitingConfirmation(int $phone);
 }

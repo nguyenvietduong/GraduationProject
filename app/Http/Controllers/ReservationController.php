@@ -70,6 +70,11 @@ class ReservationController extends Controller
 
         try {
             // Create a new reservation
+            $isOrderAwaitingConfirmation = $this->reservationService->isOrderAwaitingConfirmation($data['phone']);
+            if ($isOrderAwaitingConfirmation) {
+                return redirect()->route('reservation')->with('error', 'Số điện thoại này đã đặt một đơn đặt bàn rồi vui lòng chọn số điện thoại khác!');
+            }
+
             $reservationNew = $this->reservationService->createReservation($data);
 
             // Reservation created successfully

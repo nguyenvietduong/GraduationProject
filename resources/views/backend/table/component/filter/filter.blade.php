@@ -23,7 +23,7 @@
 </div>
 
 <div class="col-12 col-md mb-2">
-    <input type="text" class="form-control" id="search" placeholder="Search..." name="keyword"
+    <input type="text" class="form-control" id="search" placeholder="Tìm kiếm..." name="keyword"
            value="{{ request('keyword') ?: old('keyword') }}">
 </div>
 

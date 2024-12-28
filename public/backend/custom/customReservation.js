@@ -269,7 +269,6 @@
         html += '<div class="tab-content">'
         data.forEach(function (cate) {
             cate.slug == 'bua-sang' ? active = 'active show' : active = ''
-            console.log(cate.menus);
             html += `
             <div class="tab-pane p-3 ${active}" id="${cate.slug}" role="tabpanel">
                 <div class="row">
@@ -395,7 +394,6 @@
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                         }
-                        console.log(selectedMenus);
                         PMD.renderSelectedMenus(selectedMenus)
                         $('#confirmSelection').toggle(selectedMenus.invoice_item.length > 0)
                     }
