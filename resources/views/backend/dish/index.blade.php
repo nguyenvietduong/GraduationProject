@@ -44,12 +44,12 @@
             ])
 
             <div class="card-body pt-0">
-                @include('backend.component.filter')
+                @include('backend.dish.component.filter.filter')
             </div>
 
             <div class="card-body pt-0">
                 <div class="table-responsive">
-                    @include('backend.' . $object . '.component.table.table')
+                    @include('backend.dish.component.table.table')
                 </div>
             </div>
         </div>
@@ -66,20 +66,21 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-
                 <div class="row justify-content-center">
                     <div class="col-md-12 col-lg-12">
                         <div class="card">
+                            <div class="card-header infoTableDish">
+                                
+                            </div>
                             <div class="card-body pt-0">
                                 <table border="1" class="table mb-0 checkbox-all"
                                     id="datatable_1">
                                     <thead>
                                         <tr>
-                                            <th style="background-color: #f4f4f4">Tên món</th>
-                                            <th style="background-color: #f4f4f4" class="text-center">Số lượng</th>
-                                            <th style="background-color: #f4f4f4" class="text-center">Thành tiền</th>
-                                            <th style="background-color: #f4f4f4" class="text-center">Trạng thái</th>
+                                            <th class=" bg-primary">Tên món</th>
+                                            <th class="text-center bg-primary">Số lượng</th>
+                                            <th class="text-center bg-primary">Thành tiền</th>
+                                            <th class="text-center bg-primary">Trạng thái</th>
                                         </tr>
                                     </thead>
                                     <tbody id="array-invoice-item-detail"></tbody>

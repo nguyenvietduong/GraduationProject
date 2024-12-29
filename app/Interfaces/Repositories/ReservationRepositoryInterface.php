@@ -15,6 +15,9 @@ interface ReservationRepositoryInterface extends RepositoryInterface
      */
     public function getAllReservations(array $filters = [], $perPage = 5);
 
+
+    public function getAllReservationsArrived(array $filters = [], $perPage = 5);
+
     /**
      * Get details of a Reservation by ID.
      *

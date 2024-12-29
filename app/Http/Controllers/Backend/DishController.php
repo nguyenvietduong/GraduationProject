@@ -63,9 +63,7 @@ class DishController extends Controller
         // Apply filters from the request
         $filters = [
             'reservation_time' => $params['reservation_time'] ?? '',
-            'name' => $params['name'] ?? '',
-            'email' => $params['email'] ?? '',
-            'phone' => $params['phone'] ?? '',
+            'code' => $params['code'] ?? '',
         ];
 
         // Get the per_page value
@@ -73,8 +71,8 @@ class DishController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'todayArrivedCount' =>  $this->reservationRepository->where('status', '!=', 'completed')->whereDate('reservation_time', '=', now()->toDateString())->count(),
-            'datas' => $this->reservationService->getAllReservations($filters, $perPage, self::OBJECT), // Paginated reservation list for the view
+            'todayArrivedCount' =>  $this->reservationRepository->where('status', '=', 'arrived')->whereDate('reservation_time', '=', now()->toDateString())->count(),
+            'datas' => $this->reservationService->getAllReservationsArrived($filters, $perPage, self::OBJECT), // Paginated reservation list for the view
         ]);
     }
 }

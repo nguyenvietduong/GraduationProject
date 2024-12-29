@@ -26,9 +26,9 @@
         }
 
         /* .menu-info:hover {
-                    background-color: #f0f0f0;
-                    transform: scale(1.05);
-                } */
+                        background-color: #f0f0f0;
+                        transform: scale(1.05);
+                    } */
 
         .menu-info.selected {
             border-color: #00ff40;
@@ -136,6 +136,11 @@
                                                         </div>
                                                     </div><!--end col-->
                                                     <div class="col-lg-5">
+                                                        <div class="d-flex justify-content-between">
+                                                            <button class="btn btn-primary btn-sm">Số lượng món xác nhận</button>
+                                                            <button class="btn btn-warning btn-sm">Số lượng món đang nấu</button>
+                                                            <button class="btn btn-success btn-sm">Số lượng món hoàn thành</button>
+                                                        </div>
                                                     </div><!--end col-->
 
                                                 </div> <!--end row-->
@@ -167,9 +172,10 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Tên món</th>
-                                                                        <th class="text-center" style="width: 100px">Số lượng</th>
+                                                                        <th class="text-center" style="width: 160px">Số
+                                                                            lượng</th>
                                                                         <th class="text-center">Thành tiền</th>
-                                                                        <th class="text-end">Lên món</th>
+                                                                        <th class="text-center">Lên món</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="array-menu"></tbody>

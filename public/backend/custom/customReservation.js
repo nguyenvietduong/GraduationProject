@@ -779,7 +779,7 @@
                                 <td class="text-center">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
-                                        <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
+                                        <input type="text" class="quantity-input form-control" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
                                         <button class="btn btn-secondary btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
                                     </div>
                                 </td>
@@ -792,11 +792,11 @@
                             <td>${menu.name}</td>
                             <td class="text-center">
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
+                                    <input type="text" class="quantity-input form-control" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
                                 </div>
                             </td>
                             <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
-                            <td>
+                            <td class="text-end">
                     `
                     }
 

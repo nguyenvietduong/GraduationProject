@@ -38,27 +38,27 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
     {
         $query = $this->model->query();
         $query->where('status', '!=', ['completed', 'pending']);
-    
+
         $query->whereDate('reservation_time', '=', now()->toDateString());
-        
+
         // Apply search filters
         if (!empty($filters['name'])) {
             $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
-    
+
         if (!empty($filters['email'])) {
             $query->where('email', $filters['email']);
         }
-    
+
         if (!empty($filters['phone'])) {
             $query->where('phone', $filters['phone']);
         }
-    
+
         if (!empty($filters['reservation_time'])) {
             // Adjust to match full datetime if needed
             $query->where('reservation_time', '=', $filters['reservation_time']);
         }
-    
+
         // Sort by creation date (latest first)
         // $query->orderBy('reservation_time', '');
         $query->orderByRaw("
@@ -73,7 +73,35 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
         // $query->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled') ASC");
         // Paginate results
         return $query->paginate($perPage);
-    }    
+    }
+
+    public function getAllReservationsArrived(array $filters = [], $perPage = 5)
+    {
+        $query = $this->model->query();
+        $query->where('status', '=', 'arrived');
+
+        $query->whereDate('reservation_time', '=', now()->toDateString());
+
+        // Apply search filters
+        if (!empty($filters['code'])) {
+            $query->where('code', 'like', '%' . $filters['code'] . '%');
+        }
+
+
+        if (!empty($filters['reservation_time'])) {
+            // Adjust to match full datetime if needed
+            $query->where('reservation_time', '=', $filters['reservation_time']);
+        }
+
+        // Sort by creation date (latest first)
+        // $query->orderBy('reservation_time', '');
+        $query->orderByRaw("
+            ABS(TIMESTAMPDIFF(SECOND, reservation_time, NOW())) ASC
+        ");
+        // $query->orderByRaw("FIELD(status, 'arrived', 'confirmed', 'pending','canceled') ASC");
+        // Paginate results
+        return $query->paginate($perPage);
+    }
 
     /**
      * Get Reservation detail by ID.
@@ -143,7 +171,7 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
     public function existingReservation($IdTable, $data = [])
     {
         return $this->model->where('table_id', $IdTable)
-        ->where('reservation_time', $data)
-        ->first();
+            ->where('reservation_time', $data)
+            ->first();
     }
 }
