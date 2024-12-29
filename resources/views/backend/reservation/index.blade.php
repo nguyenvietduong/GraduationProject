@@ -25,11 +25,6 @@
             position: relative;
         }
 
-        /* .menu-info:hover {
-                        background-color: #f0f0f0;
-                        transform: scale(1.05);
-                    } */
-
         .menu-info.selected {
             border-color: #00ff40;
             background-color: #d1ffe4;
@@ -136,10 +131,14 @@
                                                         </div>
                                                     </div><!--end col-->
                                                     <div class="col-lg-5">
-                                                        <div class="d-flex justify-content-between">
-                                                            <button class="btn btn-primary btn-sm">Số lượng món xác nhận</button>
-                                                            <button class="btn btn-warning btn-sm">Số lượng món đang nấu</button>
-                                                            <button class="btn btn-success btn-sm">Số lượng món hoàn thành</button>
+                                                        <div class="">
+                                                            <h5>Chú thích</h5>
+                                                            <button class="btn btn-primary btn-sm">0</button>: Số lượng món
+                                                            xác nhận
+                                                            <button class="btn btn-warning btn-sm">0</button>: Số lượng món
+                                                            đang nấu
+                                                            <button class="btn btn-success btn-sm">0</button>: Số lượng món
+                                                            hoàn thành
                                                         </div>
                                                     </div><!--end col-->
 

@@ -796,7 +796,7 @@
                                 </div>
                             </td>
                             <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
-                            <td class="text-end">
+                            <td>
                     `
                     }
 

@@ -20,9 +20,9 @@ class UpdateStatusMenu extends Controller
         $menu = Menu::find($request->id);
 
         $hasInvalidStatus = Invoice_item::where('menu_id', $request->id)
-            ->whereRaw('JSON_EXTRACT(status_menu, "$.1") != "0"')
-            ->exists();
-
+        ->whereRaw('JSON_EXTRACT(status_menu, "$.\"1\"") != "0"')
+        ->exists();
+        
         if ($hasInvalidStatus) {
             return response()->json([
                 'message' => 'Cannot update. Some items with the same menu_id have invalid status in status_menu.'
