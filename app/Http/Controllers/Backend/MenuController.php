@@ -52,6 +52,7 @@ class MenuController extends Controller
      */
     public function index(MenuListRequest $request)
     {   
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
@@ -84,6 +85,7 @@ class MenuController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         // $this->authorize('modules', 'edit accounts');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'menu',
@@ -118,6 +120,7 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         // Retrieve the details of the menu
         $menu = $this->menuService->getMenuDetail($id);
         // dd($menu);

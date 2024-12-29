@@ -167,7 +167,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Tên món</th>
-                                                                        <th class="text-center">Số lượng</th>
+                                                                        <th class="text-center" style="width: 100px">Số lượng</th>
                                                                         <th class="text-center">Thành tiền</th>
                                                                         <th class="text-end">Lên món</th>
                                                                     </tr>

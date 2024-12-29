@@ -56,6 +56,7 @@ class UserController extends Controller
      */
     public function index(AccountListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         // Xác thực dữ liệu từ request
         $request->validated();
@@ -89,6 +90,7 @@ class UserController extends Controller
     public function create()
     {
 
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'dataRole' => $this->roleRepository->pluck('name', 'id'),
@@ -124,6 +126,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         session()->forget('image_temp'); // Xóa giá trị tạm thời của hình ảnh
         // Lấy thông tin chi tiết của người dùng
         $data = $this->accountService->getAccountDetail($id);

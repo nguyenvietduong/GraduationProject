@@ -29,6 +29,12 @@ class RoleSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
+                'name' => 'Kitchen Staff',
+                'authorities' => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
                 'name' => 'Customer',
                 'authorities' => '',
                 'created_at' => Carbon::now(),
@@ -87,12 +93,22 @@ class RoleSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'full_name' => 'Nguyễn Thị Hương',
+                'full_name' => 'Nhân viên cửa hàng',
                 'phone' => '0396416189',
-                'email' => 'nguyenthihuong.qc2004@gmail.com',
+                'email' => 'staff@gmail.com',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
-                'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 2
+                'role_id' => 2, // Giả định rằng bạn đã có một role với ID = 2
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'full_name' => 'Nhân viên bếp',
+                'phone' => '0921044773',
+                'email' => 'kitchenstaff@gmail.com',
+                'password' => Hash::make('12345678'), // Mã hóa mật khẩu
+                'status' => 'normal',
+                'role_id' => 3, // Giả định rằng bạn đã có một role với ID = 2
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

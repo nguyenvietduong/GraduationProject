@@ -54,6 +54,7 @@ class DishController extends Controller
      */
     public function index(ReservationListRequest $request)
     {
+        $this->authorize('modules', 'dish.index');
         $request->validated();
 
         // Extract filters from the request

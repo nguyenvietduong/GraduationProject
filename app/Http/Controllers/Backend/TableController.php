@@ -31,7 +31,7 @@ class TableController extends Controller
 
     public function index(TableListRequest $request)
     {
-
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         // Extract filters from the request
         $params = $request->all();
 
@@ -61,6 +61,7 @@ class TableController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         return view(self::PATH_VIEW . 'create', [
             'object' => self::OBJECT,
         ]);
@@ -94,6 +95,7 @@ class TableController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         // Retrieve the details of the Category
         $table = $this->tableService->getTableDetail($id);
         if ($table) {

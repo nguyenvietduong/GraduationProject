@@ -56,6 +56,7 @@ class StaffController extends Controller
      */
     public function index(AccountListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         // Validate the request data
         $request->validated();
@@ -88,7 +89,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
             'dataRole' => $this->roleRepository->pluck('name', 'id'),
@@ -124,6 +125,7 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         session()->forget('image_temp');
         // Retrieve the details of the Staff
         $data = $this->accountService->getAccountDetail($id);
