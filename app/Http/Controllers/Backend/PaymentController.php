@@ -52,6 +52,8 @@ class PaymentController extends Controller
         $data["reservation"] = $reservation;
         $data["invoice"] = $invoice;
 
+        // dd($data);
+
         return $data;
     }
 

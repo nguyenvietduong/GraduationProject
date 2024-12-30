@@ -49,45 +49,10 @@
                             $statuses = __('messages.reservation.status');
                         @endphp
 
-                        <select name="status" class="form-select status selectReservation"
+                        <select name="status" disabled class="form-select status selectReservation"
                             data-account-id="{{ $data->id }}">
                             @foreach ($statuses as $key => $option)
-                                @if ($data->status == 'pending')
-                                    @if ($key != 'completed' && $key != 'arrived')
-                                        <option value="{{ $key }}" @selected($status == $key)
-                                            @selected($data->status == $key)>
-                                            {{ $option }}
-                                        </option>
-                                    @endif
-                                @elseif ($data->status == 'confirmed')
-                                    @if ($key != 'pending' && $key != 'canceled' && $key != 'completed')
-                                        <option value="{{ $key }}" @selected($status == $key)
-                                            @selected($data->status == $key)>
-                                            {{ $option }}
-                                        </option>
-                                    @endif
-                                @elseif ($data->status == 'canceled')
-                                    @if ($key == 'canceled')
-                                        <option value="{{ $key }}" @selected($status == $key)
-                                            @selected($data->status == $key)>
-                                            {{ $option }}
-                                        </option>
-                                    @endif
-                                @elseif ($data->status == 'arrived')
-                                    @if ($key != 'pending' && $key != 'canceled' && $key != 'confirmed' && $key != 'completed')
-                                        <option value="{{ $key }}" @selected($status == $key)
-                                            @selected($data->status == $key)>
-                                            {{ $option }}
-                                        </option>
-                                    @endif
-                                @else
-                                    @if ($key != 'pending' && $key != 'completed')
-                                        <option value="{{ $key }}" @selected($status == $key)
-                                            @selected($data->status == $key)>
-                                            {{ $option }}
-                                        </option>
-                                    @endif
-                                @endif
+                                <option value="" @selected($data->status == $key)>{{ $option }}</option>
                             @endforeach
                         </select>
                     </td>

@@ -30,7 +30,7 @@ class PromotionController extends Controller
 
     public function index(ListRequest $request)
     {
-        // $this->authorize('modules', '' . self::OBJECT . '.index');
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $request->validated();
         $params = $request->all();
 
@@ -67,6 +67,7 @@ class PromotionController extends Controller
 
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'promotion',
         ]);
@@ -84,6 +85,7 @@ class PromotionController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         $data = $this->promotionService->getPromotionDetail($id);
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'promotion',

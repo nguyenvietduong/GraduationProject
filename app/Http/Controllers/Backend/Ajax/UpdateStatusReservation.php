@@ -146,7 +146,7 @@ class UpdateStatusReservation extends Controller
                         'total' => $item->quantity * $item->price,
                         'is_served' => $item->is_served,
                         'status_menu' => json_decode($item->status_menu),
-                        'updated_at' => $item->updated_at
+                        'status_menu_id' => $item->menu->status
                     ];
                 }
             }
@@ -178,11 +178,11 @@ class UpdateStatusReservation extends Controller
 
             if (!$existingReservationDetail) {
                 // Nếu chưa có, thêm bàn vào chi tiết đặt bàn
-                $tableName = Table::where('id', $table['id'])->get();
+                $tableName = Table::where('id', $table['id'])->first();
                 ReservationDetail::create([
                     'reservation_id' => $data['reservation_id'],
                     'table_id' => $table['id'],
-                    'table_name' => $tableName
+                    'table_name' => $tableName->name
                 ]);
 
                 // Cập nhật trạng thái bàn thành "đã có người ngồi"

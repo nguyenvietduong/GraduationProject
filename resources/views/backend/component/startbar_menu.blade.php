@@ -78,7 +78,7 @@ $segment = request()->segment(2);
         </li>
 
         <!-- Hệ thống -->
-        <li class="nav-item" style="display: {{ checkBladeAdmin(4) }}">
+        <li class="nav-item" style="display: {{ checkBladeAdmin(3) }}">
             <a class="nav-link {{ set_active(['menu', 'category'], 'active', 'admin') }}"
                 href="#sidebarFoodManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                 aria-controls="sidebarFoodManagement">
@@ -128,7 +128,7 @@ $segment = request()->segment(2);
                 <span>Hóa đơn</span>
             </a>
         </li>
-        <li class="nav-item" style="display: {{ checkBladeAdmin(4) }}">
+        <li class="nav-item" style="display: {{ checkBladeAdmin(3) }}">
             <a class="nav-link {{ set_active(['dish'], 'active', 'admin') }}"
                 href="{{ route('admin.dish.index') }}">
                 <i class="fa fa-calendar-check menu-icon"></i>

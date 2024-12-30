@@ -373,7 +373,7 @@
 
                 selectedMenus.invoice_item.forEach(item => {
                     Object.entries(item.status_menu).forEach(([key, value]) => {
-                        if(key == 1 && value == 0){
+                        if(key == 2 && value != 0 || key == 3 && value!=0){
                         $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected cursor-not-allowed-menu');
                         }else{
                             $('.menu-info[data-menu-id="' + item.id + '"]').addClass('selected')
@@ -390,7 +390,7 @@
                         const menuName = $(this).data('menu-name')
 
                         if ($(this).hasClass('selected')) {
-                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice, is_served: 0 }) // Initialize quantity to 1
+                            selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice, is_served: 0, status_menu_id: 'active'  }) // Initialize quantity to 1
                         } else {
                             selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                         }
@@ -447,7 +447,7 @@
                     const menuName = $(this).data('menu-name')
 
                     if ($(this).hasClass('selected')) {
-                        selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice, served: 0 }) // Initialize quantity to 1
+                        selectedMenus.invoice_item.push({ id: menuId, name: menuName, quantity: 1, price: menuPrice, total: menuPrice, served: 0, status_menu_id: 'active' }) // Initialize quantity to 1
                     } else {
                         selectedMenus.invoice_item = selectedMenus.invoice_item.filter(menu => menu.id !== menuId)
                     }
@@ -608,8 +608,6 @@
 
     //Quantity Input
     PMD.quantityInput = (selectedMenus, dataInvoice = null) => {
-        console.log(dataInvoice);
-
         // Xử lý khi thay đổi số lượng qua input
         $('#array-menu').on('input', '.quantity-input', function () {
             const menuId = $(this).data('menu-id');
@@ -771,20 +769,36 @@
             conditionTemp = 2
             let html = ''
             await selectedMenus.invoice_item.forEach(menu => {
+                console.log(selectedMenus.invoice_item);
+                
                 let total = PMD.formatCurrency(menu.total)
-                    html += `
-                    <tr data-status-menu-id="${menu.id}">
-                        <td>${menu.name}</td>
-                        <td class="text-center">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
-                                <input type="text" class="quantity-input form-control text-center px-3 w-50" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
-                                <button class="btn btn-secondary btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
-                            </div>
-                        </td>
-                        <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
-                        <td>
-                `
+                    if(menu.status_menu_id == 'active'){
+                        html += `
+                            <tr data-status-menu-id="${menu.id}">
+                                <td>${menu.name}</td>
+                                <td class="text-center">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <button class="btn btn-danger btn-sm decrease-btn me-2" data-menu-id="${menu.id}">-</button>
+                                        <input type="text" class="quantity-input form-control" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
+                                        <button class="btn btn-secondary btn-sm increase-btn ms-2" data-menu-id="${menu.id}">+</button>
+                                    </div>
+                                </td>
+                                <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
+                                <td>
+                        `
+                    }else{
+                        html += `
+                        <tr data-status-menu-id="${menu.id}" class="bg_status">
+                            <td>${menu.name}</td>
+                            <td class="text-center">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input type="text" class="quantity-input form-control" data-menu-id="${menu.id}" min="1" value="${menu.quantity}" readonly>
+                                </div>
+                            </td>
+                            <td class="text-end"><span class="price-invoice-item-${menu.id}">${total}</span>đ</td>
+                            <td>
+                    `
+                    }
 
                 if(menu.status_menu != null){
                     Object.entries(menu.status_menu).forEach(([key, value]) => {

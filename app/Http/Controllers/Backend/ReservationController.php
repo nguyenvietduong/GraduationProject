@@ -54,6 +54,7 @@ class ReservationController extends Controller
      */
     public function index(ReservationListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $request->validated();
 
         // Extract filters from the request

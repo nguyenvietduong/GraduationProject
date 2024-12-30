@@ -50,7 +50,7 @@
 
     CUONG.renderMenuItem = async (menuItems) => {
         $('#list_menu_item').empty()
-        
+
         if (menuItems.invoice == null) {
             $('#list_menu_item').append('<tr><td colspan="3" class="text-center">No items selected.</td></tr>')
         } else {
@@ -87,7 +87,7 @@
                         <div class="div">
                             <p class="m-0">${voucher.title}</p>
                             <small class="m-0">Mô tả: ${voucher.description}</small> <br>
-                            <small>Số lượng: ${(voucher.total - voucher.promotion_users.length) <= 0 ? 0 : voucher.total - voucher.promotion_users.length }</small>
+                            <small>Số lượng: ${(voucher.total - voucher.promotion_users.length) <= 0 ? 0 : voucher.total - voucher.promotion_users.length}</small>
                         </div>
                     </div>
                 `)
@@ -106,7 +106,7 @@
                         <div class="div">
                             <p class="m-0">${voucher.title}</p>
                             <small class="m-0">Mô tả: ${voucher.description}</small> <br>
-                            <small >Số lượng: ${(voucher.total - voucher.promotion_users.length) <= 0 ? 0 : voucher.total - voucher.promotion_users.length }</small>
+                            <small >Số lượng: ${(voucher.total - voucher.promotion_users.length) <= 0 ? 0 : voucher.total - voucher.promotion_users.length}</small>
                         </div>
                     </div>
                 `)
@@ -121,14 +121,14 @@
                 'Content-Type': 'application/json'
             },
             data: JSON.stringify(data),
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     executeExample('success');
                 } else {
                     alert('Lỗi khi thêm hóa đơn.');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Error:', error);
             }
         });
@@ -142,23 +142,23 @@
                 reservation_id: reservationId,
                 _token: $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 if (response.success) {
                     const pdfUrl = response.pdfUrl;
-        
+
                     // Mở PDF trong một tab mới
                     window.open(pdfUrl, '_blank');
                 } else {
                     alert('Lỗi khi tạo và lưu hóa đơn.');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Error:', error);
             }
         });
-    }    
-    
+    }
+
     //Show Modal Data
     CUONG.showBsModal = () => {
         $('#pay').on('show.bs.modal', async function (event) {
@@ -166,7 +166,7 @@
             let reservationId;
             let invoiceDetail;
             if (button.length) {
-                reservationId = button.attr('dataReservationId')    
+                reservationId = button.attr('dataReservationId')
                 invoiceDetail = await CUONG.fetchInvoiceDetail(`/admin/payment/${reservationId}`);
                 CUONG.renderMenuItem(invoiceDetail);
                 $("#idDonhang").attr("idDonHang", invoiceDetail.reservation.id);
@@ -179,7 +179,7 @@
                 if (invoiceDetail.invoice) {
                     total_amount = invoiceDetail.invoice.total_amount
                     total_payment = invoiceDetail.invoice.total_amount
-                } 
+                }
 
                 $('#pay').find('.total-amount').text(formatNumber(total_amount))
                 $('#pay').find('.total-payment').text(formatNumber(total_payment))
@@ -244,28 +244,56 @@
                         }
                     }
                 });
-                $(`#btn_paid_${reservationId}`).off('click').click((e) => {
+                $(`#btn_paid_${reservationId}`).off('click').click(async (e) => {
                     if (total_amount == 0 && total_payment == 0) {
                         alert('Vui lòng chọn món để được thanh toán!')
                         return
                     }
-                    let payment_method = 'cash';
-                    let data = {
-                        _token: _token,
-                        invoiceDetail,
-                        total_payment,
-                        voucher_discount,
-                        code,
-                        payment_method
-                    }
-                    
-                    $('#pay').modal('hide'),
 
-                        CUONG.addInvoice(data)
-                        CUONG.exportAndSavePDF(reservationId)
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 3000)
+                    let checkDish = true
+
+                    await invoiceDetail.invoice.invoice_items.forEach(menu => {
+                        let hasKey1 = false;
+                        let hasKey2 = false;
+
+                        Object.entries(JSON.parse(menu.status_menu)).forEach(([key, value]) => {
+                            if (key == 1 && value != 0) {
+                                hasKey1 = true;
+                            }
+                            if (key == 2 && value != 0) {
+                                hasKey2 = true;
+
+                            }
+                        });
+
+                        if (hasKey1 || hasKey2) {
+                            checkDish = false; // Nếu có cả key 1 và key 2 với giá trị khác 0
+                        }
+
+                    });
+
+                    if (checkDish) {
+                        let payment_method = 'cash';
+                        let data = {
+                            _token: _token,
+                            invoiceDetail,
+                            total_payment,
+                            voucher_discount,
+                            code,
+                            payment_method
+                        };
+
+                        $('#pay').modal('hide');
+
+                        CUONG.addInvoice(data);
+                        CUONG.exportAndSavePDF(reservationId);
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 3000);
+                    } else {
+                        alert('Món ăn chưa lên đầy đủ!');
+                        return;
+                    }
                 });
             }
 
