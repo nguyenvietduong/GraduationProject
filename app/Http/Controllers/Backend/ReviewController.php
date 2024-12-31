@@ -50,6 +50,7 @@ class ReviewController extends Controller
      */
     public function index(ReviewListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         session()->forget('image_review_temp'); // Clear temporary image value
         // Validate the request data

@@ -23,13 +23,19 @@ class RoleSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Manager',
+                'name' => 'Staff',
                 'authorities' => 'admin',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'Customer',
+                'name' => 'Kitchen Staff',
+                'authorities' => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'User',
                 'authorities' => '',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -42,7 +48,7 @@ class RoleSeeder extends Seeder
                 'email' => 'duongnv@hblab.vn',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
-                'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 1
+                'role_id' => 4, // Giả định rằng bạn đã có một role với ID = 1
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -52,7 +58,7 @@ class RoleSeeder extends Seeder
                 'email' => 'ducpmph33321@fpt.edu.vn',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
-                'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 1
+                'role_id' => 4, // Giả định rằng bạn đã có một role với ID = 1
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -62,7 +68,7 @@ class RoleSeeder extends Seeder
                 'email' => 'Cuongato2k4@gmail.com',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
-                'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 2
+                'role_id' => 4, // Giả định rằng bạn đã có một role với ID = 2
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -72,7 +78,7 @@ class RoleSeeder extends Seeder
                 'email' => 'trucbntdev7204@gmail.com',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
-                'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 2
+                'role_id' => 4, // Giả định rằng bạn đã có một role với ID = 2
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -82,14 +88,14 @@ class RoleSeeder extends Seeder
                 'email' => 'tandz20004@gmail.com',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
-                'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 2
+                'role_id' => 4, // Giả định rằng bạn đã có một role với ID = 2
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'full_name' => 'Nguyễn Thị Hương',
-                'phone' => '0396416189',
-                'email' => 'nguyenthihuong.qc2004@gmail.com',
+                'full_name' => 'Admin',
+                'phone' => '0999999999',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
                 'role_id' => 1, // Giả định rằng bạn đã có một role với ID = 2
@@ -97,16 +103,25 @@ class RoleSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'full_name' => 'Người dùng',
-                'phone' => '012345678',
-                'email' => 'user0@example.com',
-                'password' => Hash::make('012345678'), // Mã hóa mật khẩu
+                'full_name' => 'Nhân viên cửa hàng',
+                'phone' => '0396416189',
+                'email' => 'staff@gmail.com',
+                'password' => Hash::make('12345678'), // Mã hóa mật khẩu
+                'status' => 'normal',
+                'role_id' => 2, // Giả định rằng bạn đã có một role với ID = 2
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'full_name' => 'Nhân viên bếp',
+                'phone' => '0921044773',
+                'email' => 'kitchenstaff@gmail.com',
+                'password' => Hash::make('12345678'), // Mã hóa mật khẩu
                 'status' => 'normal',
                 'role_id' => 3, // Giả định rằng bạn đã có một role với ID = 2
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Thêm nhiều người dùng ở đây nếu cần
         ]);
     }
 }

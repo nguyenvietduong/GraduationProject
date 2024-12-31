@@ -39,7 +39,7 @@ class CategoryController extends Controller
      */
     public function index(CategoryListRequest $request)
     {
-        // $this->authorize('modules', '' . self::OBJECT . '.index');
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
         $request->validated();
@@ -71,7 +71,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        // $this->authorize('modules', 'edit accounts');
+        $this->authorize('modules', '' . self::OBJECT . '.create');
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'category',
         ]);
@@ -104,7 +104,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        // Retrieve the details of the Category
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         $category = $this->categoryService->getCategoryDetail($id);
         if ($category) {
             return view(self::PATH_VIEW . __FUNCTION__, [

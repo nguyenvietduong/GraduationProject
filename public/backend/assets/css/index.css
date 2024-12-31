@@ -28,11 +28,11 @@
     opacity: 0.4;
     cursor: not-allowed !important;
 }
-
+/* 
 .cursor-not-allowed-menu:hover::after {
     content: "Đã lên món!";
     position: absolute;
-    top: 50%; /* Đặt tooltip bên dưới */
+    top: 50%; 
     left: 50%;
     transform: translateX(-50%);
     background-color: #000000;
@@ -43,8 +43,8 @@
     white-space: nowrap;
     z-index: 9999;
     opacity: 1;
-    pointer-events: none; /* Để không bị cản trở khi hover */
-}
+    pointer-events: none; 
+} */
 
 .cursor-not-allowed-menu::after {
     opacity: 0;

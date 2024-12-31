@@ -28,13 +28,25 @@
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h4 class="card-title">{{ __('messages.invoice.fields.invoice_detail') }}</h4>
+                                        <h4 class="card-title">Số
+                                            khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
+
+                                        @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
+                                            <h4 class="card-title">
+                                                Bàn sử dụng:
+                                                {{ $reservationDetail->pluck('table_name')->implode(', ') }}
+                                            </h4>
+                                        @else
+                                            <p class="text-center">Không có dữ liệu</p>
+                                        @endif
                                     </div><!--end col-->
                                 </div> <!--end row-->
                             </div><!--end card-header-->
                             <div class="card-body pt-0">
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <h5 class="">{{ __('messages.invoice.fields.invoice_detail') }}</h5>
+
                                         @if (isset($invoiceDetail) && is_object($invoiceDetail) && $invoiceDetail->isNotEmpty())
                                             <table class="table " border="1">
                                                 <thead class="table-light">
@@ -109,49 +121,6 @@
                                             <p class="text-center">Không có dữ liệu</p>
                                         @endif
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h4 class="card-title">
-                                        {{ __('messages.reservation_details.fields.reservation_detail') }} - Số
-                                        khách: {{ $guest ?? 'Không có dữ liệu' }}</h4>
-                                </div><!--end col-->
-                            </div> <!--end row-->
-                        </div><!--end card-header-->
-                        <div class="card-body pt-0">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    @if (isset($reservationDetail) && is_object($reservationDetail) && $reservationDetail->isNotEmpty())
-                                        <table class="table" border="1">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Bàn</th>
-                                                    <th>Tối đa</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($reservationDetail as $key => $data)
-                                                    @php
-                                                        $total_amount += $data->total;
-                                                    @endphp
-                                                    <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td> {{ $data->table->name ?? 'Không có dữ liệu' }}</td>
-                                                        <td> {{ $data->table->capacity ?? 'Không có dữ liệu' }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <p class="text-center">Không có dữ liệu</p>
-                                    @endif
                                 </div>
                             </div>
                         </div>

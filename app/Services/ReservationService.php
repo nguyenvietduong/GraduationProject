@@ -50,6 +50,18 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         }
     }
 
+    public function getAllReservationsArrived(array $filters = [], int $perPage = 5)
+    {
+        try {
+            // Retrieve reservations from the repository using filters and pagination
+            return $this->reservationRepository->getAllReservationsArrived($filters, $perPage);
+        } catch (Exception $e) {
+            // Handle any exceptions that occur while retrieving reservations
+            throw new Exception('Unable to retrieve reservation list: ' . $e->getMessage());
+        }
+    }
+
+
     /**
      * Get the details of a reservation by its ID.
      *

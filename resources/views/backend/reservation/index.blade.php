@@ -25,14 +25,44 @@
             position: relative;
         }
 
-        /* .menu-info:hover {
-                background-color: #f0f0f0;
-                transform: scale(1.05);
-            } */
-
         .menu-info.selected {
             border-color: #00ff40;
             background-color: #d1ffe4;
+        }
+
+        /* Giao diện Sold Out */
+        .menu-info.sold-out {
+            opacity: 0.6;
+            /* Làm mờ */
+            pointer-events: none;
+            /* Không thể click */
+            cursor: not-allowed !important;
+            /* Con trỏ cấm */
+            background-color: #f9f9f9;
+            /* Nền nhạt */
+            border-color: rgba(255, 0, 0, 0.9);
+        }
+
+        .menu-info.sold-out img {
+            filter: grayscale(100%);
+            /* Ảnh đen trắng */
+        }
+
+        .menu-info.sold-out::after {
+            content: "Sold Out";
+            /* Thêm chữ */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 0, 0, 0.9);
+            /* Nền mờ */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
     </style>
     <div class="container-xxl">
@@ -101,6 +131,15 @@
                                                         </div>
                                                     </div><!--end col-->
                                                     <div class="col-lg-5">
+                                                        <div class="">
+                                                            <h5>Chú thích</h5>
+                                                            <button class="btn btn-primary btn-sm">0</button>: Số lượng món
+                                                            xác nhận
+                                                            <button class="btn btn-warning btn-sm">0</button>: Số lượng món
+                                                            đang nấu
+                                                            <button class="btn btn-success btn-sm">0</button>: Số lượng món
+                                                            hoàn thành
+                                                        </div>
                                                     </div><!--end col-->
 
                                                 </div> <!--end row-->
@@ -116,7 +155,7 @@
                                                         <div class="card-header px-0">
                                                             <div class="row align-items-center">
                                                                 <div class="col">
-                                                    
+
                                                                 </div><!--end col-->
                                                             </div> <!--end row-->
                                                         </div><!--end card-header-->
@@ -132,9 +171,10 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Tên món</th>
-                                                                        <th class="text-center">Số lượng</th>
+                                                                        <th class="text-center" style="width: 160px">Số
+                                                                            lượng</th>
                                                                         <th class="text-center">Thành tiền</th>
-                                                                        <th class="text-end">Lên món</th>
+                                                                        <th class="text-center">Lên món</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="array-menu"></tbody>
@@ -269,7 +309,7 @@
         </div>
     </div>
 
-    <div class="cursor-not-allowed-menu" title="Đã lên món không thể hủy"></div>    
+    <div class="cursor-not-allowed-menu" title="Đã lên món không thể hủy"></div>
 
     @push('script')
         <script src="{{ asset('backend/custom/customQrCode.js') }}"></script>

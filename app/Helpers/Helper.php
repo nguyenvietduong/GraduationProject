@@ -317,8 +317,8 @@ if (!function_exists('checkBladeAdmin')) {
             } else {
                 return 'none';
             }
-        } else if (Auth::check() && Auth::user()->role_id == 4) {
-            if ($role == 4) {
+        } else if (Auth::check() && Auth::user()->role_id == 3) {
+            if ($role == 3) {
                 return '';
             } else {
                 return 'none';

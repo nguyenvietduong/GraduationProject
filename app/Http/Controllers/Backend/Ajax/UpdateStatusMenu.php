@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Ajax;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice_item;
 use Illuminate\Http\Request;
 use App\Models\Menu; // Assuming you're using the menu model
 
@@ -17,6 +18,16 @@ class UpdateStatusMenu extends Controller
 
         // Find the menu by ID
         $menu = Menu::find($request->id);
+
+        $hasInvalidStatus = Invoice_item::where('menu_id', $request->id)
+        ->whereRaw('JSON_EXTRACT(status_menu, "$.\"1\"") != "0"')
+        ->exists();
+        
+        if ($hasInvalidStatus) {
+            return response()->json([
+                'message' => 'Cannot update. Some items with the same menu_id have invalid status in status_menu.'
+            ], 403);
+        }
 
         if (!$menu) {
             return response()->json(['message' => 'menu not found'], 404);

@@ -55,6 +55,7 @@ class BlogController extends Controller
      */
     public function index(BlogListRequest $request)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.index');
         $this->tempImageService->deleteTempImagesForUser();
         session()->forget('image_blog_temp'); // Clear temporary image value
         // Validate the request data
@@ -88,6 +89,7 @@ class BlogController extends Controller
      */
     public function create()
     {
+        $this->authorize('modules', '' . self::OBJECT . '.create');
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => 'blog',
@@ -127,6 +129,7 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('modules', '' . self::OBJECT . '.edit');
         // Retrieve the details of the blog
         $blog = $this->blogService->getBlogDetail($id);
         if ($blog) {
