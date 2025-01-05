@@ -48,4 +48,5 @@ interface ReservationServiceInterface
     public function deleteReservation(int $id);
 
     public function isOrderAwaitingConfirmation(int $phone);
+    public function isIpAwaitingConfirmation(string $ipAddress);
 }

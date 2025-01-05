@@ -109,3 +109,4 @@ Route::get("/checkVoucher", [AjaxPromotion::class, "getDetailVoucher"]);
 Route::get("/checkVoucherClient", [AjaxPromotion::class, "getDetailVoucherClient"]);
 Route::get("/searchVoucher", [AjaxPromotion::class, "searchVoucher"]);
 Route::get("/getAllVoucher", [AjaxPromotion::class, "getAllVoucher"]);
+Route::get('/reservation/confirm/{code}', [ReservationController::class, 'confirm'])->name('reservation.confirm');
