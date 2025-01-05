@@ -92,8 +92,6 @@ class ReservationService extends BaseService implements ReservationServiceInterf
             $reservation_time = \Carbon\Carbon::parse($data['date'] . ' ' . $data['input-time']);
             $data['reservation_time'] = $reservation_time;
 
-            $data['status'] = 'pending';
-
             // Tạo mã ngẫu nhiên bao gồm chữ in hoa và số
             do {
                 $codeRandum = strtoupper(Str::random(9));
@@ -116,11 +114,25 @@ class ReservationService extends BaseService implements ReservationServiceInterf
 
     public function isOrderAwaitingConfirmation(int $phone)
     {
-        // Kiểm tra đơn hàng có trạng thái "chờ xác nhận"
+        $fourHoursAgo = now()->subHours(4);
+
         $orderExists = Reservation::where('phone', $phone)
             ->where('status', 'pending')
+            ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
+        return $orderExists;
+    }    
+
+    public function isIpAwaitingConfirmation(string $ipAddress)
+    {
+        $fourHoursAgo = now()->subHours(4);
+    
+        $orderExists = Reservation::where('ipAddress', $ipAddress)
+            ->where('status', 'pending')
+            ->whereBetween('created_at', [$fourHoursAgo, now()])
+            ->exists();
+        
         return $orderExists;
     }    
 

@@ -41,7 +41,8 @@
     <div class="container">
         @if ($reservation->status == 'pending')
         <h1>Xác Nhận Đặt Bàn</h1>
-        <p>Chào {{ $reservation->name }}, chúng tôi đã nhận được đơn đặt bàn vào lúc <strong>{{ formatDate($reservation->reservation_time) }}</strong> của quý khách.</p>
+        <p>Chào {{ $reservation->name }}</p>
+        <p>Chúng tôi đã nhận được đơn đặt bàn vào lúc <strong>{{ formatDate($reservation->reservation_time) }}</strong> của quý khách.</p>
         <p>Bộ phận chăm sóc khách hàng sẽ sớm liên hệ lại để hỗ trợ thêm thông tin. Sau khi xác nhận chúng tôi sẽ thông báo lại!</p>
         <p>Chúng tôi rất mong được phục vụ quý khách tại nhà hàng của chúng tôi!</p>
         <p>Trân trọng,<br>Đội ngũ Nhà Hàng</p>

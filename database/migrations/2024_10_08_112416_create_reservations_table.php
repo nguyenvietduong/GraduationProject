@@ -14,13 +14,15 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('code')->unique();
+            $table->string('confirmation_code')->nullable();
             $table->string('name');
             $table->string('email');
             $table->string('phone');
+            $table->string('ipAddress');
             $table->dateTime('reservation_time');
             $table->integer('guests');
             $table->text('special_request')->nullable();
-            $table->enum('status', ['pending', 'confirmed', 'canceled', 'completed'])->default('pending');
+            $table->enum('status', ['verification_pending', 'pending', 'confirmed', 'canceled', 'completed'])->default('verification_pending');
             $table->timestamps();
             $table->softDeletes();
 

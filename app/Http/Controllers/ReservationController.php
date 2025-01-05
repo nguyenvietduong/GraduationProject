@@ -14,9 +14,11 @@ use App\Traits\HandleExceptionTrait;
 use Illuminate\Http\Request;
 use App\Mail\ReservationCancellationMail;
 use App\Mail\ReservationConfirmed;
+use App\Mail\ReservationVerificationMail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 // Requests
 
 class ReservationController extends Controller
@@ -63,39 +65,118 @@ class ReservationController extends Controller
      * @param StoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    
     public function store(StoreRequest $request)
     {
-        // Validate the data from the request using ReservationStoreRequest
+        // Validate the data from the request
         $data = $request->validated();
-
         try {
-            // Create a new reservation
+            // Kiểm tra nếu đã có đơn đặt hàng chờ xác nhận
+            $isIpAwaitingConfirmation = $this->reservationService->isIpAwaitingConfirmation($request->ip());
+            if ($isIpAwaitingConfirmation) {
+                return redirect()->route('reservation')->with('error', 'IP này đã đặt đơn, vui lòng thử lại sau 4 tiếng!');
+            }
+            
             $isOrderAwaitingConfirmation = $this->reservationService->isOrderAwaitingConfirmation($data['phone']);
             if ($isOrderAwaitingConfirmation) {
-                return redirect()->route('reservation')->with('error', 'Số điện thoại này đã đặt một đơn đặt bàn rồi vui lòng chọn số điện thoại khác!');
-            }
-
+                return redirect()->route('reservation')->with('error', 'Số điện thoại này đã đặt đơn, vui lòng thử lại sau 4 tiếng!');
+            }            
+    
+            // Tạo mã xác nhận
+            $confirmationCode = strtoupper(Str::random(6));
+    
+            // Lưu dữ liệu đơn hàng tạm thời vào database với trạng thái 'verification_pending'
+            $data['status'] = 'verification_pending';
+            $data['ipAddress'] = $request->ip();
+            $data['confirmation_code'] = $confirmationCode;
             $reservationNew = $this->reservationService->createReservation($data);
-
-            // Reservation created successfully
-            $notificationData = [
-                'title' => __('messages.system.titleNotificationReservation'),
-                'message' => $reservationNew
-            ];
-
-            $this->notificationService->createNotification($notificationData);
-            event(new NotificationEvent($reservationNew));
-
-            // Send confirmation email
-            if (isset($reservationNew->email)) {
-                Mail::to($reservationNew->email)->send(new ReservationConfirmed($reservationNew));
-            }
-
-            return redirect()->route('reservation')->with('success', 'Đặt bàn thành công!');
+    
+            // Gửi email xác nhận
+            $confirmationUrl = route('reservation.confirm', $reservationNew->confirmation_code);
+            Mail::to($data['email'])->send(new ReservationVerificationMail($confirmationUrl));
+    
+            return redirect()->route('reservation')->with('success', 'Vui lòng kiểm tra email của bạn để xác nhận đặt bàn!');
         } catch (\Exception $e) {
             return redirect()->route('reservation')->with('error', 'Đặt bàn thất bại!');
         }
+    }    
+
+    public function confirm($code)
+    {
+        // Tìm đơn hàng theo mã xác nhận
+        $reservation = Reservation::whereNotNull('confirmation_code')
+        ->where('confirmation_code', $code)
+        ->where('status', 'verification_pending')
+        ->first();
+
+        if (!$reservation) {
+            return redirect()->route('reservation')->with('error', 'Mã xác nhận không hợp lệ hoặc đã hết hạn!');
+        }
+
+        // Cập nhật trạng thái đơn hàng thành 'pending'
+        $reservation->update(['status' => 'pending', 'confirmation_code' => null]);
+
+        $notificationData = [
+            'title' => __('messages.system.titleNotificationReservation'),
+            'message' => $reservation
+        ];
+
+        $this->notificationService->createNotification($notificationData);
+        event(new NotificationEvent($reservation));
+
+        // Send confirmation email
+        if (isset($reservation->email)) {
+            Mail::to($reservation->email)->send(new ReservationConfirmed($reservation));
+        }
+
+        return redirect()->route('reservation')->with('success', 'Đặt bàn thành công!');
     }
+
+    // public function confirms(StoreRequest $request)
+    // {
+    //     // Validate the data from the request using ReservationStoreRequest
+    //     $data = $request->validated();
+
+    //     try {
+    //         // Create a new reservation
+    //         $isOrderAwaitingConfirmation = $this->reservationService->isOrderAwaitingConfirmation($data['phone']);
+    //         if ($isOrderAwaitingConfirmation) {
+    //             return redirect()->route('reservation')->with('error', 'Số điện thoại này đã đặt một đơn đặt bàn rồi vui lòng chọn số điện thoại khác!');
+    //         }
+
+    //         $codeStore = null;
+
+    //         // Lưu mã xác nhận vào session
+    //         $confirmationCode = strtoupper(Str::random(6));
+    //         session(['confirmation_code' => $confirmationCode]);
+
+    //         // Lấy mã từ session
+    //         $cachedCode = session('confirmation_code');
+
+    //         // Xóa mã sau khi xác nhận
+    //         session()->forget('confirmation_code');
+
+    //         $reservationNew = $this->reservationService->createReservation($data);
+
+    //         // Reservation created successfully
+    //         $notificationData = [
+    //             'title' => __('messages.system.titleNotificationReservation'),
+    //             'message' => $reservationNew
+    //         ];
+
+    //         $this->notificationService->createNotification($notificationData);
+    //         event(new NotificationEvent($reservationNew));
+
+    //         // Send confirmation email
+    //         if (isset($reservationNew->email)) {
+    //             Mail::to($reservationNew->email)->send(new ReservationConfirmed($reservationNew));
+    //         }
+
+    //         return redirect()->route('reservation')->with('success', 'Đặt bàn thành công!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->route('reservation')->with('error', 'Đặt bàn thất bại!');
+    //     }
+    // }
 
     public function checkAvailability(Request $request)
     {
