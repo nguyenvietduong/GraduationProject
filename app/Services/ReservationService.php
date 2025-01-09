@@ -112,16 +112,30 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         }
     }
 
-    public function isOrderAwaitingConfirmation(int $phone)
+    public function isOrderAwaitingConfirmation(int $phone, string $email)
     {
         $fourHoursAgo = now()->subHours(4);
-
-        $orderExists = Reservation::where('phone', $phone)
-            ->where('status', 'pending')
+    
+        // Kiểm tra riêng biệt số điện thoại
+        $phoneExists = Reservation::where('phone', $phone)
+            ->where('status', '!=', 'verification_pending')
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
-        return $orderExists;
+        // Kiểm tra riêng biệt email
+        $emailExists = Reservation::where('email', $email)
+            ->where('status', '!=', 'verification_pending')
+            ->whereBetween('created_at', [$fourHoursAgo, now()])
+            ->exists();
+    
+        // Kiểm tra cả số điện thoại và email cùng lúc
+        $bothExist = Reservation::where('phone', $phone)
+            ->where('email', $email)
+            ->where('status', '!=', 'verification_pending')
+            ->whereBetween('created_at', [$fourHoursAgo, now()])
+            ->exists();
+    
+        return $phoneExists || $emailExists || $bothExist;
     }    
 
     public function isIpAwaitingConfirmation(string $ipAddress)
@@ -129,7 +143,7 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         $fourHoursAgo = now()->subHours(4);
     
         $orderExists = Reservation::where('ipAddress', $ipAddress)
-            ->where('status', 'pending')
+        ->where('status', '!=', 'verification_pending')
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
         
