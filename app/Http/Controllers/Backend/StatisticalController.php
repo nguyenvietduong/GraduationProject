@@ -270,23 +270,23 @@ class StatisticalController extends Controller
             ->groupBy('month') // Không đổi
             ->orderBy('month') // Không đổi
             ->pluck('user_count', 'month') // Không đổi
-            ->toArray();    
-    
+            ->toArray();
+
         // Khởi tạo kết quả cho 12 tháng, mặc định là 0
         $result = [];
         for ($month = 1; $month <= 12; $month++) {
             $result['Tháng ' . $month] = $userData[$month] ?? 0; // Nếu không có dữ liệu, trả về 0
         }
-    
+
         return $result;
-    }    
+    }
 
     private function calculateYearlyCustomerCount()
     {
         // Define start and end years
         $startDate = 2020;
         $endDate = Carbon::now()->year;
-        
+
         // Query the customer count data based on the selected years
         $user_count = Invoice::where('status', 'paid') // Removed 'invoices.' as it's not necessary
             ->whereBetween('created_at', [
@@ -298,34 +298,34 @@ class StatisticalController extends Controller
             ->orderBy('year') // Order by year
             ->pluck('user_count', 'year') // Pluck by year
             ->toArray();
-        
+
         // Create a range of years from 2020 to the current year
         $years = range($startDate, $endDate);
-        
+
         // Prepare the result
         $result = [];
         foreach ($years as $year) {
             // If no data for the year, set count to 0
             $result['Năm ' . $year] = $user_count[$year] ?? 0;
         }
-        
+
         return $result;
-    }    
+    }
 
     private function calculateCustomerCount($day = null, $month = null, $year = null)
     {
         $customerData = [];
-    
+
         // Handle customer count for a specific month
         if (!$day && $month && $year) {
             $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
             $endOfMonth = $startOfMonth->copy()->endOfMonth();
-    
+
             $defaultCustomerData = [];
             for ($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay()) {
                 $defaultCustomerData[$date->toDateString()] = 0;
             }
-    
+
             // Query to count unique customers (by name, email, phone) per day in the given month
             $reservations = Invoice::where('invoices.status', 'paid')
                 ->selectRaw('DATE(created_at) as day, COUNT(*) as customer_count')
@@ -333,27 +333,25 @@ class StatisticalController extends Controller
                 ->groupBy('day')
                 ->orderBy('day')
                 ->get();
-    
+
             // Map results to default data structure
             foreach ($reservations as $reservation) {
                 $defaultCustomerData[$reservation->day] = $reservation->customer_count;
             }
-    
-            return $defaultCustomerData;
-        }
 
-        else if ($day && $month && $year) {
+            return $defaultCustomerData;
+        } else if ($day && $month && $year) {
             $specificDate = Carbon::create($year, $month, $day)->startOfDay();
             $startHour = 7;
             $endHour = 22;
-        
+
             // Initialize an array for the specified hours with customer count = 0
             $defaultCustomerData = [];
             for ($hour = $startHour; $hour <= $endHour; $hour++) {
                 $hourKey = $specificDate->copy()->addHours($hour)->format('H:00');
                 $defaultCustomerData[$hourKey] = 0;
             }
-        
+
             // Query to count unique customers (by name, email, phone) per hour on the given day
             $reservations = Invoice::where('invoices.status', 'paid')
                 ->selectRaw('HOUR(created_at) as hour, COUNT(*) as customer_count')
@@ -362,7 +360,7 @@ class StatisticalController extends Controller
                 ->groupBy('hour')
                 ->orderBy('hour')
                 ->get();
-        
+
             // Map results to the data structure for each hour
             foreach ($reservations as $reservation) {
                 if (isset($reservation->hour)) {
@@ -370,13 +368,13 @@ class StatisticalController extends Controller
                     $defaultCustomerData[$hourKey] = $reservation->customer_count;
                 }
             }
-        
+
             return $defaultCustomerData;
         }
-        
+
         return $customerData;
     }
-    
+
 
     // Món ăn
     public function getMenuItemsWithReservationCounts(Request $request)
@@ -502,4 +500,40 @@ class StatisticalController extends Controller
 
         return $result;
     }
+
+    public function reservation(Request $request)
+    {
+        // Nhận giá trị ngày bắt đầu và kết thúc từ request
+        $startDate = $request->get('startDate') ? Carbon::parse($request->get('startDate')) : Carbon::today();
+        $endDate = $request->get('endDate') ? Carbon::parse($request->get('endDate')) : Carbon::today();
+    
+        // Tổng số đơn hàng trong năm
+        $totalYear = Reservation::whereYear('created_at', Carbon::now()->year)->count();
+    
+        // Tổng số đơn hàng trong khoảng thời gian (ngày bắt đầu đến ngày kết thúc)
+        $totalOrders = Reservation::whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])->count();
+    
+        // Chuẩn bị dữ liệu thống kê (theo ngày)
+        $dataChart = Reservation::selectRaw('DATE(created_at) as date, COUNT(*) as total_orders')
+            ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'date' => $item->date,
+                    'order' => $item->total_orders,
+                ];
+            });
+    
+        // Chuẩn bị dữ liệu cho view
+        $data = [
+            'totalYear' => $totalYear,      // Tổng số đơn hàng trong năm
+            'totalOrders' => $totalOrders, // Tổng số đơn hàng trong khoảng thời gian
+            'dataChart' => $dataChart,     // Số lượng đơn hàng theo ngày
+        ];
+    
+        // Trả dữ liệu về view
+        return view(self::PATH_VIEW . __FUNCTION__, compact('data', 'startDate', 'endDate'));
+    }         
 }

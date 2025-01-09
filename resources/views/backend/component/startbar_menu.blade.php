@@ -186,6 +186,13 @@ $segment = request()->segment(2);
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ set_active(['reservations'], 'active', 'admin', 3) }}"
+                            href="{{ route('admin.statistical.reservations') }}">
+                            <i class="fa fa-calendar-alt menu-icon"></i>
+                            <span>Đơn hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ set_active(['menu'], 'active', 'admin', 3) }}"
                             href="{{ route('admin.statistical.menu') }}">
                             <i class="fa fa-utensils menu-icon"></i>
