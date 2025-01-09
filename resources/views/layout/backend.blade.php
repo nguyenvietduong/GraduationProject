@@ -164,7 +164,7 @@
                         <div class="col-lg-6">
                             <label class="mb-2">Điện thoại</label>
                             <div class="input-group mb-2">
-                                <input type="number" name="phoneAddNew" class="form-control">
+                                <input type="text" name="phoneAddNew" class="form-control">
                             </div>
                             <p class="errorReservation errPhoneReservation text-danger"></p>
 

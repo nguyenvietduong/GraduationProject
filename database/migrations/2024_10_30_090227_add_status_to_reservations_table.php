@@ -12,7 +12,7 @@ return new class extends Migration {
     public function up(): void
     {
         // Modify the 'status' column to add a new value 'arrived'
-        DB::statement("ALTER TABLE reservations MODIFY COLUMN status ENUM('pending', 'confirmed', 'canceled', 'completed', 'arrived') DEFAULT 'pending'");
+        DB::statement("ALTER TABLE reservations MODIFY COLUMN status ENUM('verification_pending', 'pending', 'confirmed', 'canceled', 'completed', 'arrived') DEFAULT 'verification_pending'");
     }
 
     /**
@@ -21,6 +21,6 @@ return new class extends Migration {
     public function down(): void
     {
         // Revert the 'status' column back to its original ENUM options
-        DB::statement("ALTER TABLE reservations MODIFY COLUMN status ENUM('pending', 'confirmed', 'canceled', 'completed') DEFAULT 'pending'");
+        DB::statement("ALTER TABLE reservations MODIFY COLUMN status ENUM('verification_pending', 'pending', 'confirmed', 'canceled', 'completed') DEFAULT 'verification_pending'");
     }
 };
