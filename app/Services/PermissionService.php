@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\Repositories\PermissionRepositoryInterface;
 use App\Interfaces\Services\PermissionServiceInterface;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 
@@ -69,8 +70,11 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     public function createPermission(array $data)
     {
         try {
-            // Create the permission
-            return $this->permissionRepository->createPermission($data);
+
+            $permission = $this->permissionRepository->createPermission($data);
+
+            $role = Role::find(1);
+            $role->permissions()->attach($permission->id);
         } catch (Exception $e) {
             // Handle any errors that occur during permission creation
             throw new Exception('Unable to create permission: ' . $e->getMessage());
