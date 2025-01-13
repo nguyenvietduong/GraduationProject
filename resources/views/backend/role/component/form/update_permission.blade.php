@@ -18,8 +18,12 @@
                 @foreach ($roles as $role)
                     <td class="text-center">
                         <input {{ collect($role->permissions)->contains('id', $permission->id) ? 'checked' : '' }}
-                            type="checkbox" name="permission[{{ $role->id }}][]" value="{{ $permission->id }}"
+                            {{ $role->id == 1 ? 'disabled' : '' }} type="checkbox"
+                            name="permission[{{ $role->id }}][]" value="{{ $permission->id }}"
                             class="form-check-input" id="flexCheckDefault">
+                        @if ($role->id == 1 && $role->permissions->contains('id', $permission->id))
+                            <input type="hidden" name="permissions[]" value="{{ $permission->id }}">
+                        @endif
                     </td>
                 @endforeach
             </tr>
