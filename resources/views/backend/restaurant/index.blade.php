@@ -44,8 +44,7 @@
                                                     <input type="file" id="restaurantImageInput" name="restaurant_image"
                                                         accept="image/*" style="display: none;">
                                                     <button type="submit" id="uploadImageButton"
-                                                        class="btn btn-primary mt-2" style="display: none;">Upload
-                                                        Image</button>
+                                                        class="btn btn-primary mt-2" style="display: none;">Chỉnh sửa ảnh</button>
                                                 </form>
                                             </div>
                                             <!--end col-->
@@ -75,13 +74,13 @@
                                             <div class="col-auto" id="div-edit">
                                                 <a href="javascript:void(0);" id="editButton"
                                                     class="float-end text-muted d-inline-flex text-decoration-underline">
-                                                    <i class="iconoir-edit-pencil fs-18 me-1"></i>Edit
+                                                    <i class="iconoir-edit-pencil fs-18 me-1"></i>Chỉnh sửa
                                                 </a>
                                             </div><!--end col-->
                                             <div class="col-auto" id="div-cancel" style="display: none;">
                                                 <a href="javascript:void(0);" id="cancelButton"
                                                     class="float-end text-muted d-inline-flex text-decoration-underline">
-                                                    <i class="fas fa-times fs-18 me-1"></i>Cancel
+                                                    <i class="fas fa-times fs-18 me-1"></i>Hủy bỏ
                                                 </a>
                                             </div>
                                             <!--end col-->
