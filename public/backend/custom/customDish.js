@@ -168,7 +168,6 @@
                         <tr data-menu-id="${menu.id}" ${key == 1 ? 'class="bg_status"' : ''}> 
                             <td>${menu.name}</td>
                             <td class="text-center quantityDishMenus">${value}</td>
-                            <td class="text-center">${total}đ</td>
                             <td class="text-center">${optionsHtml}</td>
                         </tr>`;
                 }
