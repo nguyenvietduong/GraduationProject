@@ -118,20 +118,22 @@ class ReservationService extends BaseService implements ReservationServiceInterf
     
         // Kiểm tra riêng biệt số điện thoại
         $phoneExists = Reservation::where('phone', $phone)
-            ->where('status', '!=', 'verification_pending')
+            ->where('status', 'pending')
+            ->where('status', 'confirmed')
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
         // Kiểm tra riêng biệt email
         $emailExists = Reservation::where('email', $email)
-            ->where('status', '!=', 'verification_pending')
+            ->where('status', 'pending')
+            ->where('status', 'confirmed')
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
         // Kiểm tra cả số điện thoại và email cùng lúc
         $bothExist = Reservation::where('phone', $phone)
-            ->where('email', $email)
-            ->where('status', '!=', 'verification_pending')
+            ->where('status', 'pending')
+            ->where('status', 'confirmed')
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
@@ -143,7 +145,8 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         $fourHoursAgo = now()->subHours(4);
     
         $orderExists = Reservation::where('ipAddress', $ipAddress)
-        ->where('status', '!=', 'verification_pending')
+            ->where('status', 'pending')
+            ->where('status', 'confirmed')
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
         
