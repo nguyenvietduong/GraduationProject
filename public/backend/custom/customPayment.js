@@ -122,14 +122,35 @@
             },
             data: JSON.stringify(data),
             success: function (response) {
-                if (response.success) {
-                    executeExample('success');
+                if (response.success === true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: response.message,
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 } else {
-                    alert('Lỗi khi thêm hóa đơn.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại!',
+                        text: response.message,
+                    });
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error:', error);
+                let errorMessage = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+                // Kiểm tra nếu server trả về message cụ thể
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: errorMessage,
+                });
             }
         });
     }
@@ -286,10 +307,10 @@
                         $('#pay').modal('hide');
 
                         CUONG.addInvoice(data);
-                        CUONG.exportAndSavePDF(reservationId);
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 3000);
+                        // CUONG.exportAndSavePDF(reservationId);
+                        // setTimeout(() => {
+                        //     window.location.reload();
+                        // }, 3000);
                     } else {
                         alert('Món ăn chưa lên đầy đủ!');
                         return;
