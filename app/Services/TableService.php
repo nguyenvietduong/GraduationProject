@@ -64,6 +64,8 @@ class TableService implements TableServiceInterface
     public function updateTable(int $id, array $data): mixed
     {
         $table = $this->getTableDetail($id); // Check if the table exists
+        
+
         return $this->tableRepository->updateTable($id, $data);
     }
 

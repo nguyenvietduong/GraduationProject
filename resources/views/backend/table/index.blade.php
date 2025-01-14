@@ -53,7 +53,7 @@
                             }).then(() => {
                                 window.location.reload(); // Reloads the page correctly
                             });
-                        }else{
+                        } else {
                             Swal.fire({
                                 icon: 'error',
                                 title: '{{ __('Error') }}',

@@ -2,10 +2,6 @@
     background-color: rgb(240, 240, 240);
 }
 
-.disableTable {
-    pointer-events: none;
-    opacity: 0.6;
-}
 
 /* .tab-pane {
     display: flex;
@@ -28,6 +24,7 @@
     opacity: 0.4;
     cursor: not-allowed !important;
 }
+
 /* 
 .cursor-not-allowed-menu:hover::after {
     content: "Đã lên món!";
@@ -67,9 +64,10 @@
     transition: transform 0.2s, background-color 0.2s;
 }
 
+
 .table-info.selected {
     border-color: #00ff40;
-    background-color: #d1ffe4;
+    background-color: #d1ffe4 !important;
 }
 
 .menu-info {
@@ -89,4 +87,111 @@
 .menu-info.selected {
     border-color: #00ff40;
     background-color: #d1ffe4;
+}
+
+
+
+/* .table-info.selected {
+    opacity: 0.6 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    background-color: #d1ffe4 !important;
+    border-color: rgba(47, 217, 62, 0.9) !important;
+}
+
+.table-info.selected::after {
+    content: "Bàn đang chọn" !important;
+    transform: translate(-50%, -50%) !important;
+    background-color: rgba(175, 224, 28, 0.9) !important;
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+    text-transform: uppercase !important;
+} */
+
+
+
+/* Giao diện Sold Out */
+.table-info.disableTable {
+    opacity: 0.6;
+    /* Làm mờ */
+    pointer-events: none;
+    /* Không thể click */
+    cursor: not-allowed;
+    /* Con trỏ cấm */
+    background-color: #f9f9f9;
+    /* Nền nhạt */
+    border-color: rgba(175, 224, 28, 0.9);
+}
+
+.table-info.disableTable::after {
+    content: "Đang sử dụng";
+    /* Thêm chữ */
+    transform: translate(-50%, -50%);
+    background-color: rgba(175, 224, 28, 0.9);
+    /* Nền mờ */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+
+/* Giao diện Sold Out */
+.table-info.reserved {
+    opacity: 0.6 !important;
+    /* Làm mờ */
+    pointer-events: none !important;
+    /* Không thể click */
+    cursor: not-allowed !important;
+    /* Con trỏ cấm */
+    background-color: #f9f9f9 !important;
+    /* Nền nhạt */
+    border-color: rgba(78, 36, 202, 0.9) !important;
+}
+
+.table-info.reserved::after {
+    content: "Có người đặt" !important;
+    /* Thêm chữ */
+    transform: translate(-50%, -50%) !important;
+    background-color: rgba(78, 36, 202, 0.9) !important;
+    /* Nền mờ */
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+    text-transform: uppercase !important;
+}
+
+
+/* Giao diện Sold Out */
+.table-info.unactive {
+    opacity: 0.6 !important;
+    /* Làm mờ */
+    pointer-events: none !important;
+    /* Không thể click */
+    cursor: not-allowed !important;
+    /* Con trỏ cấm */
+    background-color: #f9f9f9 !important;
+    /* Nền nhạt */
+    border-color: rgba(255, 0, 0, 0.9) !important;
+}
+
+.table-info.unactive::after {
+    content: "Không hoạt động" !important;
+    /* Thêm chữ */
+    transform: translate(-50%, -50%) !important;
+    background-color: rgba(255, 0, 0, 0.9) !important;
+    /* Nền mờ */
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+    text-transform: uppercase !important;
 }
