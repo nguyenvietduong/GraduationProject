@@ -4,7 +4,15 @@
         <tr>
             <th></th>
             @foreach ($roles as $role)
-                <th class="text-center">{{ $role->name }}</th>
+                @if ($role->id != 4)
+                    @if ($role->id == 1)
+                        <th class="text-center">Admin</th>
+                    @elseif ($role->id == 2)
+                        <th class="text-center">Nhân viên</th>
+                    @elseif ($role->id == 3)
+                        <th class="text-center">Nhân viên bếp</th>
+                    @endif
+                @endif
             @endforeach
         </tr>
         @foreach ($permissions as $permission)
@@ -16,15 +24,17 @@
                     </div>
                 </td>
                 @foreach ($roles as $role)
-                    <td class="text-center">
-                        <input {{ collect($role->permissions)->contains('id', $permission->id) ? 'checked' : '' }}
-                            {{ $role->id == 1 ? 'disabled' : '' }} type="checkbox"
-                            name="permission[{{ $role->id }}][]" value="{{ $permission->id }}"
-                            class="form-check-input" id="flexCheckDefault">
-                        @if ($role->id == 1 && $role->permissions->contains('id', $permission->id))
-                            <input type="hidden" name="permissions[]" value="{{ $permission->id }}">
-                        @endif
-                    </td>
+                    @if ($role->id != 4)
+                        <td class="text-center">
+                            <input {{ collect($role->permissions)->contains('id', $permission->id) ? 'checked' : '' }}
+                                {{ $role->id == 1 ? 'disabled' : '' }} type="checkbox"
+                                name="permission[{{ $role->id }}][]" value="{{ $permission->id }}"
+                                class="form-check-input" id="flexCheckDefault">
+                            @if ($role->id == 1 && $role->permissions->contains('id', $permission->id))
+                                <input type="hidden" name="permissions[]" value="{{ $permission->id }}">
+                            @endif
+                        </td>
+                    @endif
                 @endforeach
             </tr>
         @endforeach
