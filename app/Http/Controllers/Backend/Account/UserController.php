@@ -32,7 +32,7 @@ class UserController extends Controller
     const PATH_VIEW = 'backend.account.';
     const PER_PAGE_DEFAULT = 5;
     const OBJECT = 'user';
-    const ROLE = 3;
+    const ROLE = 4;
 
     public function __construct(
         AccountServiceInterface $accountService,

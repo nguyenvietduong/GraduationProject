@@ -34,11 +34,14 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllAccount(array $filters = [], $perPage = 5, $role = 'user')
+    public function getAllAccount(array $filters = [], $perPage = 5, $role = 4)
     {
         $query = $this->model->query();
-
-        $query->where('role_id', $role);
+        if (is_array($role)) {
+            $query->whereIn('role_id', $role);
+        } else {
+            $query->where('role_id', $role);
+        }
 
         // Apply search filters
         if (!empty($filters['search'])) {
