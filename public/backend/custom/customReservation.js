@@ -624,17 +624,20 @@
         });
 
         // Xử lý khi nhấn nút giảm số lượng
-        $('#array-menu').off('click').on('click', '.decrease-btn', function () {
+        $(document).off('click').on('click', '.decrease-btn', function () {
+            console.log("Click dec..");
             let quantityPrimary = 0
             const menuId = $(this).data('menu-id');
             const input = $(`.quantity-input[data-menu-id="${menuId}"]`);
             const inputQuantityPrimary = $('.quantityPrimary-' + menuId)
             quantityPrimary = inputQuantityPrimary.text()
-            
+
             // const currentValue = parseInt(input.val(), 10);
             const menu = selectedMenus.invoice_item.find(item => item.id === menuId);
             const currentValue = menu.quantity
             if (dataInvoice != null) {
+                console.log("dataInvoice " + dataInvoice);
+
                 const dataInvoiceItem = dataInvoice.find(item => item.id === menuId)
 
                 if (parseInt(quantityPrimary) != 0) {
@@ -880,7 +883,7 @@
                 $('.errNameReservation').append('Tên khách hàng không được quá 255 ký tự');
                 checked = false;
             }
-            
+
             if (!email) {
                 $('.errEmailReservation').append('Email khách hàng không được trống')
                 checked = false
