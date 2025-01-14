@@ -906,6 +906,9 @@
             } else if (isNaN(guest) || parseInt(guest) <= 0) {
                 $('.errGuestReservation').append('Số lượng khách phải là số lớn hơn 0');
                 checked = false;
+            } else if (isNaN(guest) || parseInt(guest) > 100) {
+                $('.errGuestReservation').append('Số lượng khách không được vượt quá 100');
+                checked = false;
             }
 
             if (checked == true) {
