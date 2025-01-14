@@ -79,7 +79,6 @@
                                         <tr>
                                             <th class=" bg-primary">Tên món</th>
                                             <th class="text-center bg-primary">Số lượng</th>
-                                            <th class="text-center bg-primary">Thành tiền</th>
                                             <th class="text-center bg-primary">Trạng thái</th>
                                         </tr>
                                     </thead>

@@ -7,7 +7,7 @@
                     <label for="reservation_time">Thời gian đặt</label> <!-- Thêm id cho label -->
                 </div>
                 <div class="col-7">
-                    <input type="datetime-local" class="form-control" id="reservation_time" name="reservation_time"
+                    <input type="date" class="form-control" id="reservation_time" name="reservation_time"
                         value="{{ request('reservation_time') ?: old('reservation_time') }}">
                 </div>
             </div>
