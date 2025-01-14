@@ -116,27 +116,27 @@ class ReservationService extends BaseService implements ReservationServiceInterf
     {
         $fourHoursAgo = now()->subHours(4);
     
+        // Danh sách các trạng thái cần kiểm tra
+        $statuses = ['verification_pending', 'pending', 'confirmed'];
+    
         // Kiểm tra riêng biệt số điện thoại
         $phoneExists = Reservation::where('phone', $phone)
-            ->where('status', 'verification_pending')
-            ->where('status', 'pending')
-            ->where('status', 'confirmed')
+            ->whereIn('status', $statuses) // Sử dụng whereIn
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
         // Kiểm tra riêng biệt email
         $emailExists = Reservation::where('email', $email)
-            ->where('status', 'verification_pending')
-            ->where('status', 'pending')
-            ->where('status', 'confirmed')
+            ->whereIn('status', $statuses) // Sử dụng whereIn
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
         // Kiểm tra cả số điện thoại và email cùng lúc
-        $bothExist = Reservation::where('phone', $phone)
-            ->where('status', 'verification_pending')
-            ->where('status', 'pending')
-            ->where('status', 'confirmed')
+        $bothExist = Reservation::where(function ($query) use ($phone, $email) {
+                $query->where('phone', $phone)
+                      ->orWhere('email', $email);
+            })
+            ->whereIn('status', $statuses) // Sử dụng whereIn
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
@@ -147,15 +147,16 @@ class ReservationService extends BaseService implements ReservationServiceInterf
     {
         $fourHoursAgo = now()->subHours(4);
     
+        // Danh sách các trạng thái cần kiểm tra
+        $statuses = ['verification_pending', 'pending', 'confirmed'];
+    
         $orderExists = Reservation::where('ipAddress', $ipAddress)
-            ->where('status', 'verification_pending')
-            ->where('status', 'pending')
-            ->where('status', 'confirmed')
+            ->whereIn('status', $statuses) // Sử dụng whereIn
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
-        
+    
         return $orderExists;
-    }    
+    }
 
     /**
      * Update a reservation by its ID.
