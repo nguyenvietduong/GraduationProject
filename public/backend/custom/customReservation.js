@@ -44,10 +44,35 @@
                 type: 'POST',
                 data: data,
                 success: async function (response) {
-                    // executeExample('success')
+                    if (response.success === true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: response.message,
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thất bại!',
+                            text: response.message,
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
-                    executeExample('error')
+                    let errorMessage = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+                    // Kiểm tra nếu server trả về message cụ thể
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: errorMessage,
+                    });
                 }
             })
         }
@@ -73,10 +98,35 @@
                 type: 'POST',
                 data: data,
                 success: async function (response) {
-                    // executeExample('success')
+                    if (response.success === true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: response.message,
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thất bại!',
+                            text: response.message,
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
-                    executeExample('error')
+                    let errorMessage = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+                    // Kiểm tra nếu server trả về message cụ thể
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: errorMessage,
+                    });
                 }
             })
         }
@@ -235,10 +285,15 @@
     //Render Data Table & Menus
     PMD.renderListTable = (data) => {
         let disable
+        let unactive
+        let reserved
         data.forEach(function (table) {
-            (table.status == 'occupied') ? disable = 'disableTable' : disable = ''
+            (table.status == 'occupied') ? disable = ' disableTable' : disable = '';
+            (table.status == 'out_of_service') ? unactive = ' unactive' : unactive = '';
+            (table.status == 'reserved') ? reserved = ' reserved' : reserved = ''
+
             $('#availableTables').append(`
-            <div class="table-info col-3 mb-4 ${disable}" data-table-id="${table.id}" data-table-name="${table.name}">
+            <div class="table-info col-3 mb-4${disable}${unactive}${reserved}" data-table-id="${table.id}" data-table-name="${table.name}">
                 <p>Bàn: ${table.name}</p>
                 <p>Số người tối đa: ${table.capacity}</p>
             </div>
@@ -347,8 +402,10 @@
                 PMD.renderNotiTable(guestsReservation)
             }
             let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
+            console.log(invoiceData);
             let dataItem = await PMD.getInvoiceDataDetail(reservationId);
             if (invoiceData.length != []) {
+                console.log(111111);
                 const dataInvoiceItem = dataItem.invoice_item
                 let selectedMenus = {
                     invoice_id: invoiceData.invoice_id,
@@ -404,6 +461,8 @@
                 PMD.checkButtonAddInvoice(selectedMenus, guestsReservation, true)
                 return
             } else {
+                console.log(22222);
+
                 let selectedMenus = {
                     reservation_id: reservationId,
                     reservation_code: reservationCode,
@@ -531,12 +590,6 @@
                 } else {
                     PMD.createInvoiceDataDetail(item, guest)
                 }
-
-                $('#exampleModal').modal('hide')
-
-                localStorage.setItem('showSuccessMessage', 'true')
-
-                window.location.reload()
             }
         })
     }
@@ -838,6 +891,13 @@
         if (localStorage.getItem('showSuccessMessage') === 'true') {
             executeExample('success')
             localStorage.removeItem('showSuccessMessage') // Xóa sau khi hiển thị
+        }
+    }
+
+    PMD.showErrorMessage = () => {
+        if (localStorage.getItem('showErrorMessage') === 'true') {
+            executeExample('error')
+            localStorage.removeItem('showErrorMessage') // Xóa sau khi hiển thị
         }
     }
 

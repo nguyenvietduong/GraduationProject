@@ -10,10 +10,6 @@
             transition: transform 0.2s, background-color 0.2s;
         }
 
-        .table-info.selected {
-            border-color: #00ff40;
-            background-color: #d1ffe4;
-        }
 
         .menu-info {
             padding: 10px;
@@ -51,9 +47,6 @@
         .menu-info.sold-out::after {
             content: "Sold Out";
             /* Thêm chữ */
-            position: absolute;
-            top: 50%;
-            left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 0, 0, 0.9);
             /* Nền mờ */
