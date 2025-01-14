@@ -6,7 +6,7 @@
                 @include('backend.component.card-component', [
                     'title' => __('messages.system.table.title') . ' ' . __('messages.' . $object . '.title'),
                     'totalRecords' => $roleTotalRecords,
-                    'createRoute' => route('admin.' . $object . '.create'), // Corrected the route syntax
+                    'createRoute' => null, // Corrected the route syntax
                     'permission' => TRUE,
                 ])
 
