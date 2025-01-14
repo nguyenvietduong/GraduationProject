@@ -15,7 +15,7 @@
             </div>
 
             <div class="col-lg-6 col-12 mb-2">
-                <label for="description" class="form-label">Mô tả <span class="text-danger">*</span></label>
+                <label for="description" class="form-label">Mô tả</label>
                 <input type="text" class="form-control @error('description') is-invalid @enderror" id="description"
                     name="description" value="{{ old('description') }}" placeholder="Mô tả">
                 @error('description')
@@ -31,11 +31,10 @@
                         class="text-danger">*</span></label>
                 <select name="status" id="status" class="form-control @error('status') is-invalid @enderror"
                     required>
-                    <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
-                    <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>Occupied</option>
-                    <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>Reserved</option>
-                    <option value="out_of_service" {{ old('status') == 'out_of_service' ? 'selected' : '' }}>Out of
-                        Service
+                    <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Còn chỗ</option>
+                    <option value="occupied" {{ old('status') == 'occupied' ? 'selected' : '' }}>Đang dùng</option>
+                    <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>Có người đặt</option>
+                    <option value="out_of_service" {{ old('status') == 'out_of_service' ? 'selected' : '' }}>Không hoạt động
                     </option>
                 </select>
                 @error('status')

@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email');
             $table->string('phone');
-            $table->string('ipAddress');
+            $table->string('ipAddress')->nullable();
             $table->dateTime('reservation_time');
             $table->integer('guests');
             $table->text('special_request')->nullable();

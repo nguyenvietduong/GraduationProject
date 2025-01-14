@@ -15,7 +15,7 @@
             </div>
 
             <div class="col-lg-6 col-12 mb-2">
-                <label for="description" class="form-label">Mô tả <span class="text-danger">*</span></label>
+                <label for="description" class="form-label">Mô tả</label>
                 <input type="text" class="form-control @error('description') is-invalid @enderror" id="description"
                     name="description" value="{{ $tableData->description }}" placeholder="Mô tả">
                 @error('description')
@@ -32,21 +32,17 @@
                 <input type="text" name="" class="form-control" id=""
                     value="{{ $tableData->status }}" readonly>
                 <input type="hidden" name="status" value="{{ $tableData->status }}">
-                {{-- <select disabled name="" id="status"
-                    class="form-select form-select-lm  @error('status') is-invalid @enderror" id="status">
-                    @php
-                        $status = request('status') ?: old('status');
-                        $statuses = __('messages.table.status');
-                    @endphp
-                    @foreach ($statuses as $key => $option)
-                        <option value="{{ $key }}" @selected($key == $tableData->status)>
-                            {{ $option }}
-                        </option>
-                    @endforeach
-                </select> --}}
-                {{-- @error('status')
+                <select name="status" id="status" class="form-control @error('status') is-invalid @enderror"
+                    required>
+                    <option value="available" @selected('available' == $tableData->status) {{ old('status') == 'available' ? 'selected' : '' }}>Còn chỗ</option>
+                    <option value="occupied" @selected('occupied' == $tableData->status) {{ old('status') == 'occupied' ? 'selected' : '' }}>Đang dùng</option>
+                    <option value="reserved" @selected('reserved' == $tableData->status) {{ old('status') == 'reserved' ? 'selected' : '' }}>Có người đặt</option>
+                    <option value="out_of_service" @selected('out_of_service' == $tableData->status) {{ old('status') == 'out_of_service' ? 'selected' : '' }}>Không hoạt động
+                    </option>
+                </select>
+                @error('status')
                     <div class="invalid-feedback">{{ $message }}</div>
-                @enderror --}}
+                @enderror
             </div>
 
             <!-- Sức chứa -->
@@ -63,7 +59,7 @@
         </div>
 
         <!-- Vị trí -->
-        <div class="mb-2">
+        {{-- <div class="mb-2">
             <label for="position" class="form-label">{{ __('messages.table.fields.position') }} <span
                     class="text-danger">*</span></label>
             <input type="number" class="form-control @error('position') is-invalid @enderror" id="position"
@@ -72,7 +68,7 @@
             @error('position')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
-        </div>
+        </div> --}}
 
         <!--end row-->
     </div>

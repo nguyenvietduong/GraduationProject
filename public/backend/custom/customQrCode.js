@@ -46,7 +46,7 @@
 
         async function checkPaid(price, content) {
             try {
-                const response = await fetch("https://script.google.com/macros/s/AKfycbzhLxN13bSRrEUygDXl7BF9JasEYl2LrAZInsgl9jeLhgwUkAvI-NCXbn2_CewoGC5XgA/exec");
+                const response = await fetch("https://script.google.com/a/macros/hblab.vn/s/AKfycbx6XZBcqxPY2buuBxMzs9VyDy2NvUO8tL1CtQ1NlejokPrS5z_tJZy6-AbxBhGhbh-C/exec");
 
                 if (!response.ok) {
                     console.error('Error with fetch:', response.status, response.statusText);
