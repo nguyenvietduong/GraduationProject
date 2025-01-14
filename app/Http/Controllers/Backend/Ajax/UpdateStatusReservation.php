@@ -177,7 +177,7 @@ class UpdateStatusReservation extends Controller
                 $tableStatus = Table::where('id', $table['id'])->value('status');
 
                 if ($tableStatus !== 'available') {
-                    throw new \Exception('Bàn này không còn chỗ.');
+                    throw new \Exception('Bàn không còn chỗ.');
                 }
 
                 // Kiểm tra xem bàn đã tồn tại trong chi tiết đặt bàn chưa
@@ -196,6 +196,7 @@ class UpdateStatusReservation extends Controller
                 }
             }
 
+            $messageErrorMenu = 'Món ';
 
 
             // Lặp qua danh sách món ăn trong hóa đơn
@@ -204,7 +205,8 @@ class UpdateStatusReservation extends Controller
 
                 if ($menuStatus !== 'active') {
                     // Nếu món ăn không hoạt động, trả về lỗi
-                    throw new \Exception('Món "' . $item['name'] . '" hiện không hoạt động.');
+                    $messageErrorMenu .= $item['name'] . ', ';
+                    $checkError = false;
                 }
 
 
@@ -223,6 +225,10 @@ class UpdateStatusReservation extends Controller
                     'total' => $item['total'],
                     'status_menu' => json_encode($temp)
                 ]);
+            }
+
+            if ($checkError === false) {
+                throw new \Exception($messageErrorMenu . 'hiện không hoạt động.');
             }
 
             DB::commit();
@@ -251,13 +257,16 @@ class UpdateStatusReservation extends Controller
             $invoice->update(['total_amount' => $data['total_amount']]);
 
             $invoice->invoiceItems()->delete();
+            $messageErrorMenu = 'Món ';
 
             foreach ($invoiceItems as $item) {
                 $menuStatus = Menu::where('id', $item['id'])->value('status');
 
                 if ($menuStatus !== 'active') {
                     // Nếu món ăn không hoạt động, trả về lỗi
-                    throw new \Exception('Món "' . $item['name'] . '" hiện không hoạt động.');
+                    $messageErrorMenu .= $item['name'] . ', ';
+                    $checkError = false;
+
                 }
 
                 $invoice->invoiceItems()->create([
@@ -270,6 +279,9 @@ class UpdateStatusReservation extends Controller
                     'is_served' => $item['is_served'],
                     'status_menu' => json_encode($item['status_menu'])
                 ]);
+            }
+            if ($checkError === false) {
+                throw new \Exception($messageErrorMenu . 'hiện không hoạt động.');
             }
             DB::commit();
 
