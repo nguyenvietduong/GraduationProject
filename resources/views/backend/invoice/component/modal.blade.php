@@ -65,7 +65,7 @@
                                                         @endphp
                                                         <tr>
                                                             <td>{{ $key + 1 }}</td>
-                                                            <td> {{ $data->menu->name ?? 'Không có dữ liệu' }}</td>
+                                                            <td> {{ $data->menu_name ?? 'Không có dữ liệu' }}</td>
                                                             <td> {{ $data->quantity ?? 0 }}</td>
                                                             <td>{{ number_format($data->price * $data->quantity ?? 0, 0, ',', '.') }}
                                                                 đ</td>

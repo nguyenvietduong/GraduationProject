@@ -170,7 +170,7 @@
 
                             <label class="mb-2">Số người</label>
                             <div class="input-group mb-2">
-                                <input type="number" name="guestAddNew" class="form-control">
+                                <input type="text" name="guestAddNew" class="form-control">
                             </div>
                             <p class="errorReservation errGuestReservation text-danger"></p>
 
