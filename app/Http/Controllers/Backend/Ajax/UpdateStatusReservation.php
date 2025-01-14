@@ -227,7 +227,7 @@ class UpdateStatusReservation extends Controller
                 ]);
             }
 
-            if ($checkError === false) {
+            if (isset($checkError) && $checkError === false) {
                 throw new \Exception($messageErrorMenu . 'hiện không hoạt động.');
             }
 
@@ -280,7 +280,7 @@ class UpdateStatusReservation extends Controller
                     'status_menu' => json_encode($item['status_menu'])
                 ]);
             }
-            if ($checkError === false) {
+            if (isset($checkError) && $checkError === false) {
                 throw new \Exception($messageErrorMenu . 'hiện không hoạt động.');
             }
             DB::commit();
