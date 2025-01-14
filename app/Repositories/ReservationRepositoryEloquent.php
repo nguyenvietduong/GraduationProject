@@ -46,6 +46,10 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
             $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
 
+        if (!empty($filters['isCanceled'])) {
+            $query->where('status', $filters['isCanceled']);
+        }
+
         if (!empty($filters['email'])) {
             $query->where('email', $filters['email']);
         }

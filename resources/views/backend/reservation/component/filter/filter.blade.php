@@ -28,5 +28,14 @@
             <input type="text" class="form-control" id="phone" placeholder="Số điện thoại..." name="phone"
                 value="{{ request('phone') ?: old('phone') }}">
         </div>
+
+        <div class="col-12 col-md mb-2">
+            <div class="form-check">
+                <input class="form-check-input" {{ request()->get('isCanceled') ? 'checked' : '' }} type="checkbox" name="isCanceled" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Đã hủy
+                </label>
+            </div>
+        </div>
     </div>
 </div>
