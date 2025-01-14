@@ -75,8 +75,8 @@ class ReservationController extends Controller
             $isIpAwaitingConfirmation = $this->reservationService->isIpAwaitingConfirmation($request->ip());
             $isOrderAwaitingConfirmation = $this->reservationService->isOrderAwaitingConfirmation($data['phone'], $data['email']);
             
-            if ($isIpAwaitingConfirmation && $isOrderAwaitingConfirmation) {
-                return redirect()->route('reservation')->with('error', 'Để bảo vệ hệ thống, bạn chỉ có thể gửi yêu cầu mỗi 4 tiếng. Vui lòng thử lại sau. Xin cảm ơn!');
+            if (($isIpAwaitingConfirmation && $isOrderAwaitingConfirmation) || $isIpAwaitingConfirmation || $isOrderAwaitingConfirmation) {
+                return redirect()->route('reservation')->with('error', 'Để tránh SPAM, bạn chỉ có thể gửi yêu cầu mỗi 4 tiếng. Vui lòng thử lại sau. Xin cảm ơn!');
             }            
     
             // Tạo mã xác nhận
