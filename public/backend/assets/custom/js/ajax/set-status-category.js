@@ -19,7 +19,7 @@ $(document).ready(function () {
             data: data,
             success: function (response) {
                 if (response.status == false) {
-                    executeExample('error');
+                    alert(response.message);
                 } else {
                     executeExample('success');
                 }

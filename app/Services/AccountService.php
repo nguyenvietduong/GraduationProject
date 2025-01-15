@@ -39,7 +39,7 @@ class AccountService extends BaseService implements AccountServiceInterface
      * @return mixed
      * @throws Exception
      */
-    public function getAllAccount(array $filters = [], int $perPage = 5, $role = 'user')
+    public function getAllAccount(array $filters = [], int $perPage = 5, $role = [])
     {
         try {
             // Retrieve accounts from the repository using filters and pagination
