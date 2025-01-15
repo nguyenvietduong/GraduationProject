@@ -375,11 +375,35 @@
                     }
                 });
 
-                $(`#btn_cancel_reservation_${reservationId}`).off('click').on('click', function () {
-                    if (confirm('Bạn có chắc chắn muốn hủy đơn hàng không?')) {
-                        if (confirm('Đơn hàng sẽ bị hủy?')) {
-                            CUONG.cancelReservation(invoiceDetail)
+                $(`#btn_cancel_reservation_${reservationId}`).off('click').on('click', async function () {
+                    let checkDish = true
+                    await invoiceDetail.invoice.invoice_items.forEach(menu => {
+                        let hasKey1 = false;
+                        let hasKey2 = false;
+
+                        Object.entries(JSON.parse(menu.status_menu)).forEach(([key, value]) => {
+                            if (key == 2 && value != 0) {
+                                hasKey1 = true;
+                            }
+                            if (key == 3 && value != 0) {
+                                hasKey2 = true;
+                            }
+                        });
+
+                        if (hasKey1 || hasKey2) {
+                            checkDish = false; // Nếu có cả key 1 và key 2 với giá trị khác 0
                         }
+                    });
+                    if (checkDish) {
+                        if (confirm('Bạn có chắc chắn muốn hủy đơn hàng không?')) {
+                            if (confirm('Đơn hàng sẽ bị hủy?')) {
+                                CUONG.cancelReservation(invoiceDetail)
+                            }
+                        }
+                    } else {
+                        $(`#btn_cancel_reservation_${reservationId}`).prop('disabled', true);
+                        alert('Món ăn đã lên hoặc đang làm, không thể hủy');
+                        return;
                     }
                 })
             }
