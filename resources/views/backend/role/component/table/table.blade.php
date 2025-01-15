@@ -26,7 +26,15 @@
             </td>
             <td class="ps-0">
                 <p class="d-inline-block align-middle mb-0">
-                    {{ $item->name ?? __('messages.system.no_data_available') }}
+                    @if ($item->name == 'User')
+                        Người dùng
+                    @elseif ($item->name == 'Kitchen Staff')
+                        Nhân viên bếp
+                    @elseif ($item->name == 'Staff')
+                        Nhân viên
+                    @elseif ($item->name == 'Admin')
+                        Admin
+                    @endif
                 </p>
             </td>
             <td class="ps-0">

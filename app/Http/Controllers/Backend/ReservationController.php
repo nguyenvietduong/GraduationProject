@@ -66,6 +66,7 @@ class ReservationController extends Controller
             'name' => $params['name'] ?? '',
             'email' => $params['email'] ?? '',
             'phone' => $params['phone'] ?? '',
+            'isCanceled' => $params['isCanceled'] ?? '',
         ];
 
         // Get the per_page value

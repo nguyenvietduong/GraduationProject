@@ -46,35 +46,37 @@
 
         async function checkPaid(price, content) {
             try {
-                const response = await fetch("https://script.google.com/a/macros/hblab.vn/s/AKfycbx6XZBcqxPY2buuBxMzs9VyDy2NvUO8tL1CtQ1NlejokPrS5z_tJZy6-AbxBhGhbh-C/exec");
-
+                const response = await fetch("https://script.google.com/macros/s/AKfycbz0PDo8CgUaDwpzvLAuzgjn5g0xWfHTBpudE6LeD_FparLVH---BbDD7zUpoZPo11Wh1g/exec");
+                
                 if (!response.ok) {
                     console.error('Error with fetch:', response.status, response.statusText);
                     return false;
                 }
-
+        
                 const data = await response.json();
-                const lastPayment = data.data?.[data.data.length - 1];
-
+                const lastPayment = data?.data?.[data.data.length - 1];  // Cập nhật với đúng cấu trúc
+        
                 if (!lastPayment) {
                     console.error('Invalid data structure or no data received:', data);
                     return false;
                 }
-
+        
                 const lastPrice = lastPayment['Giá trị'];
                 const lastContent = lastPayment['Mô tả'];
-
-                // Kiểm tra giá trị thanh toán và mô tả
+        
+                console.log('Last payment:', lastPayment);
+        
+                // So sánh giá trị thanh toán và mô tả
                 if (lastPrice >= price && lastContent.includes(content)) {
-                    return true; // Thanh toán thành công.
+                    return true; // Thanh toán thành công
                 }
-
-                return false; // Thanh toán chưa thành công.
+        
+                return false; // Thanh toán chưa thành công
             } catch (error) {
                 console.error("Error occurred during payment check:", error);
                 return false;
             }
-        }
+        }        
 
         function processPayment() {
             const reservationId = $("#idDonhang").attr('iddonhang');

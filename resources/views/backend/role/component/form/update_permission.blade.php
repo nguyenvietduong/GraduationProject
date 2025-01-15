@@ -4,14 +4,14 @@
         <tr>
             <th></th>
             @foreach ($roles as $role)
-                @if ($role->id != 4)
-                    @if ($role->id == 1)
-                        <th class="text-center">Admin</th>
-                    @elseif ($role->id == 2)
-                        <th class="text-center">Nhân viên</th>
-                    @elseif ($role->id == 3)
-                        <th class="text-center">Nhân viên bếp</th>
-                    @endif
+                @if ($role->id == 1)
+                    <th class="text-center">Admin</th>
+                @elseif ($role->id == 2)
+                    <th class="text-center">Nhân viên</th>
+                @elseif ($role->id == 3)
+                    <th class="text-center">Nhân viên bếp</th>
+                @elseif ($role->id == 4)
+                    <th class="text-center">Người dùng</th>
                 @endif
             @endforeach
         </tr>
@@ -24,17 +24,15 @@
                     </div>
                 </td>
                 @foreach ($roles as $role)
-                    @if ($role->id != 4)
-                        <td class="text-center">
-                            <input {{ collect($role->permissions)->contains('id', $permission->id) ? 'checked' : '' }}
-                                {{ $role->id == 1 ? 'disabled' : '' }} type="checkbox"
-                                name="permission[{{ $role->id }}][]" value="{{ $permission->id }}"
-                                class="form-check-input" id="flexCheckDefault">
-                            @if ($role->id == 1 && $role->permissions->contains('id', $permission->id))
-                                <input type="hidden" name="permissions[]" value="{{ $permission->id }}">
-                            @endif
-                        </td>
-                    @endif
+                    <td class="text-center">
+                        <input {{ collect($role->permissions)->contains('id', $permission->id) ? 'checked' : '' }}
+                            {{ $role->id == 1 ? 'disabled' : '' }} {{ $role->id == 4 ? 'disabled' : '' }} type="checkbox"
+                            name="permission[{{ $role->id }}][]" value="{{ $permission->id }}"
+                            class="form-check-input" id="flexCheckDefault">
+                        @if ($role->id == 1 && $role->permissions->contains('id', $permission->id))
+                            <input type="hidden" name="permissions[]" value="{{ $permission->id }}">
+                        @endif
+                    </td>
                 @endforeach
             </tr>
         @endforeach
