@@ -49,6 +49,9 @@ Route::post('create-new-reservation', [UpdateStatusReservation::class, 'createNe
 Route::post('create-invoice-detail', [UpdateStatusReservation::class, 'createInvoiceDataDetail']);
 Route::post('update-invoice-detail', [UpdateStatusReservation::class, 'updateInvoiceDataDetail']);
 Route::post('update-status-menu-invoice-detail', [UpdateStatusReservation::class, 'updateStatusMenuInvoiceDetail']);
+Route::post('cancel-reservation-payment', [UpdateStatusReservation::class, 'cancelReservationPayment']);
+
+
 
 
 Route::post('admin/menu/updateStatus', [UpdateStatusMenu::class, 'updateStatus'])->name('admin.menu.updateStatus');

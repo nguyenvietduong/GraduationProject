@@ -339,4 +339,47 @@ class UpdateStatusReservation extends Controller
             ]);
         }
     }
+
+    public function cancelReservationPayment(Request $request)
+    {
+        $data = $request->all();
+
+        DB::beginTransaction();
+
+        try {
+            $reservationId = $request->input('reservation_id');
+            $reservationDetails = $request->input('reservation_detail');
+            $invoiceId = $request->input('invoice_id');
+
+            $reservation = Reservation::findOrFail($reservationId);
+            $reservation->status = 'canceled';
+            $reservation->save();
+
+            // 2. Xóa dữ liệu trong reservation_details
+            $reservation->reservationDetails()->delete();
+
+            // 3. Cập nhật trạng thái của các bàn từ reservation_detail
+            if (!is_null($reservationDetails)) {
+                foreach ($reservationDetails as $detail) {
+                    Table::where('id', $detail['table_id'])->update(['status' => 'available']);
+                }
+            }
+
+            // 4. Xóa dữ liệu trong invoices
+            $invoice = Invoice::find($invoiceId);
+            if ($invoice) {
+                // 5. Xóa dữ liệu trong invoice_items
+                $invoice->invoiceItems()->delete();
+                $invoice->delete();
+            }
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Hủy đơn thành công']);
+        } catch (\Exception $e) {
+            // Rollback nếu có lỗi
+            DB::rollBack();
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
+        }
+    }
 }

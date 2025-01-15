@@ -87,7 +87,6 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
     public function countAccountsByRole(array $role = [])
     {
         $query = $this->model->whereIn('role_id', $role); // Spatie's role scope for filtering by role
-
         return $query->count();
     }
 

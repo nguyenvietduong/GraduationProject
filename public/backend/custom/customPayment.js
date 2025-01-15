@@ -48,7 +48,59 @@
         }
     }
 
+
+    CUONG.cancelReservation = (data) => {
+
+        let option = {
+            _token: _token,
+            reservation_id: data.reservation.id,
+            invoice_id: data.invoice.id,
+            reservation_detail: data.reservation.reservation_details,
+        }
+
+        console.log(option);
+
+        $.ajax({
+            url: '/cancel-reservation-payment',
+            type: 'POST',
+            data: option,
+            success: async function (response) {
+                if (response.success === true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: response.message,
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại!',
+                        text: response.message,
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                let errorMessage = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+
+                // Kiểm tra nếu server trả về message cụ thể
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: errorMessage,
+                });
+            }
+        })
+    }
+
+
     CUONG.renderMenuItem = async (menuItems) => {
+        console.log(menuItems);
         $('#list_menu_item').empty()
 
         if (menuItems.invoice == null) {
@@ -66,7 +118,7 @@
                 `)
             })
             $('#list_menu_item').append(`
-                <tr style="background-color: burlywood">
+                <tr style="background-color: burlywood" data-reservation-id-payment="${menuItems.reservation.id}">
                     <td colspan="2">
                         <b>Tổng hóa đơn</b>
                     </td>
@@ -135,6 +187,8 @@
                         icon: 'error',
                         title: 'Thất bại!',
                         text: response.message,
+                    }).then(() => {
+                        window.location.reload();
                     });
                 }
             },
@@ -150,6 +204,8 @@
                     icon: 'error',
                     title: 'Lỗi!',
                     text: errorMessage,
+                }).then(() => {
+                    window.location.reload();
                 });
             }
         });
@@ -194,6 +250,8 @@
                 let voucher_discount = 0;
                 let code;
                 $('#pay').find('.btn_paid').attr('id', `btn_paid_${reservationId}`);
+                $('#pay').find('.btn_cancel_reservation').attr('id', `btn_cancel_reservation_${reservationId}`);
+
                 let total_amount = 0
                 let total_payment = 0
 
@@ -307,7 +365,7 @@
                         $('#pay').modal('hide');
 
                         CUONG.addInvoice(data);
-                        // CUONG.exportAndSavePDF(reservationId);
+                        CUONG.exportAndSavePDF(reservationId);
                         // setTimeout(() => {
                         //     window.location.reload();
                         // }, 3000);
@@ -316,6 +374,14 @@
                         return;
                     }
                 });
+
+                $(`#btn_cancel_reservation_${reservationId}`).off('click').on('click', function () {
+                    if (confirm('Bạn có chắc chắn muốn hủy đơn hàng không?')) {
+                        if (confirm('Đơn hàng sẽ bị hủy?')) {
+                            CUONG.cancelReservation(invoiceDetail)
+                        }
+                    }
+                })
             }
 
         })

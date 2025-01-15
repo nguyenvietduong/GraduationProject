@@ -79,7 +79,7 @@ class PromotionService extends BaseService implements PromotionServiceInterface
             // $data['min_order_value'] = json_encode($data['min_order_value']);
             // $data['max_discount'] = json_encode($data['max_discount']);
 
-            // dd($data);
+            dd($data);
             return $this->promotionRepository->createPromotion($data);
         } catch (Exception $e) {
             echo $e->getMessage();
