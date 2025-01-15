@@ -23,9 +23,13 @@ class UpdateStatusAccount extends Controller
 
             $status = $request->input('status');
             $id = $request->input('id');
+            $reservationExist = Reservation::where('user_id', $id)
+                ->latest()
+                ->whereNotIn('status', ['canceled', 'completed'])
+                ->exists();
 
             // Kiểm tra nếu người dùng đã đặt bàn thì không cho đổi trạng thái thành 'locked'
-            if ($status == 'locked' && Reservation::where('user_id', $id)->exists()) {
+            if ($status == 'locked' && $reservationExist) {
                 return response()->json([
                     'message' => 'Người dùng này đang có đơn đặt bàn, không thể đổi trạng thái.'
                 ], 400);
