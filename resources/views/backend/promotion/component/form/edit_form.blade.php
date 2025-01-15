@@ -20,8 +20,8 @@
                                             class="text-danger">*</span></label>
                                     <input class="form-control mb-2" type="text" value="{{ $promotionData->title }}"
                                         name="title" readonly>
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.description') }} <span
-                                            class="text-danger">*</span></label>
+                                    <label
+                                        class="mb-2">{{ __('messages.' . $object . '.fields.description') }}</label>
                                     <textarea name="description" class="form-control" id="" cols="30" rows="10">{{ $promotionData->description }}</textarea>
                                 </div><!-- end col -->
                             </div><!-- end row -->

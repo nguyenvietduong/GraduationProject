@@ -16,14 +16,15 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }} <span class="text-danger">*</span></label>
-                                    <input class="form-control mb-2 @error('title') is-invalid @enderror"
-                                        type="text" name="title" value="{{ old('title') }}">
+                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.name') }} <span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control mb-2 @error('title') is-invalid @enderror" type="text"
+                                        name="title" value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <label
-                                        class="mb-2">{{ __('messages.' . $object . '.fields.description') }} <span class="text-danger">*</span></label>
+                                        class="mb-2">{{ __('messages.' . $object . '.fields.description') }}</label>
                                     <textarea name="description" class="form-control" id="" cols="20" rows="10">{{ old('description') }}</textarea>
                                 </div><!-- end col -->
                             </div><!-- end row -->
@@ -46,7 +47,8 @@
                     <div class="row">
                         {{-- <div class="col-lg-12"> --}}
                         <div class="col-lg-6">
-                            <label class="mb-2">{{ __('messages.' . $object . '.fields.code') }} <span class="text-danger">*</span></label>
+                            <label class="mb-2">{{ __('messages.' . $object . '.fields.code') }} <span
+                                    class="text-danger">*</span></label>
                             <div class="input-group mb-2">
                                 <input
                                     class="form-control inputCodePromotion uppercase @error('code') is-invalid @enderror"
@@ -60,7 +62,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-2">
-                                <label class="mb-2">{{ __('messages.' . $object . '.fields.type') }} <span class="text-danger">*</span></label>
+                                <label class="mb-2">{{ __('messages.' . $object . '.fields.type') }} <span
+                                        class="text-danger">*</span></label>
                                 <select name="type" class="form-select selectPromotion" id="">
                                     @foreach (__('messages.promotion.type') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -70,7 +73,8 @@
                         </div>
                         {{-- </div> --}}
                         <div class="col-lg-6">
-                            <label class="mb-2">{{ __('messages.' . $object . '.fields.total') }} <span class="text-danger">*</span></label>
+                            <label class="mb-2">{{ __('messages.' . $object . '.fields.total') }} <span
+                                    class="text-danger">*</span></label>
                             <div class="input-group mb-2">
                                 <input type="text" name="total"
                                     class="form-control @error('total') is-invalid @enderror"
@@ -83,7 +87,8 @@
                             </div>
                             {{-- <div class="col-lg-6"> --}}
                             <div class="mb-2">
-                                <label class="mb-2">{{ __('messages.' . $object . '.fields.discount') }} <span class="text-danger">*</span></label>
+                                <label class="mb-2">{{ __('messages.' . $object . '.fields.discount') }} <span
+                                        class="text-danger">*</span></label>
                                 <div class="input-group mb-2">
                                     <input type="number" name="discount"
                                         class="form-control inputDiscount @error('discount') is-invalid @enderror"
@@ -97,7 +102,8 @@
 
                             {{-- </div> --}}
                             <div class="mb-2">
-                                <label class="mb-2">{{ __('messages.' . $object . '.fields.startDate') }} <span class="text-danger">*</span></label>
+                                <label class="mb-2">{{ __('messages.' . $object . '.fields.startDate') }} <span
+                                        class="text-danger">*</span></label>
                                 <input type="datetime-local" name="start_date"
                                     class="form-control @error('start_date') is-invalid @enderror"
                                     value="{{ old('start_date') }}">
@@ -109,7 +115,8 @@
 
                         <div class="col-lg-6">
                             <div class="mb-2">
-                                <label class="mb-2">{{ __('messages.' . $object . '.fields.isActive') }} <span class="text-danger">*</span></label>
+                                <label class="mb-2">{{ __('messages.' . $object . '.fields.isActive') }} <span
+                                        class="text-danger">*</span></label>
                                 <select name="is_active" class="form-select" id="">
                                     @foreach (__('messages.promotion.status') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -118,7 +125,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 col-lg-6">
-                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.minOrder') }} <span class="text-danger">*</span></label>
+                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.minOrder') }} <span
+                                            class="text-danger">*</span></label>
                                     <div class="input-group mb-2">
                                         <input type="number" name="min_order_value"
                                             class="form-control @error('min_order_value') is-invalid @enderror"
@@ -130,8 +138,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
-                                    <label
-                                        class="mb-2">{{ __('messages.' . $object . '.fields.maxDiscount') }} <span class="text-danger">*</span></label>
+                                    <label class="mb-2">{{ __('messages.' . $object . '.fields.maxDiscount') }}
+                                        <span class="text-danger">*</span></label>
                                     <div class="input-group mb-2">
                                         <input type="number"
                                             class="form-control @error('max_discount') is-invalid @enderror"
@@ -144,7 +152,8 @@
                                 </div>
                             </div>
                             <div class="mb-2">
-                                <label class="mb-2">{{ __('messages.' . $object . '.fields.endDate') }} <span class="text-danger">*</span></label>
+                                <label class="mb-2">{{ __('messages.' . $object . '.fields.endDate') }} <span
+                                        class="text-danger">*</span></label>
                                 <input type="datetime-local"
                                     class="form-control @error('end_date') is-invalid @enderror" name="end_date"
                                     value="{{ old('end_date') }}">
