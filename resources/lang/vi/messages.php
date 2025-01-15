@@ -504,7 +504,7 @@ return [
     // Fields for Account
     'account' => [
         'status' => [
-            'normal' => 'Bình thường',
+            'normal' => 'Đang hoạt động',
             'locked' => 'Khóa tài khoản',
             'warning' => 'Cảnh báo',
         ],

@@ -19,10 +19,10 @@ interface AccountRepositoryInterface extends RepositoryInterface
     /**
      * Count users with a specific role.
      *
-     * @param string $role
+     * @param array $role
      * @return int
      */
-    public function countAccountsByRole(string $role);
+    public function countAccountsByRole(array $role = []);
 
     /**
      * Get account friends by ID.

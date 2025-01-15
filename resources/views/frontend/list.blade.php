@@ -340,7 +340,7 @@
                                                 @foreach ($value->invoice->invoiceItems ?? [] as $keyInvoices => $valueInvoice)
                                                     <tr class="hover:bg-gray-50">
                                                         <td>{{ $keyInvoices + 1 }}</td>
-                                                        <td>{{ $valueInvoice->menu->name ?? 'N/A' }}</td>
+                                                        <td>{{ $valueInvoice->menu_name ?? 'N/A' }}</td>
                                                         <td>{{ $valueInvoice->quantity }}</td>
                                                         <td>{{ formatCurrency($valueInvoice->price) }} đ</td>
                                                         <td>{{ formatCurrency($valueInvoice->quantity * $valueInvoice->price) }}

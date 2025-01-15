@@ -29,17 +29,18 @@
             <div class="col-lg-6 col-12 col-sm-12 mb-2 ">
                 <label for="name" class="form-label">{{ __('messages.' . $object . '.fields.status') }} <span
                         class="text-danger">*</span></label>
-                <input type="text" name="" class="form-control" id=""
-                    value="{{ $tableData->status }}" readonly>
-                <input type="hidden" name="status" value="{{ $tableData->status }}">
                 <select name="status" id="status" class="form-control @error('status') is-invalid @enderror"
-                    required>
-                    <option value="available" @selected('available' == $tableData->status) {{ old('status') == 'available' ? 'selected' : '' }}>Còn chỗ</option>
-                    <option value="occupied" @selected('occupied' == $tableData->status) {{ old('status') == 'occupied' ? 'selected' : '' }}>Đang dùng</option>
-                    <option value="reserved" @selected('reserved' == $tableData->status) {{ old('status') == 'reserved' ? 'selected' : '' }}>Có người đặt</option>
-                    <option value="out_of_service" @selected('out_of_service' == $tableData->status) {{ old('status') == 'out_of_service' ? 'selected' : '' }}>Không hoạt động
-                    </option>
+                    {{ old('status', $tableData->status) == 'occupied' ? 'disabled' : '' }} required>
+                    <option value="available" @selected(old('status', $tableData->status) == 'available')>Còn chỗ</option>
+                    <option value="occupied" @selected(old('status', $tableData->status) == 'occupied')>Đang dùng</option>
+                    <option value="reserved" @selected(old('status', $tableData->status) == 'reserved')>Có người đặt</option>
+                    <option value="out_of_service" @selected(old('status', $tableData->status) == 'out_of_service')>Không hoạt động</option>
                 </select>
+
+                {{-- Thêm input hidden nếu status là occupied --}}
+                @if (old('status', $tableData->status) == 'occupied')
+                    <input type="hidden" name="status" value="occupied">
+                @endif
                 @error('status')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

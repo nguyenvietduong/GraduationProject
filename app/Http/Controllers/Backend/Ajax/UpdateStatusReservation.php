@@ -63,7 +63,6 @@ class UpdateStatusReservation extends Controller
 
     public function updateTableStatus(Request $request)
     {
-        // dd(123123);
         $tables = $request->input('table_id'); // Nhận mảng từ request
         $reservationId = $request->input('reservation_id');
         $guest = $request->input('guest');
@@ -162,85 +161,138 @@ class UpdateStatusReservation extends Controller
 
         $data = $request->all();
 
+        DB::beginTransaction();
 
-        // Tạo hóa đơn mới
-        $invoice = Invoice::create([
-            'reservation_id' => $data['reservation_id'],
-            'total_amount' => $data['total_amount'],
-        ]);
+        try {
 
-        // Lặp qua danh sách bàn
-        foreach ($data['list_table'] as $table) {
-            // Kiểm tra xem bàn đã tồn tại trong chi tiết đặt bàn chưa
-            $existingReservationDetail = ReservationDetail::where('reservation_id', $data['reservation_id'])
-                ->where('table_id', $table['id'])
-                ->first();
-
-            if (!$existingReservationDetail) {
-                // Nếu chưa có, thêm bàn vào chi tiết đặt bàn
-                $tableName = Table::where('id', $table['id'])->first();
-                ReservationDetail::create([
-                    'reservation_id' => $data['reservation_id'],
-                    'table_id' => $table['id'],
-                    'table_name' => $tableName->name
-                ]);
-
-                // Cập nhật trạng thái bàn thành "đã có người ngồi"
-                Table::where('id', $table['id'])->update(['status' => 'occupied']);
-            }
-        }
-
-
-
-        // Lặp qua danh sách món ăn trong hóa đơn
-        foreach ($data['invoice_item'] as $item) {
-            $temp = [
-                '1' => $item['quantity'],
-                '2' => 0,
-                '3' => 0
-            ];
-
-            Invoice_item::create([
-                'invoice_id' => $invoice->id,
-                'menu_id' => $item['id'],
-                'menu_name' => $item['name'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-                'total' => $item['total'],
-                'status_menu' => json_encode($temp)
+            // Tạo hóa đơn mới
+            $invoice = Invoice::create([
+                'reservation_id' => $data['reservation_id'],
+                'total_amount' => $data['total_amount'],
             ]);
+
+            // Lặp qua danh sách bàn
+            foreach ($data['list_table'] as $table) {
+
+                $tableStatus = Table::where('id', $table['id'])->value('status');
+
+                if ($tableStatus !== 'available') {
+                    throw new \Exception('Bàn không còn chỗ.');
+                }
+
+                // Kiểm tra xem bàn đã tồn tại trong chi tiết đặt bàn chưa
+                $existingReservationDetail = ReservationDetail::where('reservation_id', $data['reservation_id'])
+                    ->where('table_id', $table['id'])
+                    ->first();
+
+                if (!$existingReservationDetail) {
+                    $tableName = Table::where('id', $table['id'])->first();
+                    ReservationDetail::create([
+                        'reservation_id' => $data['reservation_id'],
+                        'table_id' => $table['id'],
+                        'table_name' => $tableName->name
+                    ]);
+                    Table::where('id', $table['id'])->update(['status' => 'occupied']);
+                }
+            }
+
+            $messageErrorMenu = 'Món ';
+
+
+            // Lặp qua danh sách món ăn trong hóa đơn
+            foreach ($data['invoice_item'] as $item) {
+                $menuStatus = Menu::where('id', $item['id'])->value('status');
+
+                if ($menuStatus !== 'active') {
+                    // Nếu món ăn không hoạt động, trả về lỗi
+                    $messageErrorMenu .= $item['name'] . ', ';
+                    $checkError = false;
+                }
+
+
+                $temp = [
+                    '1' => $item['quantity'],
+                    '2' => 0,
+                    '3' => 0
+                ];
+
+                Invoice_item::create([
+                    'invoice_id' => $invoice->id,
+                    'menu_id' => $item['id'],
+                    'menu_name' => $item['name'],
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price'],
+                    'total' => $item['total'],
+                    'status_menu' => json_encode($temp)
+                ]);
+            }
+
+            if (isset($checkError) && $checkError === false) {
+                throw new \Exception($messageErrorMenu . 'hiện không hoạt động.');
+            }
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
+        } catch (\Exception $e) {
+            // Rollback nếu có lỗi
+            DB::rollBack();
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
         }
 
-        return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
     }
 
     public function updateInvoiceDataDetail(Request $request)
     {
         $data = $request->all();
 
-        $invoiceItems = $request->input('invoice_item', []);
+        DB::beginTransaction();
 
+        try {
+            $invoiceItems = $request->input('invoice_item', []);
 
-        $invoice = Invoice::findOrFail($data['invoice_id']);
+            $invoice = Invoice::findOrFail($data['invoice_id']);
 
-        $invoice->update(['total_amount' => $data['total_amount']]);
+            $invoice->update(['total_amount' => $data['total_amount']]);
 
-        $invoice->invoiceItems()->delete();
+            $invoice->invoiceItems()->delete();
+            $messageErrorMenu = 'Món ';
 
-        foreach ($invoiceItems as $item) {
-            $invoice->invoiceItems()->create([
-                'invoice_id' => $data['invoice_id'],
-                'menu_id' => $item['id'],
-                'menu_name' => $item['name'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-                'total' => $item['total'],
-                'is_served' => $item['is_served'],
-                'status_menu' => json_encode($item['status_menu'])
-            ]);
+            foreach ($invoiceItems as $item) {
+                $menuStatus = Menu::where('id', $item['id'])->value('status');
+
+                if ($menuStatus !== 'active') {
+                    // Nếu món ăn không hoạt động, trả về lỗi
+                    $messageErrorMenu .= $item['name'] . ', ';
+                    $checkError = false;
+
+                }
+
+                $invoice->invoiceItems()->create([
+                    'invoice_id' => $data['invoice_id'],
+                    'menu_id' => $item['id'],
+                    'menu_name' => $item['name'],
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price'],
+                    'total' => $item['total'],
+                    'is_served' => $item['is_served'],
+                    'status_menu' => json_encode($item['status_menu'])
+                ]);
+            }
+            if (isset($checkError) && $checkError === false) {
+                throw new \Exception($messageErrorMenu . 'hiện không hoạt động.');
+            }
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
+        } catch (\Exception $e) {
+            // Rollback nếu có lỗi
+            DB::rollBack();
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
         }
 
-        return response()->json(['success' => true, 'message' => 'Lưu dữ liệu thành công']);
     }
 
 

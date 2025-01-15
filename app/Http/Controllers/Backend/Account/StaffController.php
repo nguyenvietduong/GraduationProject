@@ -74,12 +74,11 @@ class StaffController extends Controller
 
         // Get per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULt;
-        $datas = $this->accountService->getAllAccount($filters, $perPage, ['2', '3']);
-// dd($datas);
+        $datas = $this->accountService->getAllAccount($filters, $perPage, [2, 3]);
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->accountRepository->countAccountsByRole(self::ROLE), // Total records for display
+            'totalRecords' => $this->accountRepository->countAccountsByRole([2, 3]), // Total records for display
             'datas' => $datas, // Pass the paginated users to the view
         ]);
     }

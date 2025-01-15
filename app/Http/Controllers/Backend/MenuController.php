@@ -7,6 +7,7 @@ use App\Interfaces\Repositories\PermissionRepositoryInterface as PermissionRepos
 use App\Interfaces\Services\MenuServiceInterface;
 use App\Interfaces\Repositories\MenuRepositoryInterface;
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Models\Invoice_item;
 use App\Traits\HandleExceptionTrait;
 use Illuminate\Support\Str;
 
@@ -51,7 +52,7 @@ class MenuController extends Controller
      * @return \Illuminate\View\View
      */
     public function index(MenuListRequest $request)
-    {   
+    {
         $this->authorize('modules', '' . self::OBJECT . '.index');
         session()->forget('image_temp'); // Clear temporary image value
         // Validate the request data
@@ -60,13 +61,13 @@ class MenuController extends Controller
         $params = $request->all();
         // Apply filters from the request
         $filters = [
-            'search'        =>    $params['keyword'] ?? '', // Ensure this matches the search input name
-            'start_date'    =>    $params['start_date'] ?? '',
-            'end_date'      =>    $params['end_date'] ?? '',
-            'start_price'   =>    $params['start_price'] ?? 0,
-            'end_price'     =>    $params['end_price'] ?? 0,
-            'status'        =>    $params['status'] ?? '',
-            'category'        =>    $params['category'] ?? '',
+            'search' => $params['keyword'] ?? '', // Ensure this matches the search input name
+            'start_date' => $params['start_date'] ?? '',
+            'end_date' => $params['end_date'] ?? '',
+            'start_price' => $params['start_price'] ?? 0,
+            'end_price' => $params['end_price'] ?? 0,
+            'status' => $params['status'] ?? '',
+            'category' => $params['category'] ?? '',
         ];
         // Get the per_page value
         $perPage = $params['per_page'] ?? self::PER_PAGE_DEFAULT;
@@ -149,6 +150,13 @@ class MenuController extends Controller
         $data["currency"] = $request->currency;
         $data["image_old"] = $request->get("image_old");
         try {
+            $hasInvalidStatus = Invoice_item::where('menu_id', $id)
+                ->whereRaw('JSON_EXTRACT(status_menu, "$.\"1\"") != "0"')
+                ->exists();
+
+            if ($hasInvalidStatus) {
+                return redirect()->back()->with('error', 'Không thể cập nhật vì món ăn này đang được xử lý trong hóa đơn.');
+            }
             // Update the menu
             $this->menuService->updateMenu($id, $data);
             return redirect()->route('admin.menu.index')->with('success', 'Menu updated successfully');

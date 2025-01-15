@@ -34,7 +34,7 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllAccount(array $filters = [], $perPage = 5, $role = 4)
+    public function getAllAccount(array $filters = [], $perPage = 5, $role = [])
     {
         $query = $this->model->query();
         if (is_array($role)) {
@@ -81,12 +81,12 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
     /**
      * Count users with a specific role.
      *
-     * @param string $role
+     * @param array $role
      * @return int
      */
-    public function countAccountsByRole(string $role)
+    public function countAccountsByRole(array $role = [])
     {
-        $query = $this->model->where('role_id', $role); // Spatie's role scope for filtering by role
+        $query = $this->model->whereIn('role_id', $role); // Spatie's role scope for filtering by role
 
         return $query->count();
     }
