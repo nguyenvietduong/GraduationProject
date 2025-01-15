@@ -140,8 +140,18 @@ class ReservationService extends BaseService implements ReservationServiceInterf
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
-        return $phoneExists || $emailExists || $bothExist;
-    }    
+        // Kiểm tra nếu có 3 đơn hàng bị hủy trong vòng 4 giờ gần đây
+        $canceledCount = Reservation::where(function ($query) use ($phone, $email) {
+                $query->where('phone', $phone)
+                      ->orWhere('email', $email);
+            })
+            ->where('status', 'canceled')
+            ->whereBetween('created_at', [$fourHoursAgo, now()])
+            ->count();
+    
+        // Nếu có ít nhất 1 trong các điều kiện hoặc có 3 đơn hàng bị hủy
+        return $phoneExists || $emailExists || $bothExist || $canceledCount >= 3;
+    }     
 
     public function isIpAwaitingConfirmation(string $ipAddress)
     {
@@ -150,13 +160,21 @@ class ReservationService extends BaseService implements ReservationServiceInterf
         // Danh sách các trạng thái cần kiểm tra
         $statuses = ['verification_pending', 'pending', 'confirmed'];
     
+        // Kiểm tra đơn hàng tồn tại với IP và trạng thái cần kiểm tra
         $orderExists = Reservation::where('ipAddress', $ipAddress)
-            ->whereIn('status', $statuses) // Sử dụng whereIn
+            ->whereIn('status', $statuses)
             ->whereBetween('created_at', [$fourHoursAgo, now()])
             ->exists();
     
-        return $orderExists;
-    }
+        // Đếm số lượng đơn hàng bị hủy với IP
+        $canceledCount = Reservation::where('ipAddress', $ipAddress)
+            ->where('status', 'canceled')
+            ->whereBetween('created_at', [$fourHoursAgo, now()])
+            ->count();
+    
+        // Trả về kết quả nếu tồn tại đơn hàng đang chờ xác nhận hoặc có >= 3 đơn bị hủy
+        return $orderExists || $canceledCount >= 3;
+    }    
 
     /**
      * Update a reservation by its ID.
