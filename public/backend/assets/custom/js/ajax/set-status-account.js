@@ -18,7 +18,8 @@ $(document).ready(function () {
                 executeExample('success');
             },
             error: function (xhr, status, error) {
-                executeExample('error');
+                alert(xhr.responseJSON.message);
+                window.location.reload();
             }
         });        
     });

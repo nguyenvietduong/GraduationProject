@@ -77,7 +77,7 @@ class UserController extends Controller
 
         return view(self::PATH_VIEW . __FUNCTION__, [
             'object' => self::OBJECT,
-            'totalRecords' => $this->accountRepository->countAccountsByRole(self::ROLE), // Tổng số bản ghi để hiển thị
+            'totalRecords' => $this->accountRepository->countAccountsByRole([self::ROLE]), // Tổng số bản ghi để hiển thị
             'datas' => $this->accountService->getAllAccount($filters, $perPage, self::ROLE), // Truyền danh sách người dùng đã phân trang đến view
         ]);
     }
