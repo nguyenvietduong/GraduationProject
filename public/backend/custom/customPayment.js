@@ -50,11 +50,11 @@
 
 
     CUONG.cancelReservation = (data) => {
-
+        let invoiceId = (data.invoice == null) ? '' : data.invoice.id
         let option = {
             _token: _token,
             reservation_id: data.reservation.id,
-            invoice_id: data.invoice.id,
+            invoice_id: invoiceId,
             reservation_detail: data.reservation.reservation_details,
         }
 
