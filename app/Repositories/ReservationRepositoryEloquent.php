@@ -37,6 +37,11 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
     public function getAllReservations(array $filters = [], $perPage = 5)
     {
         $query = $this->model->query();
+        $query->with(['user']);
+
+        $query->whereHas('user', function ($query) {
+            $query->where('status', '!=', 'locked');
+        });
         $query->where('status', '!=', ['completed', 'pending']);
 
         $query->whereDate('reservation_time', '=', now()->toDateString());
@@ -48,6 +53,8 @@ class ReservationRepositoryEloquent extends BaseRepository implements Reservatio
 
         if (!empty($filters['isCanceled'])) {
             $query->where('status', $filters['isCanceled']);
+        } else {
+            $query->where('status', '!=', 'canceled');
         }
 
         if (!empty($filters['email'])) {
