@@ -268,9 +268,10 @@
                                         id="idDonhang" data-id="">
                                         QR Code
                                     </button>
-
                                     <button class="btn btn-primary py-2 px-3 mx-1 mt-3 btn_paid" id="">Trả tiền
                                         mặt</button>
+                                    <button class="btn btn-danger py-2 px-3 mx-1 mt-3 btn_cancel_reservation"
+                                        id="">Hủy đơn</button>
                                 </div><!--end card-body-->
                             </div><!--end card-->
                         </div>
