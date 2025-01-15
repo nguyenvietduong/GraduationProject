@@ -112,13 +112,29 @@
                 var reservationId = button.attr('dataReservationId');
             }
     
+            // Biến lưu trữ dữ liệu cũ
+            let previousInvoiceData = null;
+    
             // Hàm cập nhật dữ liệu liên tục
             const updateInvoiceData = async () => {
+                // Lấy dữ liệu mới
                 let invoiceData = await PMD.getInvoiceDataDetail(reservationId);
-                PMD.renderListInvoiceItem(invoiceData);
-                PMD.saveDish(invoiceData.invoice_id);
     
-                // Gọi lại chính nó sau 5 giây
+                // Nếu chưa có dữ liệu cũ (lần đầu tiên mở modal), lưu dữ liệu mới vào previousInvoiceData
+                if (previousInvoiceData === null) {
+                    previousInvoiceData = invoiceData;
+                    PMD.renderListInvoiceItem(invoiceData); // Render dữ liệu ban đầu
+                    PMD.saveDish(invoiceData.invoice_id);    // Lưu dữ liệu ban đầu
+                } else {
+                    // So sánh dữ liệu mới và dữ liệu cũ
+                    if (JSON.stringify(invoiceData) !== JSON.stringify(previousInvoiceData)) {
+                        PMD.renderListInvoiceItem(invoiceData); // Render lại dữ liệu mới
+                        PMD.saveDish(invoiceData.invoice_id);    // Lưu dữ liệu mới
+                        previousInvoiceData = invoiceData;       // Cập nhật dữ liệu cũ
+                    }
+                }
+    
+                // Gọi lại hàm sau 5 giây nếu modal vẫn còn hiển thị
                 if ($('#modalDish').is(':visible')) {
                     setTimeout(updateInvoiceData, 5000);
                 }
@@ -127,7 +143,7 @@
             // Gọi hàm ngay lập tức khi mở modal
             await updateInvoiceData();
         });
-    };    
+    };      
     //End Show Modal Data
 
     PMD.renderListInvoiceItem = async (invoiceItem) => {
