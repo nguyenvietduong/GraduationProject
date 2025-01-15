@@ -56,6 +56,7 @@
             reservation_id: data.reservation.id,
             invoice_id: invoiceId,
             reservation_detail: data.reservation.reservation_details,
+            invoiceDetails: data
         }
 
         console.log(option);
@@ -375,7 +376,7 @@
                     }
                 });
 
-                $(`#btn_cancel_reservation_${reservationId}`).off('click').on('click', async function () {
+                if (invoiceDetail && invoiceDetail.invoice && invoiceDetail.invoice.invoice_items != null) {
                     let checkDish = true
                     await invoiceDetail.invoice.invoice_items.forEach(menu => {
                         let hasKey1 = false;
@@ -394,18 +395,28 @@
                             checkDish = false; // Nếu có cả key 1 và key 2 với giá trị khác 0
                         }
                     });
+
                     if (checkDish) {
-                        if (confirm('Bạn có chắc chắn muốn hủy đơn hàng không?')) {
-                            if (confirm('Đơn hàng sẽ bị hủy?')) {
-                                CUONG.cancelReservation(invoiceDetail)
+                        $(`#btn_cancel_reservation_${reservationId}`).off('click').on('click', async function () {
+                            if (confirm('Bạn có chắc chắn muốn hủy đơn hàng không?')) {
+                                if (confirm('Đơn hàng sẽ bị hủy?')) {
+                                    CUONG.cancelReservation(invoiceDetail)
+                                }
                             }
-                        }
+                        })
+
                     } else {
                         $(`#btn_cancel_reservation_${reservationId}`).prop('disabled', true);
-                        alert('Món ăn đã lên hoặc đang làm, không thể hủy');
+                        // alert('Món ăn đã lên hoặc đang làm, không thể hủy');
                         return;
                     }
-                })
+                } else {
+                    $(`#btn_cancel_reservation_${reservationId}`).prop('disabled', true);
+                    return
+                }
+
+
+
             }
 
         })

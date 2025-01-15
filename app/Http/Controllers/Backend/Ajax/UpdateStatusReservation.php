@@ -351,6 +351,20 @@ class UpdateStatusReservation extends Controller
             $reservationDetails = $request->input('reservation_detail');
             $invoiceId = $request->input('invoice_id');
 
+            // $invoiceId = $data['invoiceDetail']['invoice']['id'];
+
+            // Truy vấn tất cả các món thuộc hóa đơn đó
+            $invoiceItems = Invoice_item::where('invoice_id', $invoiceId)->get();
+
+            foreach ($invoiceItems as $item) {
+                $statusMenu = json_decode($item->status_menu, true);
+
+                // Kiểm tra nếu trạng thái "1" hoặc "2" khác "0" -> món chưa lên hết
+                if (($statusMenu["2"] ?? "0") != "0" || ($statusMenu["3"] ?? "0") != "0") {
+                    throw new \Exception('Món ăn đã lên hoặc đang làm, không thể hủy!');
+                }
+            }
+
             $reservation = Reservation::findOrFail($reservationId);
             $reservation->status = 'canceled';
             $reservation->save();
